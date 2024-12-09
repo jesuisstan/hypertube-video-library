@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 96%;
+    --foreground: 222.2 84% 4.9%;
+    --positive: 181 100% 37%;
+    --negative: 354 60% 52%;
+    --card: 0 0% 100%;
+    --c42orange: 4 65% 59%;
+    --c42green: 181 99% 32%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 204 13% 37%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 204 10% 77%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 15% 10%;
+    --foreground: 210 20% 98%;
+    --positive: 181 99% 32%;
+    --negative: 0.87 85.53% 60.71%;
+    --c42orange: 4 65% 59%;
+    --c42green: 181 99% 32%;
+
+    --card: 220 14% 15%;
+    --card-foreground: 210 20% 98%;
+
+    --primary: 210 100% 70%;
+    --primary-foreground: 220 10% 10%;
+
+    --secondary: 204 50% 60%;
+    --secondary-foreground: 220 10% 10%;
+
+    --muted: 220 14% 25%;
+    --muted-foreground: 210 20% 80%;
+
+    --accent: 200 50% 30%;
+    --accent-foreground: 210 20% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-muted;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  /*transition: all 300ms ease-in-out;*/
+}
+
+@media screen and (max-width: 758px) {
+  html,
+  body {
+    font-size: 90%;
+  }
+}
+
+::selection {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+::-moz-selection {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Restyling the scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 16px;
+  border: 1px solid;
+  border-color: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--secondary));
+  border-radius: 16px;
+}
+
+.custom-button {
+  @apply rounded bg-primary px-4 py-2 text-sm text-muted shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-1 focus:ring-primary focus:ring-opacity-50;
+}
+
+.darkmode-logo {
+  filter: invert(25%) saturate(250%);
+}
