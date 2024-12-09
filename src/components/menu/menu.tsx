@@ -16,8 +16,6 @@ import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
 import MessagesCounterWrapper from '@/components/wrappers/messages-counter-wrapper';
 import NotificationsCounterWrapper from '@/components/wrappers/notifications-counter-wrapper';
 import { usePathname } from '@/navigation';
-import { useChatStore } from '@/stores/chat-store';
-import { useNotificationStore } from '@/stores/notification-store';
 import useUserStore from '@/stores/user';
 
 const Menu: React.FC = () => {
@@ -31,8 +29,6 @@ const Menu: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null); // to handle closing on outside click
   const [isClient, setIsClient] = useState(false);
-  const { unreadCount: unreadCountNotifications } = useNotificationStore();
-  const { unreadCount: unreadCountMessages } = useChatStore();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -108,23 +104,6 @@ const Menu: React.FC = () => {
             />
           )}
         </button>
-        <Link
-          href={pathname !== '/notifications' ? '/notifications' : ''}
-          scroll={false}
-          className="scale-90"
-        >
-          <NotificationsCounterWrapper unreadCount={unreadCountNotifications} />
-        </Link>
-
-        <p>{'/'}</p>
-
-        <Link
-          href={pathname !== '/messages' ? '/messages' : ''}
-          scroll={false}
-          className="scale-90"
-        >
-          <MessagesCounterWrapper unreadCount={unreadCountMessages} />
-        </Link>
       </div>
 
       {/* Menu Sidebar */}
@@ -194,8 +173,6 @@ const Menu: React.FC = () => {
                 }}
                 pathname={pathname}
                 translate={t}
-                unreadCountNotifications={unreadCountNotifications}
-                unreadCountMessages={unreadCountMessages}
               />
 
               {/* horizontal divider */}
