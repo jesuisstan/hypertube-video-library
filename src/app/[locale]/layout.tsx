@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { Montserrat } from 'next/font/google';
+import { Allerta_Stencil as GFont } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -14,13 +14,14 @@ const ThemeProvider = dynamic(() => import('@/components/providers/theme-provide
   ssr: false,
 });
 
-const montserrat = Montserrat({
+const font = GFont({
   subsets: ['latin'],
-  weight: ['500'],
+  weight: ['400'],
+  style: ['normal'],
 });
 
 export const metadata: Metadata = {
-  title: 'Matcha',
+  title: 'Hypertube',
   description: 'Because, love too can be industrialized',
   icons: {
     icon: ['/favicon.ico'],
@@ -47,7 +48,7 @@ const RootLayout = async ({
 
   return (
     <html suppressHydrationWarning lang={params.locale}>
-      <body className={clsx(montserrat.className, 'flex min-h-screen flex-col')}>
+      <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

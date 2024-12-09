@@ -125,12 +125,13 @@ const Menu: React.FC = () => {
             >
               <div className="flex h-[99px] justify-center">
                 <Image
-                  src="/identity/logo-transparent.png"
+                  src="/identity/logo-square.png"
                   alt="Matcha"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className={clsx(`h-auto w-44`, theme === 'dark' ? 'darkmode-logo' : '')}
+                  //className={clsx(`h-auto w-44`, theme === 'dark' ? 'darkmode-logo' : '')}
+                  className={clsx(`h-28 w-auto`)}
                   placeholder="blur"
                   blurDataURL={'/identity/logo-transparent.png'}
                   priority

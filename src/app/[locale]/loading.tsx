@@ -19,7 +19,7 @@ const Loading = () => {
         priority
       />
       <Image
-        src="/identity/logo-loading.png"
+        src="/identity/logo-square.png"
         alt="loading"
         width="0"
         height="0"
