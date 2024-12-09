@@ -19,12 +19,12 @@ const Loading = () => {
         priority
       />
       <Image
-        src="/identity/logo-square.png"
+        src="/identity/hypertube-high-resolution-logo-transparent.png"
         alt="loading"
         width="0"
         height="0"
         sizes="100vw"
-        className="h-80 w-80"
+        className="h-80 w-auto"
         priority
       />
       <p className="mb-16 text-2xl font-normal leading-[48px] tracking-wider">
