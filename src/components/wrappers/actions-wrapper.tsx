@@ -14,7 +14,6 @@ import {
 import ActionsSkeleton from '@/components/ui/skeletons/actions-skeleton';
 import MatchWrapper from '@/components/wrappers/match-wrapper';
 import { useRouter } from '@/navigation';
-import { useChatStore } from '@/stores/chat-store';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { TDateProfile } from '@/types/date-profile';
@@ -40,7 +39,6 @@ const ActionsWrapper = ({
     user: state.user,
     setUser: state.setUser,
   }));
-  const { selectChatPartner, initiateChatIfNotExists } = useChatStore();
   const { updateSuggestion } = useSearchStore();
   const [loading, setLoading] = useState(false);
 
@@ -143,34 +141,6 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
     window.location.href = mailtoLink;
   };
 
-  const handleChatClick = async () => {
-    if (isMatch) {
-      setLoading(true);
-
-      try {
-        // Step 1: Ensure chat is initiated if it doesn't exist
-        await initiateChatIfNotExists(user?.id!, dateProfile.id);
-
-        // Step 2: Select the chat partner
-        await selectChatPartner(user?.id!, {
-          chat_partner: dateProfile.id,
-          firstname: dateProfile.firstname,
-          lastname: dateProfile.lastname,
-          nickname: dateProfile.nickname,
-          online: dateProfile.online,
-          unread_count: 0,
-        });
-
-        // Step 3: Navigate to the chat page
-        router.push('/messages');
-      } catch (error) {
-        console.error('Error initiating or selecting chat:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   return loading ? (
     <ActionsSkeleton />
   ) : (
@@ -217,7 +187,7 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
         <button
           id="chat-button"
           className="group relative z-40 flex cursor-pointer flex-col items-center justify-center gap-2 align-middle disabled:cursor-default disabled:opacity-50"
-          onClick={handleChatClick}
+          onClick={() => console.log('Chat')}
           disabled={!isMatch || isBlocked}
         >
           <MessageCircleMore size={25} />
