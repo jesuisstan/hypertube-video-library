@@ -92,14 +92,14 @@ const Menu: React.FC = () => {
           <MenuIcon />
           {isClient && (
             <Image
-              src="/identity/logo-title-only.png"
-              alt="Matcha"
+              src="/identity/logo-square.png"
+              alt="hypertube-square-logo"
               width={0}
               height={0}
               sizes="100vw"
-              className={clsx(`h-auto w-24`, theme === 'dark' ? 'darkmode-logo' : '')}
+              className={clsx(`h-6 w-auto`)}
               placeholder="blur"
-              blurDataURL={'/identity/logo-transparent.png'}
+              blurDataURL={'/identity/logo-square.png'}
               priority
             />
           )}
@@ -123,20 +123,20 @@ const Menu: React.FC = () => {
               id="rounded-menu-container"
               className="relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl bg-card px-3 pt-5 shadow-md"
             >
-              <div className="flex h-[99px] justify-center">
-                <Image
-                  src="/identity/hypertube-high-resolution-logo-transparent.png"
-                  alt="Matcha"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  //className={clsx(`h-auto w-44`, theme === 'dark' ? 'darkmode-logo' : '')}
-                  className={clsx(`h-auto w-44`)}
-                  placeholder="blur"
-                  blurDataURL={'/identity/hypertube-high-resolution-logo-transparent.png'}
-                  priority
-                />
-              </div>
+              {/*<div className="flex h-[99px] justify-center">*/}
+              <Image
+                src="/identity/hypertube-high-resolution-logo-transparent.png"
+                alt="hypertube-logo"
+                width={0}
+                height={0}
+                sizes="100vw"
+                //className={clsx(`h-auto w-44`, theme === 'dark' ? 'darkmode-logo' : '')}
+                className={clsx(`h-auto w-auto`)}
+                placeholder="blur"
+                blurDataURL={'/identity/hypertube-high-resolution-logo-transparent.png'}
+                priority
+              />
+              {/*</div>*/}
 
               <SideBarHeader
                 name={user?.nickname || user?.firstname}

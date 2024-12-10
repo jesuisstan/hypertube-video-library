@@ -1,6 +1,6 @@
 const createNextIntlPlugin = require('next-intl/plugin');
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.tsx');
 
 const nextConfig = withNextIntl({
   reactStrictMode: false, // Disable React Strict Modecd
