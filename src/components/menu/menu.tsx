@@ -87,7 +87,7 @@ const Menu: React.FC = () => {
           type="button"
           onClick={toggleSidebar}
           title={t('menu-open')}
-          className="flex flex-row items-center space-x-3"
+          className="flex flex-row items-center space-x-3 w-fit"
         >
           <MenuIcon />
           {isClient && (
@@ -97,7 +97,7 @@ const Menu: React.FC = () => {
               width={0}
               height={0}
               sizes="100vw"
-              className={clsx(`h-10 w-auto`)}
+              className={clsx(`h-6 w-auto`)}
               placeholder="blur"
               blurDataURL={'/identity/logo-title-only.png'}
               priority
