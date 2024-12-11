@@ -92,14 +92,14 @@ const Menu: React.FC = () => {
           <MenuIcon />
           {isClient && (
             <Image
-              src="/identity/logo-square.png"
+              src="/identity/logo-title-only.png"
               alt="hypertube-square-logo"
               width={0}
               height={0}
               sizes="100vw"
-              className={clsx(`h-6 w-auto`)}
+              className={clsx(`h-10 w-auto`)}
               placeholder="blur"
-              blurDataURL={'/identity/logo-square.png'}
+              blurDataURL={'/identity/logo-title-only.png'}
               priority
             />
           )}
