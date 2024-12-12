@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { OctagonAlert } from 'lucide-react';
 
 import ModalBasic from '@/components/modals/modal-basic';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { usePathname, useRouter } from '@/navigation';
 import { TUser } from '@/types/user';
 
@@ -38,9 +38,14 @@ const ModalProfileWarning = ({ user }: { user: TUser }) => {
       </div>
 
       <div className="flex flex-row justify-center">
-        <ButtonMatcha type="button" variant="default" onClick={handleProceed} className="min-w-32">
+        <ButtonHypertube
+          type="button"
+          variant="default"
+          onClick={handleProceed}
+          className="min-w-32"
+        >
           {t('proceed')}
-        </ButtonMatcha>
+        </ButtonHypertube>
       </div>
     </ModalBasic>
   );

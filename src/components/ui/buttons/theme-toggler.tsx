@@ -5,13 +5,13 @@ import { useTheme } from 'next-themes';
 
 import { Moon, Sun } from 'lucide-react';
 
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <ButtonMatcha
+    <ButtonHypertube
       variant="ghost"
       size="icon"
       title={translate(`theme-toggle`)}
@@ -23,7 +23,7 @@ const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => 
         {/*<p>{translate(`${theme}`)}</p>*/}
         <span className="sr-only">{translate(`${theme}`)}</span>
       </div>
-    </ButtonMatcha>
+    </ButtonHypertube>
   );
 };
 

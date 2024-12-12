@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
@@ -9,10 +11,11 @@ import { getMessages } from 'next-intl/server';
 import clsx from 'clsx';
 
 import '@/styles/globals.css';
+import ThemeProvider from '@/components/providers/theme-provider';
 
-const ThemeProvider = dynamic(() => import('@/components/providers/theme-provider'), {
-  ssr: false,
-});
+//const ThemeProvider = dynamic(() => import('@/components/providers/theme-provider'), {
+//  ssr: false,
+//});
 
 const font = GFont({
   subsets: ['latin', 'cyrillic'],

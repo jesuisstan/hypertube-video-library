@@ -6,9 +6,9 @@ import LocaleSwitcher from '@/components/locale-switcher';
 import LogoutButton from '@/components/menu/logout-button';
 import ModalSettings from '@/components/modals/modal-settings';
 import AvatarMini from '@/components/ui/avatar-mini';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
-import ThemeToggler from '@/components/ui/theme-toggler';
+import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import { formatUserName } from '@/utils/format-string';
 
 const SideBarHeader = ({
@@ -49,7 +49,7 @@ const SideBarHeader = ({
         <div className="flex flex-row items-center gap-x-1 self-center align-middle">
           <ModalSettings show={showSettingsModal} setShow={setShowSettingsModal} />
           <ThemeToggler translate={translate} />
-          <ButtonMatcha
+          <ButtonHypertube
             variant="ghost"
             size="icon"
             title={translate(`settings`)}
@@ -61,7 +61,7 @@ const SideBarHeader = ({
               {/*<p>{translate(`settings`)}</p>*/}
               <span className="sr-only">{translate(`settings`)}</span>
             </div>
-          </ButtonMatcha>
+          </ButtonHypertube>
           <LogoutButton translate={translate} />
         </div>
 

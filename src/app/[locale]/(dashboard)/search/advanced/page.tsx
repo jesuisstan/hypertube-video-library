@@ -9,7 +9,7 @@ import { CircleX, MapPinned, OctagonAlert, Star, UserRoundSearch } from 'lucide-
 
 import FilterSortBar from '@/components/filter-sort-bar';
 import ModalProfileWarning from '@/components/modals/modal-profile-warning';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
@@ -274,7 +274,7 @@ const AdvancedSearch = () => {
               <p className="text-left text-sm italic">{t(`search.advanced-search-note`)}</p>
             </div>
             <div className="flex items-center justify-center text-c42orange">
-              <ButtonMatcha
+              <ButtonHypertube
                 variant="default"
                 size="default"
                 disabled={!user || loading || globalLoading}
@@ -289,7 +289,7 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('search.search')}</span>
                 </div>
-              </ButtonMatcha>
+              </ButtonHypertube>
             </div>
           </div>
         </div>
@@ -497,7 +497,7 @@ const AdvancedSearch = () => {
               />
             </div>
             <div className="flex flex-row gap-5">
-              <ButtonMatcha
+              <ButtonHypertube
                 variant="default"
                 type="button"
                 size="default"
@@ -512,8 +512,8 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('close')}</span>
                 </div>
-              </ButtonMatcha>
-              <ButtonMatcha
+              </ButtonHypertube>
+              <ButtonHypertube
                 variant="default"
                 type="submit"
                 size="default"
@@ -528,7 +528,7 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('search.search')}</span>
                 </div>
-              </ButtonMatcha>
+              </ButtonHypertube>
             </div>
           </form>
         </div>

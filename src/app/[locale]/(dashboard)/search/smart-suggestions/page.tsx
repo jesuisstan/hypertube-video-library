@@ -8,7 +8,7 @@ import { Frown, RefreshCw } from 'lucide-react';
 
 import FilterSortBar from '@/components/filter-sort-bar';
 import ModalProfileWarning from '@/components/modals/modal-profile-warning';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import FiltersBarSkeleton from '@/components/ui/skeletons/filters-bar-skeleton';
 import SuggestionsSkeleton from '@/components/ui/skeletons/suggestions-skeleton';
 import ProfileCardWrapper from '@/components/wrappers/profile-card-wrapper';
@@ -174,7 +174,7 @@ const SmartSuggestions = () => {
               <p className="text-left text-sm italic">{t(`use-smart-suggestions`)}</p>
             </div>
             <div className="flex items-center justify-center text-c42orange">
-              <ButtonMatcha
+              <ButtonHypertube
                 variant="default"
                 size="default"
                 disabled={!user || loading}
@@ -189,7 +189,7 @@ const SmartSuggestions = () => {
                   </div>
                   <span>{t('refresh')}</span>
                 </div>
-              </ButtonMatcha>
+              </ButtonHypertube>
             </div>
           </div>
 

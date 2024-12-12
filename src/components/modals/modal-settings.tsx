@@ -7,7 +7,7 @@ import ModalBasic from '@/components/modals/modal-basic';
 import ModalChangeEmail from '@/components/modals/modal-change-email';
 import ModalChangePassword from '@/components/modals/modal-change-password';
 import ModalDeleteAccount from '@/components/modals/modal-delete-account';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const ModalSettings = ({
   show,
@@ -27,7 +27,7 @@ const ModalSettings = ({
       <ModalChangePassword show={showChangePasswordModal} setShow={setShowChangePasswordModal} />
       <ModalDeleteAccount show={showDeleteAccountModal} setShow={setShowDeleteAccountModal} />
       <div className="flex flex-col items-center justify-center gap-4 px-4">
-        <ButtonMatcha
+        <ButtonHypertube
           title={t('email-change')}
           variant="default"
           size="default"
@@ -40,8 +40,8 @@ const ModalSettings = ({
               <PenLine size={15} />
             </div>
           </div>
-        </ButtonMatcha>
-        <ButtonMatcha
+        </ButtonHypertube>
+        <ButtonHypertube
           title={t('auth.change-password')}
           variant="default"
           size="default"
@@ -54,8 +54,8 @@ const ModalSettings = ({
               <PenLine size={15} />
             </div>
           </div>
-        </ButtonMatcha>
-        <ButtonMatcha
+        </ButtonHypertube>
+        <ButtonHypertube
           title={t('delete-account')}
           variant="destructive"
           size="default"
@@ -68,7 +68,7 @@ const ModalSettings = ({
               <Trash2 size={15} />
             </div>
           </div>
-        </ButtonMatcha>
+        </ButtonHypertube>
       </div>
     </ModalBasic>
   );

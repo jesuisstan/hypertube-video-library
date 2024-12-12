@@ -5,7 +5,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
 
 import ModalBasic from '@/components/modals/modal-basic';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import useUserStore from '@/stores/user';
@@ -108,7 +108,7 @@ const ModalDeleteAccount = ({
             </div>
           </div>
 
-          <ButtonMatcha
+          <ButtonHypertube
             variant="destructive"
             title={t('delete')}
             size="default"
@@ -122,7 +122,7 @@ const ModalDeleteAccount = ({
                 <Trash2 size={15} />
               </div>
             </div>
-          </ButtonMatcha>
+          </ButtonHypertube>
         </form>
         <div className="min-h-6">
           {error && <p className="mb-5 text-center text-sm text-negative">{error}</p>}

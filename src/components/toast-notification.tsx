@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as Toast from '@radix-ui/react-toast';
 
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const ToastNotification = () => {
   const [open, setOpen] = React.useState(false);
@@ -14,7 +14,7 @@ const ToastNotification = () => {
 
   return (
     <Toast.Provider swipeDirection="right">
-      <ButtonMatcha
+      <ButtonHypertube
         variant="destructive"
         type="button"
         size="sm"
@@ -28,7 +28,7 @@ const ToastNotification = () => {
       >
         {' '}
         SHOW TOAST
-      </ButtonMatcha>
+      </ButtonHypertube>
 
       <Toast.Root
         className="grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border bg-card/90 p-[15px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out]"

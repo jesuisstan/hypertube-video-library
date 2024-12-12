@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const NotFoundCustom = () => {
   const t = useTranslations();
@@ -13,9 +13,9 @@ const NotFoundCustom = () => {
       <div className="flex flex-col items-center justify-center rounded-xl bg-card/90 p-4 text-foreground">
         <h1 className="text-4xl font-bold">{t('error')} 404</h1>
         <p className="pb-5 pt-5 text-lg">{t('not-found.content')}</p>
-        <ButtonMatcha variant="link">
+        <ButtonHypertube variant="link">
           <Link href={`/dashboard`}>{t('go-to-home')}</Link>
-        </ButtonMatcha>
+        </ButtonHypertube>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { OctagonAlert } from 'lucide-react';
 
 import ModalBasic from '@/components/modals/modal-basic';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/navigation';
 import useUserStore from '@/stores/user';
@@ -41,7 +41,7 @@ const ModalChangePassword = ({
       </div>
 
       <div className="flex flex-row justify-center">
-        <ButtonMatcha
+        <ButtonHypertube
           type="button"
           variant="default"
           onClick={handleProceed}
@@ -49,7 +49,7 @@ const ModalChangePassword = ({
           loading={loading}
         >
           {t('proceed')}
-        </ButtonMatcha>
+        </ButtonHypertube>
       </div>
     </ModalBasic>
   );

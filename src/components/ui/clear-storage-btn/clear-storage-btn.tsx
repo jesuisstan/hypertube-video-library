@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const ClearLocalStorageButton = () => {
   const handleClearLocalStorage = () => {
@@ -18,7 +18,7 @@ const ClearLocalStorageButton = () => {
 
   return (
     <div className="items-center">
-      <ButtonMatcha
+      <ButtonHypertube
         variant="ghost"
         size="icon"
         title="Clear local storage data"
@@ -27,7 +27,7 @@ const ClearLocalStorageButton = () => {
       >
         <Trash2 />
         <span className="sr-only">Clear local storage data</span>
-      </ButtonMatcha>
+      </ButtonHypertube>
     </div>
   );
 };

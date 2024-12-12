@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 
 import LocaleSwitcher from '@/components/locale-switcher';
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
@@ -359,12 +359,12 @@ const Login = () => {
               </div>
             </>
           )}
-          <ButtonMatcha type="submit" variant="default" className="mb-5" loading={loading}>
+          <ButtonHypertube type="submit" variant="default" className="mb-5" loading={loading}>
             {pageLayout === 'login' && t(`auth.sign-in`)}
             {pageLayout === 'register' && t(`auth.sign-up`)}
             {pageLayout === 'confirmation' && t(`auth.resend-confirmation-email`)}
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
-          </ButtonMatcha>
+          </ButtonHypertube>
         </form>
         {error && <p className="mb-5 text-center text-sm text-negative">{error}</p>}
         {successMessage && (
@@ -372,7 +372,7 @@ const Login = () => {
         )}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (
-            <ButtonMatcha
+            <ButtonHypertube
               variant="link"
               onClick={() => {
                 setPageLayout('login');
@@ -381,11 +381,11 @@ const Login = () => {
               }}
             >
               {t(`auth.back-to-login`)}
-            </ButtonMatcha>
+            </ButtonHypertube>
           )}
           {pageLayout === 'login' && (
             <>
-              <ButtonMatcha
+              <ButtonHypertube
                 variant="link"
                 onClick={() => {
                   setPageLayout('register');
@@ -395,8 +395,8 @@ const Login = () => {
                 disabled={loading}
               >
                 {t(`auth.create-account`)}
-              </ButtonMatcha>
-              <ButtonMatcha
+              </ButtonHypertube>
+              <ButtonHypertube
                 variant="link"
                 onClick={() => {
                   setPageLayout('confirmation');
@@ -406,8 +406,8 @@ const Login = () => {
                 disabled={loading}
               >
                 {t(`auth.confirm-email`)}
-              </ButtonMatcha>
-              <ButtonMatcha
+              </ButtonHypertube>
+              <ButtonHypertube
                 variant="link"
                 onClick={() => {
                   setPageLayout('forgot');
@@ -417,7 +417,7 @@ const Login = () => {
                 disabled={loading}
               >
                 {t(`auth.forgot-password`)}
-              </ButtonMatcha>
+              </ButtonHypertube>
             </>
           )}
         </div>

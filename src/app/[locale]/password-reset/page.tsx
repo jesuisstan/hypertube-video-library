@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { CircleCheck, Eye, EyeOff, OctagonAlert } from 'lucide-react';
 
-import { ButtonMatcha } from '@/components/ui/button-matcha';
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 
@@ -124,7 +124,7 @@ const PasswordResetPage = () => {
                   </button>
                 </div>
               </>
-              <ButtonMatcha
+              <ButtonHypertube
                 type="submit"
                 variant="default"
                 className="mb-5"
@@ -132,7 +132,7 @@ const PasswordResetPage = () => {
                 disabled={loading || !!successMessage}
               >
                 {t(`auth.change-password`)}
-              </ButtonMatcha>
+              </ButtonHypertube>
             </form>
             {error && (
               <div className="flex flex-col items-center gap-2 text-negative">
@@ -148,9 +148,9 @@ const PasswordResetPage = () => {
             )}
           </>
         )}
-        <ButtonMatcha variant="link">
+        <ButtonHypertube variant="link">
           <Link href={`/dashboard`}>{t('go-to-home')}</Link>
-        </ButtonMatcha>
+        </ButtonHypertube>
       </div>
     </div>
   );
