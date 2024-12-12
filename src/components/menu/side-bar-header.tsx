@@ -7,8 +7,8 @@ import LogoutButton from '@/components/menu/logout-button';
 import ModalSettings from '@/components/modals/modal-settings';
 import AvatarMini from '@/components/ui/avatar-mini';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
-import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
+import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
 import { formatUserName } from '@/utils/format-string';
 
 const SideBarHeader = ({
