@@ -87,19 +87,19 @@ const Menu: React.FC = () => {
           type="button"
           onClick={toggleSidebar}
           title={t('menu-open')}
-          className="flex flex-row items-center space-x-3 w-fit"
+          className="flex w-fit flex-row items-center space-x-3"
         >
           <MenuIcon />
           {isClient && (
             <Image
               src="/identity/logo-title-only.png"
+              blurDataURL={'/identity/logo-title-only.png'}
               alt="hypertube-square-logo"
               width={0}
               height={0}
               sizes="100vw"
               className={clsx(`h-6 w-auto`)}
               placeholder="blur"
-              blurDataURL={'/identity/logo-title-only.png'}
               priority
             />
           )}
@@ -123,20 +123,19 @@ const Menu: React.FC = () => {
               id="rounded-menu-container"
               className="relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl bg-card px-3 pt-5 shadow-md"
             >
-              {/*<div className="flex h-[99px] justify-center">*/}
-              <Image
-                src="/identity/hypertube-high-resolution-logo-transparent.png"
-                alt="hypertube-logo"
-                width={0}
-                height={0}
-                sizes="100vw"
-                //className={clsx(`h-auto w-44`, theme === 'dark' ? 'darkmode-logo' : '')}
-                className={clsx(`h-auto w-auto`)}
-                placeholder="blur"
-                blurDataURL={'/identity/hypertube-high-resolution-logo-transparent.png'}
-                priority
-              />
-              {/*</div>*/}
+              <div className="mb-3 flex justify-center">
+                <Image
+                  src="/identity/hypertube-high-resolution-logo-transparent.png"
+                  blurDataURL={'/identity/hypertube-high-resolution-logo-transparent.png'}
+                  alt="hypertube-logo"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className={clsx(`h-auto w-52`)}
+                  placeholder="blur"
+                  priority
+                />
+              </div>
 
               <SideBarHeader
                 name={user?.nickname || user?.firstname}

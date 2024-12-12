@@ -63,9 +63,26 @@ const AboutPage = () => {
             <div>
               <OctagonAlert size={42} className="text-negative" />
             </div>
-            <p className="text-center text-xl font-normal">
-              <TextWithLineBreaks text={t('disclamer')} />
-            </p>
+            <div className="flex flex-col items-center text-center">
+              <p className="text-center text-xl font-normal">
+                <a
+                  href={`https://42.fr/en/the-program/software-engineer-degree/`}
+                  target="_blank"
+                  className="my-6 text-center text-lg text-c42green transition-all duration-300 ease-in-out hover:text-c42orange"
+                >
+                  {t('disclamer-curriculum')}
+                </a>
+              </p>
+              <p className="text-center text-xl font-normal">
+                <a
+                  href={`https://github.com/jesuisstan/hypertube-video-library`}
+                  target="_blank"
+                  className="my-6 text-center text-lg text-c42green transition-all duration-300 ease-in-out hover:text-c42orange"
+                >
+                  {t('disclamer-no-commercial')}
+                </a>
+              </p>
+            </div>
           </div>
         </div>
 
