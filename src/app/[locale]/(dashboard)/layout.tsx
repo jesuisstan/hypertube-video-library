@@ -34,7 +34,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </main>
         <Footer />
-        {/*<ToastNotification />*/}
       </div>
     </div>
   );

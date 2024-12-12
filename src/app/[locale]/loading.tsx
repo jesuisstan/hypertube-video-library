@@ -7,31 +7,27 @@ const Loading = () => {
   const t = useTranslations();
 
   return (
-    <div className="relative flex h-screen flex-col items-center justify-center text-center text-foreground">
-      <Image
-        src="/identity/background-nobg.png"
-        alt="hearts-bg"
-        fill
-        placeholder="blur"
-        blurDataURL="/identity/background-nobg.png"
-        className="z-[-5] object-cover opacity-5"
-        sizes={'100vw'}
-        priority
-      />
+    <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-10 bg-background/80 text-center text-foreground">
       <Image
         src="/identity/hypertube-high-resolution-logo-transparent.png"
+        blurDataURL={'/identity/hypertube-high-resolution-logo-transparent.png'}
         alt="loading"
         width="0"
         height="0"
         sizes="100vw"
-        className="h-80 w-auto"
+        className="h-52 w-auto min-w-80 smooth42transition md:h-60 lg:h-72"
         priority
+        placeholder="blur"
       />
-      <p className="mb-16 text-2xl font-normal leading-[48px] tracking-wider">
-        {t(`slogan-subject`)}
+      <p className="mb-16 text-lg font-normal leading-[48px] tracking-wider sm:text-2xl">
+        {t(`slogan`)}
       </p>
-      <Spinner size={12} />
-      <p className="mt-[14px] animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
+      <div className="flex flex-col items-center justify-center">
+        <Spinner size={42} />
+        <p className="mt-[14px] animate-pulse text-base font-normal leading-[19px]">
+          {t(`loading`)}
+        </p>
+      </div>
     </div>
   );
 };

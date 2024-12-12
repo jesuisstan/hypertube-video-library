@@ -1,5 +1,12 @@
 {
+  "slogan": "Ne Paniquez Pas — Plongez dans la Bibliothèque Vidéo Ultime!",
+  "loading": "Chargement...",
   "welcome": "Bienvenue sur",
+  "service-provided": "Ce service est fourni par",
+  "rights-reserved": "© 2025 - Tous droits réservés",
+  "about-description": "Hypertube est un service de streaming vidéo gratuit qui vous permet de regarder des films et des séries en ligne.\n Vous pouvez rechercher des films par genre, année ou titre.\n Vous pouvez également filtrer les films par note, date de sortie et qualité.\n Hypertube propose une large collection de films et de séries dans divers genres, notamment l'action, la comédie, le drame, l'horreur, et plus encore.",
+  "disclamer": "Ce projet fait partie du programme du 42 Network.\n Il n'a aucun but commercial et est destiné à un usage éducatif uniquement.",
+
   "dashboard": "Tableau de bord",
   "male": "Homme",
   "female": "Femme",
@@ -15,8 +22,6 @@
   "contact-support": "Contactez le support",
   "error": "Erreur",
   "success": "Succès",
-  "service-provided": "Ce service est fourni par",
-  "rights-reserved": "© 2024 - Tous droits réservés",
   "terms-condition": "Conditions générales",
   "go-to-home": "A la page Home",
   "theme-toggle": "Basculer le thème",
@@ -85,9 +90,6 @@
     "password-change-message": "Pour renforcer votre sécurité, vous allez être déconnecté et redirigé vers la page de connexion.\nÀ partir de là, veuillez sélectionner l'option 'Mot de passe oublié?' pour continuer à changer votre mot de passe.\n Souhaitez-vous continuer?",
     "password-invalid": "Mot de passe invalide"
   },
-  "slogan": "Trouvez votre date",
-  "slogan-subject": "Parce que l'amour aussi peut être industrialisé",
-  "loading": "Chargement...",
   "LocaleSwitcher": {
     "switchLocale": "Passer à {locale, select, de {Allemand} en {Anglais} other {Inconnu}}"
   },

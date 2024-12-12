@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { Allerta_Stencil as GFont } from 'next/font/google';
+import { Exo_2 as GFont } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -15,14 +15,14 @@ const ThemeProvider = dynamic(() => import('@/components/providers/theme-provide
 });
 
 const font = GFont({
-  subsets: ['latin'],
-  weight: ['400'],
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500'],
   style: ['normal'],
 });
 
 export const metadata: Metadata = {
   title: 'Hypertube',
-  description: 'Because, love too can be industrialized',
+  description: 'Your video library',
   icons: {
     icon: ['/favicon.ico'],
     apple: ['/apple-touch-icon.png'],

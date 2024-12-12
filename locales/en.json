@@ -1,5 +1,12 @@
 {
+  "slogan": "Don't Panic — Dive Into the Ultimate Video Library!",
+  "loading": "Loading...",
   "welcome": "Welcome to",
+  "service-provided": "This service is provided by",
+  "rights-reserved": "© 2025 - All rights reserved",
+  "about-description": "Hypertube is a free video streaming service that allows you to watch movies and TV shows online.\n You can search for movies by genre, year, or title.\n You can also filter movies by rating, release date, and quality.\n Hypertube has a large collection of movies and TV shows in various genres, including action, comedy, drama, horror, and more.",
+  "disclamer": "This project is a part of the 42 Network curriculum.\n It has no commercial purpose, and is intended for educational use only.",
+
   "dashboard": "Dashboard",
   "male": "Male",
   "female": "Female",
@@ -15,8 +22,6 @@
   "contact-support": "Contact Support",
   "error": "Error",
   "success": "Success",
-  "service-provided": "This service is provided by",
-  "rights-reserved": "© 2024 - All rights reserved",
   "terms-condition": "Terms and Conditions",
   "go-to-home": "To Home page",
   "theme-toggle": "Toggle theme",
@@ -85,9 +90,6 @@
     "password-change-message": "To enhance your security, you will be logged out and redirected to the login page.\nFrom there, please select the 'Forgot Password?' option to proceed with changing your password.\n Would you like to continue?",
     "password-invalid": "Invalid password"
   },
-  "slogan": "Find your date",
-  "slogan-subject": "Because, love too can be industrialized",
-  "loading": "Loading...",
   "LocaleSwitcher": {
     "label": "Change language",
     "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"

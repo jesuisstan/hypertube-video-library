@@ -6,7 +6,8 @@ const Footer = () => {
   return (
     <div className="flex flex-row items-center self-end p-2 text-right text-xs font-normal leading-4 tracking-normal">
       <div>
-        Matcha Dating App{'. '}
+        Hypertube Video Library {t(`rights-reserved`)}
+        {'. '}
         {t(`service-provided`)}{' '}
         <a
           href={`https://www.krivtsoff.site/`}
@@ -16,8 +17,6 @@ const Footer = () => {
           Stan Krivtsoff
         </a>
         {'. '}
-        {t(`rights-reserved`)}
-        {'.'}
       </div>
     </div>
   );
