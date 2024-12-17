@@ -3,6 +3,8 @@ import createMiddleware from 'next-intl/middleware';
 
 import { JWTPayload, jwtVerify } from 'jose';
 
+import { routing } from './i18n/routing';
+
 const JWT_SECRET = process.env.JWT_SECRET || 'secret-key';
 
 // List of supported locales and public pages
@@ -13,7 +15,7 @@ const publicPages = ['/', '/login', '/email-confirmation', '/password-reset'];
 const intlMiddleware = createMiddleware({
   locales,
   localePrefix: 'always', // Prefix all URLs with locale
-  defaultLocale: 'en',
+  defaultLocale: 'en'
 });
 
 export async function middleware(req: NextRequest) {

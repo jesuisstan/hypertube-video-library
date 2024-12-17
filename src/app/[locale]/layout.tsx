@@ -12,6 +12,7 @@ import clsx from 'clsx';
 
 import '@/styles/globals.css';
 import ThemeProvider from '@/components/providers/theme-provider';
+import { routing } from '@/i18n/routing';
 
 //const ThemeProvider = dynamic(() => import('@/components/providers/theme-provider'), {
 //  ssr: false,
@@ -42,15 +43,19 @@ const RootLayout = async ({
   children: React.ReactNode;
   params: { locale: string };
 }) => {
-  // Fetch the messages based on the param.locale
-  const messages = await getMessages({ locale: params.locale });
+  const { locale } = await params;
 
-  if (!messages || Object.keys(messages).length === 0) {
-    notFound(); // Trigger a 404 if the messages for the locale are not found
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
   }
 
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html suppressHydrationWarning lang={params.locale}>
+    <html suppressHydrationWarning lang={locale}>
       <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
         <ThemeProvider
           attribute="class"
