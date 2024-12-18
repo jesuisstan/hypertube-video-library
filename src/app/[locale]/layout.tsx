@@ -1,8 +1,5 @@
-//'use strict';
-
 import React from 'react';
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import { Exo_2 as GFont } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -13,10 +10,6 @@ import clsx from 'clsx';
 import '@/styles/globals.css';
 import ThemeProvider from '@/components/providers/theme-provider';
 import { Locale, routing } from '@/i18n/routing';
-
-//const ThemeProvider = dynamic(() => import('@/components/providers/theme-provider'), {
-//  ssr: false,
-//});
 
 const font = GFont({
   subsets: ['latin', 'cyrillic'],
@@ -47,8 +40,7 @@ const RootLayout = async ({
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
-  // Providing all messages to the client
-  // side is the easiest way to get started
+
   const messages = await getMessages();
 
   return (
