@@ -15,7 +15,7 @@ import SideBarHeader from '@/components/menu/side-bar-header';
 import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
 import MessagesCounterWrapper from '@/components/wrappers/messages-counter-wrapper';
 import NotificationsCounterWrapper from '@/components/wrappers/notifications-counter-wrapper';
-import { usePathname } from '@/navigation';
+import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
 const Menu: React.FC = () => {

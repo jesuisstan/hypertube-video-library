@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 
 import clsx from 'clsx';
 
-import { usePathname } from '@/navigation';
+import { usePathname } from '@/i18n/routing';
 
 const LocaleSwitcher = () => {
   const [isPending, startTransition] = useTransition();

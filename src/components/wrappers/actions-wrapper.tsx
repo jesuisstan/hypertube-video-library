@@ -13,7 +13,7 @@ import {
 
 import ActionsSkeleton from '@/components/ui/skeletons/actions-skeleton';
 import MatchWrapper from '@/components/wrappers/match-wrapper';
-import { useRouter } from '@/navigation';
+import { useRouter } from '@/i18n/routing';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { TDateProfile } from '@/types/date-profile';

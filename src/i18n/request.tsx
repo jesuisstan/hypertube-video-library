@@ -1,21 +1,18 @@
-import { notFound } from 'next/navigation';
-import { getRequestConfig } from 'next-intl/server';
+import { getRequestConfig } from "next-intl/server";
 
-import { routing } from './routing';
-
-// Can be imported from a shared config
-export const locales = ['en', 'ru', 'fr'] as const;
+import { Locale, routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
+  // This typically corresponds to the `[locale]` segment
   let locale = await requestLocale;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (!locale || !routing.locales.includes(locale as any)) {
+  // Ensure that a valid locale is used
+  if (!locale || !routing.locales.includes(locale as Locale)) {
     locale = routing.defaultLocale;
   }
 
   return {
     locale,
-    messages: (await import(`../../locales/${locale}.json`)).default,
+    messages: (await import(`@/messages/${locale}.json`)).default,
   };
 });

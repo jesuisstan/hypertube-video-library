@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
-import { useRouter } from '@/navigation';
+import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
 const Dashboard = () => {

@@ -12,7 +12,7 @@ import clsx from 'clsx';
 
 import '@/styles/globals.css';
 import ThemeProvider from '@/components/providers/theme-provider';
-import { routing } from '@/i18n/routing';
+import { Locale, routing } from '@/i18n/routing';
 
 //const ThemeProvider = dynamic(() => import('@/components/providers/theme-provider'), {
 //  ssr: false,
@@ -39,17 +39,14 @@ export const metadata: Metadata = {
 const RootLayout = async ({
   children,
   params,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
-}) => {
+  params: Promise<{ locale: Locale }>;
+}>) => {
   const { locale } = await params;
-
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
-
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();

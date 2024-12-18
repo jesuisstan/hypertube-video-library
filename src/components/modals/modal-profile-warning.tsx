@@ -4,7 +4,7 @@ import { OctagonAlert } from 'lucide-react';
 
 import ModalBasic from '@/components/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
-import { usePathname, useRouter } from '@/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
 import { TUser } from '@/types/user';
 
 const ModalProfileWarning = ({ user }: { user: TUser }) => {
