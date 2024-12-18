@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>
-      <Image
+      {/*<Image
         src="/identity/background-nobg.png"
         alt="hearts-bg"
         fill
@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         className="z-[-5] object-cover opacity-5"
         sizes="100vw"
         priority
-      />
+      />*/}
       <Menu />
       <div className="flex w-full flex-grow flex-col items-center justify-between">
         <main
