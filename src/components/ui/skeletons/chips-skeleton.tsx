@@ -23,7 +23,7 @@ const ChipsSkeleton = ({ message }: { message?: string }) => {
       {/* ERROR MESSAGE */}
       <div
         id="error-message-chips"
-        className="absolute left-1/2 top-1/2 line-clamp-3 h-[max-content] -translate-x-1/2 -translate-y-1/2 transform text-ellipsis text-center text-sm text-negative"
+        className="text-destructive absolute left-1/2 top-1/2 line-clamp-3 h-[max-content] -translate-x-1/2 -translate-y-1/2 transform text-ellipsis text-center text-sm"
         title={message}
       >
         {message ?? <span>{message}</span>}

@@ -68,7 +68,7 @@ const PasswordResetPage = () => {
         <h1 className="text-2xl font-bold">{t(`auth.change-password`)}</h1>
 
         {!resetToken || resetToken === 'invalid-token' ? (
-          <p className="pt-2 text-lg text-negative">{t(`auth.invalid-token`)}</p>
+          <p className="text-destructive pt-2 text-lg">{t(`auth.invalid-token`)}</p>
         ) : (
           <>
             <form
@@ -135,13 +135,13 @@ const PasswordResetPage = () => {
               </ButtonHypertube>
             </form>
             {error && (
-              <div className="flex flex-col items-center gap-2 text-negative">
+              <div className="text-destructive flex flex-col items-center gap-2">
                 <OctagonAlert size={30} />
                 <p className="mb-5 text-center text-sm">{error}</p>
               </div>
             )}
             {successMessage && (
-              <div className="flex flex-col items-center gap-2 text-positive">
+              <div className="flex flex-col items-center gap-2 text-c42green">
                 <CircleCheck size={30} />
                 <p className="mb-5 text-center text-sm ">{successMessage}</p>
               </div>

@@ -146,29 +146,31 @@ const Login = () => {
   };
 
   return (
-    <div className={clsx('flex h-screen w-screen flex-row items-center justify-center bg-card')}>
+    <div className={clsx('flex h-screen w-screen items-center justify-center bg-card')}>
       <div
         className={clsx(
-          'hidden h-screen flex-row items-center justify-center bg-card',
+          'hidden h-screen items-center justify-center bg-card',
           'md:flex md:w-2/3',
           'lg:flex lg:w-3/4'
         )}
       >
-        <div className="relative h-full w-full bg-card">
-          <Image
-            src="/identity/background.jpg"
-            alt="hearts"
-            fill
-            placeholder="blur"
-            blurDataURL="/identity/background.jpg"
-            className="z-0"
-            sizes={'100vw'}
-            priority
-          />
-          <div className="absolute bottom-0 z-10 bg-card/85 p-4 text-foreground">
-            <h2 className="mb-2 text-4xl">Make love, not war</h2>
-            <p className="text-sm">
-              Matcha Dating App{'. '}
+        <div className="relative flex h-full w-full">
+          <div className="flex items-center justify-center align-middle">
+            <Image
+              src="/identity/hypertube-high-resolution-logo-transparent.png"
+              blurDataURL="/identity/hypertube-high-resolution-logo-transparent.png"
+              alt="high-resolution-logo"
+              placeholder="blur"
+              priority
+              fill
+              className="ml-5 max-h-[90%] max-w-[90%] object-contain"
+            />
+          </div>
+          <div className="absolute bottom-0 z-10 p-4 text-foreground">
+            <h2 className="mb-2 text-2xl smooth42transition xl:text-3xl">{t(`slogan`)}</h2>
+            <div className="text-sm">
+              Hypertube Video Library {t(`rights-reserved`)}
+              {'. '}
               {t(`service-provided`)}{' '}
               <a
                 href={`https://www.krivtsoff.site/`}
@@ -178,9 +180,7 @@ const Login = () => {
                 Stan Krivtsoff
               </a>
               {'. '}
-              {t(`rights-reserved`)}
-              {'.'}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -191,19 +191,29 @@ const Login = () => {
           'lg:w-1/4'
         )}
       >
-        <div className="mb-2 h-[99px]">
+        <div className="flex flex-row items-center justify-center gap-5 md:hidden">
           <Image
-            src="/identity/logo-transparent.png"
-            className="z-10 m-auto mb-2 mt-0 w-44"
+            src="/identity/logo-square.png"
+            blurDataURL="/identity/logo-square.png"
+            className="z-10 mt-5"
+            alt="logo"
+            width={30}
+            height={30}
+            placeholder="blur"
+            priority
+          />
+          <Image
+            src="/identity/logo-title-only.png"
+            blurDataURL="/identity/logo-title-only.png"
+            className="z-10 mt-5"
             alt="logo"
             width={200}
             height={200}
             placeholder="blur"
-            blurDataURL="/identity/logo-transparent.png"
             priority
           />
         </div>
-        <div className="mb-5 flex self-center">
+        <div className="my-5 flex self-center">
           <LocaleSwitcher />
         </div>
         <h2 className="mb-5 text-center text-3xl text-foreground">
@@ -366,9 +376,9 @@ const Login = () => {
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
           </ButtonHypertube>
         </form>
-        {error && <p className="mb-5 text-center text-sm text-negative">{error}</p>}
+        {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
         {successMessage && (
-          <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
+          <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
         )}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (

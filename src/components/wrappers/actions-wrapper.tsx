@@ -169,14 +169,14 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
         >
           {!isLiked ? (
             <>
-              <Heart size={25} className={clsx(isBlocked ? '' : 'text-positive')} />
+              <Heart size={25} className={clsx(isBlocked ? '' : 'text-c42green')} />
               <div className="absolute -bottom-3 hidden w-fit max-w-20 transform truncate text-nowrap rounded-2xl border bg-foreground/90 px-2 py-1 text-xs text-background group-hover:block">
                 {t('like')}
               </div>
             </>
           ) : (
             <>
-              <HeartOff size={25} className="text-negative" />
+              <HeartOff size={25} className="text-destructive" />
               <div className="absolute -bottom-3 hidden w-fit max-w-20 transform truncate text-nowrap rounded-2xl border bg-foreground/90 px-2 py-1 text-xs text-background group-hover:block">
                 {t('unlike')}
               </div>
@@ -203,14 +203,14 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
         >
           {!isBlocked ? (
             <>
-              <CircleX size={25} className="text-negative" />
+              <CircleX size={25} className="text-destructive" />
               <div className="absolute -bottom-3 hidden w-fit max-w-20 transform truncate text-nowrap rounded-2xl border bg-foreground/90 px-2 py-1 text-xs text-background group-hover:block">
                 {t('block')}
               </div>
             </>
           ) : (
             <>
-              <CirclePower size={25} className="text-positive" />
+              <CirclePower size={25} className="text-c42green" />
               <div className="absolute -bottom-3 hidden w-fit max-w-20 transform truncate text-nowrap rounded-2xl border bg-foreground/90 px-2 py-1 text-xs text-background group-hover:block">
                 {t('unblock')}
               </div>
@@ -223,7 +223,7 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
           className="group relative z-40 flex cursor-pointer flex-col items-center justify-center gap-2 align-middle"
           onClick={handleReportClick}
         >
-          <ShieldAlert size={25} className="text-negative" />
+          <ShieldAlert size={25} className="text-destructive" />
           <div className="absolute -bottom-3 hidden w-fit max-w-20 transform truncate text-nowrap rounded-2xl border bg-foreground/90 px-2 py-1 text-xs text-background group-hover:block">
             {t('report')}
           </div>

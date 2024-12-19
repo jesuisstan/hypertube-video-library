@@ -6,17 +6,17 @@ export const colorsHEX = {
     foreground: '#020817',
     secondary: '#52616B',
     card: '#FFFFFF',
-    positive: '##01a2a4',
-    negative: '#ce3a49',
+    c42green: '##01a2a4',
+    destructive: '#ce3a49',
     muted: '#BEC6CA',
   },
   dark: {
-    background: '#16181d',
+    background: '#302e2e',
     foreground: '#f9fafb',
     secondary: '#66a3cc',
     card: '#21242c',
-    positive: '#22c35d',
-    negative: '#ff3a37',
+    c42green: '#22c35d',
+    destructive: '#ff3a37',
     muted: '#373d49',
   },
 };
@@ -32,5 +32,5 @@ export const C42_VIOLET_DARK = '#7e93d4';
 export const C42_TEXT = '#2c2c34';
 export const C42_TEXT_DARK = '#c0c0c0';
 export const C42_BACKGROUND = '#F5F5F5';
-export const C42_BACKGROUND_DARK = '#2c2c34';
+export const C42_BACKGROUND_DARK = '#302e2e';
 export const C42_RED = '#ce3a49';

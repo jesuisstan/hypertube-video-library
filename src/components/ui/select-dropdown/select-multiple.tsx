@@ -99,10 +99,16 @@ const SelectMultiple = ({
         <div className="mb-1 flex flex-row items-end gap-16">
           {label && <div className="text-sm font-normal text-foreground">{capitalize(label)}</div>}
           <div className="flex flex-row gap-5 text-xs font-normal text-secondary">
-            <button className="min-w-fit text-left hover:text-negative" onClick={handleSelectAll}>
+            <button
+              className="hover:text-destructive min-w-fit text-left"
+              onClick={handleSelectAll}
+            >
               {t(`selector.select-all`)}
             </button>
-            <button className="min-w-fit text-left hover:text-negative" onClick={handleUnselectAll}>
+            <button
+              className="hover:text-destructive min-w-fit text-left"
+              onClick={handleUnselectAll}
+            >
               {t(`selector.unselect-all`)}
             </button>
           </div>

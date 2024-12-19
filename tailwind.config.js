@@ -13,18 +13,10 @@ module.exports = {
     },
     screens: {
       xs: '480px',
-
-      sm: '640px',
-      // => @media (min-width: 640px) { ... }
-
-      md: '900px',
-      // => @media (min-width: 900px) { ... }
-
-      lg: '1200px',
-      // => @media (min-width: 1200px) { ... }
-
-      xl: '1500px',
-      // => @media (min-width: 1500px) { ... }
+      sm: '640px', // => @media (min-width: 640px)
+      md: '900px', // => @media (min-width: 900px)
+      lg: '1200px', // => @media (min-width: 1200px)
+      xl: '1500px', // => @media (min-width: 1500px)
     },
     extend: {
       typography: {
@@ -35,14 +27,19 @@ module.exports = {
         },
       },
       colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        positive: 'hsl(var(--positive))',
-        negative: 'hsl(var(--negative))',
-        card: 'hsl(var(--card))',
         c42orange: 'hsl(var(--c42orange))',
         c42green: 'hsl(var(--c42green))',
 
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -59,6 +56,14 @@ module.exports = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        radius: 'hsl(var(--radius))',
       },
       //backgroundImage: {
       //  'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

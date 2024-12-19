@@ -59,9 +59,9 @@ const AboutPage = () => {
           <p className="text-center text-xl font-normal">
             <TextWithLineBreaks text={t('about-description')} />
           </p>
-          <div className="flex flex-col items-center justify-center gap-5 align-middle sm:flex-row">
+          <div className="flex flex-col items-center justify-center gap-1 align-middle">
             <div>
-              <OctagonAlert size={42} className="text-negative" />
+              <OctagonAlert size={42} className="text-destructive" />
             </div>
             <div className="flex flex-col items-center text-center">
               <p className="text-center text-xl font-normal">
@@ -102,7 +102,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-html.png'}
                 priority
@@ -117,7 +117,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-css.png'}
                 priority
@@ -132,7 +132,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-js.png'}
                 priority
@@ -147,7 +147,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-ts.png'}
                 priority
@@ -162,7 +162,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-react.png'}
                 priority
@@ -177,7 +177,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-nextjs.png'}
                 priority
@@ -192,7 +192,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-tailwindcss.png'}
                 priority
@@ -207,7 +207,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'https://lucide.dev/logo.light.svg'}
                 priority
@@ -222,7 +222,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-jwt.svg'}
                 priority
@@ -237,7 +237,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-next-intl.png'}
                 priority
@@ -252,7 +252,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-vercel.svg'}
                 priority
@@ -267,7 +267,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-vercel-postgresql.svg'}
                 priority
@@ -282,7 +282,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16`)}
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
                 blurDataURL={'/powered-by/logo-vercel-blob.svg'}
                 priority

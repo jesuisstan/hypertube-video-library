@@ -73,7 +73,7 @@ const ModalDeleteAccount = ({
   return (
     <ModalBasic isOpen={show} setIsOpen={setShow} title={t('delete-account')}>
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
-        <p className="text-negative">{t('are-you-sure')}</p>
+        <p className="text-destructive">{t('are-you-sure')}</p>
         <form
           className="flex flex-col items-center justify-center text-left align-middle"
           onSubmit={handleSubmit}
@@ -125,9 +125,9 @@ const ModalDeleteAccount = ({
           </ButtonHypertube>
         </form>
         <div className="min-h-6">
-          {error && <p className="mb-5 text-center text-sm text-negative">{error}</p>}
+          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
           {successMessage && (
-            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
+            <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
           )}
         </div>
       </div>

@@ -12,7 +12,7 @@ export const getColorByRating = (rating: number) => {
   if (rating >= 80) return 'text-c42green';
   if (rating >= 60) return 'text-yellow-500';
   if (rating >= 40) return 'text-c42orange';
-  return 'text-negative';
+  return 'text-destructive';
 };
 
 const RatingWrapper = ({ rating }: { rating: number | undefined }) => {

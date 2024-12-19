@@ -66,7 +66,7 @@ const SideBarHeader = ({
         </div>
 
         {/* horizontal divider */}
-        <div className="mt-3 w-52 border-t border-secondary opacity-40" />
+        <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
       </div>
     </div>
   );

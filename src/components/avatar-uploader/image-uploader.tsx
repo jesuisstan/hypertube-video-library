@@ -213,7 +213,7 @@ const ImageUploader = ({
               disabled={loading}
               className={clsx(
                 'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-foreground smooth42transition ',
-                loading ? 'opacity-60' : 'opacity-100 hover:text-negative'
+                loading ? 'opacity-60' : 'hover:text-destructive opacity-100'
               )}
             >
               <Trash2 size={15} onClick={handleFileDeletion} />
@@ -223,8 +223,8 @@ const ImageUploader = ({
       </>
       <div className="w-52 ">
         {loading && <Spinner size={5} />}
-        {error && <div className="text-xs text-negative">{error}</div>}
-        {successMessage && <div className="text-xs text-positive">{successMessage}</div>}
+        {error && <div className="text-destructive text-xs">{error}</div>}
+        {successMessage && <div className="text-xs text-c42green">{successMessage}</div>}
         {!error && !successMessage && !loading && commonMessage && (
           <div className="text-xs text-foreground">{commonMessage}</div>
         )}

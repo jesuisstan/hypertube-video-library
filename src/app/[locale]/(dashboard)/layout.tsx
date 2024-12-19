@@ -15,12 +15,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>
       {/*<Image
-        src="/identity/background-nobg.png"
+        src="/map.svg"
         alt="hearts-bg"
         fill
         placeholder="blur"
-        blurDataURL="/identity/background-nobg.png"
-        className="z-[-5] object-cover opacity-5"
+        blurDataURL="/map.svg"
+        //className="z-[-5] object-cover opacity-5"
         sizes="100vw"
         priority
       />*/}

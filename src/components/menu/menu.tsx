@@ -13,8 +13,6 @@ import ContactSupportBlock from '@/components/menu/contact-support-block';
 import MenuList from '@/components/menu/menu-list';
 import SideBarHeader from '@/components/menu/side-bar-header';
 import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
-import MessagesCounterWrapper from '@/components/wrappers/messages-counter-wrapper';
-import NotificationsCounterWrapper from '@/components/wrappers/notifications-counter-wrapper';
 import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
@@ -154,7 +152,7 @@ const Menu: React.FC = () => {
                 <Link
                   href={`/dashboard`}
                   className={clsx(
-                    `flex w-full items-center text-secondary smooth42transition`,
+                    `text-card-foreground flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
                     pathname === `/dashboard` && 'font-bold'
                   )}
@@ -176,7 +174,7 @@ const Menu: React.FC = () => {
               />
 
               {/* horizontal divider */}
-              <div className="mb-3 ml-3 w-52 border-t border-secondary opacity-40" />
+              <div className="mb-3 ml-3 w-52 border-t border-muted-foreground opacity-40" />
               <ContactSupportBlock translate={t} />
             </div>
           </div>

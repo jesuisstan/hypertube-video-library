@@ -27,10 +27,10 @@ const FilledOrNot = ({
       {filled ? (
         <CircleCheck
           size={size}
-          className={clsx('smooth42transition', warning ? 'text-yellow-500' : 'text-positive')}
+          className={clsx('smooth42transition', warning ? 'text-yellow-500' : 'text-c42green')}
         />
       ) : (
-        <CircleAlert size={size} className="text-negative" />
+        <CircleAlert size={size} className="text-destructive" />
       )}
     </div>
   );

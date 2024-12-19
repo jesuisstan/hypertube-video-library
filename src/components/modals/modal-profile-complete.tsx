@@ -547,9 +547,9 @@ const ModalProfileComplete = ({
           )}
         </div>
         <div className="min-h-6">
-          {error && <p className="mb-5 text-center text-sm text-negative">{error}</p>}
+          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
           {successMessage && (
-            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
+            <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
           )}
         </div>
       </div>
