@@ -3,11 +3,11 @@ import { useTranslations } from 'next-intl';
 
 import { PenLine, Trash2 } from 'lucide-react';
 
+import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import ModalChangeEmail from '@/components/ui/modals/modal-change-email';
 import ModalChangePassword from '@/components/ui/modals/modal-change-password';
 import ModalDeleteAccount from '@/components/ui/modals/modal-delete-account';
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
 const ModalSettings = ({
   show,

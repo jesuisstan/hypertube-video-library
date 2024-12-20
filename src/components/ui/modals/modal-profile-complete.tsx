@@ -7,11 +7,11 @@ import clsx from 'clsx';
 import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
-import ModalBasic from '@/components/ui/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
+import ModalBasic from '@/components/ui/modals/modal-basic';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';

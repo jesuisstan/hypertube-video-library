@@ -7,8 +7,8 @@ import clsx from 'clsx';
 import { Frown, RefreshCw } from 'lucide-react';
 
 import FilterSortBar from '@/components/filter-sort-bar';
-import ModalProfileWarning from '@/components/ui/modals/modal-profile-warning';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import ModalProfileWarning from '@/components/ui/modals/modal-profile-warning';
 import FiltersBarSkeleton from '@/components/ui/skeletons/filters-bar-skeleton';
 import SuggestionsSkeleton from '@/components/ui/skeletons/suggestions-skeleton';
 import ProfileCardWrapper from '@/components/wrappers/profile-card-wrapper';

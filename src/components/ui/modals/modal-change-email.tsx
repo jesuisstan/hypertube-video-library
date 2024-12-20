@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 import { Save } from 'lucide-react';
 
-import ModalBasic from '@/components/ui/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
+import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
 import useUserStore from '@/stores/user';
 import { TUser } from '@/types/user';
