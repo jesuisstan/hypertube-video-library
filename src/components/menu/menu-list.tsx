@@ -3,8 +3,6 @@ import Link from 'next/link';
 
 import clsx from 'clsx';
 
-import MessagesCounterWrapper from '@/components/wrappers/messages-counter-wrapper';
-import NotificationsCounterWrapper from '@/components/wrappers/notifications-counter-wrapper';
 import { capitalize } from '@/utils/format-string';
 
 const MenuList = ({
