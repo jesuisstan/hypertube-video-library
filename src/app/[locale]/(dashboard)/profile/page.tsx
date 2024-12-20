@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import ModalProfileComplete from '@/components/modals/modal-profile-complete';
-import TProfileCompleteLayout from '@/components/modals/modal-profile-complete';
-import ModalProfileCongrats from '@/components/modals/modal-profile-congrats';
+import ModalProfileComplete from '@/components/ui/modals/modal-profile-complete';
+import TProfileCompleteLayout from '@/components/ui/modals/modal-profile-complete';
+import ModalProfileCongrats from '@/components/ui/modals/modal-profile-congrats';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
@@ -16,7 +16,6 @@ import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import RatingWrapper from '@/components/wrappers/rating-wrapper';
-import SexPreferenceWrapper from '@/components/wrappers/sex-preference-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
 import { calculateAge } from '@/utils/format-string';
@@ -106,15 +105,6 @@ const ProfilePage = () => {
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
-          />
-
-          {/* PREFERENCES */}
-          <SexPreferenceWrapper
-            sexPreference={user?.sex_preferences ?? undefined}
-            modifiable
-            onModify={() =>
-              handleModifyClick('sexpreferences' as keyof typeof TProfileCompleteLayout)
-            }
           />
         </div>
 

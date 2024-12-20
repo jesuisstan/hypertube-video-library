@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
-import ModalBasic from '@/components/modals/modal-basic';
+import ModalBasic from '@/components/ui/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import FilledOrNot from '@/components/ui/filled-or-not';
@@ -547,7 +547,7 @@ const ModalProfileComplete = ({
           )}
         </div>
         <div className="min-h-6">
-          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+          {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
             <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
           )}

@@ -8,8 +8,8 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 
-import LocaleSwitcher from '@/components/locale-switcher';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
@@ -376,7 +376,7 @@ const Login = () => {
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
           </ButtonHypertube>
         </form>
-        {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+        {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
         {successMessage && (
           <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
         )}

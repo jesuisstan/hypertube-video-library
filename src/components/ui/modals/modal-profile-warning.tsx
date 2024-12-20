@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert } from 'lucide-react';
 
-import ModalBasic from '@/components/modals/modal-basic';
+import ModalBasic from '@/components/ui/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { TUser } from '@/types/user';

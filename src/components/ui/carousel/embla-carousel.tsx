@@ -7,8 +7,8 @@ import {
   NextButton,
   PrevButton,
   usePrevNextButtons,
-} from '@/components/carousel/embla-carousel-arrow-buttons';
-import { DotButton, useDotButton } from '@/components/carousel/embla-carousel-dot-button';
+} from '@/components/ui/carousel/embla-carousel-arrow-buttons';
+import { DotButton, useDotButton } from '@/components/ui/carousel/embla-carousel-dot-button';
 
 type TPropType = {
   slides: React.ReactNode[];

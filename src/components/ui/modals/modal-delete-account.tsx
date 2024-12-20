@@ -2,16 +2,17 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { Eye, EyeOff } from 'lucide-react';
-import { Save } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
-import ModalBasic from '@/components/modals/modal-basic';
+import ModalBasic from '@/components/ui/modals/modal-basic';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import useUserStore from '@/stores/user';
 import { TUser } from '@/types/user';
+import { handleClearLocalStorage } from '@/utils/utils';
 
-const ModalChangeEmail = ({
+const ModalDeleteAccount = ({
   show,
   setShow,
 }: {
@@ -19,9 +20,9 @@ const ModalChangeEmail = ({
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
   const t = useTranslations();
-  const { user, setUser } = useUserStore((state) => ({
+  const { user, clearUser } = useUserStore((state) => ({
     user: state.user,
-    setUser: state.setUser,
+    clearUser: state.clearUser,
   }));
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -39,43 +40,26 @@ const ModalChangeEmail = ({
     if (!currentForm) return;
 
     const formData = new FormData(currentForm);
-    //const data = Object.fromEntries(formData.entries());
-    const newEmail = formData.get('email-new');
-    const confirmEmail = formData.get('email-confirm');
-
-    if (newEmail !== confirmEmail) {
-      setError(t('email-mismatch'));
-      setLoading(false);
-      return;
-    }
-
-    if (newEmail === user?.email) {
-      setSuccessMessage(t('data-is-up-to-date'));
-      setLoading(false);
-      return;
-    }
-
     let response: any;
     try {
-      response = await fetch(`/api/profile/update/email`, {
-        method: 'POST',
+      response = await fetch(`/api/profile/delete`, {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: user?.id,
-          email: newEmail,
           password: formData.get('password'),
         }),
       });
 
       const result = await response.json();
-      const updatedUserData: TUser = result.user;
       if (response.ok) {
         setSuccessMessage(t(result.message));
-        if (updatedUserData) {
-          setUser({ ...user, ...updatedUserData });
-        }
+        setTimeout(() => {
+          clearUser();
+          handleClearLocalStorage();
+        }, 1000);
       } else {
         setError(t(result.error));
       }
@@ -87,47 +71,15 @@ const ModalChangeEmail = ({
   };
 
   return (
-    <ModalBasic isOpen={show} setIsOpen={setShow} title={t('email-change')}>
+    <ModalBasic isOpen={show} setIsOpen={setShow} title={t('delete-account')}>
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
-        <p>
-          {t('email-current')}
-          {': '}
-          <span className="italic">{user?.email}</span>
-        </p>
+        <p className="text-destructive">{t('are-you-sure')}</p>
         <form
           className="flex flex-col items-center justify-center text-left align-middle"
           onSubmit={handleSubmit}
           ref={formRef}
         >
           <div className="flex flex-col">
-            <div className="flex flex-col">
-              <Label htmlFor="email-new" className="mb-2">
-                {t(`email-new`)}
-              </Label>
-              <RequiredInput
-                type="email"
-                id="email-new"
-                name="email-new"
-                placeholder={t(`email-new-enter`)}
-                autoComplete="email"
-                maxLength={42}
-                className="mb-2"
-              />
-            </div>
-            <div className="flex flex-col">
-              <Label htmlFor="email-confirm" className="mb-2">
-                {t(`email-new-confirmation`)}
-              </Label>
-              <RequiredInput
-                type="email"
-                id="email-confirm"
-                name="email-confirm"
-                placeholder={t(`email-new-enter-again`)}
-                autoComplete="new-email-confirmation"
-                maxLength={42}
-                className="mb-2"
-              />
-            </div>
             <div className="flex flex-col">
               <Label htmlFor="password" className="mb-2">
                 {t(`auth.password`)}
@@ -157,23 +109,23 @@ const ModalChangeEmail = ({
           </div>
 
           <ButtonHypertube
-            variant="default"
-            title={t('save')}
+            variant="destructive"
+            title={t('delete')}
             size="default"
             className="w-full min-w-32"
             type="submit"
             loading={loading}
           >
             <div className="flex flex-row items-center space-x-2">
-              <span>{t('save')}</span>
+              <span>{t('delete')}</span>
               <div>
-                <Save size={15} />
+                <Trash2 size={15} />
               </div>
             </div>
           </ButtonHypertube>
         </form>
         <div className="min-h-6">
-          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+          {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
             <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
           )}
@@ -183,4 +135,4 @@ const ModalChangeEmail = ({
   );
 };
 
-export default ModalChangeEmail;
+export default ModalDeleteAccount;

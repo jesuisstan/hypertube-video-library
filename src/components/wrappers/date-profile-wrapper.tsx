@@ -12,7 +12,6 @@ import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import RatingWrapper from '@/components/wrappers/rating-wrapper';
-import SexPreferenceWrapper from '@/components/wrappers/sex-preference-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import { TDateProfile } from '@/types/date-profile';
 
@@ -91,8 +90,6 @@ const DateProfileWrapper = ({
           {/* LOCATION */}
           <LocationWrapper address={dateProfile?.address} />
 
-          {/* PREFERENCES */}
-          <SexPreferenceWrapper sexPreference={dateProfile?.sex_preferences ?? undefined} />
         </div>
 
         {/* CENTER SECTOR */}

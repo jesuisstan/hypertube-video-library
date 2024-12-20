@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useTheme } from 'next-themes';
 
-import { Moon, Sun } from 'lucide-react';
+import { MoonStar, Sun } from 'lucide-react';
 
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 
@@ -19,7 +19,7 @@ const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => 
       className="smooth42transition hover:bg-transparent hover:text-c42orange"
     >
       <div className="flex flex-row items-center gap-2">
-        {theme === 'light' ? <Sun /> : <Moon />}
+        {theme === 'light' ? <Sun /> : <MoonStar />}
         {/*<p>{translate(`${theme}`)}</p>*/}
         <span className="sr-only">{translate(`${theme}`)}</span>
       </div>

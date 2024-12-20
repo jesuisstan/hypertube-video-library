@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { EmblaOptionsType } from 'embla-carousel';
 import { PenLine } from 'lucide-react';
 
-import EmblaCarousel from '@/components/carousel/embla-carousel';
+import EmblaCarousel from '@/components/ui/carousel/embla-carousel';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { TDateProfile } from '@/types/date-profile';
 import { TUser } from '@/types/user';

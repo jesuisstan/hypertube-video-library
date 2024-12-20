@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { CircleHelp, Star } from 'lucide-react';
 
-import ModalRaitingDescription from '@/components/modals/modal-rating-description';
+import ModalRaitingDescription from '@/components/ui/modals/modal-rating-description';
 
 export const getColorByRating = (rating: number) => {
   if (rating >= 80) return 'text-c42green';

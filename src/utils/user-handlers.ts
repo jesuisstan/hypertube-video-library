@@ -1,4 +1,4 @@
-import { TProfileCompleteLayout } from '@/components/modals/modal-profile-complete';
+import { TProfileCompleteLayout } from '@/components/ui/modals/modal-profile-complete';
 import { TUser } from '@/types/user';
 
 export const isProfileCategoryFilled = (

@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { CircleX, MapPinned, OctagonAlert, Star, UserRoundSearch } from 'lucide-react';
 
 import FilterSortBar from '@/components/filter-sort-bar';
-import ModalProfileWarning from '@/components/modals/modal-profile-warning';
+import ModalProfileWarning from '@/components/ui/modals/modal-profile-warning';
 import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import { Label } from '@/components/ui/label';

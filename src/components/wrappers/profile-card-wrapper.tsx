@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
@@ -9,7 +8,6 @@ import { MapPinned } from 'lucide-react';
 
 import AvatarMini from '@/components/ui/avatar-mini';
 import { getColorByRating } from '@/components/wrappers/rating-wrapper';
-import { SexPreferenceIcon } from '@/components/wrappers/sex-preference-wrapper';
 import { TDateProfile } from '@/types/date-profile';
 import { calculateAge } from '@/utils/format-string';
 
@@ -64,56 +62,6 @@ const ProfileCardWrapper = ({ profile }: { profile: TDateProfile }) => {
             <p className="truncate text-sm" title={profile?.address}>
               {profile?.address}
             </p>
-          </div>
-
-          <div className="flex scale-90 flex-row items-center justify-center gap-2">
-            {profile?.sex === 'male' ? (
-              <div
-                title={`${t('sex')} - ${t(`${profile?.sex}`)}`}
-                className={clsx(
-                  'flex items-center justify-center rounded-full',
-                  theme === 'dark' ? 'bg-foreground' : ''
-                )}
-              >
-                <div className="overflow-hidden rounded-full bg-transparent">
-                  <Image
-                    src="/sex/male.png"
-                    alt="men"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="h-auto w-10 p-1"
-                    placeholder="blur"
-                    blurDataURL={'/sex/male.png'}
-                    priority
-                  />
-                </div>
-              </div>
-            ) : (
-              <div
-                title={`${t('sex')} - ${t(`${profile?.sex}`)}`}
-                className={clsx(
-                  'flex items-center justify-center rounded-full',
-                  theme === 'dark' ? 'bg-foreground' : ''
-                )}
-              >
-                <div className="overflow-hidden rounded-full bg-transparent">
-                  <Image
-                    src="/sex/female.png"
-                    alt="female"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="h-auto w-10 p-1"
-                    placeholder="blur"
-                    blurDataURL={'/sex/female.png'}
-                    priority
-                  />
-                </div>
-              </div>
-            )}
-            {'/'}
-            <SexPreferenceIcon preference={profile?.sex_preferences} theme={theme!} translate={t} />
           </div>
         </div>
       </div>
