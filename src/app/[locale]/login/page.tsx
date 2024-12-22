@@ -237,7 +237,7 @@ const Login = () => {
                   window.location.href = '/api/auth/ecole42';
                 }}
               >
-                <div className="flex items-center justify-center rounded-full bg-background p-1">
+                <div className="flex items-center justify-center rounded-full border border-background/50 bg-c42green p-1">
                   <Image
                     src="/icons/icon-42.png"
                     blurDataURL="/icons/icon-42.png"
@@ -275,15 +275,17 @@ const Login = () => {
                   window.location.href = '/api/auth/github';
                 }}
               >
-                <Image
-                  src="/icons/icon-github.svg"
-                  blurDataURL="/icons/icon-github.svg"
-                  alt="logo"
-                  width={20}
-                  height={20}
-                  placeholder="blur"
-                  priority
-                />
+                <div className="flex items-center justify-center rounded-full border border-background/50 bg-muted-foreground p-1">
+                  <Image
+                    src="/icons/icon-github.svg"
+                    blurDataURL="/icons/icon-github.svg"
+                    alt="logo"
+                    width={20}
+                    height={20}
+                    placeholder="blur"
+                    priority
+                  />
+                </div>
               </ButtonHypertube>
             </div>
 
