@@ -12,6 +12,7 @@ import { LayoutDashboard, MenuIcon } from 'lucide-react';
 import ContactSupportBlock from '@/components/menu/contact-support-block';
 import MenuList from '@/components/menu/menu-list';
 import SideBarHeader from '@/components/menu/side-bar-header';
+import { Separator } from '@/components/ui/separator';
 import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
 import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -143,6 +144,9 @@ const Menu: React.FC = () => {
                 translate={t}
               />
 
+              {/* Horizontal divider */}
+              <Separator />
+
               {/* DASHBOARD LINK */}
               <div
                 id="dashboard-link"
@@ -152,7 +156,7 @@ const Menu: React.FC = () => {
                 <Link
                   href={`/dashboard`}
                   className={clsx(
-                    `text-card-foreground flex w-full items-center smooth42transition`,
+                    `flex w-full items-center text-card-foreground smooth42transition`,
                     `hover:text-c42orange`,
                     pathname === `/dashboard` && 'font-bold'
                   )}
@@ -174,7 +178,9 @@ const Menu: React.FC = () => {
               />
 
               {/* horizontal divider */}
-              <div className="mb-3 ml-3 w-52 border-t border-muted-foreground opacity-40" />
+              <Separator />
+
+              {/* SUPPORT BLOCK */}
               <ContactSupportBlock translate={t} />
             </div>
           </div>

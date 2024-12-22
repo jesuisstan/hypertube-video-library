@@ -64,9 +64,6 @@ const SideBarHeader = ({
           </ButtonHypertube>
           <LogoutButton translate={translate} />
         </div>
-
-        {/* horizontal divider */}
-        <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
       </div>
     </div>
   );

@@ -7,8 +7,16 @@
   "about-description": "Hypertube is a free video streaming service that allows you to watch movies and TV shows online.\n You can search for movies by genre, year, or title.\n You can also filter movies by rating, release date, and quality.\n Hypertube has a large collection of movies and TV shows in various genres, including action, comedy, drama, horror, and more.",
   "disclamer-curriculum": "This project is a part of the 42 Network curriculum.",
   "disclamer-no-commercial": "It has no commercial purpose, and is intended for educational use only.",
-
   "dashboard": "Dashboard",
+  "error": "Error",
+  "something-went-wrong": "Something went wrong",
+  "go-back": "Go back",
+  "return-to": "Return to",
+  "not-found": {
+    "title": "Not found",
+    "content": "The page, you are looking for, does not exist"
+  },
+
   "male": "Male",
   "female": "Female",
   "lastname": "Last name",
@@ -21,7 +29,6 @@
   "sexual-preferences": "Sex-preferences",
   "need-help": "Need help? Contact Support",
   "contact-support": "Contact Support",
-  "error": "Error",
   "success": "Success",
   "terms-condition": "Terms and Conditions",
   "go-to-home": "To Home page",
@@ -37,10 +44,6 @@
     "undefined": "Undefined",
     "tags": "Tags #",
     "select-city": "Search for a city"
-  },
-  "not-found": {
-    "title": "Page not found",
-    "content": "The page, you are looking for, does not exist"
   },
   "auth": {
     "password": "Password",
