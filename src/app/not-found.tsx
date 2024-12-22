@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
@@ -17,6 +18,16 @@ const NotFound = () => {
         id="access-denied-warning"
         className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
       >
+        <Image
+          src="/identity/logo-title-only.png"
+          blurDataURL="/identity/logo-title-only.png"
+          alt="logo"
+          width={142}
+          height={0}
+          placeholder="blur"
+          priority
+        />
+
         <h1 className="text-4xl font-bold">{t('error') + ' 404' + ': ' + t('not-found.title')}</h1>
         <TextWithLineBreaks text={t('not-found.content')} />
 
@@ -29,7 +40,7 @@ const NotFound = () => {
 
           <a href="mailto:support@q3-technology.com" target="_blank" rel="noopener noreferrer">
             <ButtonHypertube type="button" variant="link" size="sm">
-              {t('contact-support')}
+              <span className="text-muted-foreground">{t('contact-support')}</span>
             </ButtonHypertube>
           </a>
         </div>

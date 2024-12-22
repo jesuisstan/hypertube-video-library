@@ -13,6 +13,7 @@ import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
+import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
@@ -163,7 +164,7 @@ const Login = () => {
               placeholder="blur"
               priority
               fill
-              className="ml-5 max-h-[90%] max-w-[90%] object-contain"
+              className="ml-10 max-h-[90%] max-w-[90%] object-contain"
             />
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
@@ -184,6 +185,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+
       <div
         className={clsx(
           'm-auto flex h-full w-full flex-col overflow-y-scroll pl-5 pr-5',
@@ -216,12 +218,81 @@ const Login = () => {
         <div className="my-5 flex self-center">
           <LocaleSwitcher />
         </div>
-        <h2 className="mb-5 text-center text-3xl text-foreground">
+        <h2 className="mb-5 text-center text-2xl text-foreground">
           {pageLayout === 'login' && t(`auth.sign-in`)}
           {pageLayout === 'register' && t(`auth.register-new`)}
           {pageLayout === 'confirmation' && t(`auth.confirm-email`)}
           {pageLayout === 'forgot' && t(`auth.reset-password`)}
         </h2>
+
+        {/* Social login buttons */}
+        {(pageLayout === 'login' || pageLayout === 'register') && (
+          <div>
+            <div className="mb-3 flex flex-row justify-center gap-5">
+              <ButtonHypertube
+                title="Ecole 42"
+                variant="default"
+                className="w-44 md:w-28"
+                onClick={() => {
+                  window.location.href = '/api/auth/ecole42';
+                }}
+              >
+                <div className="flex items-center justify-center rounded-full bg-background p-1">
+                  <Image
+                    src="/icons/icon-42.png"
+                    blurDataURL="/icons/icon-42.png"
+                    alt="logo"
+                    width={20}
+                    height={20}
+                    placeholder="blur"
+                    priority
+                  />
+                </div>
+              </ButtonHypertube>
+              <ButtonHypertube
+                title="Google"
+                variant="default"
+                className="w-44 md:w-28"
+                onClick={() => {
+                  window.location.href = '/api/auth/google';
+                }}
+              >
+                <Image
+                  src="/icons/icon-google.svg"
+                  blurDataURL="/icons/icon-google.svg"
+                  alt="logo"
+                  width={20}
+                  height={20}
+                  placeholder="blur"
+                  priority
+                />
+              </ButtonHypertube>
+              <ButtonHypertube
+                title="Github"
+                variant="default"
+                className="w-44 md:w-28"
+                onClick={() => {
+                  window.location.href = '/api/auth/github';
+                }}
+              >
+                <Image
+                  src="/icons/icon-github.svg"
+                  blurDataURL="/icons/icon-github.svg"
+                  alt="logo"
+                  width={20}
+                  height={20}
+                  placeholder="blur"
+                  priority
+                />
+              </ButtonHypertube>
+            </div>
+
+            {/* Horizontal devider */}
+            <Separator text={t(`or`).toUpperCase()} />
+          </div>
+        )}
+
+        {/* Login method selector */}
         {pageLayout === 'login' && (
           <div className="mb-7 flex flex-row justify-start gap-5">
             <RadioGroup
@@ -236,7 +307,10 @@ const Login = () => {
             />
           </div>
         )}
+
+        {/* Form */}
         <form className="flex flex-col" onSubmit={handleSubmit} ref={formRef}>
+          {/* Register form */}
           {pageLayout === 'register' && (
             <>
               <Label htmlFor="firstname" className="mb-2">
@@ -306,6 +380,8 @@ const Login = () => {
               </div>
             </>
           )}
+
+          {/* Login form with Nickname */}
           {pageLayout === 'login' && loginMethod === 'nickname' && (
             <>
               <Label htmlFor="nickname-login" className="mb-2">
@@ -323,6 +399,8 @@ const Login = () => {
               />
             </>
           )}
+
+          {/* Login form with Email */}
           {((pageLayout === 'login' && loginMethod === 'email') || pageLayout !== 'login') && (
             <>
               <Label htmlFor="email" className="mb-2">
@@ -341,6 +419,8 @@ const Login = () => {
               />
             </>
           )}
+
+          {/* Password Input */}
           {pageLayout !== 'confirmation' && pageLayout !== 'forgot' && (
             <>
               <Label htmlFor="password" className="mb-2">
@@ -369,6 +449,8 @@ const Login = () => {
               </div>
             </>
           )}
+
+          {/* Submit button */}
           <ButtonHypertube type="submit" variant="default" className="mb-5" loading={loading}>
             {pageLayout === 'login' && t(`auth.sign-in`)}
             {pageLayout === 'register' && t(`auth.sign-up`)}
@@ -393,47 +475,54 @@ const Login = () => {
               {t(`auth.back-to-login`)}
             </ButtonHypertube>
           )}
+          {/* Additional buttons */}
           {pageLayout === 'login' && (
-            <>
-              <ButtonHypertube
-                variant="link"
-                onClick={() => {
-                  setPageLayout('register');
-                  setError('');
-                  setSuccessMessage('');
-                }}
-                disabled={loading}
-              >
-                {t(`auth.create-account`)}
-              </ButtonHypertube>
-              <ButtonHypertube
-                variant="link"
-                onClick={() => {
-                  setPageLayout('confirmation');
-                  setError('');
-                  setSuccessMessage('');
-                }}
-                disabled={loading}
-              >
-                {t(`auth.confirm-email`)}
-              </ButtonHypertube>
-              <ButtonHypertube
-                variant="link"
-                onClick={() => {
-                  setPageLayout('forgot');
-                  setError('');
-                  setSuccessMessage('');
-                }}
-                disabled={loading}
-              >
-                {t(`auth.forgot-password`)}
-              </ButtonHypertube>
-            </>
+            <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">
+              <Separator text={t(`or`).toUpperCase()} />
+              <div className="flex flex-col items-center justify-center gap-2 xs:flex-row">
+                <ButtonHypertube
+                  variant="link"
+                  onClick={() => {
+                    setPageLayout('register');
+                    setError('');
+                    setSuccessMessage('');
+                  }}
+                  disabled={loading}
+                  className="w-44 md:w-28"
+                >
+                  {t(`auth.create-account`)}
+                </ButtonHypertube>
+                <ButtonHypertube
+                  variant="link"
+                  onClick={() => {
+                    setPageLayout('confirmation');
+                    setError('');
+                    setSuccessMessage('');
+                  }}
+                  disabled={loading}
+                  className="w-44 md:w-28"
+                >
+                  {t(`auth.confirm-email`)}
+                </ButtonHypertube>
+                <ButtonHypertube
+                  variant="link"
+                  onClick={() => {
+                    setPageLayout('forgot');
+                    setError('');
+                    setSuccessMessage('');
+                  }}
+                  disabled={loading}
+                  className="w-44 md:w-28"
+                >
+                  {t(`auth.forgot-password`)}
+                </ButtonHypertube>
+              </div>
+            </div>
           )}
         </div>
         <a
           href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
-          className="my-6 text-center text-sm text-secondary transition-all duration-300 ease-in-out hover:text-c42orange"
+          className="my-6 text-center text-sm text-muted-foreground transition-all duration-300 ease-in-out hover:text-c42orange"
         >
           {t(`need-help`)}
         </a>

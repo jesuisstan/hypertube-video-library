@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
 
 import clsx from 'clsx';
 import { LayoutDashboard, MenuIcon } from 'lucide-react';
@@ -18,7 +17,6 @@ import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
 const Menu: React.FC = () => {
-  const { theme } = useTheme();
   const t = useTranslations();
   const { user, globalLoading } = useUserStore((state) => ({
     user: state.user,
@@ -97,7 +95,7 @@ const Menu: React.FC = () => {
               width={0}
               height={0}
               sizes="100vw"
-              className={clsx(`h-6 w-auto`)}
+              className={clsx(`h-5 w-auto`)}
               placeholder="blur"
               priority
             />

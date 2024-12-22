@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Exo_2 as GFont } from 'next/font/google';
-import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 

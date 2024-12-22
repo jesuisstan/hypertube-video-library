@@ -19,7 +19,7 @@ const Dashboard = () => {
   ) : (
     <div>
       FUTURE CONTENT
-      <ButtonHypertube onClick={() => router.push('/profile')} variant="default">
+      <ButtonHypertube onClick={() => router.push('/profile')} variant="default" loading={true}>
         {t('profile')}
       </ButtonHypertube>
     </div>
