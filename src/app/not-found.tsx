@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
@@ -7,7 +5,7 @@ import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
 import { Separator } from '@/components/ui/separator';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 
-const NotFoundPage = () => {
+const NotFound = () => {
   const t = useTranslations();
 
   return (
@@ -40,4 +38,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default NotFound;
