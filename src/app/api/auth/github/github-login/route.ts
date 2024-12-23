@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
 const GITHUB_CLIENT_ID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-const HOST = process.env.NEXT_PUBLIC_HOSTNAME;
-const PORT = process.env.NEXT_PUBLIC_PORT;
 
-export async function GET() {
-  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email&redirect_uri=http://${HOST}:${PORT}/api/auth/github/github-callback`;
+export async function GET(request: Request) {
+  const { protocol, host } = new URL(request.url);
+  const redirectUri = `${protocol}//${host}/api/auth/github/github-callback`;
+  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email&redirect_uri=${redirectUri}`;
   return NextResponse.redirect(githubAuthUrl);
 }
