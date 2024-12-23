@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 
 const ClearLocalStorageButton = () => {
   const handleClearLocalStorage = () => {
@@ -18,16 +18,16 @@ const ClearLocalStorageButton = () => {
 
   return (
     <div className="items-center">
-      <ButtonHypertube
+      <ButtonCustom
         variant="ghost"
         size="icon"
         title="Clear local storage data"
         onClick={handleClearLocalStorage}
-        className="hover:text-destructive transition-all duration-300 ease-in-out hover:bg-transparent"
+        className="transition-all duration-300 ease-in-out hover:bg-transparent hover:text-destructive"
       >
         <Trash2 />
         <span className="sr-only">Clear local storage data</span>
-      </ButtonHypertube>
+      </ButtonCustom>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 
 import { PenLine, Trash2 } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import ModalChangeEmail from '@/components/ui/modals/modal-change-email';
 import ModalChangePassword from '@/components/ui/modals/modal-change-password';
@@ -27,7 +27,7 @@ const ModalSettings = ({
       <ModalChangePassword show={showChangePasswordModal} setShow={setShowChangePasswordModal} />
       <ModalDeleteAccount show={showDeleteAccountModal} setShow={setShowDeleteAccountModal} />
       <div className="flex flex-col items-center justify-center gap-4 px-4">
-        <ButtonHypertube
+        <ButtonCustom
           title={t('email-change')}
           variant="default"
           size="default"
@@ -40,8 +40,8 @@ const ModalSettings = ({
               <PenLine size={15} />
             </div>
           </div>
-        </ButtonHypertube>
-        <ButtonHypertube
+        </ButtonCustom>
+        <ButtonCustom
           title={t('auth.change-password')}
           variant="default"
           size="default"
@@ -54,8 +54,8 @@ const ModalSettings = ({
               <PenLine size={15} />
             </div>
           </div>
-        </ButtonHypertube>
-        <ButtonHypertube
+        </ButtonCustom>
+        <ButtonCustom
           title={t('delete-account')}
           variant="destructive"
           size="default"
@@ -68,7 +68,7 @@ const ModalSettings = ({
               <Trash2 size={15} />
             </div>
           </div>
-        </ButtonHypertube>
+        </ButtonCustom>
       </div>
     </ModalBasic>
   );

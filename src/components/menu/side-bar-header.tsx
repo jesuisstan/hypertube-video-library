@@ -4,7 +4,7 @@ import { Settings } from 'lucide-react';
 
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar-mini';
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import ModalSettings from '@/components/ui/modals/modal-settings';
@@ -49,7 +49,7 @@ const SideBarHeader = ({
         <div className="flex flex-row items-center gap-x-1 self-center align-middle">
           <ModalSettings show={showSettingsModal} setShow={setShowSettingsModal} />
           <ThemeToggler translate={translate} />
-          <ButtonHypertube
+          <ButtonCustom
             variant="ghost"
             size="icon"
             title={translate(`settings`)}
@@ -61,7 +61,7 @@ const SideBarHeader = ({
               {/*<p>{translate(`settings`)}</p>*/}
               <span className="sr-only">{translate(`settings`)}</span>
             </div>
-          </ButtonHypertube>
+          </ButtonCustom>
           <LogoutButton translate={translate} />
         </div>
       </div>

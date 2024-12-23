@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { LogOut } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { setUserOffline } from '@/utils/user-handlers';
@@ -28,7 +28,7 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
 
   return (
     <div className="items-center">
-      <ButtonHypertube
+      <ButtonCustom
         variant="ghost"
         size="icon"
         title={translate(`auth.logout`)}
@@ -40,7 +40,7 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
           {/*<p>{translate(`auth.logout`)}</p>*/}
           <span className="sr-only">{translate(`auth.logout`)}</span>
         </div>
-      </ButtonHypertube>
+      </ButtonCustom>
     </div>
   );
 };

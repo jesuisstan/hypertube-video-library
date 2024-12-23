@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secret-key';
 
 // List of supported locales and public pages
 const locales = ['en', 'fr', 'ru'];
-const publicPages = ['/', '/login', '/email-confirmation', '/password-reset'];
+const publicPages = ['/', '/authentication', '/email-confirmation', '/password-reset'];
 
 // Middleware for internationalization (i18n)
 const intlMiddleware = createMiddleware({
@@ -38,8 +38,8 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
 
   if (!token) {
-    // If the user is not logged in, redirect to the login page
-    return NextResponse.redirect(new URL('/login', req.url));
+    // If the user is not logged in, redirect to the authentication page
+    return NextResponse.redirect(new URL('/authentication', req.url));
   }
 
   try {
@@ -53,7 +53,7 @@ export async function middleware(req: NextRequest) {
     //}
   } catch (error) {
     console.error('JWT verification failed:', error);
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.redirect(new URL('/authentication', req.url));
   }
 
   // Apply i18n middleware to the request and return

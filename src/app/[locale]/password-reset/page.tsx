@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { CircleCheck, Eye, EyeOff, OctagonAlert } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 
@@ -68,7 +68,7 @@ const PasswordResetPage = () => {
         <h1 className="text-2xl font-bold">{t(`auth.change-password`)}</h1>
 
         {!resetToken || resetToken === 'invalid-token' ? (
-          <p className="text-destructive pt-2 text-lg">{t(`auth.invalid-token`)}</p>
+          <p className="pt-2 text-lg text-destructive">{t(`auth.invalid-token`)}</p>
         ) : (
           <>
             <form
@@ -124,7 +124,7 @@ const PasswordResetPage = () => {
                   </button>
                 </div>
               </>
-              <ButtonHypertube
+              <ButtonCustom
                 type="submit"
                 variant="default"
                 className="mb-5"
@@ -132,10 +132,10 @@ const PasswordResetPage = () => {
                 disabled={loading || !!successMessage}
               >
                 {t(`auth.change-password`)}
-              </ButtonHypertube>
+              </ButtonCustom>
             </form>
             {error && (
-              <div className="text-destructive flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-2 text-destructive">
                 <OctagonAlert size={30} />
                 <p className="mb-5 text-center text-sm">{error}</p>
               </div>
@@ -148,9 +148,9 @@ const PasswordResetPage = () => {
             )}
           </>
         )}
-        <ButtonHypertube variant="link">
+        <ButtonCustom variant="link">
           <Link href={`/dashboard`}>{t('go-to-home')}</Link>
-        </ButtonHypertube>
+        </ButtonCustom>
       </div>
     </div>
   );

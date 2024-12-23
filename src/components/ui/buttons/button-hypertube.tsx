@@ -40,7 +40,7 @@ export interface ButtonProps
   loading?: boolean;
 }
 
-const ButtonHypertube = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonCustom = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { className, variant, size, asChild = false, loading = false, disabled, children, ...props },
     ref
@@ -63,6 +63,6 @@ const ButtonHypertube = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-ButtonHypertube.displayName = 'ButtonHypertube';
+ButtonCustom.displayName = 'ButtonCustom';
 
-export { ButtonHypertube, buttonVariants };
+export { ButtonCustom, buttonVariants };

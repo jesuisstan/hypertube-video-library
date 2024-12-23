@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
@@ -108,7 +108,7 @@ const ModalDeleteAccount = ({
             </div>
           </div>
 
-          <ButtonHypertube
+          <ButtonCustom
             variant="destructive"
             title={t('delete')}
             size="default"
@@ -122,7 +122,7 @@ const ModalDeleteAccount = ({
                 <Trash2 size={15} />
               </div>
             </div>
-          </ButtonHypertube>
+          </ButtonCustom>
         </form>
         <div className="min-h-6">
           {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}

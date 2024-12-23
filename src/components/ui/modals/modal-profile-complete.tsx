@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
@@ -522,10 +522,10 @@ const ModalProfileComplete = ({
                   <p className="text-xs italic">{t('category-filled-?')}</p>
                   <FilledOrNot size={18} filled={isProfileCategoryFilled(layout, user)} />
                 </div>
-                {/*<ButtonHypertube type="submit" size="icon" loading={loading} title={t('save')}>
+                {/*<ButtonCustom type="submit" size="icon" loading={loading} title={t('save')}>
                   <Save size={24} />
-                </ButtonHypertube>*/}
-                <ButtonHypertube
+                </ButtonCustom>*/}
+                <ButtonCustom
                   type="submit"
                   size="default"
                   disabled={!user || loading}
@@ -539,7 +539,7 @@ const ModalProfileComplete = ({
                     </div>
                     <span>{t('save')}</span>
                   </div>
-                </ButtonHypertube>
+                </ButtonCustom>
               </div>
             </form>
           ) : (
@@ -562,7 +562,7 @@ const ModalProfileComplete = ({
         )}
       >
         {layout !== 'basics' && (
-          <ButtonHypertube
+          <ButtonCustom
             type="button"
             variant="default"
             onClick={handlePrevious}
@@ -570,9 +570,9 @@ const ModalProfileComplete = ({
             disabled={loading}
           >
             {t('back')}
-          </ButtonHypertube>
+          </ButtonCustom>
         )}
-        <ButtonHypertube
+        <ButtonCustom
           type="button"
           variant="default"
           onClick={handleNext}
@@ -580,7 +580,7 @@ const ModalProfileComplete = ({
           disabled={loading}
         >
           {layout !== 'photos' ? t('next') : t('finish')}
-        </ButtonHypertube>
+        </ButtonCustom>
       </div>
     </ModalBasic>
   );

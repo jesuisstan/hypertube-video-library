@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import { Separator } from '@/components/ui/separator';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 
@@ -34,14 +34,14 @@ const NotFound = () => {
         <Separator />
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
-          <ButtonHypertube type="button" variant="default" size="default" className="min-w-32">
+          <ButtonCustom type="button" variant="default" size="default" className="min-w-32">
             <Link href={`/dashboard`}>{t('return-to') + ' ' + t('dashboard')}</Link>
-          </ButtonHypertube>
+          </ButtonCustom>
 
           <a href="mailto:support@q3-technology.com" target="_blank" rel="noopener noreferrer">
-            <ButtonHypertube type="button" variant="link" size="sm">
+            <ButtonCustom type="button" variant="link" size="sm">
               <span className="text-muted-foreground">{t('contact-support')}</span>
-            </ButtonHypertube>
+            </ButtonCustom>
           </a>
         </div>
       </div>

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Frown, RefreshCw } from 'lucide-react';
 
 import FilterSortBar from '@/components/filter-sort-bar';
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import ModalProfileWarning from '@/components/ui/modals/modal-profile-warning';
 import FiltersBarSkeleton from '@/components/ui/skeletons/filters-bar-skeleton';
 import SuggestionsSkeleton from '@/components/ui/skeletons/suggestions-skeleton';
@@ -174,7 +174,7 @@ const SmartSuggestions = () => {
               <p className="text-left text-sm italic">{t(`use-smart-suggestions`)}</p>
             </div>
             <div className="flex items-center justify-center text-c42orange">
-              <ButtonHypertube
+              <ButtonCustom
                 variant="default"
                 size="default"
                 disabled={!user || loading}
@@ -189,7 +189,7 @@ const SmartSuggestions = () => {
                   </div>
                   <span>{t('refresh')}</span>
                 </div>
-              </ButtonHypertube>
+              </ButtonCustom>
             </div>
           </div>
 

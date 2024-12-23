@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -19,9 +19,9 @@ const Dashboard = () => {
   ) : (
     <div>
       FUTURE CONTENT
-      <ButtonHypertube onClick={() => router.push('/profile')} variant="default" loading={true}>
+      <ButtonCustom onClick={() => router.push('/profile')} variant="default" loading={true}>
         {t('profile')}
-      </ButtonHypertube>
+      </ButtonCustom>
     </div>
   );
 };

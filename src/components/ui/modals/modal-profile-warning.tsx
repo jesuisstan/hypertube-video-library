@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { TUser } from '@/types/user';
@@ -38,14 +38,9 @@ const ModalProfileWarning = ({ user }: { user: TUser }) => {
       </div>
 
       <div className="flex flex-row justify-center">
-        <ButtonHypertube
-          type="button"
-          variant="default"
-          onClick={handleProceed}
-          className="min-w-32"
-        >
+        <ButtonCustom type="button" variant="default" onClick={handleProceed} className="min-w-32">
           {t('proceed')}
-        </ButtonHypertube>
+        </ButtonCustom>
       </div>
     </ModalBasic>
   );

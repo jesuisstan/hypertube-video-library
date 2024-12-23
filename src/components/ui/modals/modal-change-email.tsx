@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 import { Save } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import { Label } from '@/components/ui/label';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
@@ -156,7 +156,7 @@ const ModalChangeEmail = ({
             </div>
           </div>
 
-          <ButtonHypertube
+          <ButtonCustom
             variant="default"
             title={t('save')}
             size="default"
@@ -170,7 +170,7 @@ const ModalChangeEmail = ({
                 <Save size={15} />
               </div>
             </div>
-          </ButtonHypertube>
+          </ButtonCustom>
         </form>
         <div className="min-h-6">
           {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}

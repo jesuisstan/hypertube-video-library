@@ -5,13 +5,13 @@ import { useTheme } from 'next-themes';
 
 import { MoonStar, Sun } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 
 const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <ButtonHypertube
+    <ButtonCustom
       variant="ghost"
       size="icon"
       title={translate(`theme-toggle`)}
@@ -23,7 +23,7 @@ const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => 
         {/*<p>{translate(`${theme}`)}</p>*/}
         <span className="sr-only">{translate(`${theme}`)}</span>
       </div>
-    </ButtonHypertube>
+    </ButtonCustom>
   );
 };
 

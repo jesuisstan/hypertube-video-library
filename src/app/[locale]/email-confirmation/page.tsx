@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 
 const EmailConfirmation = () => {
   const t = useTranslations();
@@ -19,9 +19,9 @@ const EmailConfirmation = () => {
       <div className="flex min-w-56 flex-col items-center justify-center rounded-xl bg-card/90 p-4 text-foreground">
         <h1 className="text-2xl font-bold">{t(`${displayTitle.toLowerCase()}`)}</h1>
         <p className="pb-5 pt-5 text-lg">{t(`auth.${displayMessage}`)}</p>
-        <ButtonHypertube variant="link">
+        <ButtonCustom variant="link">
           <Link href={`/dashboard`}>{t('go-to-home')}</Link>
-        </ButtonHypertube>
+        </ButtonCustom>
       </div>
     </div>
   );

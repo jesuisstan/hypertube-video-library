@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { CircleX, MapPinned, OctagonAlert, Star, UserRoundSearch } from 'lucide-react';
 
 import FilterSortBar from '@/components/filter-sort-bar';
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import { Label } from '@/components/ui/label';
 import ModalProfileWarning from '@/components/ui/modals/modal-profile-warning';
@@ -274,7 +274,7 @@ const AdvancedSearch = () => {
               <p className="text-left text-sm italic">{t(`search.advanced-search-note`)}</p>
             </div>
             <div className="flex items-center justify-center text-c42orange">
-              <ButtonHypertube
+              <ButtonCustom
                 variant="default"
                 size="default"
                 disabled={!user || loading || globalLoading}
@@ -289,7 +289,7 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('search.search')}</span>
                 </div>
-              </ButtonHypertube>
+              </ButtonCustom>
             </div>
           </div>
         </div>
@@ -497,7 +497,7 @@ const AdvancedSearch = () => {
               />
             </div>
             <div className="flex flex-row gap-5">
-              <ButtonHypertube
+              <ButtonCustom
                 variant="default"
                 type="button"
                 size="default"
@@ -512,8 +512,8 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('close')}</span>
                 </div>
-              </ButtonHypertube>
-              <ButtonHypertube
+              </ButtonCustom>
+              <ButtonCustom
                 variant="default"
                 type="submit"
                 size="default"
@@ -528,7 +528,7 @@ const AdvancedSearch = () => {
                   </div>
                   <span>{t('search.search')}</span>
                 </div>
-              </ButtonHypertube>
+              </ButtonCustom>
             </div>
           </form>
         </div>

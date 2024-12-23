@@ -8,7 +8,8 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 
-import { ButtonHypertube } from '@/components/ui/buttons/button-hypertube';
+import SocialMediaAuth from '@/components/auth/social-media-auth';
+import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
@@ -17,7 +18,7 @@ import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
-const Login = () => {
+const Authentication = () => {
   const t = useTranslations();
   const { resetSearchStore } = useSearchStore();
   const router = useRouter();
@@ -226,72 +227,10 @@ const Login = () => {
         </h2>
 
         {/* Social login buttons */}
+        {(pageLayout === 'login' || pageLayout === 'register') && <SocialMediaAuth />}
+        {/* Horizontal devider */}
         {(pageLayout === 'login' || pageLayout === 'register') && (
-          <div>
-            <div className="mb-3 flex flex-row justify-center gap-5">
-              <ButtonHypertube
-                title="Ecole 42"
-                variant="default"
-                className="w-44 md:w-28"
-                onClick={() => {
-                  window.location.href = '/api/auth/ecole42';
-                }}
-              >
-                <div className="flex items-center justify-center rounded-full border border-background/50 bg-c42green p-1">
-                  <Image
-                    src="/icons/icon-42.png"
-                    blurDataURL="/icons/icon-42.png"
-                    alt="logo"
-                    width={20}
-                    height={20}
-                    placeholder="blur"
-                    priority
-                  />
-                </div>
-              </ButtonHypertube>
-              <ButtonHypertube
-                title="Google"
-                variant="default"
-                className="w-44 md:w-28"
-                onClick={() => {
-                  window.location.href = '/api/auth/google';
-                }}
-              >
-                <Image
-                  src="/icons/icon-google.svg"
-                  blurDataURL="/icons/icon-google.svg"
-                  alt="logo"
-                  width={20}
-                  height={20}
-                  placeholder="blur"
-                  priority
-                />
-              </ButtonHypertube>
-              <ButtonHypertube
-                title="Github"
-                variant="default"
-                className="w-44 md:w-28"
-                onClick={() => {
-                  window.location.href = '/api/auth/github';
-                }}
-              >
-                <div className="flex items-center justify-center rounded-full border border-background/50 bg-muted-foreground p-1">
-                  <Image
-                    src="/icons/icon-github.svg"
-                    blurDataURL="/icons/icon-github.svg"
-                    alt="logo"
-                    width={20}
-                    height={20}
-                    placeholder="blur"
-                    priority
-                  />
-                </div>
-              </ButtonHypertube>
-            </div>
-
-            {/* Horizontal devider */}
-            <Separator text={t(`or`).toUpperCase()} />
-          </div>
+          <Separator text={t(`or`).toUpperCase()} />
         )}
 
         {/* Login method selector */}
@@ -453,12 +392,12 @@ const Login = () => {
           )}
 
           {/* Submit button */}
-          <ButtonHypertube type="submit" variant="default" className="mb-5" loading={loading}>
+          <ButtonCustom type="submit" variant="default" className="mb-5" loading={loading}>
             {pageLayout === 'login' && t(`auth.sign-in`)}
             {pageLayout === 'register' && t(`auth.sign-up`)}
             {pageLayout === 'confirmation' && t(`auth.resend-confirmation-email`)}
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
-          </ButtonHypertube>
+          </ButtonCustom>
         </form>
         {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
         {successMessage && (
@@ -466,7 +405,7 @@ const Login = () => {
         )}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (
-            <ButtonHypertube
+            <ButtonCustom
               variant="link"
               onClick={() => {
                 setPageLayout('login');
@@ -475,14 +414,14 @@ const Login = () => {
               }}
             >
               {t(`auth.back-to-login`)}
-            </ButtonHypertube>
+            </ButtonCustom>
           )}
           {/* Additional buttons */}
           {pageLayout === 'login' && (
             <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">
               <Separator text={t(`or`).toUpperCase()} />
               <div className="flex flex-col items-center justify-center gap-2 xs:flex-row">
-                <ButtonHypertube
+                <ButtonCustom
                   variant="link"
                   onClick={() => {
                     setPageLayout('register');
@@ -493,8 +432,8 @@ const Login = () => {
                   className="w-44 md:w-28"
                 >
                   {t(`auth.create-account`)}
-                </ButtonHypertube>
-                <ButtonHypertube
+                </ButtonCustom>
+                <ButtonCustom
                   variant="link"
                   onClick={() => {
                     setPageLayout('confirmation');
@@ -505,8 +444,8 @@ const Login = () => {
                   className="w-44 md:w-28"
                 >
                   {t(`auth.confirm-email`)}
-                </ButtonHypertube>
-                <ButtonHypertube
+                </ButtonCustom>
+                <ButtonCustom
                   variant="link"
                   onClick={() => {
                     setPageLayout('forgot');
@@ -517,7 +456,7 @@ const Login = () => {
                   className="w-44 md:w-28"
                 >
                   {t(`auth.forgot-password`)}
-                </ButtonHypertube>
+                </ButtonCustom>
               </div>
             </div>
           )}
@@ -533,4 +472,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Authentication;
