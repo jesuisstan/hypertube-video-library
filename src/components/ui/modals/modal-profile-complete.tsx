@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';

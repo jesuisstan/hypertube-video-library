@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 
 import SocialMediaAuth from '@/components/auth/social-media-auth';
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';

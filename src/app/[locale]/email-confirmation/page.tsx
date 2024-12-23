@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 const EmailConfirmation = () => {
   const t = useTranslations();

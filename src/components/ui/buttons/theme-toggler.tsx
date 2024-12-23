@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 
 import { MoonStar, Sun } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => {
   const { theme, setTheme } = useTheme();

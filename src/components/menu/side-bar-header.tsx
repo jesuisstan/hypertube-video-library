@@ -4,7 +4,7 @@ import { Settings } from 'lucide-react';
 
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar-mini';
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import ModalSettings from '@/components/ui/modals/modal-settings';

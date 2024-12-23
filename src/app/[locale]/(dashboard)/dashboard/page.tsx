@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';

@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 
 import { PenLine, Trash2 } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import ModalChangeEmail from '@/components/ui/modals/modal-change-email';
 import ModalChangePassword from '@/components/ui/modals/modal-change-password';

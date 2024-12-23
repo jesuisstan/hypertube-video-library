@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { LogOut } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { setUserOffline } from '@/utils/user-handlers';

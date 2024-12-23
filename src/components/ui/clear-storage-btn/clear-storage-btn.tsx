@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 const ClearLocalStorageButton = () => {
   const handleClearLocalStorage = () => {

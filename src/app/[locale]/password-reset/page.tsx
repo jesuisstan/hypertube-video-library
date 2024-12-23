@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { CircleCheck, Eye, EyeOff, OctagonAlert } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-hypertube';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 const SocialMediaAuth = () => {
   return (
