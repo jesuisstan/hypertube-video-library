@@ -81,7 +81,7 @@ export const authOptions = {
     strategy: 'jwt' as SessionStrategy,
   },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: TUser }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -130,5 +130,5 @@ export const authOptions = {
   },
 };
 
-const handler = NextAuth(authOptions as any);
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
