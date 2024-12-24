@@ -26,7 +26,6 @@
     "axios": "^1.7.4",
     "bcrypt": "^5.1.1",
     "browser-image-compression": "^2.0.2",
-    "chalk": "^5.4.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
@@ -52,9 +51,10 @@
     "sheetjs-style": "^0.15.8",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "use-sync-external-store": "^1.4.0",
     "uuid": "^10.0.0",
     "zod": "^3.24.1",
-    "zustand": "^4.5.2"
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@babel/types": "^7.25.4",
@@ -70,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "autoprefixer": "10.4.19",
+    "chalk": "^5.4.1",
     "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",

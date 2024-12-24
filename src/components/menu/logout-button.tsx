@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 import { LogOut } from 'lucide-react';
 
@@ -8,22 +9,31 @@ import useUserStore from '@/stores/user';
 import { setUserOffline } from '@/utils/user-handlers';
 
 const LogoutButton = ({ translate }: { translate: (key: string) => string }) => {
-  const { user, logout, setGlobalLoading } = useUserStore((state) => ({
-    user: state.user,
-    logout: state.logout,
-    setGlobalLoading: state.setGlobalLoading,
-  }));
+  const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+  const setGlobalLoading = useUserStore((state) => state.setGlobalLoading);
+
   const { resetSearchStore } = useSearchStore();
   const router = useRouter();
 
   const handleLogout = async () => {
     setGlobalLoading(true); // set global loading
-    await setUserOffline(user?.id!); // set user offline
+
+    if (user?.id) {
+      await setUserOffline(user.id); // set user offline
+    }
+
     resetSearchStore(); // reset search store
-    logout(); // logout users
-    await new Promise((resolve) => setTimeout(resolve, 100)); // wait for some time to ensure logout is processed
-    setGlobalLoading(false); // set global loading
-    router.push('/authentication'); // redirect to login page
+    logout(); // clear local user state
+
+    // Use NextAuth's signOut method
+    await signOut({
+      redirect: false, // Prevent automatic redirection
+      callbackUrl: '/authentication', // Specify where to redirect after logout
+    });
+
+    setGlobalLoading(false); // stop global loading
+    router.push('/authentication'); // Redirect explicitly (optional, as callbackUrl handles it)
   };
 
   return (

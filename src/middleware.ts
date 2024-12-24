@@ -10,7 +10,8 @@ const intlMiddleware = createMiddleware({
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.JWT_SECRET });
-  const isPublicPage = ["/", "/authentication", "/email-confirmation", "/password-reset"].some((path) =>
+  console.log("!!!!!!!!!!!!! token", token); // debug
+  const isPublicPage = ["/", "/authentication", "/email-confirmation", "/password-reset", "/dashboard"].some((path) =>
     req.nextUrl.pathname.startsWith(path)
   );
 

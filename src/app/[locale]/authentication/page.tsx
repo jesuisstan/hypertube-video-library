@@ -17,7 +17,6 @@ import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
-import useUserStore from '@/stores/user';
 import { spaceToKebab } from '@/utils/format-string';
 
 const Authentication = () => {
@@ -29,20 +28,8 @@ const Authentication = () => {
   const [error, setError] = React.useState('');
   const [successMessage, setSuccessMessage] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
-  const { user, setUser } = useUserStore((state) => ({
-    user: state.user,
-    setUser: state.setUser,
-  }));
   const [loading, setLoading] = React.useState(false);
   const [loginMethod, setLoginMethod] = React.useState('email'); // <'email' | 'nickname'>
-  const [sex, setSex] = React.useState('male'); // <'male' | 'female'>
-
-  // Redirect to dashboard if user is already logged in
-  React.useEffect(() => {
-    if (user) {
-      router.push('/dashboard');
-    }
-  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,8 +71,6 @@ const Authentication = () => {
             firstname: formData.get('firstname'),
             lastname: formData.get('lastname'),
             nickname: formData.get('nickname'),
-            birthdate: formData.get('birthdate'),
-            sex: sex,
           }),
         });
         setLoading(false);
@@ -172,6 +157,7 @@ const Authentication = () => {
               priority
               fill
               className="ml-10 max-h-[90%] max-w-[90%] object-contain"
+              sizes="max-h-[90%] max-w-[90%]"
             />
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
@@ -208,7 +194,6 @@ const Authentication = () => {
             alt="logo"
             width={30}
             height={30}
-            placeholder="blur"
             priority
           />
           <Image
@@ -299,32 +284,6 @@ const Authentication = () => {
                 errorMessage={t('auth.max-char') + ' 21: a-Z 0-9 - @'}
                 className="mb-2"
               />
-              <div className="flex flex-row gap-10">
-                <div className="flex flex-col">
-                  <Label htmlFor="birthdate" className="mb-2">
-                    {t(`birthdate`)}
-                  </Label>
-                  <RequiredInput
-                    type="date"
-                    id="birthdate"
-                    name="birthdate"
-                    placeholder={t(`birthdate`)}
-                    className="mb-2"
-                  />
-                </div>
-                <div className="flex flex-col self-start">
-                  <RadioGroup
-                    label={t(`selector.sex`) + ':'}
-                    options={[
-                      { value: 'male', label: t(`male`) },
-                      { value: 'female', label: t(`female`) },
-                    ]}
-                    defaultValue="male"
-                    selectedItem={sex}
-                    onSelectItem={setSex}
-                  />
-                </div>
-              </div>
             </>
           )}
 

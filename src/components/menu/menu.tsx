@@ -18,10 +18,8 @@ import useUserStore from '@/stores/user';
 
 const Menu: React.FC = () => {
   const t = useTranslations();
-  const { user, globalLoading } = useUserStore((state) => ({
-    user: state.user,
-    globalLoading: state.globalLoading,
-  }));
+  const user = useUserStore((state) => state.user);
+  const globalLoading = useUserStore((state) => state.globalLoading);
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null); // to handle closing on outside click

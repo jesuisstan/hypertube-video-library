@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { TvMinimalPlay } from 'lucide-react';
+import { SquarePlay } from 'lucide-react';
 
 const Spinner = ({ size = 16, color }: { size?: number; color?: string }) => {
   return (
     <div>
-      <TvMinimalPlay
+      <SquarePlay
         size={size}
-        className={clsx('animate-ping', color ? `text-${color}` : `text-foreground`)}
+        className={clsx('animate-ping', color ? `text-${color}` : `text-c42orange`)}
       />
     </div>
   );

@@ -53,18 +53,19 @@ const ModalProfileComplete = ({
   setProfileIsCompleted: Dispatch<SetStateAction<boolean>>;
 }) => {
   const t = useTranslations();
-  const { user, setUser } = useUserStore((state) => ({
-    user: state.user,
-    setUser: state.setUser,
-  }));
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const localeActive = useLocale();
   const [layout, setLayout] = useState<TProfileCompleteLayout>(startLayout ?? 'photos');
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [sex, setSex] = useState(user?.sex as string); // <'male' | 'female'>
-  const [sexPreferences, setSexPreferences] = useState(user?.sex_preferences as string); // <'men' | 'women' | 'bisexual'>
+  //const [sex, setSex] = useState(user?.sex as string); // <'male' | 'female'>
+  //const [sexPreferences, setSexPreferences] = useState(user?.sex_preferences as string); // <'men' | 'women' | 'bisexual'>
+  const [sex, setSex] = useState('male'); // <'male' | 'female'> todo: fix this
+  const [sexPreferences, setSexPreferences] = useState('men'); // <'men' | 'women' | 'bisexual'> todo: fix this
+
   const [biography, setBiography] = useState(user?.biography || '');
   const [selectedTags, setSelectedTags] = useState<string[]>(user?.tags || []);
 
@@ -281,7 +282,8 @@ const ModalProfileComplete = ({
               name="birthdate"
               placeholder={t(`birthdate`)}
               className="mb-2"
-              value={formatDateForInput(user?.birthdate)}
+              //value={formatDateForInput(user?.birthdate)}
+              value={formatDateForInput('0')}
             />
           </div>
           <div className="flex flex-col self-start">

@@ -7,17 +7,12 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { OctagonAlert } from 'lucide-react';
 
-import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
-import useUserStore from '@/stores/user';
 
 const AboutPage = () => {
   const t = useTranslations();
-  const user = useUserStore((state) => state.user);
 
-  return !user ? (
-    <DashboardSkeleton />
-  ) : (
+  return (
     <div className="p-5">
       {/* HEADER */}
       <div className="mb-5 flex flex-col flex-wrap items-center justify-center gap-5">

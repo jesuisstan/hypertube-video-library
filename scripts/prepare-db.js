@@ -58,17 +58,8 @@ const runCommand = (command) => {
 
 // Sequentially run each script
 const runCommands = () => {
-  runCommand('node ./scripts/delete-table.js chat');
-  runCommand('node ./scripts/delete-table.js visits');
-  runCommand('node ./scripts/delete-table.js likes');
-  runCommand('node ./scripts/delete-table.js matches');
-  runCommand('node ./scripts/delete-table.js blocked_users');
-  runCommand('node ./scripts/delete-table.js notifications');
-  runCommand('node ./scripts/delete-table.js users');
-
   runCommand('node ./scripts/create-table-users.js');
   runCommand('node ./scripts/fill-table-users.js');
-  runCommand('node ./scripts/create-tables-activity.js');
 };
 
 // If chalk is already available, run commands directly

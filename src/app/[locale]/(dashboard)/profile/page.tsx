@@ -22,18 +22,20 @@ import { calculateAge } from '@/utils/format-string';
 
 const ProfilePage = () => {
   const t = useTranslations();
-  const { user, globalLoading } = useUserStore();
+  const user = useUserStore((state) => state.user);
+  const globalLoading = useUserStore((state) => state.globalLoading);
+
   const [loading, setLoading] = useState(false);
   const [showProfileCompleteModal, setShowProfileCompleteModal] = useState(false);
   const [showProfileCongratsModal, setShowProfileCongratsModal] = useState(false);
   const [profileCompleteModalLayout, setProfileCompleteModalLayout] = useState('basics');
 
-  useEffect(() => {
-    if (!user) return;
-    if (!user?.complete) {
-      setShowProfileCompleteModal(true);
-    }
-  }, [user]);
+  //useEffect(() => {
+  //  if (!user) return;
+  //  if (!user?.complete) {
+  //    setShowProfileCompleteModal(true);
+  //  }
+  //}, [user]);
 
   const handleModifyClick = (layout: keyof typeof TProfileCompleteLayout) => {
     setProfileCompleteModalLayout(layout);
@@ -75,8 +77,10 @@ const ProfilePage = () => {
             <LabelsWrapper
               firstName={user?.firstname ?? '???'}
               lastName={user?.lastname ?? '???'}
-              age={calculateAge(user?.birthdate)}
-              sex={user?.sex ?? '???'}
+              //age={calculateAge(user?.birthdate)}
+              //sex={user?.sex ?? '???'}
+              age={calculateAge('0')}
+              sex={'???'}
               loading={false}
               modifiable
               onModify={() => handleModifyClick('basics' as keyof typeof TProfileCompleteLayout)}
@@ -88,7 +92,8 @@ const ProfilePage = () => {
               onModify={() => handleModifyClick('biography' as keyof typeof TProfileCompleteLayout)}
             />
             {/* STATUS GROUP */}
-            <StatusWrapper onlineStatus={user?.online} lastAction={user?.last_action} />
+            {/*<StatusWrapper onlineStatus={user?.online} lastAction={user?.last_action} />*/}
+            <StatusWrapper onlineStatus={false} lastAction={user?.last_action} />
           </div>
         </div>
       </div>
@@ -97,9 +102,6 @@ const ProfilePage = () => {
       <div className="mb-4 grid grid-cols-12 gap-4">
         {/* LEFT SECTOR */}
         <div className={clsx('col-span-12 h-max space-y-5', 'lg:col-span-3')}>
-          {/* RAITING */}
-          <RatingWrapper rating={user?.rating} />
-
           {/* LOCATION */}
           <LocationWrapper
             address={user?.address}
