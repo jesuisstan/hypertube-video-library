@@ -1,14 +1,9 @@
-import NextAuth from 'next-auth';
-import { SessionStrategy } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-
-import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
+import { db } from '@vercel/postgres';
 
-import { TUser } from '@/types/user';
-
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -39,38 +34,13 @@ export const authOptions = {
             throw new Error('please-confirm-email-before-login');
           }
 
-          // Update the last_action
-          try {
-            const currentDate = new Date();
-            const updateQuery = `UPDATE users SET last_action = $2, online = true WHERE id = $1 RETURNING *;`;
-            const updateValues = [user.id, currentDate.toISOString()];
-            const updatedUserResult = await client.query(updateQuery, updateValues);
-            const updatedUser = updatedUserResult.rows[0];
+          const currentDate = new Date();
+          const updateQuery = `UPDATE users SET last_action = $2, online = true WHERE id = $1 RETURNING *;`;
+          const updateValues = [user.id, currentDate.toISOString()];
+          const updatedUserResult = await client.query(updateQuery, updateValues);
+          const updatedUser = updatedUserResult.rows[0];
 
-            // Ensure the returned user matches the TUser type
-            const userData: TUser = {
-              id: updatedUser.id,
-              email: updatedUser.email,
-              firstname: updatedUser.firstname,
-              lastname: updatedUser.lastname,
-              nickname: updatedUser.nickname,
-              biography: updatedUser.biography,
-              tags: updatedUser.tags,
-              registration_date: updatedUser.registration_date,
-              last_action: updatedUser.last_action,
-              latitude: updatedUser.latitude,
-              longitude: updatedUser.longitude,
-              address: updatedUser.address,
-              photos: updatedUser.photos,
-              confirmed: updatedUser.confirmed,
-              prefered_language: updatedUser.prefered_language,
-            };
-
-            return userData;
-          } catch (error) {
-            console.error('Error updating last_action:', error);
-            throw new Error('user-update-failed');
-          }
+          return updatedUser; // Return the user object directly
         } finally {
           client.release();
         }
@@ -78,11 +48,13 @@ export const authOptions = {
     }),
   ],
   session: {
-    strategy: 'jwt' as SessionStrategy,
+    strategy: 'jwt',
   },
   callbacks: {
     async jwt({ token, user }) {
+      // When the user object is returned from authorize
       if (user) {
+        // Assign user properties to the token
         token.id = user.id;
         token.email = user.email;
         token.firstname = user.firstname;
@@ -99,25 +71,12 @@ export const authOptions = {
         token.confirmed = user.confirmed;
         token.prefered_language = user.prefered_language;
       }
-      return token;
+      return token; // Return the token after modification
     },
-    async session({ session, token }: { session: any; token: any }) {
+    async session({ session, token }) {
+      // Assign the modified token to the session's user object
       if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-        session.user.firstname = token.firstname;
-        session.user.lastname = token.lastname;
-        session.user.nickname = token.nickname;
-        session.user.biography = token.biography;
-        session.user.tags = token.tags;
-        session.user.registration_date = token.registration_date;
-        session.user.last_action = token.last_action;
-        session.user.latitude = token.latitude;
-        session.user.longitude = token.longitude;
-        session.user.address = token.address;
-        session.user.photos = token.photos;
-        session.user.confirmed = token.confirmed;
-        session.user.prefered_language = token.prefered_language;
+        session.user = token; // Now token has custom properties
       }
       return session;
     },
@@ -126,7 +85,7 @@ export const authOptions = {
   pages: {
     signIn: '/authentication',
     error: '/authentication',
-    redirect: '/dashboard',
+    //redirect: '/dashboard',
   },
 };
 

@@ -102,6 +102,8 @@ const Authentication = () => {
     if (!response) return;
 
     const result = response instanceof Response ? await response.json() : response;
+    console.log('response', response); // debug
+    console.log('result', result); // debug
 
     if (response.ok) {
       switch (pageLayout) {

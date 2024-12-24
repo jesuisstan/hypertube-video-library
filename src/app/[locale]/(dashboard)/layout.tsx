@@ -14,11 +14,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
   const setUser = useUserStore((state) => state.setUser);
 
-  React.useEffect(() => {
-    if (session?.user) {
-      setUser(session.user as TUser);
-    }
-  }, [session, setUser]);
+  //React.useEffect(() => {
+  //  if (session?.user) {
+  //    setUser(session.user as TUser);
+  //  }
+  //}, [session, setUser]);
 
   return (
     <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>

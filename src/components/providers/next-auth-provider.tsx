@@ -1,5 +1,6 @@
 'use client';
 
+import UserSessionSync from '@/hooks/UserSessionSync';
 import { SessionProvider } from 'next-auth/react';
 
 type Props = {
@@ -7,7 +8,12 @@ type Props = {
 };
 
 const NextAuthProvider = ({ children }: Props) => {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <SessionProvider>
+      <UserSessionSync /> {/* Sync session with Zustand store */}
+      {children}
+    </SessionProvider>
+  );
 };
 
 export default NextAuthProvider;

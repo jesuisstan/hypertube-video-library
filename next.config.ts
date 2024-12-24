@@ -4,7 +4,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  reactStrictMode: false, // Disable React Strict Modecd
+  reactStrictMode: process.env.NODE_ENV !== 'production', // Strict mode in development
   images: {
     remotePatterns: [
       {
@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
       {
         source: '/',
         destination: '/dashboard',
-        permanent: true,
+        permanent: true, // Permanent redirects send a 308 status
       },
     ];
   },
