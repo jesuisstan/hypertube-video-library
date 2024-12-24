@@ -67,9 +67,11 @@
     "password-invalid": "Неверный пароль",
     "invalid-password": "Неверный пароль",
     "user-not-found": "Пользователь не найден",
-    "user-update-failed": "Не удалось обновить пользователя"
+    "user-update-failed": "Не удалось обновить пользователя",
+    "processing": "Обработка..."
   },
   "user-not-found": "Пользователь не найден",
+  "processing": "Обработка...",
 
   "male": "Мужчина",
   "female": "Женщина",

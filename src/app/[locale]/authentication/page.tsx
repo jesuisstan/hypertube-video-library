@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 
-import SocialMediaAuth from '@/components/auth/social-media-auth';
+import SocialMediaAuth from '@/app/[locale]/authentication/(components)/social-media-auth';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import { Label } from '@/components/ui/label';
@@ -102,8 +102,6 @@ const Authentication = () => {
     if (!response) return;
 
     const result = response instanceof Response ? await response.json() : response;
-    console.log('response', response); // debug
-    console.log('result', result); // debug
 
     if (response.ok) {
       switch (pageLayout) {
@@ -155,11 +153,13 @@ const Authentication = () => {
               src="/identity/hypertube-high-resolution-logo-transparent.png"
               blurDataURL="/identity/hypertube-high-resolution-logo-transparent.png"
               alt="high-resolution-logo"
-              placeholder="blur"
+              placeholder="empty"
               priority
-              fill
-              className="ml-10 max-h-[90%] max-w-[90%] object-contain"
-              sizes="max-h-[90%] max-w-[90%]"
+              className="max-h-[90%] max-w-[90%] object-contain"
+              sizes="auto"
+              style={{ width: 3000, height: 1500 }}
+              width={0}
+              height={0}
             />
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
@@ -167,7 +167,7 @@ const Authentication = () => {
             <div className="text-sm">
               Hypertube Video Library {t(`rights-reserved`)}
               {'. '}
-              {t(`service-provided`)}{' '}
+              {t(`service-provided`)} vv
               <a
                 href={`https://www.krivtsoff.site/`}
                 target="_blank"
@@ -195,7 +195,8 @@ const Authentication = () => {
             className="z-10 mt-5"
             alt="logo"
             width={30}
-            height={30}
+            height={0}
+            placeholder="blur"
             priority
           />
           <Image
@@ -204,7 +205,7 @@ const Authentication = () => {
             className="z-10 mt-5"
             alt="logo"
             width={200}
-            height={200}
+            height={0}
             placeholder="blur"
             priority
           />

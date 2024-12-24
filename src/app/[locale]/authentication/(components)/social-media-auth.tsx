@@ -3,18 +3,20 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import NextAuth from "next-auth";
-import FortyTwoProvider from "next-auth/providers/42-school";
+import NextAuth from 'next-auth';
+import FortyTwoProvider from 'next-auth/providers/42-school';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import useUserStore from '@/stores/user';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [FortyTwoProvider({
-    clientId: process.env.FORTY_TWO_CLIENT_ID || '',
-    clientSecret: process.env.FORTY_TWO_CLIENT_SECRET || '',
-  })],
-})
+  providers: [
+    FortyTwoProvider({
+      clientId: process.env.FORTY_TWO_CLIENT_ID || '',
+      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET || '',
+    }),
+  ],
+});
 
 const SocialMediaAuth = () => {
   const router = useRouter();
@@ -23,32 +25,32 @@ const SocialMediaAuth = () => {
   //  setUser: state.setUser,
   //}));
 
-//  const authenticateUser = async () => {
-//    try {
-//      const response = await fetch('/api/auth/github/github-callback', {
-//        credentials: 'include',
-//      });
-//console.log("response", response); // debug
-//      if (response.ok) {
-//        const { token, user } = await response.json();
+  //  const authenticateUser = async () => {
+  //    try {
+  //      const response = await fetch('/api/auth/github/github-callback', {
+  //        credentials: 'include',
+  //      });
+  //console.log("response", response); // debug
+  //      if (response.ok) {
+  //        const { token, user } = await response.json();
 
-//        // Store the token (e.g., in localStorage or a cookie)
-//        localStorage.setItem('token', token);
+  //        // Store the token (e.g., in localStorage or a cookie)
+  //        localStorage.setItem('token', token);
 
-//        // Set the user state (assuming you have a global state or context)
-//        setUser(user);
+  //        // Set the user state (assuming you have a global state or context)
+  //        setUser(user);
 
-//        // Navigate to the dashboard
-//        router.push('/dashboard');
-//      } else {
-//        console.error('Authentication failed');
-//        router.push('/authentication');
-//      }
-//    } catch (error) {
-//      console.error('Error during authentication:', error);
-//      router.push('/authentication');
-//    }
-//  };
+  //        // Navigate to the dashboard
+  //        router.push('/dashboard');
+  //      } else {
+  //        console.error('Authentication failed');
+  //        router.push('/authentication');
+  //      }
+  //    } catch (error) {
+  //      console.error('Error during authentication:', error);
+  //      router.push('/authentication');
+  //    }
+  //  };
 
   return (
     <div>
@@ -66,10 +68,12 @@ const SocialMediaAuth = () => {
             <Image
               src="/icons/icon-42.png"
               blurDataURL="/icons/icon-42.png"
-              alt="logo"
-              width={20}
-              height={20}
+              alt="logo-42"
               priority
+              placeholder="empty"
+              width={0}
+              height={0}
+              className="h-5 w-5"
             />
           </div>
         </ButtonCustom>
@@ -84,10 +88,12 @@ const SocialMediaAuth = () => {
           <Image
             src="/icons/icon-google.svg"
             blurDataURL="/icons/icon-google.svg"
-            alt="logo"
-            width={20}
-            height={20}
+            alt="logo-google"
             priority
+            placeholder="empty"
+            width={0}
+            height={0}
+            className="h-6 w-6"
           />
         </ButtonCustom>
         <ButtonCustom
@@ -104,9 +110,11 @@ const SocialMediaAuth = () => {
               src="/icons/icon-github.svg"
               blurDataURL="/icons/icon-github.svg"
               alt="logo"
-              width={20}
-              height={20}
               priority
+              placeholder="empty"
+              width={0}
+              height={0}
+              className="h-5 w-5"
             />
           </div>
         </ButtonCustom>

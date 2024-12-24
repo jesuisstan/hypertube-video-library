@@ -22,16 +22,16 @@ const NotFound = () => {
           src="/identity/logo-title-only.png"
           blurDataURL="/identity/logo-title-only.png"
           alt="logo"
-          width={142}
+          width={121}
           height={0}
-          placeholder="blur"
+          placeholder="empty"
           priority
         />
 
-        <h1 className="text-4xl font-bold">{t('error') + ' 404' + ': ' + t('not-found.title')}</h1>
-        <TextWithLineBreaks text={t('not-found.content')} />
-
         <Separator />
+
+        <h1 className="text-3xl font-bold">{t('error') + ' 404' + ': ' + t('not-found.title')}</h1>
+        <TextWithLineBreaks text={t('not-found.content')} />
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
           <ButtonCustom type="button" variant="default" size="default" className="min-w-32">

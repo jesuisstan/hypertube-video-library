@@ -67,9 +67,11 @@
     "password-invalid": "Invalid password",
     "invalid-password": "Invalid password",
     "user-not-found": "User not found",
-    "user-update-failed": "Failed to update user"
+    "user-update-failed": "Failed to update user",
+    "processing": "Processing..."
   },
   "user-not-found": "User not found",
+  "processing": "Processing...",
 
   "male": "Male",
   "female": "Female",

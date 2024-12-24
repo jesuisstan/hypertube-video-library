@@ -24,16 +24,16 @@ const DefaultErrorPage = () => {
           src="/identity/logo-title-only.png"
           blurDataURL="/identity/logo-title-only.png"
           alt="logo"
-          width={142}
+          width={121}
           height={0}
-          placeholder="blur"
+          placeholder="empty"
           priority
         />
 
-        <h1 className="text-4xl font-bold">{t('error') + ' 500'}</h1>
-        <TextWithLineBreaks text={t('something-went-wrong')} />
-
         <Separator />
+
+        <h1 className="text-3xl font-bold">{t('error') + ' 500'}</h1>
+        <TextWithLineBreaks text={t('something-went-wrong')} />
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
           <ButtonCustom type="button" variant="default" size="default" className="min-w-32">
