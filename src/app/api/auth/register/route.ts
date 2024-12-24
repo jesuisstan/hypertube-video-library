@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(req: Request) {
   const { firstname, lastname, nickname, email, password } = await req.json();
+  const preferedLanguage = 'en';
   const hashedPassword = await bcrypt.hash(password, 10);
   const confirmationToken = uuidv4(); // Generate a unique token
   const client = await db.connect();
@@ -51,10 +52,15 @@ export async function POST(req: Request) {
       html: `To start using Hypertube, please confirm your email by clicking the following link: <a href="${confirmationUrl}">Confirm your email</a>.`,
     });
 
+    // create fake data for the user (because we use the same DB as in Matcha project)
+    const fakeBirthday = new Date('2000-01-01').toISOString();
+    const fakeSex = 'male';
+    const fakeSexPreferences = 'women';
+
     // If the email was sent successfully, insert the user into the database
     await client.sql`
       INSERT INTO users (firstname, lastname, nickname, email, password, birthdate, sex, registration_date, last_action, online, confirmed, service_token, sex_preferences, prefered_language)
-      VALUES (${firstname}, ${lastname}, ${nickname}, ${email}, ${hashedPassword}, "N/a", "male", NOW(), NOW(), false, false, ${confirmationToken}, "female", "en");
+      VALUES (${firstname}, ${lastname}, ${nickname}, ${email}, ${hashedPassword}, ${fakeBirthday}, ${fakeSex}, NOW(), NOW(), false, false, ${confirmationToken}, ${fakeSexPreferences}, ${preferedLanguage});
     `;
 
     return NextResponse.json({

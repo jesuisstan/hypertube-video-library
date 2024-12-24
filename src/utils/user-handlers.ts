@@ -1,5 +1,6 @@
+import { User as TUser } from 'next-auth';
+
 import { TProfileCompleteLayout } from '@/components/ui/modals/modal-profile-complete';
-import { TUser } from '@/types/user';
 
 export const isProfileCategoryFilled = (
   layout: TProfileCompleteLayout,
@@ -8,13 +9,11 @@ export const isProfileCategoryFilled = (
   if (!user) return false;
 
   if (layout === 'basics') {
-    return !!(user?.firstname && user?.lastname && user?.nickname && user?.birthdate);
+    return !!(user?.firstname && user?.lastname && user?.nickname);
   } else if (layout === 'biography') {
     return !!user?.biography;
   } else if (layout === 'location') {
     return !!user?.address;
-  } else if (layout === 'sexpreferences') {
-    return !!user?.sex_preferences;
   } else if (layout === 'tags') {
     return user?.tags?.length! >= 3;
   } else if (layout === 'photos') {

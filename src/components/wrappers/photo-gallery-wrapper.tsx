@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
 import { EmblaOptionsType } from 'embla-carousel';
@@ -10,7 +11,6 @@ import { PenLine } from 'lucide-react';
 import EmblaCarousel from '@/components/ui/carousel/embla-carousel';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { TDateProfile } from '@/types/date-profile';
-import { TUser } from '@/types/user';
 
 const EmptyPhoto = () => {
   return (

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import AsyncSelect from 'react-select/async';
+import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
@@ -18,7 +19,6 @@ import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { TAGS_LIST } from '@/constants/tags-list';
 import useUserStore from '@/stores/user';
 import { TGeoCoordinates, TSelectGeoOption } from '@/types/geolocation';
-import { TUser } from '@/types/user';
 import { formatDateForInput } from '@/utils/format-date';
 import {
   createTGeoCoordinates,

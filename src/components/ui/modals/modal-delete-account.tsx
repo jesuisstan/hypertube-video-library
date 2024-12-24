@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
 import { Eye, EyeOff } from 'lucide-react';
@@ -9,7 +10,6 @@ import { Label } from '@/components/ui/label';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
 import useUserStore from '@/stores/user';
-import { TUser } from '@/types/user';
 import { handleClearLocalStorage } from '@/utils/utils';
 
 const ModalDeleteAccount = ({

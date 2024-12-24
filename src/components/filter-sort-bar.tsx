@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { User } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -17,11 +18,10 @@ import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import FiltersBarSkeleton from '@/components/ui/skeletons/filters-bar-skeleton';
 import { TDateProfile } from '@/types/date-profile';
 import { TSelectorOption } from '@/types/general';
-import { TUser } from '@/types/user';
 import { haversineDistance } from '@/utils/server/haversine-distance';
 
 interface FilterSortBarProps {
-  user: TUser;
+  user: User;
   profileSuggestions: TDateProfile[];
   loading: boolean;
   citiesOptions: string[];

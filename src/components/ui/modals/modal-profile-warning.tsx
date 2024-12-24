@@ -1,3 +1,4 @@
+import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
 import { OctagonAlert } from 'lucide-react';
@@ -5,7 +6,6 @@ import { OctagonAlert } from 'lucide-react';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { usePathname, useRouter } from '@/i18n/routing';
-import { TUser } from '@/types/user';
 
 const ModalProfileWarning = ({ user }: { user: TUser }) => {
   const t = useTranslations();
@@ -25,7 +25,8 @@ const ModalProfileWarning = ({ user }: { user: TUser }) => {
   };
 
   return (
-    <ModalBasic isOpen={!user?.complete} title={t('attension')}>
+    //<ModalBasic isOpen={!user?.complete} title={t('attension')}> todo
+    <ModalBasic isOpen={false} title={t('attension')}>
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
         <div className="text-c42orange">
           <OctagonAlert size={60} className="smooth42transition hover:scale-150" />

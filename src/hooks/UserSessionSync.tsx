@@ -1,6 +1,7 @@
-import { useSession } from 'next-auth/react'; // next-auth hook to get the session
-import useUserStore from '@/stores/user'; // Your Zustand store
 import { useEffect } from 'react';
+import { useSession } from 'next-auth/react'; // next-auth hook to get the session
+
+import useUserStore from '@/stores/user'; // Your Zustand store
 
 const UserSessionSync = () => {
   const { data: session, status } = useSession(); // Get session data

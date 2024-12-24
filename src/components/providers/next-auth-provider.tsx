@@ -1,7 +1,8 @@
 'use client';
 
-import UserSessionSync from '@/hooks/UserSessionSync';
 import { SessionProvider } from 'next-auth/react';
+
+import UserSessionSync from '@/hooks/UserSessionSync';
 
 type Props = {
   children?: React.ReactNode;

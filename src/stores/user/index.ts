@@ -1,12 +1,11 @@
+import { User } from 'next-auth';
+
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { TUser } from '@/types/user';
-
 type UserStore = {
-  user: TUser | null;
-  setUser: (userData: TUser) => void;
-  updateUserRating: (newRating: number) => void;
+  user: User | null;
+  setUser: (userData: User) => void;
   clearUser: () => void;
   logout: () => void;
   globalLoading: boolean;
@@ -17,15 +16,7 @@ const useUserStore = create<UserStore>()(
   persist(
     (set, get) => ({
       user: null,
-      setUser: (userData: TUser) => set({ user: userData }),
-      updateUserRating: (newRating: number) => {
-        set((state) => {
-          if (state.user) {
-            return { user: { ...state.user, rating: newRating } };
-          }
-          return state;
-        });
-      },
+      setUser: (userData: User) => set({ user: userData }),
       clearUser: () => set({ user: null }),
       logout: () => {
         set({ user: null });
