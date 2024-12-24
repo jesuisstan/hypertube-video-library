@@ -175,7 +175,7 @@ const useSearchStore = create<TSearchStore>()(
             });
           },
         }),
-        { name: 'matcha-search-store', storage: createJSONStorage(() => localStorage) }
+        { name: 'hypertube-search-store', storage: createJSONStorage(() => localStorage) }
       )
     ),
     { anonymousActionType: 'searchFiltersActionStore' }

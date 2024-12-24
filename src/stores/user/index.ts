@@ -35,7 +35,7 @@ const useUserStore = create<UserStore>()(
       setGlobalLoading: (loading: boolean) => set({ globalLoading: loading }),
     }),
     {
-      name: 'user-storage',
+      name: 'hypertube-user-store',
       storage: createJSONStorage(() => localStorage),
     }
   )

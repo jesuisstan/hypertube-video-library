@@ -19,8 +19,6 @@ const ModalBasic = ({
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   children: React.ReactNode;
 }) => {
-  const { theme } = useTheme();
-
   return (
     <AlertDialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialog.Portal>
@@ -29,19 +27,18 @@ const ModalBasic = ({
         <AlertDialog.Content className="fixed left-[50%] top-[50%] z-50 h-auto max-h-[95vh] w-96 max-w-[95vw] translate-x-[-50%] translate-y-[-50%] space-y-5 overflow-auto rounded-2xl bg-card p-6 shadow-md shadow-secondary transition-all duration-300 ease-in-out focus:outline-none xs:w-fit">
           <AlertDialog.Title
             className={clsx(
-              `mt-8 flex flex-wrap items-center justify-center overflow-hidden pl-10 pr-10`
+              `mt-5 flex flex-wrap items-center justify-center overflow-hidden pl-10 pr-10`
             )}
           >
             <Image
               src="/identity/logo-title-only.png"
-              alt="matcha-title-only-logo"
-              width={0}
+              blurDataURL="/identity/logo-title-only.png"
+              alt="logo"
+              width={142}
               height={0}
-              sizes="100vw"
-              className={clsx(
-                `absolute left-3 top-3 h-5 w-auto`,
-                theme === 'dark' ? 'darkmode-logo' : ''
-              )}
+              placeholder="blur"
+              priority
+              className={clsx(`absolute top-5`)}
             />
             <span className="overflow-hidden text-ellipsis text-center text-2xl">{title}</span>
 
@@ -51,7 +48,7 @@ const ModalBasic = ({
                 onClick={() => setIsOpen?.(false)}
                 aria-label="Close"
               >
-                <X size={24} />
+                <X size={16} />
               </button>
             )}
           </AlertDialog.Title>

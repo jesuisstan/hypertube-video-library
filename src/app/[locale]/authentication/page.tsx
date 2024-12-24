@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -17,6 +18,7 @@ import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
+import { spaceToKebab } from '@/utils/format-string';
 
 const Authentication = () => {
   const t = useTranslations();
@@ -63,14 +65,11 @@ const Authentication = () => {
       case 'login':
         setLoading(true);
         resetSearchStore(); // reset search store
-        response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: formData.get('email'),
-            password: formData.get('password'),
-            nickname: formData.get('nickname-login'),
-          }),
+        response = await signIn('credentials', {
+          redirect: false,
+          emailOrNickname:
+            loginMethod === 'email' ? formData.get('email') : formData.get('nickname-login'),
+          password: formData.get('password'),
         });
         setLoading(false);
         break;
@@ -117,18 +116,21 @@ const Authentication = () => {
 
     if (!response) return;
 
-    const result = await response.json();
+    const result = response instanceof Response ? await response.json() : response;
 
     if (response.ok) {
       switch (pageLayout) {
         case 'login':
-          if (result.user.confirmed) {
+          if (result) {
             setLoading(true);
-            document.cookie = `token=${result.token}; path=/`;
-            setUser(result.user);
-            window.location.href = `/dashboard`;
+            router.push('/dashboard');
           } else {
-            setError(t(`auth.${result.error}`));
+            if (result.error) {
+              setError(t(`auth.${spaceToKebab(result.error).toLocaleLowerCase()}`));
+            } else if (result.message) {
+              setSuccessMessage(t(`auth.${spaceToKebab(result.message).toLocaleLowerCase()}`));
+            }
+            setLoading(false);
           }
           break;
         case 'register':
@@ -139,11 +141,15 @@ const Authentication = () => {
           setSuccessMessage(t(`auth.${result.message}`));
           break;
         case 'forgot':
-          setSuccessMessage(t(`auth.${result.message}`));
+          setSuccessMessage(t(`auth.${spaceToKebab(result.message).toLocaleLowerCase()}`));
           break;
       }
     } else {
-      setError(t(`auth.${result.error}`));
+      if (result.error) {
+        setError(t(`auth.${spaceToKebab(result.error).toLocaleLowerCase()}`));
+      } else if (result.message) {
+        setSuccessMessage(t(`auth.${spaceToKebab(result.message).toLocaleLowerCase()}`));
+      }
     }
   };
 

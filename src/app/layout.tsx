@@ -7,6 +7,7 @@ import { getMessages } from 'next-intl/server';
 import clsx from 'clsx';
 
 import '@/styles/globals.css';
+import NextAuthProvider from '@/components/providers/next-auth-provider';
 import ThemeProvider from '@/components/providers/theme-provider';
 import { Locale, routing } from '@/i18n/routing';
 
@@ -51,7 +52,9 @@ const RootLayout = async ({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+          <NextAuthProvider>
+            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>

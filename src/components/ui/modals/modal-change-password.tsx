@@ -27,7 +27,7 @@ const ModalChangePassword = ({
     // wait for some time to ensure logout is processed
     await new Promise((resolve) => setTimeout(resolve, 100));
     setLoading(false);
-    router.push('/login');
+    router.push('/authentication');
   };
 
   return (

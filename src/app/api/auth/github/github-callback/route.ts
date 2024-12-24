@@ -101,7 +101,6 @@ export async function GET(request: Request) {
     const updateValues = [user.id, currentDate.toISOString()];
     const updatedUserResult = await client.query(updateQuery, updateValues);
     const updatedUser = updatedUserResult.rows[0];
-
     return NextResponse.json({ token, user: updatedUser });
   } catch (error) {
     console.error('Error updating last_action:', error);

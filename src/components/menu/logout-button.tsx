@@ -23,7 +23,7 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
     logout(); // logout users
     await new Promise((resolve) => setTimeout(resolve, 100)); // wait for some time to ensure logout is processed
     setGlobalLoading(false); // set global loading
-    router.push('/login');
+    router.push('/authentication'); // redirect to login page
   };
 
   return (

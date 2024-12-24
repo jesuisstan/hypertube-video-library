@@ -1,13 +1,11 @@
 import { z } from 'zod';
 
 export const userSchema = z.object({
-  id: z.string().nullable(),
+  id: z.string(),
   email: z.string().email(),
   firstname: z.string(),
   lastname: z.string(),
   nickname: z.string(),
-  birthdate: z.string(),
-  sex: z.enum(['male', 'female']),
   biography: z.string(),
   tags: z.array(z.string()),
   registration_date: z.string(),
@@ -15,12 +13,9 @@ export const userSchema = z.object({
   latitude: z.number().nullable(),
   longitude: z.number().nullable(),
   address: z.string().nullable(),
-  online: z.boolean(),
-  rating: z.number(),
-  sex_preferences: z.enum(['men', 'women', 'bisexual']).nullable(),
   photos: z.array(z.string()),
   confirmed: z.boolean(),
-  complete: z.boolean(),
+  prefered_language: z.string(),
 });
 
 export type TUser = z.infer<typeof userSchema>;

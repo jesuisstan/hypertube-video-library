@@ -16,7 +16,7 @@ const EmptyPhoto = () => {
   return (
     <Image
       src={`/identity/logo-square.png`}
-      alt="matcha-heart"
+      alt="hypertube-heart"
       width={0}
       height={0}
       sizes="100vw"

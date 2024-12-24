@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'login-failed' }, { status: 500 });
   }
 
-  // Update the last_action, online status and rating of the user
+  // Update the last_action
   try {
     const currentDate = new Date();
     const updateQuery = `

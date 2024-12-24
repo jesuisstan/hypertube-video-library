@@ -1,29 +1,27 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 import clsx from 'clsx';
 
 import Footer from '@/components/footer';
 import Menu from '@/components/menu/menu';
 import useUserStore from '@/stores/user';
+import { TUser } from '@/types/user';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useUserStore();
+  const { data: session } = useSession();
+  const setUser = useUserStore((state) => state.setUser);
+
+  React.useEffect(() => {
+    if (session?.user) {
+      setUser(session.user as TUser);
+    }
+  }, [session, setUser]);
 
   return (
     <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>
-      {/*<Image
-        src="/map.svg"
-        alt="hearts-bg"
-        fill
-        placeholder="blur"
-        blurDataURL="/map.svg"
-        //className="z-[-5] object-cover opacity-5"
-        sizes="100vw"
-        priority
-      />*/}
       <Menu />
       <div className="flex w-full flex-grow flex-col items-center justify-between">
         <main
