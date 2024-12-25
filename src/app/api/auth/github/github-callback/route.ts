@@ -4,7 +4,7 @@ import { db } from '@vercel/postgres';
 import { SignJWT } from 'jose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default-secret-key';
-const GITHUB_CLIENT_ID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const DEFAULT_PASSWORD = process.env.DEFAULT_PASS
 

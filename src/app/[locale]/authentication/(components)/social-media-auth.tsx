@@ -1,68 +1,51 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import NextAuth from 'next-auth';
-import FortyTwoProvider from 'next-auth/providers/42-school';
+import { signIn } from 'next-auth/react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import useUserStore from '@/stores/user';
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [
-    FortyTwoProvider({
-      clientId: process.env.FORTY_TWO_CLIENT_ID || '',
-      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET || '',
-    }),
-  ],
-});
 
 const SocialMediaAuth = () => {
-  const router = useRouter();
-  //const { user, setUser } = useUserStore((state) => ({
-  //  user: state.user,
-  //  setUser: state.setUser,
-  //}));
+  const [loadingGithub, setLoadingGithub] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [loading42, setLoading42] = useState(false);
 
-  //  const authenticateUser = async () => {
-  //    try {
-  //      const response = await fetch('/api/auth/github/github-callback', {
-  //        credentials: 'include',
-  //      });
-  //console.log("response", response); // debug
-  //      if (response.ok) {
-  //        const { token, user } = await response.json();
+  const authenticateUser = async (provider: string) => {
+    try {
+      if (provider === 'github') {
+        setLoadingGithub(true);
+      } else if (provider === 'google') {
+        setLoadingGoogle(true);
+      } else if (provider === '42-school') {
+        setLoading42(true);
+      }
+      // Redirect to GitHub login page
+      await signIn(provider);
 
-  //        // Store the token (e.g., in localStorage or a cookie)
-  //        localStorage.setItem('token', token);
-
-  //        // Set the user state (assuming you have a global state or context)
-  //        setUser(user);
-
-  //        // Navigate to the dashboard
-  //        router.push('/dashboard');
-  //      } else {
-  //        console.error('Authentication failed');
-  //        router.push('/authentication');
-  //      }
-  //    } catch (error) {
-  //      console.error('Error during authentication:', error);
-  //      router.push('/authentication');
-  //    }
-  //  };
+      //setLoading(false);
+    } catch (error) {
+      console.error('Error during GitHub authentication:', error);
+      if (provider === 'github') {
+        setLoadingGithub(false);
+      } else if (provider === 'google') {
+        setLoadingGoogle(false);
+      } else if (provider === '42-school') {
+        setLoading42(false);
+      }
+    }
+  };
 
   return (
     <div>
       <div className="mb-3 flex flex-row justify-center gap-5">
         <ButtonCustom
-          title="Ecole 42"
+          title="42-school"
           variant="default"
           className="w-44 md:w-28"
-          onClick={() => {
-            //window.location.href = '/api/auth/login-42';
-            signIn('42');
-          }}
+          onClick={() => authenticateUser('42-school')}
+          loading={loading42}
+          disabled={loading42 || loadingGoogle || loadingGithub}
         >
           <div className="flex items-center justify-center rounded-full border border-background/50 bg-c42green p-1">
             <Image
@@ -81,9 +64,9 @@ const SocialMediaAuth = () => {
           title="Google"
           variant="default"
           className="w-44 md:w-28"
-          onClick={() => {
-            window.location.href = '/api/auth/login-google';
-          }}
+          onClick={() => authenticateUser('google')}
+          loading={loadingGoogle}
+          disabled={loading42 || loadingGoogle || loadingGithub}
         >
           <Image
             src="/icons/icon-google.svg"
@@ -100,10 +83,9 @@ const SocialMediaAuth = () => {
           title="Github"
           variant="default"
           className="w-44 md:w-28"
-          onClick={() => {
-            window.location.href = '/api/auth/github/github-login';
-          }}
-          //onClick={authenticateUser}
+          onClick={() => authenticateUser('github')}
+          loading={loadingGithub}
+          disabled={loading42 || loadingGoogle || loadingGithub}
         >
           <div className="flex items-center justify-center rounded-full border border-background/50 bg-muted-foreground p-1">
             <Image

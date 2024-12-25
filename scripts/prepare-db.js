@@ -58,31 +58,20 @@ const runCommand = (command) => {
 
 // Sequentially run each script
 const runCommands = () => {
+  runCommand('node ./scripts/delete-table.js chat');
+  runCommand('node ./scripts/delete-table.js visits');
+  runCommand('node ./scripts/delete-table.js likes');
+  runCommand('node ./scripts/delete-table.js matches');
+  runCommand('node ./scripts/delete-table.js blocked_users');
+  runCommand('node ./scripts/delete-table.js notifications');
+  runCommand('node ./scripts/delete-table.js users');
+
   runCommand('node ./scripts/create-table-users.js');
   runCommand('node ./scripts/fill-table-users.js');
+  runCommand('node ./scripts/create-tables-activity.js');
 };
 
 // If chalk is already available, run commands directly
 if (chalk) {
   runCommands();
 }
-
-//// script version: 0.0.1 (no color)
-//const { execSync } = require('child_process');
-
-//// Function to run shell commands
-//const runCommand = (command) => {
-//  try {
-//    console.log(`Running: ${command}`);
-//    execSync(command, { stdio: 'inherit' });
-//    console.log(`${command} - completed successfully.`);
-//  } catch (error) {
-//    console.error(`${command} - failed with error:`, error);
-//    process.exit(1); // Exit on failure
-//  }
-//};
-
-//// Sequentially run each script
-//runCommand('node ./scripts/delete-table.js users');
-//runCommand('node ./scripts/create-table-users.js');
-//runCommand('node ./scripts/fill-table-users.js');

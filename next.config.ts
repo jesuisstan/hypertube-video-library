@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'kdbxq6eseiqtwhzx.public.blob.vercel-storage.com',
+        hostname: 'kdbxq6eseiqtwhzx.public.blob.vercel-storage.com', // Vercel's blob URL
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com', // GitHub's avatar URL
       },
     ],
   },

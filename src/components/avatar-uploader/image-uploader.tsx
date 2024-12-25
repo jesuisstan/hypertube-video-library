@@ -21,10 +21,8 @@ const ImageUploader = ({
   setProfileIsCompleted: Dispatch<SetStateAction<boolean>>;
 }) => {
   const t = useTranslations();
-  const { user, setUser } = useUserStore((state) => ({
-    user: state.user,
-    setUser: state.setUser,
-  }));
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const [fileEnter, setFileEnter] = useState(false);
   const [isCompressing, setIsCompressing] = useState(false);
   const [loading, setLoading] = useState(false);

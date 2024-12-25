@@ -24,7 +24,7 @@ declare module 'next-auth' {
     prefered_language: string;
   }
 
-  export interface User extends DefaultUser {
+  interface User extends DefaultUser {
     id: string;
     email: string;
     firstname: string;
@@ -40,5 +40,15 @@ declare module 'next-auth' {
     photos: string[];
     confirmed: boolean;
     prefered_language: string;
+  }
+
+  interface Profile {
+    id?: string;
+    email?: string;
+    login?: string; // GitHub login (nickname) is optional
+    name?: string; // GitHub name is optional
+    avatar_url?: string; // GitHub avatar_url is optional
+    bio?: string; // GitHub bio (biography) is optional
+    location?: string; // GitHub location (address) is optional
   }
 }

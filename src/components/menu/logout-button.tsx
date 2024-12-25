@@ -6,7 +6,6 @@ import { LogOut } from 'lucide-react';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
-import { setUserOffline } from '@/utils/user-handlers';
 
 const LogoutButton = ({ translate }: { translate: (key: string) => string }) => {
   const user = useUserStore((state) => state.user);
@@ -18,10 +17,6 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
 
   const handleLogout = async () => {
     setGlobalLoading(true); // set global loading
-
-    if (user?.id) {
-      await setUserOffline(user.id); // set user offline
-    }
 
     resetSearchStore(); // reset search store
     logout(); // clear local user state

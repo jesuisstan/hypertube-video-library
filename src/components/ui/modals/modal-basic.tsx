@@ -34,9 +34,9 @@ const ModalBasic = ({
               src="/identity/logo-title-only.png"
               blurDataURL="/identity/logo-title-only.png"
               alt="logo"
-              width={142}
+              width={121}
               height={0}
-              placeholder="blur"
+              placeholder="empty"
               priority
               className={clsx(`absolute top-5`)}
             />

@@ -20,10 +20,8 @@ const ModalDeleteAccount = ({
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
   const t = useTranslations();
-  const { user, clearUser } = useUserStore((state) => ({
-    user: state.user,
-    clearUser: state.clearUser,
-  }));
+  const user = useUserStore((state) => state.user);
+  const clearUser = useUserStore((state) => state.clearUser);
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');

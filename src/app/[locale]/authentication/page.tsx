@@ -163,11 +163,11 @@ const Authentication = () => {
             />
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
-            <h2 className="mb-2 text-2xl smooth42transition xl:text-3xl">{t(`slogan`)}</h2>
+            {/*<h2 className="mb-2 text-2xl smooth42transition xl:text-3xl">{t(`slogan`)}</h2>*/}
             <div className="text-sm">
               Hypertube Video Library {t(`rights-reserved`)}
               {'. '}
-              {t(`service-provided`)} vv
+              {t(`service-provided`)}{' '}
               <a
                 href={`https://www.krivtsoff.site/`}
                 target="_blank"
@@ -384,6 +384,7 @@ const Authentication = () => {
               {t(`auth.back-to-login`)}
             </ButtonCustom>
           )}
+
           {/* Additional buttons */}
           {pageLayout === 'login' && (
             <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">

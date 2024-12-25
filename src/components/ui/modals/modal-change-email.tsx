@@ -19,10 +19,8 @@ const ModalChangeEmail = ({
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
   const t = useTranslations();
-  const { user, setUser } = useUserStore((state) => ({
-    user: state.user,
-    setUser: state.setUser,
-  }));
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
