@@ -6,10 +6,10 @@ import DateSkeleton from '@/components/ui/skeletons/date-skeleton';
 import { formatApiDateLastUpdate } from '@/utils/format-date';
 
 const StatusWrapper = ({
-  onlineStatus,
+  confirmed,
   lastAction,
 }: {
-  onlineStatus: boolean | undefined;
+  confirmed: boolean | undefined;
   lastAction: string | undefined;
 }) => {
   const t = useTranslations();
@@ -41,11 +41,11 @@ const StatusWrapper = ({
         <p
           className={clsx(
             'line-clamp-1 h-[max-content] text-ellipsis text-sm',
-            onlineStatus ? 'animate-pulse text-c42green' : 'text-destructive'
+            confirmed ? 'text-c42green' : 'text-destructive'
           )}
-          title={onlineStatus ? t('online') : t('offline')}
+          title={confirmed ? t('confirmed') : t('not-confirmed')}
         >
-          {onlineStatus ? t('online') : t('offline')}
+          {confirmed ? t('confirmed') : t('not-confirmed')}
         </p>
       </div>
     </div>

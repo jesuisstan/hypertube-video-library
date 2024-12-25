@@ -45,10 +45,18 @@ declare module 'next-auth' {
   interface Profile {
     id?: string;
     email?: string;
+
     login?: string; // GitHub login (nickname) is optional
     name?: string; // GitHub name is optional
     avatar_url?: string; // GitHub avatar_url is optional
     bio?: string; // GitHub bio (biography) is optional
     location?: string; // GitHub location (address) is optional
+
+    url?: string; // 42 url is optional
+    image?: {
+      link?: string;
+    }; // 42 image is optional
+    first_name?: string; // 42 first_name is optional
+    last_name?: string; // 42 last_name is optional
   }
 }

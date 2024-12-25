@@ -92,8 +92,7 @@ const ProfilePage = () => {
               onModify={() => handleModifyClick('biography' as keyof typeof TProfileCompleteLayout)}
             />
             {/* STATUS GROUP */}
-            {/*<StatusWrapper onlineStatus={user?.online} lastAction={user?.last_action} />*/}
-            <StatusWrapper onlineStatus={false} lastAction={user?.last_action} />
+            <StatusWrapper confirmed={user?.confirmed} lastAction={user?.last_action} />
           </div>
         </div>
       </div>

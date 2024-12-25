@@ -7,6 +7,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
+import { findOrCreateUser, updateLastAction } from '@/utils/server/auth-utils';
+import { defineCampus } from '@/utils/server/define-42-campus';
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
@@ -68,75 +71,49 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account?.provider === 'github') {
-        const client = await db.connect();
-        try {
-          const githubEmail = profile?.email || `${profile?.login}@github.com`;
-          const nickname = profile?.login;
+      const hashedPassword = await bcrypt.hash(process.env.DEFAULT_PASS!, 10);
 
-          // Check if the user exists
-          let result = await client.query('SELECT * FROM users WHERE email = $1', [githubEmail]);
-          let appUser = result.rows[0];
+      const providerMapper: Record<string, (profile: any) => any> = {
+        github: (profile) => ({
+          email: profile?.email || `${profile?.login}@github.com`,
+          nickname: profile?.login,
+          firstname: profile?.name?.split(' ')[0] || '',
+          lastname: profile?.name?.split(' ')[1] || '',
+          bio: profile?.bio || '',
+          location: profile?.location || '',
+          avatarUrl: profile?.avatar_url || '',
+        }),
+        '42-school': (profile) => {
+          const campus = defineCampus(profile);
+          return {
+            email: profile?.email || `${profile?.login}@student.42.fr`,
+            nickname: profile?.login,
+            firstname: profile?.first_name || '',
+            lastname: profile?.last_name || '',
+            bio: 'I am a student at 42 School, international coding school with campuses all over the world.',
+            location: `${campus.city}, ${campus.country}`,
+            avatarUrl: profile?.image?.link || '',
+          };
+        },
+      };
 
-          if (!appUser) {
-            // If user doesn't exist, create one
-            const insertQuery = `
-              INSERT INTO users (email, password, confirmed, firstname, lastname, nickname, biography, tags, complete, latitude, longitude, address, registration_date, last_action, photos, birthdate, sex)
-              VALUES ($1, $2, true, $3, $4, $5, $6, '{}', false, 0, 0, $7, NOW(), NOW(), $8, $9, $10)
-              RETURNING *;
-            `;
-            const insertValues = [
-              githubEmail,
-              process.env.DEFAULT_PASS, // Replace with hashed default password
-              profile?.name?.split(' ')[0] || '',
-              profile?.name?.split(' ')[1] || '',
-              nickname || '',
-              profile?.bio || '',
-              profile?.location || '',
-              [profile?.avatar_url],
-              '1970-01-01',
-              'male',
-            ];
-            const insertResult = await client.query(insertQuery, insertValues);
-            appUser = insertResult.rows[0];
-          }
+      if (account?.provider && providerMapper[account.provider]) {
+        const profileData = providerMapper[account.provider](profile);
 
-          // Update last_action for the user
-          const currentDate = new Date();
-          await client.query('UPDATE users SET last_action = $2, online = true WHERE id = $1', [
-            appUser.id,
-            currentDate.toISOString(),
-          ]);
+        const appUser = await findOrCreateUser(profileData, hashedPassword);
+        await updateLastAction(appUser.id);
 
-          // Attach the appUser data to the returned user object
-          user.id = appUser.id;
-          user.email = appUser.email;
-          user.firstname = appUser.firstname;
-          user.lastname = appUser.lastname;
-          user.nickname = appUser.nickname;
-          user.biography = appUser.biography;
-          user.tags = appUser.tags;
-          user.registration_date = appUser.registration_date;
-          user.last_action = appUser.last_action;
-          user.latitude = appUser.latitude;
-          user.longitude = appUser.longitude;
-          user.address = appUser.address;
-          user.photos = appUser.photos;
-          user.confirmed = appUser.confirmed;
-          user.prefered_language = appUser.prefered_language;
-
-          return true;
-        } catch (error) {
-          console.error('Error during GitHub sign-in:', error);
-          return false;
-        } finally {
-          client.release();
-        }
+        // Attach appUser data to the returned user object
+        Object.assign(user, appUser);
+        return true;
       }
-      return true;
+
+      return false;
     },
+
     async jwt({ token, user }) {
       // When the user object is returned from authorize
       if (user) {

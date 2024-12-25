@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com', // GitHub's avatar URL
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.intra.42.fr', // 42's avatar URL
+      },
     ],
   },
   async redirects() {

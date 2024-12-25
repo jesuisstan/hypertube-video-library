@@ -47,7 +47,7 @@ const SocialMediaAuth = () => {
           loading={loading42}
           disabled={loading42 || loadingGoogle || loadingGithub}
         >
-          <div className="flex items-center justify-center rounded-full border border-background/50 bg-c42green p-1">
+          <div className="flex items-center justify-center rounded-full bg-c42green p-[6px]">
             <Image
               src="/icons/icon-42.png"
               blurDataURL="/icons/icon-42.png"
@@ -76,7 +76,7 @@ const SocialMediaAuth = () => {
             placeholder="empty"
             width={0}
             height={0}
-            className="h-6 w-6"
+            className="h-7 w-7"
           />
         </ButtonCustom>
         <ButtonCustom
@@ -87,7 +87,7 @@ const SocialMediaAuth = () => {
           loading={loadingGithub}
           disabled={loading42 || loadingGoogle || loadingGithub}
         >
-          <div className="flex items-center justify-center rounded-full border border-background/50 bg-muted-foreground p-1">
+          <div className="flex items-center justify-center rounded-full  bg-muted-foreground p-[6px]">
             <Image
               src="/icons/icon-github.svg"
               blurDataURL="/icons/icon-github.svg"

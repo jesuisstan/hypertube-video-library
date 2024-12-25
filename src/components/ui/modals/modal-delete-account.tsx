@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { User as TUser } from 'next-auth';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import { Eye, EyeOff } from 'lucide-react';
@@ -9,6 +9,7 @@ import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
+import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 import { handleClearLocalStorage } from '@/utils/utils';
 
@@ -19,9 +20,10 @@ const ModalDeleteAccount = ({
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const router = useRouter();
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
-  const clearUser = useUserStore((state) => state.clearUser);
+  const logout = useUserStore((state) => state.logout);
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -54,9 +56,16 @@ const ModalDeleteAccount = ({
       const result = await response.json();
       if (response.ok) {
         setSuccessMessage(t(result.message));
-        setTimeout(() => {
-          clearUser();
-          handleClearLocalStorage();
+        setTimeout(async () => {
+          logout(); // clear local user state
+
+          // Use NextAuth's signOut method
+          await signOut({
+            redirect: false, // Prevent automatic redirection
+            callbackUrl: '/authentication', // Specify where to redirect after logout
+          });
+
+          router.push('/authentication'); // Redirect explicitly (optional, as callbackUrl handles it)
         }, 1000);
       } else {
         setError(t(result.error));

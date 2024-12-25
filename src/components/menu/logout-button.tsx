@@ -8,12 +8,10 @@ import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const LogoutButton = ({ translate }: { translate: (key: string) => string }) => {
-  const user = useUserStore((state) => state.user);
+  const router = useRouter();
   const logout = useUserStore((state) => state.logout);
   const setGlobalLoading = useUserStore((state) => state.setGlobalLoading);
-
   const { resetSearchStore } = useSearchStore();
-  const router = useRouter();
 
   const handleLogout = async () => {
     setGlobalLoading(true); // set global loading

@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 
 // get locale value on client side
 export const getLocaleFromCookiesOnClientSide = (): string | null => {
