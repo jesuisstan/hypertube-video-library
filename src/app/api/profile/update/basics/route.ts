@@ -9,30 +9,9 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { id, firstname, lastname, nickname, birthdate, sex } = body;
+    const { id, firstname, lastname, nickname } = body;
 
-    // Parse the birthdate string into components
-    const [birthYear, birthMonth, birthDay] = birthdate.split('-').map(Number);
-    const today = new Date();
-
-    // Calculate the user's age based on the parsed components
-    let age = today.getFullYear() - birthYear;
-    const monthDifference = today.getMonth() + 1 - birthMonth; // getMonth is 0-indexed
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDay)) {
-      age--;
-    }
-
-    // Validate the birthdate
-    if (new Date(birthdate) > today) {
-      return NextResponse.json({ error: 'invalid-birthdate' }, { status: 400 });
-    }
-    if (age < 18) {
-      return NextResponse.json({ error: 'under-18' }, { status: 400 });
-    } else if (age > 142) {
-      return NextResponse.json({ error: 'invalid-birthdate' }, { status: 400 });
-    }
-
-    // Step 2: Check if the user exists
+    // Step 1: Check if the user exists
     const selectQuery = `
         SELECT firstname, lastname, nickname, birthdate, sex
         FROM users 
@@ -46,13 +25,11 @@ export async function POST(req: Request) {
 
     const currentData = currentDataResult.rows[0];
 
-    // Step 3: Check if the data is up-to-date
+    // Step 2: Check if the data is up-to-date
     if (
       currentData.firstname === firstname &&
       currentData.lastname === lastname &&
-      currentData.nickname === nickname &&
-      currentData.birthdate === birthdate && // Compare as strings
-      currentData.sex === sex
+      currentData.nickname === nickname
     ) {
       return NextResponse.json({ message: 'data-is-up-to-date' });
     }
@@ -61,11 +38,11 @@ export async function POST(req: Request) {
     const currentDate = new Date().toISOString();
     const updateQuery = `
         UPDATE users 
-        SET firstname = $2, lastname = $3, nickname = $4, birthdate = $5, sex = $6, last_action = $7, online = true
+        SET firstname = $2, lastname = $3, nickname = $4, last_action = $5
         WHERE id = $1
-        RETURNING id, firstname, lastname, nickname, birthdate, sex, last_action, online;
+        RETURNING id, firstname, lastname, nickname, last_action;
       `;
-    const updateValues = [id, firstname, lastname, nickname, birthdate, sex, currentDate];
+    const updateValues = [id, firstname, lastname, nickname, currentDate];
     const updatedUserResult = await client.query(updateQuery, updateValues);
     const updatedUser = updatedUserResult.rows[0];
 

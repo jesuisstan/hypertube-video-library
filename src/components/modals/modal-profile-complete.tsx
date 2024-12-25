@@ -8,11 +8,11 @@ import clsx from 'clsx';
 import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
+import ModalBasic from '@/components/modals/modal-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
-import ModalBasic from '@/components/ui/modals/modal-basic';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
@@ -33,13 +33,7 @@ const MIN_BIOGRAPHY_LENGTH = 42;
 const MAX_BIOGRAPHY_LENGTH = 442;
 const MIN_TAGS_LENGTH = 5;
 
-export type TProfileCompleteLayout =
-  | 'basics'
-  | 'biography'
-  | 'location'
-  | 'sexpreferences'
-  | 'tags'
-  | 'photos';
+export type TProfileCompleteLayout = 'basics' | 'biography' | 'location' | 'tags' | 'photos';
 
 const ModalProfileComplete = ({
   show,
@@ -61,10 +55,6 @@ const ModalProfileComplete = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  //const [sex, setSex] = useState(user?.sex as string); // <'male' | 'female'>
-  //const [sexPreferences, setSexPreferences] = useState(user?.sex_preferences as string); // <'men' | 'women' | 'bisexual'>
-  const [sex, setSex] = useState('male'); // <'male' | 'female'> todo: fix this
-  const [sexPreferences, setSexPreferences] = useState('men'); // <'men' | 'women' | 'bisexual'> todo: fix this
 
   const [biography, setBiography] = useState(user?.biography || '');
   const [selectedTags, setSelectedTags] = useState<string[]>(user?.tags || []);
@@ -150,7 +140,6 @@ const ModalProfileComplete = ({
         lastname: formData.get('lastname'),
         nickname: formData.get('nickname'),
         birthdate: formData.get('birthdate'),
-        sex: sex,
       });
     } else if (layout === 'biography') {
       body = JSON.stringify({
@@ -163,11 +152,6 @@ const ModalProfileComplete = ({
         latitude: geoCoordinates?.lat,
         longitude: geoCoordinates?.lng,
         address: selectedCityOption?.label,
-      });
-    } else if (layout === 'sexpreferences') {
-      body = JSON.stringify({
-        id: user?.id,
-        sex_preferences: sexPreferences,
       });
     } else if (layout === 'tags') {
       if (selectedTags.length < MIN_TAGS_LENGTH) {
@@ -270,35 +254,6 @@ const ModalProfileComplete = ({
             />
           </div>
         </div>
-
-        <div className="flex flex-col self-start">
-          <div className="flex flex-col">
-            <Label htmlFor="birthdate" className="mb-2">
-              {t(`birthdate`)}
-            </Label>
-            <RequiredInput
-              type="date"
-              id="birthdate"
-              name="birthdate"
-              placeholder={t(`birthdate`)}
-              className="mb-2"
-              //value={formatDateForInput(user?.birthdate)}
-              value={formatDateForInput('0')}
-            />
-          </div>
-          <div className="flex flex-col self-start">
-            <RadioGroup
-              label={t(`selector.sex`) + ':'}
-              options={[
-                { value: 'male', label: t(`male`) },
-                { value: 'female', label: t(`female`) },
-              ]}
-              defaultValue="male"
-              selectedItem={sex}
-              onSelectItem={setSex}
-            />
-          </div>
-        </div>
       </div>
     ),
     biography: (
@@ -377,21 +332,6 @@ const ModalProfileComplete = ({
         </div>
       </div>
     ),
-    sexpreferences: (
-      <div className="m-5 flex flex-col">
-        <RadioGroup
-          label={t(`selector.preferences`) + ':'}
-          options={[
-            { value: 'men', label: t(`selector.men`) },
-            { value: 'women', label: t(`selector.women`) },
-            { value: 'bisexual', label: t(`selector.bisexual`) },
-          ]}
-          defaultValue="bisexual"
-          selectedItem={sexPreferences ?? 'bisexual'}
-          onSelectItem={setSexPreferences}
-        />
-      </div>
-    ),
     tags: (
       <div className="m-5">
         <ChipsGroup
@@ -440,9 +380,6 @@ const ModalProfileComplete = ({
         setLayout('location');
         break;
       case 'location':
-        setLayout('sexpreferences');
-        break;
-      case 'sexpreferences':
         setLayout('tags');
         break;
       case 'tags':
@@ -466,11 +403,8 @@ const ModalProfileComplete = ({
       case 'location':
         setLayout('biography');
         break;
-      case 'sexpreferences':
-        setLayout('location');
-        break;
       case 'tags':
-        setLayout('sexpreferences');
+        setLayout('location');
         break;
       case 'photos':
         setLayout('tags');

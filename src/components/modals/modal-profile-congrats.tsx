@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 
 import { CircleCheck } from 'lucide-react';
 
-import ModalBasic from '@/components/ui/modals/modal-basic';
+import ModalBasic from '@/components/modals/modal-basic';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 
 const ModalProfileCongrats = ({

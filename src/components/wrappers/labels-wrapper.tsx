@@ -9,8 +9,6 @@ import { capitalize } from '@/utils/format-string';
 type LabelsWrapperProps = {
   firstName: string;
   lastName: string;
-  age: number;
-  sex: string;
   loading: boolean;
   modifiable?: boolean;
   onModify?: () => void;
@@ -19,8 +17,6 @@ type LabelsWrapperProps = {
 const LabelsWrapper = ({
   firstName,
   lastName,
-  age,
-  sex,
   loading,
   modifiable,
   onModify,
@@ -53,22 +49,9 @@ const LabelsWrapper = ({
         </p>
       </div>
 
-      <div className="w-max">
-        <p className="text-base font-bold">{capitalize(t('age'))}</p>
-        <p className="text-sm">{String(age)}</p>
-      </div>
-
-      <div className="w-max">
-        <p className="text-base font-bold">{capitalize(t('sex'))}</p>
-        {/* Render history with line breaks */}
-        <p className="line-clamp-1 h-[max-content] text-ellipsis text-sm" title={sex}>
-          {capitalize(t(sex))}
-        </p>
-      </div>
-
       {modifiable && (
         <div className={'absolute right-2 top-2 flex gap-1'}>
-          <FilledOrNot size={15} filled={!!lastName || !firstName || !!age || !!sex} />
+          <FilledOrNot size={15} filled={!!lastName || !!firstName} />
           <div
             className={'text-foreground opacity-60 smooth42transition hover:opacity-100'}
             title={t('click-to-modify')}

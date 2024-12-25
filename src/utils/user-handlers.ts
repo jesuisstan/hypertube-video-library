@@ -1,6 +1,6 @@
 import { User as TUser } from 'next-auth';
 
-import { TProfileCompleteLayout } from '@/components/ui/modals/modal-profile-complete';
+import { TProfileCompleteLayout } from '@/components/modals/modal-profile-complete';
 
 export const isProfileCategoryFilled = (
   layout: TProfileCompleteLayout,

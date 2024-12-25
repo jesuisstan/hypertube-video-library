@@ -11,7 +11,6 @@ import InterestsWrapper from '@/components/wrappers/interests-wrapper';
 import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
-import RatingWrapper from '@/components/wrappers/rating-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import { TDateProfile } from '@/types/date-profile';
 
@@ -56,8 +55,6 @@ const DateProfileWrapper = ({
             <LabelsWrapper
               firstName={dateProfile?.firstname ?? '???'}
               lastName={dateProfile?.lastname ?? '???'}
-              age={dateProfile?.age}
-              sex={dateProfile?.sex ?? '???'}
               loading={false}
             />
             {/* DESCRIPTION */}
@@ -84,9 +81,6 @@ const DateProfileWrapper = ({
       <div className="mb-4 grid grid-cols-12 gap-4">
         {/* LEFT SECTOR */}
         <div className={clsx('col-span-12 h-max space-y-5', 'lg:col-span-3')}>
-          {/* RAITING */}
-          <RatingWrapper rating={dateProfile?.rating} />
-
           {/* LOCATION */}
           <LocationWrapper address={dateProfile?.address} />
 

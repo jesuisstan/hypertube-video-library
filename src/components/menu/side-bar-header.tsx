@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { Settings } from 'lucide-react';
 
 import LogoutButton from '@/components/menu/logout-button';
+import ModalSettings from '@/components/modals/modal-settings';
 import AvatarMini from '@/components/ui/avatar-mini';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
-import ModalSettings from '@/components/ui/modals/modal-settings';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
 import { formatUserName } from '@/utils/format-string';
 

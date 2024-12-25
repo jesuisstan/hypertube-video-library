@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import ModalProfileComplete from '@/components/ui/modals/modal-profile-complete';
-import TProfileCompleteLayout from '@/components/ui/modals/modal-profile-complete';
-import ModalProfileCongrats from '@/components/ui/modals/modal-profile-congrats';
+import ModalProfileComplete from '@/components/modals/modal-profile-complete';
+import TProfileCompleteLayout from '@/components/modals/modal-profile-complete';
+import ModalProfileCongrats from '@/components/modals/modal-profile-congrats';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
@@ -15,10 +15,8 @@ import InterestsWrapper from '@/components/wrappers/interests-wrapper';
 import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
-import RatingWrapper from '@/components/wrappers/rating-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
-import { calculateAge } from '@/utils/format-string';
 
 const ProfilePage = () => {
   const t = useTranslations();
@@ -77,10 +75,6 @@ const ProfilePage = () => {
             <LabelsWrapper
               firstName={user?.firstname ?? '???'}
               lastName={user?.lastname ?? '???'}
-              //age={calculateAge(user?.birthdate)}
-              //sex={user?.sex ?? '???'}
-              age={calculateAge('0')}
-              sex={'???'}
               loading={false}
               modifiable
               onModify={() => handleModifyClick('basics' as keyof typeof TProfileCompleteLayout)}

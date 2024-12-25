@@ -1,17 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, PenLine } from 'lucide-react';
 import { Save } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import DialogBasic from '@/components/ui/dialogs/dialog-basic';
 import { Label } from '@/components/ui/label';
-import ModalBasic from '@/components/ui/modals/modal-basic';
 import { RequiredInput } from '@/components/ui/required-input';
 import useUserStore from '@/stores/user';
 
-const ModalChangeEmail = ({
+const DialogChangeEmail = ({
   show,
   setShow,
 }: {
@@ -85,13 +85,28 @@ const ModalChangeEmail = ({
   };
 
   return (
-    <ModalBasic isOpen={show} setIsOpen={setShow} title={t('email-change')}>
+    <DialogBasic
+      isOpen={show}
+      setIsOpen={setShow}
+      title={t('email-change')}
+      description={t('email-current') + ': ' + user?.email}
+      trigger={
+        <ButtonCustom
+          title={t('email-change')}
+          variant="default"
+          size="default"
+          className="w-full min-w-32"
+        >
+          <div className="flex flex-row items-center space-x-2">
+            <span>{t('auth.email')}</span>
+            <div>
+              <PenLine size={15} />
+            </div>
+          </div>
+        </ButtonCustom>
+      }
+    >
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
-        <p>
-          {t('email-current')}
-          {': '}
-          <span className="italic">{user?.email}</span>
-        </p>
         <form
           className="flex flex-col items-center justify-center text-left align-middle"
           onSubmit={handleSubmit}
@@ -163,10 +178,10 @@ const ModalChangeEmail = ({
             loading={loading}
           >
             <div className="flex flex-row items-center space-x-2">
-              <span>{t('save')}</span>
               <div>
-                <Save size={15} />
+                <Save size={16} />
               </div>
+              <span>{t('save')}</span>
             </div>
           </ButtonCustom>
         </form>
@@ -177,8 +192,8 @@ const ModalChangeEmail = ({
           )}
         </div>
       </div>
-    </ModalBasic>
+    </DialogBasic>
   );
 };
 
-export default ModalChangeEmail;
+export default DialogChangeEmail;

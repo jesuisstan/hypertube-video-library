@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert } from 'lucide-react';
 
+import ModalBasic from '@/components/modals/modal-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import ModalBasic from '@/components/ui/modals/modal-basic';
 import { usePathname, useRouter } from '@/i18n/routing';
 
 const ModalProfileWarning = ({ user }: { user: TUser }) => {
