@@ -68,7 +68,8 @@
     "invalid-password": "Mot de passe invalide",
     "user-not-found": "User non trouvé",
     "user-update-failed": "Échec de la mise à jour de l'user",
-    "processing": "Traitement..."
+    "processing": "Traitement...",
+    "accessdenied": "Accès refusé"
   },
   "user-not-found": "User non trouvé",
   "processing": "Traitement...",

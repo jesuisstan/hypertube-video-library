@@ -60,7 +60,6 @@ export const authOptions: NextAuthOptions = {
           const updateValues = [user.id, currentDate.toISOString()];
           const updatedUserResult = await client.query(updateQuery, updateValues);
           const updatedUser = updatedUserResult.rows[0];
-
           return updatedUser; // Return the user object directly
         } finally {
           client.release();
@@ -103,15 +102,19 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider && providerMapper[account.provider]) {
         const profileData = providerMapper[account.provider](profile);
 
-        const appUser = await findOrCreateUser(profileData, hashedPassword);
-        await updateLastAction(appUser.id);
-
-        // Attach appUser data to the returned user object
-        Object.assign(user, appUser);
-        return true;
+        try {
+          const appUser = await findOrCreateUser(profileData, hashedPassword);
+          await updateLastAction(appUser.id);
+          // Attach appUser data to the returned user object
+          Object.assign(user, appUser);
+          return true;
+        } catch (error) {
+          console.error('Error in signIn callback:', error);
+          return false;
+        }
       }
 
-      return false;
+      return true;
     },
 
     async jwt({ token, user }) {
@@ -137,6 +140,7 @@ export const authOptions: NextAuthOptions = {
       return token; // Return the token after modification
     },
     async session({ session, token, user }) {
+      console.log('session', session); // Debug
       // Assign the modified token to the session's user object
       if (token) {
         session.user = token; // Now token has custom properties

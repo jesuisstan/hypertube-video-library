@@ -68,7 +68,8 @@
     "invalid-password": "Invalid password",
     "user-not-found": "User not found",
     "user-update-failed": "Failed to update user",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "accessdenied": "Access denied"
   },
   "user-not-found": "User not found",
   "processing": "Processing...",

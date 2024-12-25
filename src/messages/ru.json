@@ -68,7 +68,8 @@
     "invalid-password": "Неверный пароль",
     "user-not-found": "Пользователь не найден",
     "user-update-failed": "Не удалось обновить пользователя",
-    "processing": "Обработка..."
+    "processing": "Обработка...",
+    "accessdenied": "Доступ запрещен"
   },
   "user-not-found": "Пользователь не найден",
   "processing": "Обработка...",
