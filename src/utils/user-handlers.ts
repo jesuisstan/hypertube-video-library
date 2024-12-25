@@ -28,11 +28,9 @@ export const isProfileComplete = (user: TUser | undefined | null): boolean => {
   if (isProfileCategoryFilled('basics', user)) {
     if (isProfileCategoryFilled('biography', user)) {
       if (isProfileCategoryFilled('location', user)) {
-        if (isProfileCategoryFilled('sexpreferences', user)) {
-          if (isProfileCategoryFilled('tags', user)) {
-            if (isProfileCategoryFilled('photos', user)) {
-              isComplete = true;
-            }
+        if (isProfileCategoryFilled('tags', user)) {
+          if (isProfileCategoryFilled('photos', user)) {
+            isComplete = true;
           }
         }
       }
