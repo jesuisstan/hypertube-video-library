@@ -64,7 +64,7 @@ const DateProfileWrapper = ({
             <DescriptionWrapper text={dateProfile?.biography} />
             {/* STATUS GROUP */}
             <StatusWrapper
-              onlineStatus={dateProfile?.online}
+              confirmed={dateProfile?.confirmed}
               lastAction={dateProfile?.last_action}
             />
             {/* ACTION BUTTONS GROUP */}

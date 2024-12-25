@@ -18,7 +18,6 @@ import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import FiltersBarSkeleton from '@/components/ui/skeletons/filters-bar-skeleton';
 import { TDateProfile } from '@/types/date-profile';
 import { TSelectorOption } from '@/types/general';
-import { haversineDistance } from '@/utils/server/haversine-distance';
 
 interface FilterSortBarProps {
   user: User;
@@ -48,7 +47,7 @@ const FilterSortBar = ({
   const t = useTranslations();
 
   // State to store the currently selected sorting criterion and order
-  const [sortCriterion, setSortCriterion] = useState<'rating' | 'location' | 'age' | 'tags' | null>(
+  const [sortCriterion, setSortCriterion] = useState<'rating' | 'age' | 'tags' | null>(
     null
   );
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
@@ -127,21 +126,6 @@ const FilterSortBar = ({
         case 'tags':
           compareValue = a.tags_in_common - b.tags_in_common;
           break;
-        case 'location':
-          const distanceA = haversineDistance(
-            user?.latitude!,
-            user?.longitude!,
-            a.latitude,
-            a.longitude
-          );
-          const distanceB = haversineDistance(
-            user?.latitude!,
-            user?.longitude!,
-            b.latitude,
-            b.longitude
-          );
-          compareValue = distanceA - distanceB;
-          break;
       }
       return sortOrder === 'asc' ? compareValue : -compareValue;
     });
@@ -167,7 +151,7 @@ const FilterSortBar = ({
   };
 
   // Handler to set sorting
-  const handleSort = (criterion: 'rating' | 'location' | 'age' | 'tags', order: 'asc' | 'desc') => {
+  const handleSort = (criterion: 'rating' | 'age' | 'tags', order: 'asc' | 'desc') => {
     if (sortCriterion === criterion && sortOrder === order) {
       // Toggle off sorting if clicked again
       setSortCriterion(null);
@@ -363,31 +347,6 @@ const FilterSortBar = ({
                     setSelectedItems={setFilterCities!}
                     avoidTranslation
                   />
-                )}
-                {/* Location Sorter */}
-                {citiesOptions && citiesOptions.length > 0 && (
-                  <div className="flex flex-col gap-1">
-                    <div
-                      title={t('sort-ascending') + ' ' + t('by-distance')}
-                      className={clsx(
-                        'cursor-pointer rounded-full smooth42transition hover:text-c42orange',
-                        sortCriterion === 'location' && sortOrder === 'asc' && 'text-c42orange'
-                      )}
-                      onClick={() => handleSort('location', 'asc')}
-                    >
-                      <ArrowUp10 size={20} />
-                    </div>
-                    <div
-                      title={t('sort-descending') + ' ' + t('by-distance')}
-                      className={clsx(
-                        'cursor-pointer rounded-full smooth42transition hover:text-c42orange',
-                        sortCriterion === 'location' && sortOrder === 'desc' && 'text-c42orange'
-                      )}
-                      onClick={() => handleSort('location', 'desc')}
-                    >
-                      <ArrowDown10 size={20} />
-                    </div>
-                  </div>
                 )}
               </div>
             </div>

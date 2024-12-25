@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 
 import ActionsSkeleton from '@/components/ui/skeletons/actions-skeleton';
-import MatchWrapper from '@/components/wrappers/match-wrapper';
 import { useRouter } from '@/i18n/routing';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
@@ -145,14 +144,6 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
     <ActionsSkeleton />
   ) : (
     <div className={clsx('flex max-w-fit flex-row self-center rounded-2xl bg-card shadow-md')}>
-      {/* MATCH ? */}
-      <MatchWrapper
-        isMatch={isMatch}
-        isBlocked={isBlocked}
-        isLiked={isLiked}
-        isLikedBy={isLikedBy}
-      />
-      {/* vertical divider */}
       <div className={clsx('my-3 block w-[1px] bg-secondary opacity-40')} />
       {/* ACTIONS */}
       <div
