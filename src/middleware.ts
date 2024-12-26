@@ -31,7 +31,6 @@ export async function middleware(req: NextRequest) {
 
   // Redirect to dashboard if token is present and user is on the authentication page
   if (token && normalizedPath === '/authentication') {
-    console.log('Redirecting to dashboard');
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 

@@ -7,6 +7,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
+import { spaceToSnake } from '../format-string';
+
 import { findOrCreateUser, updateLastAction } from '@/utils/server/auth-utils';
 import { defineCampus } from '@/utils/server/define-42-campus';
 
@@ -73,7 +75,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      const hashedPassword = await bcrypt.hash(process.env.DEFAULT_PASS!, 10);
+      const hashedPassword = await bcrypt.hash(process.env.DEFAULT_PASS!, 10); // todo
 
       const providerMapper: Record<string, (profile: any) => any> = {
         github: (profile) => ({
@@ -84,6 +86,15 @@ export const authOptions: NextAuthOptions = {
           bio: profile?.bio || '',
           location: profile?.location || '',
           avatarUrl: profile?.avatar_url || '',
+        }),
+        google: (profile) => ({
+          email: profile?.email || `${spaceToSnake(profile?.name).toLowerCase()}@gmail.com`,
+          nickname: profile?.given_name ?? profile?.name?.split(' ')[0] ?? '',
+          firstname: profile?.given_name ?? profile?.name?.split(' ')[0] ?? '',
+          lastname: profile?.family_name ?? profile?.name?.split(' ')[1] ?? '',
+          avatarUrl: profile?.picture || '',
+          bio: '',
+          location: '',
         }),
         '42-school': (profile) => {
           const campus = defineCampus(profile);
@@ -140,7 +151,6 @@ export const authOptions: NextAuthOptions = {
       return token; // Return the token after modification
     },
     async session({ session, token, user }) {
-      console.log('session', session); // Debug
       // Assign the modified token to the session's user object
       if (token) {
         session.user = token; // Now token has custom properties

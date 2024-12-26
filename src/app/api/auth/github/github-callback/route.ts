@@ -42,7 +42,6 @@ export async function GET(request: Request) {
 
   const githubUserData = await githubUserResponse.json();
   const githubEmail = githubUserData.email;
-  console.log('!!!!!!!!!!!!! githubUserData', githubUserData); // debug
   let result = await client.query('SELECT * FROM users WHERE email = $1', [githubEmail]);
 
   if (!result || !result.rows || result.rows.length === 0) {

@@ -58,5 +58,9 @@ declare module 'next-auth' {
     }; // 42 image is optional
     first_name?: string; // 42 first_name is optional
     last_name?: string; // 42 last_name is optional
+
+    given_name?: string; // Google given_name is optional
+    family_name?: string; // Google family_name is optional
+    picture?: string; // Google picture is optional
   }
 }

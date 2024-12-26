@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 import { X } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import {
   Dialog,
   DialogClose,
@@ -13,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialogs/dialog-primitives';
+} from '@/components/dialogs/dialog-primitives';
 
 interface DialogModalBasicProps {
   isOpen: boolean;
@@ -29,7 +28,7 @@ const DialogBasic: React.FC<DialogModalBasicProps> = ({
   isOpen,
   setIsOpen,
   title,
-  description,
+  description = '',
   children,
   trigger,
   hideCloseButton = false,
@@ -44,7 +43,7 @@ const DialogBasic: React.FC<DialogModalBasicProps> = ({
       >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {!hideCloseButton && (
           <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">

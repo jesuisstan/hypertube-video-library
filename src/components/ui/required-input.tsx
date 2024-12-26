@@ -31,7 +31,7 @@ const RequiredInput = React.forwardRef<HTMLInputElement, InputProps>(
           required
           aria-invalid={showError ? 'true' : 'false'}
           className={cn(
-            'flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-10 w-full rounded-md border bg-input px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
             showError ? 'border-destructive' : 'border-muted'
           )}
           ref={ref}
@@ -40,7 +40,7 @@ const RequiredInput = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
-        <span className={cn('text-destructive text-xs', showError ? 'opacity-100' : 'opacity-0')}>
+        <span className={cn('text-xs text-destructive', showError ? 'opacity-100' : 'opacity-0')}>
           {errorMessage || '\u00A0'}
         </span>
       </div>

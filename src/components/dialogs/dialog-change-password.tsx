@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert, PenLine } from 'lucide-react';
 
+import DialogBasic from '@/components/dialogs/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import DialogBasic from '@/components/ui/dialogs/dialog-basic';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -42,11 +42,11 @@ const DialogChangePassword = ({
           size="default"
           className="w-full min-w-32"
         >
-          <div className="flex flex-row items-center space-x-2">
-            <span>{t('auth.password')}</span>
+          <div className="flex flex-row items-center space-x-5">
             <div>
               <PenLine size={16} />
             </div>
+            <span>{t('auth.change-password')}</span>
           </div>
         </ButtonCustom>
       }

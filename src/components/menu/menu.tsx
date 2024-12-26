@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { LayoutDashboard, MenuIcon } from 'lucide-react';
+import { LayoutDashboard, MenuIcon, ShieldQuestion } from 'lucide-react';
 
 import ContactSupportBlock from '@/components/menu/contact-support-block';
 import MenuList from '@/components/menu/menu-list';
@@ -88,12 +88,10 @@ const Menu: React.FC = () => {
           {isClient && (
             <Image
               src="/identity/logo-title-only.png"
-              blurDataURL={'/identity/logo-title-only.png'}
-              alt="hypertube-square-logo"
-              width={0}
+              blurDataURL="/identity/logo-title-only.png"
+              alt="logo"
+              width={121}
               height={0}
-              sizes="100vw"
-              className={clsx(`h-5 w-auto`)}
               placeholder="blur"
               priority
             />
@@ -144,17 +142,14 @@ const Menu: React.FC = () => {
               <Separator />
 
               {/* DASHBOARD LINK */}
-              <div
-                id="dashboard-link"
-                className="ml-3 flex w-fit items-center gap-2 text-sm text-foreground"
-              >
+              <div id="dashboard-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
                 <LayoutDashboard />
                 <Link
                   href={`/dashboard`}
                   className={clsx(
-                    `flex w-full items-center text-card-foreground smooth42transition`,
+                    `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname === `/dashboard` && 'font-bold'
+                    pathname === `/dashboard` && 'text-c42green'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);
@@ -162,6 +157,25 @@ const Menu: React.FC = () => {
                   scroll={false}
                 >
                   {t(`dashboard`)}
+                </Link>
+              </div>
+
+              {/* ABOUT LINK */}
+              <div id="about-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
+                <ShieldQuestion />
+                <Link
+                  href={`/about`}
+                  className={clsx(
+                    `flex w-full items-center smooth42transition`,
+                    `hover:text-c42orange`,
+                    pathname === `/about` && 'text-c42green'
+                  )}
+                  onClick={() => {
+                    if (isSidebarOpen) setIsSidebarOpen(false);
+                  }}
+                  scroll={false}
+                >
+                  {t(`about`)}
                 </Link>
               </div>
 

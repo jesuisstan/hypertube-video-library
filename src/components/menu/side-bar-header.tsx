@@ -1,11 +1,8 @@
 import { useState } from 'react';
 
-import { Settings } from 'lucide-react';
-
+import DialogSettings from '@/components/dialogs/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
-import ModalSettings from '@/components/modals/modal-settings';
 import AvatarMini from '@/components/ui/avatar-mini';
-import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
@@ -47,21 +44,8 @@ const SideBarHeader = ({
         </div>
 
         <div className="flex flex-row items-center gap-x-1 self-center align-middle">
-          <ModalSettings show={showSettingsModal} setShow={setShowSettingsModal} />
+          <DialogSettings show={showSettingsModal} setShow={setShowSettingsModal} />
           <ThemeToggler translate={translate} />
-          <ButtonCustom
-            variant="ghost"
-            size="icon"
-            title={translate(`settings`)}
-            onClick={() => setShowSettingsModal(true)}
-            className="smooth42transition hover:bg-transparent hover:text-c42orange"
-          >
-            <div className="flex flex-row items-center gap-2">
-              <Settings />
-              {/*<p>{translate(`settings`)}</p>*/}
-              <span className="sr-only">{translate(`settings`)}</span>
-            </div>
-          </ButtonCustom>
           <LogoutButton translate={translate} />
         </div>
       </div>

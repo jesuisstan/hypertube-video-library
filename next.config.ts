@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.intra.42.fr', // 42's avatar URL
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Google's avatar URL
+      },
     ],
   },
   async redirects() {

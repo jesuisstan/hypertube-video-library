@@ -1,26 +1,28 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { User as TUser } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
-import { Eye, EyeOff, PenLine } from 'lucide-react';
-import { Save } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
+import DialogBasic from '@/components/dialogs/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import DialogBasic from '@/components/ui/dialogs/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
+import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
-const DialogChangeEmail = ({
+const DialogDeleteAccount = ({
   show,
   setShow,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const router = useRouter();
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
+  const logout = useUserStore((state) => state.logout);
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -37,43 +39,33 @@ const DialogChangeEmail = ({
     if (!currentForm) return;
 
     const formData = new FormData(currentForm);
-    //const data = Object.fromEntries(formData.entries());
-    const newEmail = formData.get('email-new');
-    const confirmEmail = formData.get('email-confirm');
-
-    if (newEmail !== confirmEmail) {
-      setError(t('email-mismatch'));
-      setLoading(false);
-      return;
-    }
-
-    if (newEmail === user?.email) {
-      setSuccessMessage(t('data-is-up-to-date'));
-      setLoading(false);
-      return;
-    }
-
     let response: any;
     try {
-      response = await fetch(`/api/profile/update/email`, {
-        method: 'POST',
+      response = await fetch(`/api/profile/delete`, {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: user?.id,
-          email: newEmail,
           password: formData.get('password'),
         }),
       });
 
       const result = await response.json();
-      const updatedUserData: TUser = result.user;
       if (response.ok) {
         setSuccessMessage(t(result.message));
-        if (updatedUserData) {
-          setUser({ ...user, ...updatedUserData });
-        }
+        setTimeout(async () => {
+          logout(); // clear local user state
+
+          // Use NextAuth's signOut method
+          await signOut({
+            redirect: false, // Prevent automatic redirection
+            callbackUrl: '/authentication', // Specify where to redirect after logout
+          });
+
+          router.push('/authentication'); // Redirect explicitly (optional, as callbackUrl handles it)
+        }, 1000);
       } else {
         setError(t(result.error));
       }
@@ -88,59 +80,31 @@ const DialogChangeEmail = ({
     <DialogBasic
       isOpen={show}
       setIsOpen={setShow}
-      title={t('email-change')}
-      description={t('email-current') + ': ' + user?.email}
+      title={t('delete-account')}
       trigger={
         <ButtonCustom
-          title={t('email-change')}
-          variant="default"
+          title={t('delete-account')}
+          variant="destructive"
           size="default"
           className="w-full min-w-32"
         >
-          <div className="flex flex-row items-center space-x-2">
-            <span>{t('auth.email')}</span>
+          <div className="flex flex-row items-center space-x-5">
             <div>
-              <PenLine size={15} />
+              <Trash2 size={16} />
             </div>
+            <span>{t('delete-account')}</span>
           </div>
         </ButtonCustom>
       }
     >
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
+        <p className="text-destructive">{t('are-you-sure')}</p>
         <form
           className="flex flex-col items-center justify-center text-left align-middle"
           onSubmit={handleSubmit}
           ref={formRef}
         >
           <div className="flex flex-col">
-            <div className="flex flex-col">
-              <Label htmlFor="email-new" className="mb-2">
-                {t(`email-new`)}
-              </Label>
-              <RequiredInput
-                type="email"
-                id="email-new"
-                name="email-new"
-                placeholder={t(`email-new-enter`)}
-                autoComplete="email"
-                maxLength={42}
-                className="mb-2"
-              />
-            </div>
-            <div className="flex flex-col">
-              <Label htmlFor="email-confirm" className="mb-2">
-                {t(`email-new-confirmation`)}
-              </Label>
-              <RequiredInput
-                type="email"
-                id="email-confirm"
-                name="email-confirm"
-                placeholder={t(`email-new-enter-again`)}
-                autoComplete="new-email-confirmation"
-                maxLength={42}
-                className="mb-2"
-              />
-            </div>
             <div className="flex flex-col">
               <Label htmlFor="password" className="mb-2">
                 {t(`auth.password`)}
@@ -170,18 +134,18 @@ const DialogChangeEmail = ({
           </div>
 
           <ButtonCustom
-            variant="default"
-            title={t('save')}
+            variant="destructive"
+            title={t('delete')}
             size="default"
             className="w-full min-w-32"
             type="submit"
             loading={loading}
           >
-            <div className="flex flex-row items-center space-x-2">
+            <div className="flex flex-row items-center space-x-5">
               <div>
-                <Save size={16} />
+                <Trash2 size={15} />
               </div>
-              <span>{t('save')}</span>
+              <span>{t('delete')}</span>
             </div>
           </ButtonCustom>
         </form>
@@ -196,4 +160,4 @@ const DialogChangeEmail = ({
   );
 };
 
-export default DialogChangeEmail;
+export default DialogDeleteAccount;

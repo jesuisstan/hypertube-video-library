@@ -93,13 +93,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-html.png"
+                blurDataURL={'/powered-by/logo-html.png'}
                 alt="html"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-html.png'}
                 priority
               />
               <p>HTML</p>
@@ -108,13 +108,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-css.png"
+                blurDataURL={'/powered-by/logo-css.png'}
                 alt="css"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-css.png'}
                 priority
               />
               <p>CSS</p>
@@ -123,13 +123,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-js.png"
+                blurDataURL={'/powered-by/logo-js.png'}
                 alt="js"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-js.png'}
                 priority
               />
               <p>Javascript</p>
@@ -138,13 +138,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-ts.png"
+                blurDataURL={'/powered-by/logo-ts.png'}
                 alt="ts"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-ts.png'}
                 priority
               />
               <p>Typescript</p>
@@ -153,13 +153,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-react.png"
+                blurDataURL={'/powered-by/logo-react.png'}
                 alt="react"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-react.png'}
                 priority
               />
               <p>React</p>
@@ -168,13 +168,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-nextjs.png"
+                blurDataURL={'/powered-by/logo-nextjs.png'}
                 alt="nextjs"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-nextjs.png'}
                 priority
               />
               <p>NextJS</p>
@@ -183,13 +183,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-tailwindcss.png"
+                blurDataURL={'/powered-by/logo-tailwindcss.png'}
                 alt="tailwindcss"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-tailwindcss.png'}
                 priority
               />
               <p>TailwindCSS</p>
@@ -198,13 +198,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="https://lucide.dev/logo.light.svg"
+                blurDataURL={'https://lucide.dev/logo.light.svg'}
                 alt="lucide"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'https://lucide.dev/logo.light.svg'}
                 priority
               />
               <p>Lucide</p>
@@ -212,14 +212,44 @@ const AboutPage = () => {
 
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
+                src="/powered-by/logo-next-auth.png"
+                blurDataURL={'/powered-by/logo-next-auth.png'}
+                alt="next-auth"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                placeholder="blur"
+                priority
+              />
+              <p>NextAuth</p>
+            </div>
+
+            <div className="flex flex-col items-center justify-between gap-3">
+              <Image
+                src="/powered-by/logo-oauth.svg"
+                blurDataURL={'/powered-by/logo-oauth.svg'}
+                alt="oauth"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                placeholder="blur"
+                priority
+              />
+              <p>OAuth</p>
+            </div>
+
+            <div className="flex flex-col items-center justify-between gap-3">
+              <Image
                 src="/powered-by/logo-jwt.svg"
+                blurDataURL={'/powered-by/logo-jwt.svg'}
                 alt="jwt"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-jwt.svg'}
                 priority
               />
               <p>JWT</p>
@@ -228,13 +258,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-next-intl.png"
+                blurDataURL={'/powered-by/logo-next-intl.png'}
                 alt="next-intl"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-next-intl.png'}
                 priority
               />
               <p>Next-intl</p>
@@ -243,13 +273,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-vercel.svg"
+                blurDataURL={'/powered-by/logo-vercel.svg'}
                 alt="vercel"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-vercel.svg'}
                 priority
               />
               <p>Vercel</p>
@@ -258,13 +288,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-vercel-postgresql.svg"
+                blurDataURL={'/powered-by/logo-vercel-postgresql.svg'}
                 alt="vercel-postgresql"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-vercel-postgresql.svg'}
                 priority
               />
               <p>Vercel PostgreSQL</p>
@@ -273,13 +303,13 @@ const AboutPage = () => {
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-vercel-blob.svg"
+                blurDataURL={'/powered-by/logo-vercel-blob.svg'}
                 alt="vercel-blob"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
                 placeholder="blur"
-                blurDataURL={'/powered-by/logo-vercel-blob.svg'}
                 priority
               />
               <p>Vercel Blob</p>

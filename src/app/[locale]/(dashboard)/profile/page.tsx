@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -17,6 +17,8 @@ import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
+import AutoCarousel from '@/components/ui/carousel/auto-carousel';
+import { slides } from '../../authentication/(components)/logos-slides';
 
 const ProfilePage = () => {
   const t = useTranslations();
@@ -27,13 +29,6 @@ const ProfilePage = () => {
   const [showProfileCompleteModal, setShowProfileCompleteModal] = useState(false);
   const [showProfileCongratsModal, setShowProfileCongratsModal] = useState(false);
   const [profileCompleteModalLayout, setProfileCompleteModalLayout] = useState('basics');
-
-  //useEffect(() => {
-  //  if (!user) return;
-  //  if (!user?.complete) {
-  //    setShowProfileCompleteModal(true);
-  //  }
-  //}, [user]);
 
   const handleModifyClick = (layout: keyof typeof TProfileCompleteLayout) => {
     setProfileCompleteModalLayout(layout);
@@ -100,6 +95,13 @@ const ProfilePage = () => {
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
+          />
+          {/* TODO */}
+          <AutoCarousel
+            title={'Example Carousel'}
+            direction="horizontal"
+            interval={2000}
+            items={slides}
           />
         </div>
 
