@@ -4,8 +4,8 @@ import { EmblaOptionsType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
 
+import { useAutoplay } from '../embla-carousel-use-autoplay';
 import { NextButton, PrevButton, usePrevNextButtons } from './EmblaCarouselArrowButtons';
-import { useAutoplay } from './EmblaCarouselAutoplay';
 import { useAutoplayProgress } from './EmblaCarouselAutoplayProgress';
 
 type PropType = {
