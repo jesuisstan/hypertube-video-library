@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
+import { ChevronDown,ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 
 import { ButtonCustom } from '../buttons/button-custom';
 

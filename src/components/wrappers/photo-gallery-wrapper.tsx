@@ -12,7 +12,7 @@ import EmblaCarousel from '@/components/ui/carousel/embla-carousel';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { TDateProfile } from '@/types/date-profile';
 
-const EmptyPhoto = () => {
+export const EmptyPhoto = () => {
   return (
     <Image
       src={`/identity/logo-square.png`}

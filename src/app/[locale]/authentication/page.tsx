@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -18,8 +18,6 @@ import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
 import { spaceToKebab } from '@/utils/format-string';
-import AutoCarousel from '@/components/ui/carousel/auto-carousel';
-import { slides } from './(components)/logos-slides';
 
 const Authentication = () => {
   const t = useTranslations();
@@ -163,12 +161,6 @@ const Authentication = () => {
               width={0}
               height={0}
             />
-            {/*<AutoCarousel
-              direction="vertical"
-              interval={3000}
-              items={slides}
-              hideArrows
-            />*/}
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
             {/*<h2 className="mb-2 text-2xl smooth42transition xl:text-3xl">{t(`slogan`)}</h2>*/}

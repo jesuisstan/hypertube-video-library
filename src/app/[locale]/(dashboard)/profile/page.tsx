@@ -17,8 +17,6 @@ import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
-import AutoCarousel from '@/components/ui/carousel/auto-carousel';
-import { slides } from '../../authentication/(components)/logos-slides';
 
 const ProfilePage = () => {
   const t = useTranslations();
@@ -95,13 +93,6 @@ const ProfilePage = () => {
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
-          />
-          {/* TODO */}
-          <AutoCarousel
-            title={'Example Carousel'}
-            direction="horizontal"
-            interval={2000}
-            items={slides}
           />
         </div>
 
