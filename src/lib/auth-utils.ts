@@ -1,6 +1,6 @@
 import { db } from '@vercel/postgres';
 
-export async function findOrCreateUser(profileData: any, hashedPassword: string) {
+export async function findOrCreateUser(profileData: any) {
   const client = await db.connect();
   try {
     const {
@@ -21,13 +21,12 @@ export async function findOrCreateUser(profileData: any, hashedPassword: string)
     if (!user) {
       // Insert new user
       const insertQuery = `
-        INSERT INTO users (email, password, confirmed, firstname, lastname, nickname, biography, tags, complete, latitude, longitude, address, registration_date, last_action, photos, birthdate, sex)
-        VALUES ($1, $2, true, $3, $4, $5, $6, '{}', false, 0, 0, $7, NOW(), NOW(), $8, '1970-01-01', $9)
+        INSERT INTO users (email, confirmed, firstname, lastname, nickname, biography, tags, complete, latitude, longitude, address, registration_date, last_action, photos, birthdate, sex)
+        VALUES ($1, true, $2, $3, $4, $5, '{}', false, 0, 0, $6, NOW(), NOW(), $7, '1970-01-01', $8)
         RETURNING *;
       `;
       const insertValues = [
         email,
-        hashedPassword,
         firstname,
         lastname,
         nickname,

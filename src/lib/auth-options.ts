@@ -75,8 +75,6 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      const hashedPassword = await bcrypt.hash(process.env.DEFAULT_PASS!, 10); // todo
-
       const providerMapper: Record<string, (profile: any) => any> = {
         github: (profile) => ({
           email: profile?.email || `${profile?.login}@github.com`,
@@ -114,7 +112,7 @@ export const authOptions: NextAuthOptions = {
         const profileData = providerMapper[account.provider](profile);
 
         try {
-          const appUser = await findOrCreateUser(profileData, hashedPassword);
+          const appUser = await findOrCreateUser(profileData);
           await updateLastAction(appUser.id);
           // Attach appUser data to the returned user object
           Object.assign(user, appUser);
