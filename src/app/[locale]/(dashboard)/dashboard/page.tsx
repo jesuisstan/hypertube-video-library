@@ -10,6 +10,7 @@ import { slides } from '../../authentication/(components)/logos-slides';
 import EmblaCarouselAuto from '@/components/ui/carousel/auto/EmblaCarousel';
 import AutoCarousel from '@/components/ui/carousel/auto-carousel';
 import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
+import TooltipBasic from '@/components/ui/tooltips/tooltip-basic';
 import { EmptyPhoto } from '@/components/wrappers/photo-gallery-wrapper';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -131,22 +132,19 @@ const Dashboard = () => {
     </div>,
   ];
 
-
-    const { data: session, status } = useSession(); // Get session data
-  console.log('session user', session?.user); // debug
+  const { data: session, status } = useSession(); // Get session data
+  console.log('session', session);
   return !user ? (
     <DashboardSkeleton />
   ) : (
     <div>
-      CONTENT
-      {/*<AutoCarousel data={slides} direction="vertical" interval={1000} />*/}
-      {/*<AutoCarousel
-        title={'Example Carousel'}
-        direction="vertical"
-        interval={2000}
-        items={slides}
-      />*/}
-      <EmblaCarouselAuto slides={SLIDES} options={{ loop: true }} />
+      <TooltipBasic trigger={<div>SHOW</div>}>
+        <p>La la la</p>
+      </TooltipBasic>
+
+      <TooltipBasic>
+        <p>This is a default tooltip</p>
+      </TooltipBasic>
     </div>
   );
 };

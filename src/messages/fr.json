@@ -70,7 +70,9 @@
     "user-not-found": "User non trouvé",
     "user-update-failed": "Échec de la mise à jour de l'user",
     "processing": "Traitement...",
-    "accessdenied": "Accès refusé"
+    "accessdenied": "Accès refusé",
+    "social-media-email-password-change-tooltip": "Si vous vous êtes inscrit via les réseaux sociaux, vous devez d'abord créer un mot de passe pour votre compte.\nEnsuite, vous pourrez mettre à jour votre adresse e-mail dans les paramètres.\n\nPour créer/modifier votre mot de passe, veuillez utiliser l'option 'Mot de passe oublié ?' sur la page de connexion.",
+    "social-media-authenticated": "Connecté via les réseaux sociaux?"
   },
   "user-not-found": "User non trouvé",
   "processing": "Traitement...",
@@ -84,7 +86,7 @@
   "theme": "Thème",
   "refresh": "Actualiser",
   "slide-show": "Diaporama",
-  
+
   "male": "Homme",
   "female": "Femme",
   "birthdate": "Date de naissance",

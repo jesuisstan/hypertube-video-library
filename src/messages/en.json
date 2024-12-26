@@ -70,7 +70,9 @@
     "user-not-found": "User not found",
     "user-update-failed": "Failed to update user",
     "processing": "Processing...",
-    "accessdenied": "Access denied"
+    "accessdenied": "Access denied",
+    "social-media-email-password-change-tooltip": "If you registered using social media, you need to create a password for your account first.\n After that, you will be able to update your email in the settings.\n\n To create/change your password, please use the 'Forgot Password?' option on the login page.",
+    "social-media-authenticated": "Social media authenticated?"
   },
   "user-not-found": "User not found",
   "processing": "Processing...",

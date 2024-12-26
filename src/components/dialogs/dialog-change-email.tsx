@@ -9,6 +9,7 @@ import DialogBasic from '@/components/dialogs/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
+import TooltipSocialMediaWarning from '@/components/ui/tooltips/tooltip-social-media-warning';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 
@@ -110,6 +111,7 @@ const DialogChangeEmail = ({
       }
     >
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-5 text-center">
+        <TooltipSocialMediaWarning />
         <form
           className="flex flex-col items-center justify-center text-left align-middle"
           onSubmit={handleSubmit}

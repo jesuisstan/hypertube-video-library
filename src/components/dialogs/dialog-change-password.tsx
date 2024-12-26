@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import { OctagonAlert, PenLine } from 'lucide-react';
@@ -7,6 +8,7 @@ import DialogBasic from '@/components/dialogs/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/i18n/routing';
+import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const DialogChangePassword = ({
@@ -20,14 +22,21 @@ const DialogChangePassword = ({
   const { logout } = useUserStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { resetSearchStore } = useSearchStore();
 
   const handleProceed = async () => {
     setLoading(true);
-    logout();
-    // wait for some time to ensure logout is processed
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    resetSearchStore(); // reset search store
+    logout(); // clear local user state
+
+    // Use NextAuth's signOut method
+    await signOut({
+      redirect: false, // Prevent automatic redirection
+      callbackUrl: '/authentication', // Specify where to redirect after logout
+    });
+
     setLoading(false);
-    router.push('/authentication');
+    router.push('/authentication'); // Redirect explicitly (optional, as callbackUrl handles it)
   };
 
   return (
@@ -56,7 +65,6 @@ const DialogChangePassword = ({
           <OctagonAlert size={60} className="smooth42transition hover:scale-150" />
         </div>
         <TextWithLineBreaks text={t('auth.password-change-message')} />
-        {/*<p className="max-w-[50vh]">{}</p>*/}
       </div>
 
       <div className="flex flex-row justify-center">

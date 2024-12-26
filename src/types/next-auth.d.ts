@@ -22,6 +22,7 @@ declare module 'next-auth' {
     photos: string[];
     confirmed: boolean;
     prefered_language: string;
+    provider: string;
   }
 
   interface User extends DefaultUser {
@@ -40,6 +41,7 @@ declare module 'next-auth' {
     photos: string[];
     confirmed: boolean;
     prefered_language: string;
+    provider: string;
   }
 
   interface Profile {

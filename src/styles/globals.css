@@ -104,11 +104,11 @@
   background: transparent;
   border-radius: 16px;
   border: 1px solid;
-  border-color: hsl(var(--muted));
+  border-color: hsl(var(--c42orange));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--secondary));
+  background: hsl(var(--c42green));
   border-radius: 16px;
 }
 

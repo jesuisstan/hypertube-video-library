@@ -115,7 +115,7 @@ export const authOptions: NextAuthOptions = {
           const appUser = await findOrCreateUser(profileData);
           await updateLastAction(appUser.id);
           // Attach appUser data to the returned user object
-          Object.assign(user, appUser);
+          Object.assign(user, appUser, { provider: account.provider });
           return true;
         } catch (error) {
           console.error('Error in signIn callback:', error);
@@ -148,6 +148,7 @@ export const authOptions: NextAuthOptions = {
         token.photos = user.photos;
         token.confirmed = user.confirmed;
         token.prefered_language = user.prefered_language;
+        token.provider = user.provider;
       }
       return token; // Return the token after modification
     },
