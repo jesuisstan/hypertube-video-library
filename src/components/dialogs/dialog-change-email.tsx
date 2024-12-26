@@ -9,6 +9,7 @@ import DialogBasic from '@/components/dialogs/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
+import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 
 const DialogChangeEmail = ({
@@ -18,6 +19,7 @@ const DialogChangeEmail = ({
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { updateSession } = useUpdateSession();
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
@@ -72,7 +74,8 @@ const DialogChangeEmail = ({
       if (response.ok) {
         setSuccessMessage(t(result.message));
         if (updatedUserData) {
-          setUser({ ...user, ...updatedUserData });
+          //setUser({ ...user, ...updatedUserData });
+          await updateSession(updatedUserData);
         }
       } else {
         setError(t(result.error));

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
-import { checkIfUserDataIsFilled } from '@/utils/server/check-user-details-filled';
+import { checkIfUserDataIsFilled } from '@/lib/check-user-details-filled';
 
 export async function POST(req: Request) {
   const client = await db.connect();

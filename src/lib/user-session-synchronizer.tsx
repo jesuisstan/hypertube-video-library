@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'; // next-auth hook to get the sessi
 
 import useUserStore from '@/stores/user'; // Your Zustand store
 
-const UserSessionSync = () => {
+const UserSessionSynchronizer = () => {
   const { data: session, status } = useSession(); // Get session data
   const setUser = useUserStore((state) => state.setUser); // Access Zustand setUser method
 
@@ -17,4 +17,4 @@ const UserSessionSync = () => {
   return null; // This component doesn't render anything, it just syncs the session to the store
 };
 
-export default UserSessionSync;
+export default UserSessionSynchronizer;

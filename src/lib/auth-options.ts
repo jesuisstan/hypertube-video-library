@@ -7,10 +7,10 @@ import GoogleProvider from 'next-auth/providers/google';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
-import { spaceToSnake } from '../format-string';
+import { spaceToSnake } from '../utils/format-string';
 
-import { findOrCreateUser, updateLastAction } from '@/utils/server/auth-utils';
-import { defineCampus } from '@/utils/server/define-42-campus';
+import { findOrCreateUser, updateLastAction } from '@/lib/auth-utils';
+import { defineCampus } from '@/lib/auth-utils';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -128,9 +128,12 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user }) {
-      // When the user object is returned from authorize
-      if (user) {
+    async jwt({ token, user, trigger, session }) {
+      // Update jwt token with user data if triggered by signIn
+      if (trigger === 'update' && session?.user) {
+        console.log('---------- TRIGGER UPDATE ----------', session.user); // debug
+        token = { ...token, ...session.user };
+      } else if (user) {
         // Assign user properties to the token
         token.id = user.id;
         token.email = user.email;

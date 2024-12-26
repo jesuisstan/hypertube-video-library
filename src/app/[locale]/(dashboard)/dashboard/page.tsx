@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import { slides } from '../../authentication/(components)/logos-slides';
@@ -130,6 +131,9 @@ const Dashboard = () => {
     </div>,
   ];
 
+
+    const { data: session, status } = useSession(); // Get session data
+  console.log('session user', session?.user); // debug
   return !user ? (
     <DashboardSkeleton />
   ) : (

@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { TAGS_LIST } from '@/constants/tags-list';
+import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 import { TGeoCoordinates, TSelectGeoOption } from '@/types/geolocation';
 import {
@@ -44,6 +45,7 @@ const ModalProfileComplete = ({
   startLayout: TProfileCompleteLayout;
   setProfileIsCompleted: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { updateSession } = useUpdateSession();
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
@@ -184,7 +186,8 @@ const ModalProfileComplete = ({
       if (response.ok) {
         setSuccessMessage(t(result.message));
         if (updatedUserData) {
-          setUser({ ...user, ...updatedUserData });
+          //setUser({ ...user, ...updatedUserData });
+          await updateSession(updatedUserData);
         }
       } else {
         setError(t(result.error));

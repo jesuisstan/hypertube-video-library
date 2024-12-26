@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { del } from '@vercel/blob';
 import { db } from '@vercel/postgres';
 
-import { checkIfUserDataIsFilled } from '@/utils/server/check-user-details-filled';
+import { checkIfUserDataIsFilled } from '@/lib/check-user-details-filled';
 
 export async function DELETE(req: Request): Promise<NextResponse> {
   const client = await db.connect();
