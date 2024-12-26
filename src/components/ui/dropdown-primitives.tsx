@@ -33,14 +33,14 @@ const DropdownMenuSelector = React.forwardRef<
       className={clsx(
         `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-muted bg-transparent px-3 text-sm font-normal transition-all duration-300 ease-in-out`,
         `hover:border-c42orange`,
-        value ? 'text-foreground' : 'text-secondary',
+        value ? 'text-foreground' : 'text-muted-foreground',
         className
       )}
     >
       {startIcon}
       <div className="truncate">{value || 'Select'}</div>
       <ChevronRight
-        className="relative top-[1px] h-4 text-secondary smooth42transition group-data-[state=open]:-rotate-180"
+        className="relative top-[1px] h-4 text-muted-foreground smooth42transition group-data-[state=open]:-rotate-180"
         aria-hidden
       />
     </div>
@@ -62,7 +62,7 @@ const DropdownMenuMultipleSelector = React.forwardRef<
         `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-muted bg-transparent px-3 text-sm font-normal transition-all duration-300 ease-in-out`,
         `hover:border-c42orange`,
         `xl: max-w-xl, lg: max-w-full`,
-        value ? 'text-foreground' : 'text-secondary',
+        value ? 'text-foreground' : 'text-muted-foreground',
         className
       )}
     >
@@ -70,7 +70,7 @@ const DropdownMenuMultipleSelector = React.forwardRef<
         {value || 'Select'}
       </div>
       <ChevronDown
-        className="relative top-[1px] h-4 shrink-0 text-secondary transition-transform ease-in group-data-[state=open]:-rotate-180"
+        className="relative top-[1px] h-4 shrink-0 text-muted-foreground transition-transform ease-in group-data-[state=open]:-rotate-180"
         aria-hidden
       />
     </div>
@@ -107,7 +107,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={clsx(
-      'bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
       className
     )}
     {...props}
@@ -124,8 +124,8 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={clsx(
-        'text-popover-foreground z-50 max-h-96 min-w-[10rem] max-w-[242px] overflow-y-auto rounded-md border border-muted bg-card p-1 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        `dark:border-secondary`,
+        'z-50 max-h-96 min-w-[10rem] max-w-[242px] overflow-y-auto rounded-md border border-muted bg-card p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+        `dark:border-muted-foreground`,
         className
       )}
       {...props}

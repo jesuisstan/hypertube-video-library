@@ -163,7 +163,7 @@ const DialogChangeEmail = ({
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-2 text-secondary"
+                  className="absolute right-2 top-2 text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff /> : <Eye />}

@@ -271,7 +271,7 @@ const ModalProfileComplete = ({
             value={biography}
             onChange={handleBiographyChange}
           />
-          <span className="mt-1 text-xs text-secondary/80">
+          <span className="mt-1 text-xs text-muted-foreground/80">
             {t('min') + ' ' + MIN_BIOGRAPHY_LENGTH}
             {', '}
             {t('max') + ' ' + MAX_BIOGRAPHY_LENGTH} {t('characters')}
@@ -293,7 +293,7 @@ const ModalProfileComplete = ({
             />
           </div>
           {/* vertical divider */}
-          <div className={clsx('w-[1px] bg-secondary opacity-40', 'xl:block')} />
+          <div className={clsx('w-[1px] bg-muted-foreground opacity-40', 'xl:block')} />
           {/* city selector */}
           <div id="geo-selector" className="flex flex-col gap-3">
             <div className="w-full">
@@ -312,7 +312,7 @@ const ModalProfileComplete = ({
             </div>
           </div>
           {/* vertical divider */}
-          <div className={clsx('w-[1px] bg-secondary opacity-40', 'xl:block')} />
+          <div className={clsx('w-[1px] bg-muted-foreground opacity-40', 'xl:block')} />
           {/* fake location */}
           <div id="geo-locator" className="self-center" title={t('set-fake-location')}>
             <MapPinOff

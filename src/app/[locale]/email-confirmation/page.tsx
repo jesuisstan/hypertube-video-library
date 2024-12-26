@@ -33,11 +33,11 @@ const EmailConfirmation = () => {
 
   return (
     <div
-      className="flex w-full items-center justify-center"
+      className="flex w-full items-center justify-center smooth42transition"
       style={{ minHeight: 'calc(100vh - 56px)' }}
     >
       <div
-        id="access-denied-warning"
+        id="email-confirmation"
         className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
       >
         <Image
@@ -66,7 +66,11 @@ const EmailConfirmation = () => {
             <Link href={`/dashboard`}>{t('return-to') + ' ' + t('dashboard')}</Link>
           </ButtonCustom>
 
-          <a href="mailto:support@q3-technology.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <ButtonCustom type="button" variant="link" size="sm">
               <span className="text-muted-foreground">{t('contact-support')}</span>
             </ButtonCustom>

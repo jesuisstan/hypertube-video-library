@@ -350,7 +350,7 @@ const Authentication = () => {
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-[7px] text-secondary"
+                  className="absolute right-2 top-[7px] text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff /> : <Eye />}

@@ -60,7 +60,7 @@ const ChipsGroup = ({
       <div className="mb-4 flex flex-row items-end gap-8">
         {label && <div className="text-base font-medium italic text-foreground">{label}</div>}
 
-        <div className="flex flex-row gap-7 text-xs font-normal text-secondary/80">
+        <div className="flex flex-row gap-7 text-xs font-normal text-muted-foreground/80">
           <button className="min-w-fit text-left hover:text-c42green" onClick={handleSelectAll}>
             {t(`selector.select-all`)}
           </button>

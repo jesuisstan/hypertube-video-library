@@ -9,7 +9,7 @@ type TLastUpdateProps = {
 
 const LastUpdateWrapper: React.FC<TLastUpdateProps> = ({ loading, date }) => {
   return (
-    <div className="mt-4 flex flex-row justify-end gap-1 text-right text-sm text-secondary">
+    <div className="mt-4 flex flex-row justify-end gap-1 text-right text-sm text-muted-foreground">
       {/*{t`common:table-overview.last-update`}{' '}*/}
       {loading || !date ? <DateSkeleton /> : (date ?? '')}
     </div>

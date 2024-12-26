@@ -144,7 +144,7 @@ ${user?.firstname} ${user?.lastname} (${user?.nickname} / ID: ${user?.id})`;
     <ActionsSkeleton />
   ) : (
     <div className={clsx('flex max-w-fit flex-row self-center rounded-2xl bg-card shadow-md')}>
-      <div className={clsx('my-3 block w-[1px] bg-secondary opacity-40')} />
+      <div className={clsx('my-3 block w-[1px] bg-muted-foreground opacity-40')} />
       {/* ACTIONS */}
       <div
         className={clsx(

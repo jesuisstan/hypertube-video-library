@@ -1,23 +1,30 @@
 'use client';
 
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import { CircleCheck, Eye, EyeOff, OctagonAlert } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
+import { Separator } from '@/components/ui/separator';
 
 const PasswordResetPage = () => {
   const t = useTranslations();
-  const formRef = React.useRef<HTMLFormElement>(null);
-  const resetToken = new URLSearchParams(window.location.search).get('token');
-  const [error, setError] = React.useState('');
-  const [successMessage, setSuccessMessage] = React.useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [resetToken, setResetToken] = useState<string | null>(null);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token');
+    setResetToken(token);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,12 +70,31 @@ const PasswordResetPage = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-identity-background bg-cover bg-center text-center">
-      <div className="flex min-w-fit flex-col items-center justify-center rounded-xl bg-card/90 p-4 text-foreground">
-        <h1 className="text-2xl font-bold">{t(`auth.change-password`)}</h1>
+    <div
+      className="flex w-full items-center justify-center smooth42transition"
+      style={{ minHeight: 'calc(100vh - 56px)' }}
+    >
+      <div
+        id="email-confirmation"
+        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
+      >
+        <Image
+          src="/identity/logo-title-only.png"
+          blurDataURL="/identity/logo-title-only.png"
+          alt="logo"
+          width={121}
+          height={0}
+          placeholder="empty"
+          priority
+        />
 
-        {!resetToken || resetToken === 'invalid-token' ? (
+        <Separator />
+
+        <h1 className="text-2xl font-bold">{t(`auth.change-password`)}</h1>
+        {resetToken === 'invalid-token' ? (
           <p className="pt-2 text-lg text-destructive">{t(`auth.invalid-token`)}</p>
+        ) : !resetToken ? (
+          <p className="animate-pulse pt-2 text-lg">{t(`auth.processing`)}</p>
         ) : (
           <>
             <form
@@ -93,7 +119,7 @@ const PasswordResetPage = () => {
                   />
                   <button
                     type="button"
-                    className="absolute right-2 top-2 text-secondary"
+                    className="absolute right-2 top-2 text-muted-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loading || !!successMessage}
                   >
@@ -116,7 +142,7 @@ const PasswordResetPage = () => {
                   />
                   <button
                     type="button"
-                    className="absolute right-2 top-2 text-secondary"
+                    className="absolute right-2 top-2 text-muted-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loading || !!successMessage}
                   >
@@ -134,23 +160,30 @@ const PasswordResetPage = () => {
                 {t(`auth.change-password`)}
               </ButtonCustom>
             </form>
-            {error && (
-              <div className="flex flex-col items-center gap-2 text-destructive">
-                <OctagonAlert size={30} />
-                <p className="mb-5 text-center text-sm">{error}</p>
-              </div>
-            )}
+            {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
             {successMessage && (
-              <div className="flex flex-col items-center gap-2 text-c42green">
-                <CircleCheck size={30} />
-                <p className="mb-5 text-center text-sm ">{successMessage}</p>
-              </div>
+              <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
             )}
           </>
         )}
-        <ButtonCustom variant="link">
-          <Link href={`/dashboard`}>{t('go-to-home')}</Link>
-        </ButtonCustom>
+
+        <Separator />
+
+        <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
+          <ButtonCustom type="button" variant="default" size="default" className="min-w-32">
+            <Link href={`/dashboard`}>{t('return-to') + ' ' + t('dashboard')}</Link>
+          </ButtonCustom>
+
+          <a
+            href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ButtonCustom type="button" variant="link" size="sm">
+              <span className="text-muted-foreground">{t('contact-support')}</span>
+            </ButtonCustom>
+          </a>
+        </div>
       </div>
     </div>
   );

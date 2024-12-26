@@ -71,7 +71,7 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
             </div>
           </div>
           {/* horizontal divider */}
-          <div className="mt-3 w-52 border-t border-secondary opacity-40" />
+          <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
         </div>
 
         {/* Sidebar search bar */}
@@ -83,7 +83,7 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
         {generateSkeletonItems(3)}
 
         {/* horizontal divider */}
-        <div className="mt-3 w-52 border-t border-secondary opacity-40" />
+        <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
         <div className="pb-1">
           <div className="ml-4 h-2.5 w-44 rounded-full bg-muted pb-3" />
         </div>

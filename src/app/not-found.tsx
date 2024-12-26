@@ -38,7 +38,11 @@ const NotFound = () => {
             <Link href={`/dashboard`}>{t('return-to') + ' ' + t('dashboard')}</Link>
           </ButtonCustom>
 
-          <a href="mailto:support@q3-technology.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <ButtonCustom type="button" variant="link" size="sm">
               <span className="text-muted-foreground">{t('contact-support')}</span>
             </ButtonCustom>
