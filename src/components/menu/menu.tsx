@@ -160,6 +160,14 @@ const Menu: React.FC = () => {
                 </Link>
               </div>
 
+              <MenuList
+                onClick={() => {
+                  if (isSidebarOpen) setIsSidebarOpen(false);
+                }}
+                pathname={pathname}
+                translate={t}
+              />
+
               {/* ABOUT LINK */}
               <div id="about-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
                 <ShieldQuestion />
@@ -178,14 +186,6 @@ const Menu: React.FC = () => {
                   {t(`about`)}
                 </Link>
               </div>
-
-              <MenuList
-                onClick={() => {
-                  if (isSidebarOpen) setIsSidebarOpen(false);
-                }}
-                pathname={pathname}
-                translate={t}
-              />
 
               {/* horizontal divider */}
               <Separator />

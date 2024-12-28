@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
     // Define the confirmation URL
     const { origin } = new URL(req.url);
-    const resetPasswordUrl = `${origin}/api/auth/password-reset?token=${confirmationToken}`;
+    const resetPasswordUrl = `${origin}/api/auth/password/reset?token=${confirmationToken}`;
 
     // Send an email to the user with the confirmation URL
     await transporter.sendMail({

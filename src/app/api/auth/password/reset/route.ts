@@ -5,8 +5,8 @@ export async function GET(req: Request) {
   const token = url.searchParams.get('token');
 
   if (!token) {
-    return NextResponse.redirect(new URL('/password-reset?token=invalid-token', req.url));
+    return NextResponse.redirect(new URL('/password/reset?token=invalid-token', req.url));
   }
 
-  return NextResponse.redirect(new URL(`/password-reset?token=${token}`, req.url));
+  return NextResponse.redirect(new URL(`/password/reset?token=${token}`, req.url));
 }

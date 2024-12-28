@@ -46,7 +46,7 @@ const PasswordResetPage = () => {
     setLoading(true);
 
     let response;
-    response = await fetch('/api/auth/password-db-modification', {
+    response = await fetch('/api/auth/password/modify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

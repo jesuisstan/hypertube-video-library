@@ -88,7 +88,7 @@ const Authentication = () => {
         break;
       case 'forgot':
         setLoading(true);
-        response = await fetch('/api/auth/password-forgotten-email', {
+        response = await fetch('/api/auth/password/forgotten-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

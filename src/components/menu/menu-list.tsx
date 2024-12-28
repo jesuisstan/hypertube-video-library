@@ -15,9 +15,15 @@ const MenuList = ({
   translate: (key: string) => string;
 }) => {
   return (
-    <ul className="text-card-foreground space-y-4 overflow-y-auto text-sm font-bold">
+    <ul className="space-y-4 overflow-y-auto text-sm font-normal text-card-foreground">
       <li>
-        <span className="group ml-3 flex items-center">{capitalize(translate(`account`))}</span>
+        <span
+          className={clsx('group ml-3 flex items-center smooth42transition', {
+            'text-c42green': pathname === '/profile',
+          })}
+        >
+          {capitalize(translate(`account`))}
+        </span>
         <ul className="ml-4 mt-2 border-l border-muted-foreground font-normal text-muted-foreground">
           <li>
             <Link
@@ -45,7 +51,11 @@ const MenuList = ({
       </li>
 
       <li>
-        <span className="group ml-3 flex items-center">
+        <span
+          className={clsx('group ml-3 flex items-center smooth42transition', {
+            'text-c42green': pathname === '/search',
+          })}
+        >
           {capitalize(translate(`search.search`))}
         </span>
         <ul className="ml-4 mt-2 border-l border-muted-foreground font-normal text-muted-foreground">
