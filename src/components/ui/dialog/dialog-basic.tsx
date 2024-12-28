@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/dialogs/dialog-primitives';
+} from '@/components/ui/dialog/dialog-primitives';
 
 interface DialogModalBasicProps {
   isOpen: boolean;
@@ -37,7 +37,7 @@ const DialogBasic: React.FC<DialogModalBasicProps> = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="w-auto min-w-80 max-w-96 xs:max-w-fit"
         onEscapeKeyDown={hideCloseButton && !setIsOpen ? (e) => e.preventDefault() : undefined}
         onPointerDownOutside={hideCloseButton && !setIsOpen ? (e) => e.preventDefault() : undefined}
       >

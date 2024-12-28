@@ -10,7 +10,6 @@ import { slides } from '../../authentication/(components)/logos-slides';
 import EmblaCarouselAuto from '@/components/ui/carousel/auto/EmblaCarousel';
 import AutoCarousel from '@/components/ui/carousel/auto-carousel';
 import DashboardSkeleton from '@/components/ui/skeletons/dashboard-skeleton';
-import TooltipBasic from '@/components/ui/tooltips/tooltip-basic';
 import { EmptyPhoto } from '@/components/wrappers/photo-gallery-wrapper';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -134,19 +133,7 @@ const Dashboard = () => {
 
   const { data: session, status } = useSession(); // Get session data
   console.log('session', session);
-  return !user ? (
-    <DashboardSkeleton />
-  ) : (
-    <div>
-      <TooltipBasic trigger={<div>SHOW</div>}>
-        <p>La la la</p>
-      </TooltipBasic>
-
-      <TooltipBasic>
-        <p>This is a default tooltip</p>
-      </TooltipBasic>
-    </div>
-  );
+  return !user ? <DashboardSkeleton /> : <div>CONTENT</div>;
 };
 
 export default Dashboard;

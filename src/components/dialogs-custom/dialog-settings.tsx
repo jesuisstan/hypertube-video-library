@@ -3,11 +3,11 @@ import { useTranslations } from 'next-intl';
 
 import { Settings } from 'lucide-react';
 
-import DialogBasic from '@/components/dialogs/dialog-basic';
-import DialogChangeEmail from '@/components/dialogs/dialog-change-email';
-import DialogChangePassword from '@/components/dialogs/dialog-change-password';
-import DialogDeleteAccount from '@/components/dialogs/dialog-delete-account';
+import DialogChangeEmail from '@/components/dialogs-custom/dialog-change-email';
+import DialogChangePassword from '@/components/dialogs-custom/dialog-change-password';
+import DialogDeleteAccount from '@/components/dialogs-custom/dialog-delete-account';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import DialogBasic from '@/components/ui/dialog/dialog-basic';
 
 const DialogSettings = ({
   show,

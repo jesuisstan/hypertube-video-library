@@ -25,7 +25,7 @@ const AboutPage = () => {
             width={0}
             height={0}
             sizes="100vw"
-            className={clsx(`h-12 w-auto`)}
+            className={clsx(`h-10 w-auto`)}
             placeholder="blur"
             priority
           />
@@ -36,7 +36,7 @@ const AboutPage = () => {
             width={0}
             height={0}
             sizes="100vw"
-            className={clsx(`h-auto w-96 min-w-52`)}
+            className={clsx(`h-auto w-80 min-w-52`)}
             placeholder="blur"
             priority
           />

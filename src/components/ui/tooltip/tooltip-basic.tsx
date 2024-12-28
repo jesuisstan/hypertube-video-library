@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltips/tooltip-primitives';
+} from '@/components/ui/tooltip/tooltip-primitives';
 
 interface TooltipBasicProps {
   trigger?: React.ReactNode;

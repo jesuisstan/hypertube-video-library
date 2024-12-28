@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
 import clsx from 'clsx';
-import { MapPinned, MapPinOff, OctagonAlert, Save } from 'lucide-react';
+import { CircleAlert, MapPinned, MapPinOff, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
-import ModalBasic from '@/components/modals/modal-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
+import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
@@ -34,7 +34,7 @@ const MIN_TAGS_LENGTH = 5;
 
 export type TProfileCompleteLayout = 'basics' | 'biography' | 'location' | 'tags' | 'photos';
 
-const ModalProfileComplete = ({
+const DialogProfileModify = ({
   show,
   setShow,
   startLayout,
@@ -259,19 +259,16 @@ const ModalProfileComplete = ({
     ),
     biography: (
       <div>
-        <Label htmlFor="about" className="mb-2">
-          {t(`bio`) + ':'}
-        </Label>
         <div className="flex flex-col">
           <textarea
             id="biography"
             name="biography"
             placeholder={t(`describe-youself`)}
-            className="disabled:opacity-50, flex h-48 min-w-[30vw] rounded-md border bg-background p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
+            className="disabled:opacity-50, m-1 flex h-48 min-w-[30vw] rounded-md border bg-card p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
             value={biography}
             onChange={handleBiographyChange}
           />
-          <span className="mt-1 text-xs text-muted-foreground/80">
+          <span className="ml-2 mt-1 text-xs text-muted-foreground/80">
             {t('min') + ' ' + MIN_BIOGRAPHY_LENGTH}
             {', '}
             {t('max') + ' ' + MAX_BIOGRAPHY_LENGTH} {t('characters')}
@@ -281,21 +278,27 @@ const ModalProfileComplete = ({
     ),
     location: (
       <div className="flex flex-col">
-        <Label htmlFor="geolocation" className="mb-2 ml-5">
-          {t(`location`) + ':'}
-        </Label>
-        <div id="geolocation" className="m-5 flex flex-row gap-5 self-center">
-          <div id="geo-locator" className="self-center" title={t('get-location')}>
-            <MapPinned
-              size={24}
-              onClick={handleGeoLocatorClick}
-              className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-110"
-            />
+        <div id="geolocation" className="m-5 flex flex-col self-center">
+          <div className="mb-2 flex flex-row items-center justify-center gap-5">
+            <div id="geo-locator" className="self-center" title={t('get-location')}>
+              <MapPinned
+                size={24}
+                onClick={handleGeoLocatorClick}
+                className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-110"
+              />
+            </div>
+            <p className="text-muted-foreground">{' / '}</p>
+            {/* fake location */}
+            <div id="geo-locator" className="self-center" title={t('set-fake-location')}>
+              <MapPinOff
+                size={24}
+                onClick={handleFakeLocatorClick}
+                className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-110"
+              />
+            </div>
           </div>
-          {/* vertical divider */}
-          <div className={clsx('w-[1px] bg-muted-foreground opacity-40', 'xl:block')} />
           {/* city selector */}
-          <div id="geo-selector" className="flex flex-col gap-3">
+          <div id="geo-selector" className="mt-2">
             <div className="w-full">
               <Label htmlFor="city" className="mb-2">
                 {t(`city`)}
@@ -311,23 +314,13 @@ const ModalProfileComplete = ({
               />
             </div>
           </div>
-          {/* vertical divider */}
-          <div className={clsx('w-[1px] bg-muted-foreground opacity-40', 'xl:block')} />
-          {/* fake location */}
-          <div id="geo-locator" className="self-center" title={t('set-fake-location')}>
-            <MapPinOff
-              size={24}
-              onClick={handleFakeLocatorClick}
-              className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-110"
-            />
-          </div>
         </div>
         {/* warning */}
-        <div className="flex max-w-96 flex-row items-center justify-center gap-3 space-y-1 self-center text-center">
+        <div className="flex max-w-full flex-row items-center justify-center gap-3 space-y-1 self-center text-center">
           <div className="text-c42orange">
-            <OctagonAlert size={25} />
+            <CircleAlert size={25} />
           </div>
-          <div className="text-left text-xs">
+          <div className="text-left text-xs max-w-96">
             <TextWithLineBreaks text={t('location-need-message')} />
           </div>
         </div>
@@ -356,10 +349,6 @@ const ModalProfileComplete = ({
           {user?.photos?.length ?? 0} / 5
         </div>
         <ImageUploader id={0} setProfileIsCompleted={setProfileIsCompleted} />
-        <ImageUploader id={1} setProfileIsCompleted={setProfileIsCompleted} />
-        <ImageUploader id={2} setProfileIsCompleted={setProfileIsCompleted} />
-        <ImageUploader id={3} setProfileIsCompleted={setProfileIsCompleted} />
-        <ImageUploader id={4} setProfileIsCompleted={setProfileIsCompleted} />
       </div>
     ),
   };
@@ -440,7 +429,13 @@ const ModalProfileComplete = ({
   }, [selectedCityOption]);
 
   return (
-    <ModalBasic isOpen={show} setIsOpen={handleClose} title={t('complete-profile')}>
+    <DialogBasic
+      isOpen={show}
+      setIsOpen={handleClose}
+      title={t('complete-profile')}
+      trigger={null}
+      description={t(`dialog-title.${layout}`)}
+    >
       <div className="max-h-[70vh] overflow-y-auto">
         <div
           className={clsx(
@@ -519,8 +514,8 @@ const ModalProfileComplete = ({
           {layout !== 'photos' ? t('next') : t('finish')}
         </ButtonCustom>
       </div>
-    </ModalBasic>
+    </DialogBasic>
   );
 };
 
-export default ModalProfileComplete;
+export default DialogProfileModify;

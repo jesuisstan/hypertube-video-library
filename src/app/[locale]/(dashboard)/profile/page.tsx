@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import ModalProfileComplete from '@/components/modals/modal-profile-complete';
-import TProfileCompleteLayout from '@/components/modals/modal-profile-complete';
-import ModalProfileCongrats from '@/components/modals/modal-profile-congrats';
+import DialogProfileIsComplete from '@/components/dialogs-custom/dialog-profile-is-complete';
+import ModalProfileComplete from '@/components/dialogs-custom/dialog-profile-modify';
+import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
@@ -43,7 +43,10 @@ const ProfilePage = () => {
         startLayout={profileCompleteModalLayout as keyof typeof TProfileCompleteLayout}
         setProfileIsCompleted={setShowProfileCongratsModal}
       />
-      <ModalProfileCongrats show={showProfileCongratsModal} setShow={setShowProfileCongratsModal} />
+      <DialogProfileIsComplete
+        show={showProfileCongratsModal}
+        setShow={setShowProfileCongratsModal}
+      />
 
       {/* HEADER */}
       <div className={clsx('mb-4 flex items-center justify-between')}>

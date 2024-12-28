@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff, PenLine } from 'lucide-react';
 import { Save } from 'lucide-react';
 
-import DialogBasic from '@/components/dialogs/dialog-basic';
+import TooltipSocialMediaWarning from '@/components/tooltips-custom/tooltip-social-media-warning';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
-import TooltipSocialMediaWarning from '@/components/ui/tooltips/tooltip-social-media-warning';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 

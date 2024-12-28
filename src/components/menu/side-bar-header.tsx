@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import DialogSettings from '@/components/dialogs/dialog-settings';
+import DialogSettings from '@/components/dialogs-custom/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar-mini';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';

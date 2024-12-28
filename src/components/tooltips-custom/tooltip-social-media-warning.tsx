@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert } from 'lucide-react';
 
-import { ButtonCustom } from '../buttons/button-custom';
+import { ButtonCustom } from '../ui/buttons/button-custom';
 
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
-import TooltipBasic from '@/components/ui/tooltips/tooltip-basic';
+import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import { useRouter } from '@/i18n/routing';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
