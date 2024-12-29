@@ -47,14 +47,9 @@ export async function POST(req: Request) {
     const currentDate = new Date().toISOString();
     const updateQuery = `
         UPDATE users
-        SET tags = $2, last_action = $3, online = true,
-            rating = CASE
-                        WHEN (tags IS NULL OR tags = '{}' OR array_length(tags, 1) = 0) THEN 
-                          LEAST(rating + 5, 100)
-                        ELSE rating
-                      END
+        SET tags = $2, last_action = $3
         WHERE id = $1
-        RETURNING id, tags, last_action, online, rating;
+        RETURNING id, tags, last_action;
       `;
     const updateValues = [id, tags, currentDate];
     const updatedUserResult = await client.query(updateQuery, updateValues);

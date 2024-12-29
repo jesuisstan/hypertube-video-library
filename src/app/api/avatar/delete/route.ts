@@ -34,9 +34,9 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     const currentDate = new Date();
     const updateQuery = `
       UPDATE users
-      SET photos = array_remove(photos, $2), last_action = $3, online = true, rating = GREATEST(rating - 5, 22)
+      SET photos = array_remove(photos, $2), last_action = $3
       WHERE id = $1
-      RETURNING id, photos, last_action, online, rating;
+      RETURNING id, photos, last_action;
     `;
     const updateValues = [userId, photoUrl, currentDate.toISOString()];
     const updatedUserResult = await client.query(updateQuery, updateValues);

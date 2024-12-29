@@ -28,13 +28,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
     }
 
-    // Step 3: Update the user's photos array by appending the new URL. Update the last action, online status, and rating in one query.
+    // Step 3: Update the user's photos array by appending the new URL. Update the last action.
     const currentDate = new Date();
     const updateQuery = `
       UPDATE users 
-      SET photos = array_append(photos, $2), last_action = $3, online = true, rating = LEAST(rating + 5, 100)
+      SET photos = array_append(photos, $2), last_action = $3
       WHERE id = $1
-      RETURNING id, photos, last_action, online, rating;
+      RETURNING id, photos, last_action;
     `;
     const updateValues = [id, url, currentDate.toISOString()];
     const updatedUserResult = await client.query(updateQuery, updateValues);

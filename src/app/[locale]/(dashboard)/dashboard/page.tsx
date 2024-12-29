@@ -132,7 +132,6 @@ const Dashboard = () => {
   ];
 
   const { data: session, status } = useSession(); // Get session data
-  console.log('session', session);
   return !user ? <DashboardSkeleton /> : <div>CONTENT</div>;
 };
 

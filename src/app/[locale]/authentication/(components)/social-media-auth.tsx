@@ -1,12 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
-const SocialMediaAuth = () => {
+const SocialMediaAuth = ({
+  translate,
+  setError,
+}: {
+  translate: (key: string) => string;
+  setError: Dispatch<React.SetStateAction<string>>;
+}) => {
   const [loadingGithub, setLoadingGithub] = useState(false);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loading42, setLoading42] = useState(false);
@@ -25,7 +31,8 @@ const SocialMediaAuth = () => {
 
       //setLoading(false);
     } catch (error) {
-      console.error('Error during GitHub authentication:', error);
+      console.error('Error during Social Media authentication:', error);
+      setError(translate('something-went-wrong'));
       if (provider === 'github') {
         setLoadingGithub(false);
       } else if (provider === 'google') {

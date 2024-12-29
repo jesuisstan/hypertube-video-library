@@ -221,7 +221,9 @@ const Authentication = () => {
         </h2>
 
         {/* Social login buttons */}
-        {(pageLayout === 'login' || pageLayout === 'register') && <SocialMediaAuth />}
+        {(pageLayout === 'login' || pageLayout === 'register') && (
+          <SocialMediaAuth translate={t} setError={setError} />
+        )}
         {/* Horizontal devider */}
         {(pageLayout === 'login' || pageLayout === 'register') && (
           <Separator text={t(`or`).toUpperCase()} />

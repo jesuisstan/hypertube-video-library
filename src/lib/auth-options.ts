@@ -129,7 +129,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, trigger, session }) {
       // Update jwt token with user data if triggered by signIn
       if (trigger === 'update' && session?.user) {
-        console.log('---------- TRIGGER UPDATE ----------', session.user); // debug
+        console.log('---------- TRIGGER UPDATE ----------'); // debug
         token = { ...token, ...session.user };
       } else if (user) {
         // Assign user properties to the token
