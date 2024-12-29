@@ -133,7 +133,9 @@ const Menu: React.FC = () => {
               <SideBarHeader
                 name={user?.nickname || user?.firstname}
                 photoUrl={
-                  Array.isArray(user?.photos) && user?.photos.length > 0 ? user.photos[0] : ''
+                  Array.isArray(user?.photos) && user?.photos.length > 0
+                    ? user.photos[0]
+                    : undefined
                 }
                 translate={t}
               />

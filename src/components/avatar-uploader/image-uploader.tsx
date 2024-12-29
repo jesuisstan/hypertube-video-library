@@ -11,6 +11,7 @@ import { CirclePlus, Trash2 } from 'lucide-react';
 import { compressFile } from './utils';
 
 import Spinner from '@/components/ui/spinner';
+import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 
 const ImageUploader = ({
@@ -22,7 +23,7 @@ const ImageUploader = ({
 }) => {
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
+  const { updateSession } = useUpdateSession();
   const [fileEnter, setFileEnter] = useState(false);
   const [isCompressing, setIsCompressing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -73,7 +74,8 @@ const ImageUploader = ({
 
           if (responseSQL.ok) {
             if (updatedUserData) {
-              setUser({ ...user, ...updatedUserData });
+              //setUser({ ...user, ...updatedUserData });
+              await updateSession(updatedUserData);
             }
           } else {
             setError(t(result.error));
@@ -110,7 +112,8 @@ const ImageUploader = ({
       setSuccessMessage(t(result.message));
       setLoading(false);
       if (updatedUserData) {
-        setUser({ ...user, ...updatedUserData });
+        //setUser({ ...user, ...updatedUserData });
+        await updateSession(updatedUserData);
       }
     } else {
       setLoading(false);
@@ -158,7 +161,7 @@ const ImageUploader = ({
               }
             }}
             className={clsx(
-              'flex h-20 w-20 max-w-xs flex-col items-center justify-center border-dashed bg-background',
+              'flex h-20 w-20 max-w-xs flex-col items-center justify-center border-dashed border-muted-foreground bg-input',
               fileEnter ? 'border-4' : 'border-2'
             )}
           >
@@ -167,11 +170,11 @@ const ImageUploader = ({
               className="flex h-full flex-col justify-center text-center"
             >
               {isCompressing || loading ? (
-                <Spinner size={5} />
+                <Spinner size={21} />
               ) : (
                 <CirclePlus
                   size={21}
-                  className="cursor-pointer smooth42transition hover:text-c42green"
+                  className="cursor-pointer text-muted-foreground smooth42transition hover:text-c42green"
                 />
               )}
             </label>
@@ -210,7 +213,7 @@ const ImageUploader = ({
             <button
               disabled={loading}
               className={clsx(
-                'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-foreground smooth42transition ',
+                'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-muted-foreground smooth42transition ',
                 loading ? 'opacity-60' : 'opacity-100 hover:text-destructive'
               )}
             >
@@ -219,12 +222,17 @@ const ImageUploader = ({
           </div>
         )}
       </>
-      <div className="w-52 ">
-        {loading && <Spinner size={5} />}
-        {error && <div className="text-xs text-destructive">{error}</div>}
-        {successMessage && <div className="text-xs text-c42green">{successMessage}</div>}
-        {!error && !successMessage && !loading && commonMessage && (
-          <div className="text-xs text-foreground">{commonMessage}</div>
+      <div className="w-52">
+        {loading ? (
+          <Spinner size={21} />
+        ) : (
+          <div>
+            {error && <div className="text-xs text-destructive">{error}</div>}
+            {successMessage && <div className="text-xs text-c42green">{successMessage}</div>}
+            {!error && !successMessage && !loading && commonMessage && (
+              <div className="text-xs text-foreground">{commonMessage}</div>
+            )}
+          </div>
         )}
       </div>
     </div>

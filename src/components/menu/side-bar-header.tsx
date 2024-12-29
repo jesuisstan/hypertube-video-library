@@ -26,7 +26,7 @@ const SideBarHeader = ({
         className="flex items-center justify-center space-x-4 align-middle font-bold "
       >
         {/* Avatar */}
-        <AvatarMini src={photoUrl!} nickname={name || ''} rounded />
+        <AvatarMini src={photoUrl} nickname={name ?? ''} rounded />
 
         {/* Nickname */}
         <div className="text-2xl text-foreground">

@@ -264,7 +264,7 @@ const DialogProfileModify = ({
             id="biography"
             name="biography"
             placeholder={t(`describe-youself`)}
-            className="disabled:opacity-50, m-1 flex h-48 min-w-[30vw] rounded-md border bg-card p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
+            className="disabled:opacity-50, m-1 flex h-48 min-w-[36vw] rounded-md border bg-input p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
             value={biography}
             onChange={handleBiographyChange}
           />
@@ -320,7 +320,7 @@ const DialogProfileModify = ({
           <div className="text-c42orange">
             <CircleAlert size={25} />
           </div>
-          <div className="text-left text-xs max-w-96">
+          <div className="max-w-96 text-pretty text-xs">
             <TextWithLineBreaks text={t('location-need-message')} />
           </div>
         </div>
@@ -338,16 +338,7 @@ const DialogProfileModify = ({
       </div>
     ),
     photos: (
-      <div className="flex min-h-96 min-w-96 flex-col gap-1 text-left">
-        <div className="mb-5 flex flex-row flex-wrap items-center justify-center gap-3 align-middle">
-          <Label htmlFor="about">{t(`photo-gallery`)}</Label>
-          <FilledOrNot
-            size={24}
-            filled={isProfileCategoryFilled(layout, user)}
-            warning={!(user?.photos?.length! >= 1 && user?.photos?.length! < 5 ? false : true)}
-          />
-          {user?.photos?.length ?? 0} / 5
-        </div>
+      <div className="flex">
         <ImageUploader id={0} setProfileIsCompleted={setProfileIsCompleted} />
       </div>
     ),
@@ -439,7 +430,7 @@ const DialogProfileModify = ({
       <div className="max-h-[70vh] overflow-y-auto">
         <div
           className={clsx(
-            'flex h-max min-h-[40vh] min-w-[30vw] flex-col items-center justify-center space-y-10 text-center'
+            'flex h-max min-h-[20vh] min-w-[30vw] flex-col items-center justify-center space-y-10 text-center'
           )}
         >
           {layout !== 'photos' ? (

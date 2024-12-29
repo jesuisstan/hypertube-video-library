@@ -10,7 +10,7 @@ const AvatarMini = ({
   width,
   height,
 }: {
-  src: string;
+  src: string | undefined;
   nickname: string;
   rounded?: boolean;
   width?: number;
