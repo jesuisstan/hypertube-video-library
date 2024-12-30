@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
-import { OctagonAlert, PenLine } from 'lucide-react';
+import { OctagonAlert, PencilLine } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import DialogBasic from '@/components/ui/dialog/dialog-basic';
@@ -53,7 +53,7 @@ const DialogChangePassword = ({
         >
           <div className="flex flex-row items-center space-x-5">
             <div>
-              <PenLine size={16} />
+              <PencilLine size={16} />
             </div>
             <span>{t('auth.change-password')}</span>
           </div>

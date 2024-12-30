@@ -6,7 +6,7 @@ import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
 import { EmblaOptionsType } from 'embla-carousel';
-import { PenLine } from 'lucide-react';
+import { PencilLine } from 'lucide-react';
 
 import EmblaCarouselAutoscrolling from '../ui/carousel/embla-carousel-autoscrolling';
 
@@ -215,7 +215,7 @@ const PhotoGalleryWrapper = ({
               className="text-foreground opacity-60 transition-opacity hover:opacity-100"
               title={t('click-to-modify')}
             >
-              <PenLine size={15} onClick={onModify} />
+              <PencilLine size={15} onClick={onModify} />
             </div>
           </div>
         )}

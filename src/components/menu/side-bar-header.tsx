@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import DialogSettings from '@/components/dialogs-custom/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
-import AvatarMini from '@/components/ui/avatar-mini';
+import AvatarMini from '@/components/ui/avatar/avatar-mini';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';

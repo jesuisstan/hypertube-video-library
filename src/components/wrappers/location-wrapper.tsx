@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
-import { PenLine } from 'lucide-react';
+import { PencilLine } from 'lucide-react';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 
@@ -37,7 +37,7 @@ const LocationWrapper = ({
                   className={'text-foreground opacity-60 smooth42transition hover:opacity-100'}
                   title={t('click-to-modify')}
                 >
-                  <PenLine size={15} onClick={onModify} />
+                  <PencilLine size={15} onClick={onModify} />
                 </div>
               </div>
             )}

@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import { MapPinned } from 'lucide-react';
 
-import AvatarMini from '@/components/ui/avatar-mini';
+import AvatarMini from '@/components/ui/avatar/avatar-mini';
 import { TDateProfile } from '@/types/date-profile';
 import { calculateAge } from '@/utils/format-string';
 
@@ -22,7 +22,7 @@ const ProfileCardWrapper = ({ profile }: { profile: TDateProfile }) => {
           title={profile?.online ? t('online') : t('offline')}
           className={clsx(
             'absolute bottom-2 right-2 rounded-full p-1',
-            profile?.online ? 'animate-ping bg-c42green' : 'bg-destructive animate-pulse'
+            profile?.online ? 'animate-ping bg-c42green' : 'animate-pulse bg-destructive'
           )}
         ></div>
 

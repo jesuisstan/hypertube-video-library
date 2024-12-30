@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
-import { Eye, EyeOff, PenLine } from 'lucide-react';
+import { Eye, EyeOff, PencilLine } from 'lucide-react';
 import { Save } from 'lucide-react';
 
 import TooltipSocialMediaWarning from '@/components/tooltips-custom/tooltip-social-media-warning';
@@ -103,7 +103,7 @@ const DialogChangeEmail = ({
         >
           <div className="flex flex-row items-center space-x-5">
             <div>
-              <PenLine size={16} />
+              <PencilLine size={16} />
             </div>
             <span>{t('email-change')}</span>
           </div>

@@ -213,7 +213,7 @@ const ImageUploader = ({
             <button
               disabled={loading}
               className={clsx(
-                'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-muted-foreground smooth42transition ',
+                'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-muted-foreground smooth42transition',
                 loading ? 'opacity-60' : 'opacity-100 hover:text-destructive'
               )}
             >

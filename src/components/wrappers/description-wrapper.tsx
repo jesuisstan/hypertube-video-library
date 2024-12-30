@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp, PenLine } from 'lucide-react';
+import { ChevronDown, ChevronUp, PencilLine } from 'lucide-react';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
@@ -82,7 +82,7 @@ const DescriptionWrapper = ({
             className={'text-foreground opacity-60 smooth42transition hover:opacity-100'}
             title={t('click-to-modify')}
           >
-            <PenLine size={15} onClick={onModify} />
+            <PencilLine size={15} onClick={onModify} />
           </div>
         </div>
       )}

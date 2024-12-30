@@ -8,13 +8,13 @@ import clsx from 'clsx';
 import DialogProfileIsComplete from '@/components/dialogs-custom/dialog-profile-is-complete';
 import ModalProfileComplete from '@/components/dialogs-custom/dialog-profile-modify';
 import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
+import AvatarGeneral from '@/components/ui/avatar/avatar-general';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
 import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
-import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
 
@@ -67,6 +67,19 @@ const ProfilePage = () => {
               'lg:flex-row lg:items-start lg:space-x-4 lg:space-y-0'
             )}
           >
+            <div className={clsx('col-span-12 space-y-5 self-center', 'lg:col-span-6')}>
+              {/* AVATAR */}
+              <AvatarGeneral
+                src={user?.photos[0]}
+                nickname={user?.nickname ?? '???'}
+                rounded
+                width={242}
+                height={242}
+                onAvatarChange={() =>
+                  handleModifyClick('photos' as keyof typeof TProfileCompleteLayout)
+                }
+              />
+            </div>
             {/* LABELS */}
             <LabelsWrapper
               firstName={user?.firstname ?? '???'}
@@ -101,11 +114,16 @@ const ProfilePage = () => {
 
         {/* CENTER SECTOR */}
         <div className={clsx('col-span-12 space-y-5', 'lg:col-span-6')}>
-          {/* PHOTOS */}
-          <PhotoGalleryWrapper
-            profile={user}
-            modifiable
-            onModify={() => handleModifyClick('photos' as keyof typeof TProfileCompleteLayout)}
+          {/* AVATAR */}
+          <AvatarGeneral
+            src={user?.photos[0]}
+            nickname={user?.nickname ?? '???'}
+            rounded
+            width={242}
+            height={242}
+            onAvatarChange={() =>
+              handleModifyClick('photos' as keyof typeof TProfileCompleteLayout)
+            }
           />
         </div>
 
