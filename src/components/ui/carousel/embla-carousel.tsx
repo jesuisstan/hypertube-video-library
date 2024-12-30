@@ -60,7 +60,11 @@ const EmblaCarousel: React.FC<TPropType> = (props) => {
       <div className="flex items-center justify-center self-center">
         <ButtonCustom onClick={toggleAutoplay} type="button" variant={'ghost'} size={'default'}>
           <div className="flex items-center justify-center gap-2">
-            {autoplayIsPlaying ? <CircleStop size={30} /> : <CirclePlay size={30} />}
+            {autoplayIsPlaying ? (
+              <CircleStop size={30} className="text-destructive" />
+            ) : (
+              <CirclePlay size={30} className="text-c42green" />
+            )}
             <p className="text-sm">{t('slide-show')}</p>
           </div>
         </ButtonCustom>

@@ -7,17 +7,24 @@ import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { EmblaOptionsType } from 'embla-carousel';
 import { Eye, EyeOff } from 'lucide-react';
 
+import { SLIDES } from './(components)/slides';
+
 import SocialMediaAuth from '@/app/[locale]/authentication/(components)/social-media-auth';
+import Footer from '@/components/footer';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
+import EmblaCarouselAutoscrolling from '@/components/ui/carousel/embla-carousel-autoscrolling';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
 import useSearchStore from '@/stores/search';
 import { spaceToKebab } from '@/utils/format-string';
+
+const OPTIONS: EmblaOptionsType = { loop: true };
 
 const Authentication = () => {
   const t = useTranslations();
@@ -147,9 +154,9 @@ const Authentication = () => {
           'lg:flex lg:w-3/4'
         )}
       >
-        <div className="relative flex h-full w-full">
+        <div className="relative flex h-full w-full items-center justify-center">
           <div className="flex items-center justify-center align-middle">
-            <Image
+            {/*<Image
               src="/identity/hypertube-high-resolution-logo-transparent.png"
               blurDataURL="/identity/hypertube-high-resolution-logo-transparent.png"
               alt="high-resolution-logo"
@@ -160,23 +167,15 @@ const Authentication = () => {
               style={{ width: 3000, height: 1500 }}
               width={0}
               height={0}
+            />*/}
+            <EmblaCarouselAutoscrolling
+              slides={SLIDES!}
+              options={OPTIONS}
+              className="max-w-[70vw]"
             />
           </div>
           <div className="absolute bottom-0 z-10 p-4 text-foreground">
-            {/*<h2 className="mb-2 text-2xl smooth42transition xl:text-3xl">{t(`slogan`)}</h2>*/}
-            <div className="text-sm">
-              Hypertube Video Library {t(`rights-reserved`)}
-              {'. '}
-              {t(`service-provided`)}{' '}
-              <a
-                href={`https://www.krivtsoff.site/`}
-                target="_blank"
-                className="my-6 text-center text-sm text-c42green transition-all duration-300 ease-in-out hover:text-c42orange"
-              >
-                Stan Krivtsoff
-              </a>
-              {'. '}
-            </div>
+            <Footer />
           </div>
         </div>
       </div>

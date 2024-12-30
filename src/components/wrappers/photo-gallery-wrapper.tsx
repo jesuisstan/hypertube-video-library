@@ -8,7 +8,8 @@ import { useTranslations } from 'next-intl';
 import { EmblaOptionsType } from 'embla-carousel';
 import { PenLine } from 'lucide-react';
 
-import EmblaCarousel from '@/components/ui/carousel/embla-carousel';
+import EmblaCarouselAutoscrolling from '../ui/carousel/embla-carousel-autoscrolling';
+
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { TDateProfile } from '@/types/date-profile';
 
@@ -196,7 +197,7 @@ const PhotoGalleryWrapper = ({
           {/*<h3 className="mb-4 text-left text-xl font-bold">{t('photo-gallery')}</h3>*/}
           {profile?.photos ? (
             <div className="w-full max-w-4xl rounded-xl py-5">
-              <EmblaCarousel slides={SLIDES!} options={OPTIONS} />
+              <EmblaCarouselAutoscrolling slides={SLIDES!} options={OPTIONS} />
             </div>
           ) : (
             <p className="italic">{t('data-incomplete')}</p>
