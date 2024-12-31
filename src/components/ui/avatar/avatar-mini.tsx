@@ -18,7 +18,7 @@ const AvatarMini = ({
 }) => (
   <Avatar.Root
     className={clsx(
-      'inline-flex select-none items-center justify-center overflow-hidden bg-foreground align-middle',
+      'inline-flex select-none items-center justify-center overflow-hidden border-[1px] border-foreground bg-foreground align-middle',
       rounded ? 'rounded-full' : 'rounded-2xl',
       width ? `w-${width}` : 'w-11',
       height ? `h-${height}` : 'h-11'

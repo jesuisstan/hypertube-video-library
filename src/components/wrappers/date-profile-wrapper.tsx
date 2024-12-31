@@ -8,7 +8,7 @@ import ActionsWrapper from '@/components/wrappers/actions-wrapper';
 import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
-import LabelsWrapper from '@/components/wrappers/labels-wrapper';
+import LabelsWrapper from '@/components/wrappers/header-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
@@ -83,7 +83,6 @@ const DateProfileWrapper = ({
         <div className={clsx('col-span-12 h-max space-y-5', 'lg:col-span-3')}>
           {/* LOCATION */}
           <LocationWrapper address={dateProfile?.address} />
-
         </div>
 
         {/* CENTER SECTOR */}

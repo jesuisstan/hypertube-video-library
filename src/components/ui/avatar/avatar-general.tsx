@@ -28,7 +28,7 @@ const AvatarGeneral = ({
     <div className="group relative" style={avatarSizeStyle}>
       <Avatar.Root
         className={clsx(
-          'inline-flex cursor-pointer select-none items-center justify-center overflow-hidden bg-foreground align-middle',
+          'inline-flex cursor-pointer select-none items-center border-2 border-foreground justify-center overflow-hidden bg-foreground align-middle',
           rounded ? 'rounded-full' : 'rounded-2xl'
         )}
         style={avatarSizeStyle}

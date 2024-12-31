@@ -10,10 +10,9 @@ import ModalProfileComplete from '@/components/dialogs-custom/dialog-profile-mod
 import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
 import AvatarGeneral from '@/components/ui/avatar/avatar-general';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
-import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
+import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
-import LabelsWrapper from '@/components/wrappers/labels-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
@@ -51,43 +50,23 @@ const ProfilePage = () => {
       {/* HEADER */}
       <div className={clsx('mb-4 flex items-center justify-between')}>
         <div className="flex min-w-full flex-col justify-start">
-          <div id="user-nickname" className="mb-2 flex w-fit flex-wrap gap-x-2 smooth42transition">
-            {/* CONFIRMED ? */}
-            <ConfirmationWrapper confirmed={user?.confirmed} />
-            <h1
-              title={user?.nickname ?? '???'}
-              className="max-w-96 truncate p-2 text-4xl font-bold xs:max-w-fit"
-            >
-              {user?.nickname ?? '???'}
-            </h1>
-          </div>
+          {/* HEADER */}
+          <HeaderWrapper
+            photoURL={user?.photos[0]}
+            nickname={user?.nickname ?? '???'}
+            firstName={user?.firstname ?? '???'}
+            lastName={user?.lastname ?? '???'}
+            loading={false}
+            modifiable
+            onModify={handleModifyClick}
+          />
           <div
             className={clsx(
               'flex flex-col items-stretch space-y-4',
               'lg:flex-row lg:items-start lg:space-x-4 lg:space-y-0'
             )}
           >
-            <div className={clsx('col-span-12 space-y-5 self-center', 'lg:col-span-6')}>
-              {/* AVATAR */}
-              <AvatarGeneral
-                src={user?.photos[0]}
-                nickname={user?.nickname ?? '???'}
-                rounded
-                width={242}
-                height={242}
-                onAvatarChange={() =>
-                  handleModifyClick('photos' as keyof typeof TProfileCompleteLayout)
-                }
-              />
-            </div>
-            {/* LABELS */}
-            <LabelsWrapper
-              firstName={user?.firstname ?? '???'}
-              lastName={user?.lastname ?? '???'}
-              loading={false}
-              modifiable
-              onModify={() => handleModifyClick('basics' as keyof typeof TProfileCompleteLayout)}
-            />
+            <div className={clsx('col-span-12 space-y-5 self-center', 'lg:col-span-6')}></div>
             {/* DESCRIPTION */}
             <DescriptionWrapper
               text={user?.biography}
@@ -96,6 +75,12 @@ const ProfilePage = () => {
             />
             {/* STATUS GROUP */}
             <StatusWrapper confirmed={user?.confirmed} lastAction={user?.last_action} />
+            {/* LOCATION */}
+            <LocationWrapper
+              address={user?.address}
+              modifiable
+              onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
+            />
           </div>
         </div>
       </div>
