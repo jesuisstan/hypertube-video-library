@@ -5,10 +5,9 @@ import { Dispatch, SetStateAction } from 'react';
 import clsx from 'clsx';
 
 import ActionsWrapper from '@/components/wrappers/actions-wrapper';
-import ConfirmationWrapper from '@/components/wrappers/confirmation-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
+import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
-import LabelsWrapper from '@/components/wrappers/header-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
@@ -35,8 +34,6 @@ const DateProfileWrapper = ({
       <div className={clsx('mb-4 flex items-center justify-between')}>
         <div className="flex min-w-full flex-col justify-start">
           <div className="mb-2 flex w-fit flex-wrap gap-x-2 smooth42transition">
-            {/* CONFIRMED ? */}
-            <ConfirmationWrapper confirmed={dateProfile?.confirmed} />
             <h1
               id="user-nickname"
               title={dateProfile?.nickname ?? '???'}
@@ -52,11 +49,11 @@ const DateProfileWrapper = ({
             )}
           >
             {/* LABELS */}
-            <LabelsWrapper
+            {/*<LabelsWrapper
               firstName={dateProfile?.firstname ?? '???'}
               lastName={dateProfile?.lastname ?? '???'}
               loading={false}
-            />
+            />*/}
             {/* DESCRIPTION */}
             <DescriptionWrapper text={dateProfile?.biography} />
             {/* STATUS GROUP */}
