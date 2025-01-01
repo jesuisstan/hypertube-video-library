@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction } from 'react';
 
 import clsx from 'clsx';
 
-import ActionsWrapper from '@/components/wrappers/actions-wrapper';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
@@ -60,15 +59,6 @@ const DateProfileWrapper = ({
             <StatusWrapper
               confirmed={dateProfile?.confirmed}
               lastAction={dateProfile?.last_action}
-            />
-            {/* ACTION BUTTONS GROUP */}
-            <ActionsWrapper
-              dateProfile={dateProfile}
-              setDateProfile={setDateProfile}
-              isMatch={isMatch}
-              isLiked={isLiked}
-              isLikedBy={isLikedBy}
-              isBlocked={isBlocked}
             />
           </div>
         </div>
