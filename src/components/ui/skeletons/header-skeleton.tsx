@@ -1,5 +1,3 @@
-import ActionsSkeleton from '@/components/ui/skeletons/actions-skeleton';
-
 const HeaderSkeleton = () => {
   return (
     <div className="flex w-full animate-pulse flex-col justify-start">
@@ -19,8 +17,6 @@ const HeaderSkeleton = () => {
         <div className="flex flex-col space-y-3">
           <div className="h-14 rounded-2xl bg-muted lg:h-[104px] lg:w-52"></div>
         </div>
-        {/* Skeleton for Actions Group */}
-        <ActionsSkeleton />
       </div>
     </div>
   );

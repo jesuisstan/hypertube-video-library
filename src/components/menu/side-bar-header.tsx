@@ -3,8 +3,8 @@ import { useState } from 'react';
 import DialogSettings from '@/components/dialogs-custom/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar/avatar-mini';
-import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
+import { Separator } from '@/components/ui/separator';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
 import { formatUserName } from '@/utils/format-string';
 
@@ -23,7 +23,7 @@ const SideBarHeader = ({
     <div className="flex flex-col items-center justify-center gap-2 align-middle">
       <div
         title={name}
-        className="flex items-center justify-center space-x-4 align-middle font-bold "
+        className="mb-2 flex items-center justify-center space-x-4 align-middle font-bold"
       >
         {/* Avatar */}
         <AvatarMini src={photoUrl} nickname={name ?? ''} rounded />
@@ -38,16 +38,11 @@ const SideBarHeader = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 text-center text-xs font-normal text-foreground">
-        <div className="mb-3 mt-5 flex self-center">
-          <LocaleSwitcher />
-        </div>
-
-        <div className="flex flex-row items-center gap-x-1 self-center align-middle">
-          <ThemeToggler translate={translate} />
-          <DialogSettings show={showSettingsModal} setShow={setShowSettingsModal} />
-          <LogoutButton translate={translate} />
-        </div>
+      <Separator />
+      <div className="flex flex-row items-center gap-x-1 self-center align-middle">
+        <ThemeToggler translate={translate} />
+        <DialogSettings show={showSettingsModal} setShow={setShowSettingsModal} />
+        <LogoutButton translate={translate} />
       </div>
     </div>
   );

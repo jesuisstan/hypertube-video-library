@@ -2,8 +2,10 @@ import Image from 'next/image';
 
 import clsx from 'clsx';
 
+import { Separator } from '@/components/ui/separator';
+
 export const UserNameSkeleton = () => {
-  return <div className="flex h-5 w-28 animate-pulse rounded-full bg-muted" />;
+  return <div className="flex h-4 w-28 animate-pulse rounded-full bg-muted" />;
 };
 
 export const generateSkeletonItems = (count: number) => {
@@ -53,38 +55,41 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
         </div>
 
         {/* Sidebar header */}
-        <div className="flex flex-col items-center justify-center space-y-6 align-middle">
-          <div className="flex items-center justify-center space-x-4 align-middle font-bold ">
+        <div className="flex flex-col items-center justify-center gap-2 align-middle">
+          <div className="mb-2 flex items-center justify-center space-x-4 align-middle font-bold">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-base text-card" />
             <UserNameSkeleton />
           </div>
-          <div className="flex flex-col items-center space-y-5 text-xs font-normal text-foreground">
-            <div className="flex flex-row items-center justify-center gap-5">
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-            </div>
-            <div className="flex flex-row items-center justify-center gap-5">
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-              <div className="h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-            </div>
-          </div>
           {/* horizontal divider */}
-          <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
+          <Separator />
+          {/* Sidebar options buttons */}
+          <div className="flex flex-row items-center gap-x-1 self-center align-middle">
+            <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
+            <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
+            <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
+          </div>
+
+          {/* horizontal divider */}
+          <Separator />
         </div>
 
-        {/* Sidebar search bar */}
+        {/* DASHBOARD LINK */}
         <div className="pb-1">
-          <div className="ml-4 h-2.5 w-44 rounded-full bg-muted pb-6" />
+          <div className="ml-4 h-2 w-44 rounded-full bg-muted pb-5" />
         </div>
 
         {/* Smartdata list */}
-        {generateSkeletonItems(3)}
+        {generateSkeletonItems(2)}
+
+        {/* ABOUT LINK */}
+        <div className="pb-1">
+          <div className="ml-4 h-2 w-44 rounded-full bg-muted pb-5" />
+        </div>
 
         {/* horizontal divider */}
-        <div className="mt-3 w-52 border-t border-muted-foreground opacity-40" />
-        <div className="pb-1">
+        <Separator />
+
+        <div className="pb-5">
           <div className="ml-4 h-2.5 w-44 rounded-full bg-muted pb-3" />
         </div>
       </div>

@@ -41,7 +41,7 @@ const HeaderWrapper = ({
   return (
     <div
       className={clsx(
-        'relative flex max-h-fit min-h-[104px] w-fit min-w-64 flex-row flex-wrap items-end justify-end gap-5 rounded-2xl bg-card p-5 shadow-md transition-all duration-300 ease-in-out'
+        'relative flex max-h-fit min-h-[104px] w-fit min-w-64 flex-row flex-wrap items-center justify-center gap-5 rounded-2xl bg-card p-5 align-middle shadow-md transition-all duration-300 ease-in-out smooth42transition'
       )}
     >
       {/* AVATAR */}
