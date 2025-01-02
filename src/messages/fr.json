@@ -72,7 +72,8 @@
     "processing": "Traitement...",
     "accessdenied": "Accès refusé",
     "social-media-email-password-change-tooltip": "Si vous vous êtes inscrit via les réseaux sociaux, vous devez d'abord créer un mot de passe pour votre compte.\nEnsuite, vous pourrez mettre à jour votre adresse e-mail dans les paramètres.\n\nPour créer/modifier votre mot de passe, veuillez utiliser l'option 'Mot de passe oublié ?' sur la page de connexion.",
-    "social-media-authenticated": "Connecté via les réseaux sociaux?"
+    "social-media-authenticated": "Connecté via les réseaux sociaux?",
+    "data-and-hash-arguments-required": "Mot de passe non défini"
   },
   "user-not-found": "User non trouvé",
   "processing": "Traitement...",
@@ -87,7 +88,6 @@
   "refresh": "Actualiser",
   "slide-show": "Diaporama",
   "congrats": "Félicitations!",
-  "profile-is-complete": "Votre profil est complet!",
   "dialog-title": {
     "basics": "Informations de base",
     "biography": "Description",
@@ -184,9 +184,7 @@
     "no-suggestions-for-filters-sorting": "Pas de suggestions pour les filtres / le tri"
   },
   "attension": "Attention!",
-  "complete-your-profile-message": "Veuillez compléter votre profil pour continuer à utiliser le service et accéder aux fonctionnalités de recherche avancée.",
   "complete-profile": "Compléter le profil",
-  "not-available-for-search": "De plus, votre profil ne sera pas visible dans la recherche tant qu'il ne sera pas entièrement complété.",
   "ignore": "Ignorer",
   "personal-data": "Données personnelles",
   "about-youself": "À propos de vous",

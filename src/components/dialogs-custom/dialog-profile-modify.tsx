@@ -29,7 +29,7 @@ import { isProfileCategoryFilled } from '@/utils/user-handlers';
 const MIN_DESCRIPTION_LENGTH = 42;
 const MAX_DESCRIPTION_LENGTH = 442;
 
-export type TProfileCompleteLayout = 'basics' | 'description' | 'location' | 'photos';
+export type TProfileCompleteLayout = 'basics' | 'description' | 'location' | 'photos' | 'lang';
 
 const DialogProfileModify = ({
   show,
@@ -51,6 +51,7 @@ const DialogProfileModify = ({
   const [successMessage, setSuccessMessage] = useState('');
 
   const [description, setDescription] = useState(user?.biography || '');
+  const [preferredLanguage, setPreferredLanguage] = useState(user?.preferred_language || '');
 
   // Location vars
   const [selectedCityOption, setSelectedCityOption] = useState<TSelectGeoOption | null>(
@@ -146,12 +147,17 @@ const DialogProfileModify = ({
         longitude: geoCoordinates?.lng,
         address: selectedCityOption?.label,
       });
+    } else if (layout === 'lang') {
+      body = JSON.stringify({
+        category: 'lang',
+        preferred_language: preferredLanguage,
+      });
     }
 
     let response: any;
     try {
       response = await fetch(`/api/users/${user?.id}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -406,9 +412,6 @@ const DialogProfileModify = ({
                   <p className="text-xs italic">{t('category-filled-?')}</p>
                   <FilledOrNot size={18} filled={isProfileCategoryFilled(layout, user)} />
                 </div>
-                {/*<ButtonCustom type="submit" size="icon" loading={loading} title={t('save')}>
-                  <Save size={24} />
-                </ButtonCustom>*/}
                 <ButtonCustom
                   type="submit"
                   size="default"

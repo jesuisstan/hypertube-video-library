@@ -66,7 +66,7 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: any 
   }
 }
 
-export async function POST(req: Request, context: { params: Promise<{ id: any }> }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: any }> }) {
   const client = await db.connect();
   const params = await context.params;
   const id = params.id;

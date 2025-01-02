@@ -76,7 +76,7 @@ const ProfilePage = () => {
         {/* LANGUAGE PREFERED */}
         <div className="w-full basis-1/3">
           <PrefLangWrapper
-            lang={user?.prefered_language}
+            lang={user?.preferred_language}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
           />

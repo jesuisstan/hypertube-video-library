@@ -29,10 +29,10 @@ export async function POST(req: Request) {
 
       // Step 2: Check if the user exists
       const selectQuery = `
-      SELECT photos
-      FROM users 
-      WHERE id = $1
-    `;
+        SELECT photos
+        FROM users 
+        WHERE id = $1
+      `;
       const currentDataResult = await client.query(selectQuery, [id]);
 
       if (currentDataResult.rowCount === 0) {
@@ -42,11 +42,11 @@ export async function POST(req: Request) {
       // Step 3: Update the user's photos array by appending the new URL. Update the last action.
       const currentDate = new Date();
       const updateQuery = `
-      UPDATE users 
-      SET photos = array_append(photos, $2), last_action = $3
-      WHERE id = $1
-      RETURNING id, photos, last_action;
-    `;
+        UPDATE users 
+        SET photos = array_append(photos, $2), last_action = $3
+        WHERE id = $1
+        RETURNING id, photos, last_action;
+      `;
       const updateValues = [id, url, currentDate.toISOString()];
       const updatedUserResult = await client.query(updateQuery, updateValues);
       const updatedUser = updatedUserResult.rows[0];

@@ -72,7 +72,8 @@
     "processing": "Processing...",
     "accessdenied": "Access denied",
     "social-media-email-password-change-tooltip": "If you registered using social media, you need to create a password for your account first.\n After that, you will be able to update your email in the settings.\n\n To create/change your password, please use the 'Forgot Password?' option on the login page.",
-    "social-media-authenticated": "Social media authenticated?"
+    "social-media-authenticated": "Social media authenticated?",
+    "data-and-hash-arguments-required": "Password not set"
   },
   "user-not-found": "User not found",
   "processing": "Processing...",
@@ -87,7 +88,6 @@
   "refresh": "Refresh",
   "slide-show": "Slide show",
   "congrats": "Congratulations!",
-  "profile-is-complete": "Your profile is complete!",
   "dialog-title": {
     "basics": "Basics",
     "biography": "Description",
@@ -184,9 +184,7 @@
     "no-suggestions-for-filters-sorting": "No suggestions found for the selected filters / sorting"
   },
   "attension": "Attention!",
-  "complete-your-profile-message": "Please complete your profile to continue using the service and gain access to advanced search.",
   "complete-profile": "Complete profile",
-  "not-available-for-search": "Additionally, your profile won't be visible in search until it is fully completed.",
   "ignore": "Ignore",
   "personal-data": "Personal Data",
   "about-youself": "About youself",

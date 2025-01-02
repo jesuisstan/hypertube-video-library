@@ -20,7 +20,7 @@ declare module 'next-auth' {
     address: string | null;
     photos: string[];
     confirmed: boolean;
-    prefered_language: string;
+    preferred_language: string;
     provider: string;
   }
 
@@ -38,7 +38,7 @@ declare module 'next-auth' {
     address: string | null;
     photos: string[];
     confirmed: boolean;
-    prefered_language: string;
+    preferred_language: string;
     provider: string;
   }
 

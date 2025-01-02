@@ -145,7 +145,7 @@ export const authOptions: NextAuthOptions = {
         token.address = user.address;
         token.photos = user.photos;
         token.confirmed = user.confirmed;
-        token.prefered_language = user.prefered_language;
+        token.preferred_language = user.preferred_language;
         token.provider = user.provider;
       }
       return token; // Return the token after modification

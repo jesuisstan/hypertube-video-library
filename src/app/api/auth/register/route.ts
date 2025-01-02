@@ -59,7 +59,7 @@ export async function POST(req: Request) {
 
     // If the email was sent successfully, insert the user into the database
     await client.sql`
-      INSERT INTO users (firstname, lastname, nickname, email, password, birthdate, sex, registration_date, last_action, online, confirmed, service_token, sex_preferences, prefered_language)
+      INSERT INTO users (firstname, lastname, nickname, email, password, birthdate, sex, registration_date, last_action, online, confirmed, service_token, sex_preferences, preferred_language)
       VALUES (${firstname}, ${lastname}, ${nickname}, ${email}, ${hashedPassword}, ${fakeBirthday}, ${fakeSex}, NOW(), NOW(), false, false, ${confirmationToken}, ${fakeSexPreferences}, ${preferedLanguage});
     `;
 
