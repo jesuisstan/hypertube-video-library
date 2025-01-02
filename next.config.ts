@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/dashboard',
+        destination: '/browse',
         permanent: true, // Permanent redirects send a 308 status
       },
     ];

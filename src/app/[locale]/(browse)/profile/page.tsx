@@ -5,13 +5,11 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import DialogProfileIsComplete from '@/components/dialogs-custom/dialog-profile-is-complete';
-import ModalProfileComplete from '@/components/dialogs-custom/dialog-profile-modify';
+import DialogProfileModify from '@/components/dialogs-custom/dialog-profile-modify';
 import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
 import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import HeaderWrapper from '@/components/wrappers/header-wrapper';
-import InterestsWrapper from '@/components/wrappers/interests-wrapper';
 import PrefLangWrapper from '@/components/wrappers/lang-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
@@ -36,15 +34,10 @@ const ProfilePage = () => {
     <ProfilePageSkeleton />
   ) : (
     <div className="flex flex-col items-stretch space-y-4">
-      <ModalProfileComplete
+      <DialogProfileModify
         show={showProfileCompleteModal}
         setShow={setShowProfileCompleteModal}
         startLayout={profileCompleteModalLayout as keyof typeof TProfileCompleteLayout}
-        setProfileIsCompleted={setShowProfileCongratsModal}
-      />
-      <DialogProfileIsComplete
-        show={showProfileCongratsModal}
-        setShow={setShowProfileCongratsModal}
       />
 
       {/* HEADER */}
@@ -64,39 +57,28 @@ const ProfilePage = () => {
 
       {/* MAIN CONTENT */}
       <div className={clsx('flex flex-col items-stretch gap-4', 'lg:flex-row lg:items-start')}>
+        {/* DESCRIPTION */}
+        <div className="w-full basis-1/3">
+          <DescriptionWrapper
+            text={user?.biography}
+            modifiable
+            onModify={() => handleModifyClick('description' as keyof typeof TProfileCompleteLayout)}
+          />
+        </div>
         {/* LOCATION */}
-        <div className="w-full basis-1/4">
+        <div className="w-full basis-1/3">
           <LocationWrapper
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
           />
         </div>
-        {/* LOCATION */}
-        <div className="w-full basis-1/4">
+        {/* LANGUAGE PREFERED */}
+        <div className="w-full basis-1/3">
           <PrefLangWrapper
             lang={user?.prefered_language}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
-          />
-        </div>
-      </div>
-
-      <div className={clsx('flex flex-col items-stretch gap-4', 'lg:flex-row lg:items-start')}>
-        {/* DESCRIPTION */}
-        <div className="w-full basis-2/4">
-          <DescriptionWrapper
-            text={user?.biography}
-            modifiable
-            onModify={() => handleModifyClick('biography' as keyof typeof TProfileCompleteLayout)}
-          />
-        </div>
-        {/* INTERESTS */}
-        <div className="w-full basis-2/4">
-          <InterestsWrapper
-            tagsList={user?.tags!}
-            modifiable
-            onModify={() => handleModifyClick('tags' as keyof typeof TProfileCompleteLayout)}
           />
         </div>
       </div>

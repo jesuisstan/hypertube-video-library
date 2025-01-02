@@ -41,13 +41,12 @@ const DialogDeleteAccount = ({
     const formData = new FormData(currentForm);
     let response: any;
     try {
-      response = await fetch(`/api/profile/delete`, {
+      response = await fetch(`/api/users/${user?.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: user?.id,
           password: formData.get('password'),
         }),
       });

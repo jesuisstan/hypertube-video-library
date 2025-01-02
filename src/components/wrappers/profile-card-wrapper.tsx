@@ -6,10 +6,9 @@ import clsx from 'clsx';
 import { MapPinned } from 'lucide-react';
 
 import AvatarMini from '@/components/ui/avatar/avatar-mini';
-import { TDateProfile } from '@/types/date-profile';
 import { calculateAge } from '@/utils/format-string';
 
-const ProfileCardWrapper = ({ profile }: { profile: TDateProfile }) => {
+const ProfileCardWrapper = ({ profile }: { profile: any }) => {
   const t = useTranslations();
 
   return (

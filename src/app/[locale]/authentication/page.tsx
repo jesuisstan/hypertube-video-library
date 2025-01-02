@@ -21,14 +21,12 @@ import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
-import useSearchStore from '@/stores/search';
 import { spaceToKebab } from '@/utils/format-string';
 
 const OPTIONS: EmblaOptionsType = { loop: true };
 
 const Authentication = () => {
   const t = useTranslations();
-  const { resetSearchStore } = useSearchStore();
   const router = useRouter();
   const [pageLayout, setPageLayout] = React.useState('login');
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -58,7 +56,6 @@ const Authentication = () => {
     switch (pageLayout) {
       case 'login':
         setLoading(true);
-        resetSearchStore(); // reset search store
         response = await signIn('credentials', {
           redirect: false,
           emailOrNickname:

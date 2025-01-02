@@ -13,7 +13,6 @@ declare module 'next-auth' {
     lastname: string;
     nickname: string;
     biography: string;
-    tags: string[];
     registration_date: string;
     last_action: string;
     latitude: number | null;
@@ -32,7 +31,6 @@ declare module 'next-auth' {
     lastname: string;
     nickname: string;
     biography: string;
-    tags: string[];
     registration_date: string;
     last_action: string;
     latitude: number | null;

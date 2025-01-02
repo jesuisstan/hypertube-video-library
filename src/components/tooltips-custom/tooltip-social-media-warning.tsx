@@ -9,7 +9,6 @@ import { ButtonCustom } from '../ui/buttons/button-custom';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import { useRouter } from '@/i18n/routing';
-import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const TooltipSocialMediaWarning = () => {
@@ -17,11 +16,9 @@ const TooltipSocialMediaWarning = () => {
   const { logout } = useUserStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { resetSearchStore } = useSearchStore();
 
   const handleProceed = async () => {
     setLoading(true);
-    resetSearchStore(); // reset search store
     logout(); // clear local user state
 
     // Use NextAuth's signOut method

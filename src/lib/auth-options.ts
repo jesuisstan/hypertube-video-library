@@ -7,10 +7,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
-import { spaceToSnake } from '../utils/format-string';
-
 import { findOrCreateUser, updateLastAction } from '@/lib/auth-utils';
 import { defineCampus } from '@/lib/auth-utils';
+import { spaceToSnake } from '@/utils/format-string';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -139,7 +138,6 @@ export const authOptions: NextAuthOptions = {
         token.lastname = user.lastname;
         token.nickname = user.nickname;
         token.biography = user.biography;
-        token.tags = user.tags;
         token.registration_date = user.registration_date;
         token.last_action = user.last_action;
         token.latitude = user.latitude;

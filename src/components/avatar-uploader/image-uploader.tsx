@@ -14,13 +14,7 @@ import Spinner from '@/components/ui/spinner';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 
-const ImageUploader = ({
-  id,
-  setProfileIsCompleted,
-}: {
-  id: number;
-  setProfileIsCompleted: Dispatch<SetStateAction<boolean>>;
-}) => {
+const ImageUploader = ({ id }: { id: number }) => {
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
   const { updateSession } = useUpdateSession();
@@ -43,7 +37,7 @@ const ImageUploader = ({
       try {
         const compressedImage = await compressFile(file); // Compress the image
         if (compressedImage) {
-          const response = await fetch(`/api/avatar/upload?filename=${compressedImage.name}`, {
+          const response = await fetch(`/api/avatar?filename=${compressedImage.name}`, {
             method: 'POST',
             body: compressedImage,
           });
@@ -53,7 +47,7 @@ const ImageUploader = ({
           setPhotoUrl(newBlob?.url);
 
           // Save the compressed image to the user's profile
-          const responseSQL = await fetch(`/api/avatar/save-url`, {
+          const responseSQL = await fetch(`/api/avatar`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -66,11 +60,6 @@ const ImageUploader = ({
 
           const result = await responseSQL.json();
           const updatedUserData: TUser = result.user;
-
-          // trigger showing the Modal profile completion if needed
-          if (result.changedToCompleteFlag) {
-            setProfileIsCompleted(true);
-          }
 
           if (responseSQL.ok) {
             if (updatedUserData) {
@@ -100,7 +89,7 @@ const ImageUploader = ({
   const handleFileDeletion = async () => {
     setLoading(true);
     const response = await fetch(
-      `/api/avatar/delete?id=${user?.id}&url=${encodeURIComponent(photoUrl!)}`,
+      `/api/avatar?id=${user?.id}&url=${encodeURIComponent(photoUrl!)}`,
       {
         method: 'DELETE',
       }

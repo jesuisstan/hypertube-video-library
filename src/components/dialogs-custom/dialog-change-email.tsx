@@ -58,7 +58,7 @@ const DialogChangeEmail = ({
 
     let response: any;
     try {
-      response = await fetch(`/api/profile/update/email`, {
+      response = await fetch(`/api/auth/update-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

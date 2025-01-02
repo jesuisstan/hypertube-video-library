@@ -8,7 +8,6 @@ import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/i18n/routing';
-import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const DialogChangePassword = ({
@@ -22,11 +21,9 @@ const DialogChangePassword = ({
   const { logout } = useUserStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { resetSearchStore } = useSearchStore();
 
   const handleProceed = async () => {
     setLoading(true);
-    resetSearchStore(); // reset search store
     logout(); // clear local user state
 
     // Use NextAuth's signOut method

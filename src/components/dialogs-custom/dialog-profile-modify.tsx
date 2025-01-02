@@ -9,13 +9,11 @@ import { CircleAlert, MapPinned, MapPinOff, Save } from 'lucide-react';
 
 import ImageUploader from '@/components/avatar-uploader/image-uploader';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import ChipsGroup from '@/components/ui/chips/chips-group';
 import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
-import { TAGS_LIST } from '@/constants/tags-list';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 import { TGeoCoordinates, TSelectGeoOption } from '@/types/geolocation';
@@ -28,27 +26,23 @@ import {
 } from '@/utils/geolocation-handlers';
 import { isProfileCategoryFilled } from '@/utils/user-handlers';
 
-const MIN_BIOGRAPHY_LENGTH = 42;
-const MAX_BIOGRAPHY_LENGTH = 442;
-const MIN_TAGS_LENGTH = 5;
+const MIN_DESCRIPTION_LENGTH = 42;
+const MAX_DESCRIPTION_LENGTH = 442;
 
-export type TProfileCompleteLayout = 'basics' | 'biography' | 'location' | 'tags' | 'photos';
+export type TProfileCompleteLayout = 'basics' | 'description' | 'location' | 'photos';
 
 const DialogProfileModify = ({
   show,
   setShow,
   startLayout,
-  setProfileIsCompleted,
 }: {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   startLayout: TProfileCompleteLayout;
-  setProfileIsCompleted: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { updateSession } = useUpdateSession();
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
   const localeActive = useLocale();
   const [layout, setLayout] = useState<TProfileCompleteLayout>(startLayout ?? 'photos');
   const formRef = useRef<HTMLFormElement>(null);
@@ -56,8 +50,7 @@ const DialogProfileModify = ({
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const [biography, setBiography] = useState(user?.biography || '');
-  const [selectedTags, setSelectedTags] = useState<string[]>(user?.tags || []);
+  const [description, setDescription] = useState(user?.biography || '');
 
   // Location vars
   const [selectedCityOption, setSelectedCityOption] = useState<TSelectGeoOption | null>(
@@ -67,12 +60,12 @@ const DialogProfileModify = ({
     createTGeoCoordinates(user?.latitude, user?.longitude)
   );
 
-  const handleBiographyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
-    if (text.length <= MAX_BIOGRAPHY_LENGTH) {
-      setBiography(text);
+    if (text.length <= MAX_DESCRIPTION_LENGTH) {
+      setDescription(text);
     } else {
-      setBiography(text.substring(0, MAX_BIOGRAPHY_LENGTH));
+      setDescription(text.substring(0, MAX_DESCRIPTION_LENGTH));
     }
   };
 
@@ -135,39 +128,29 @@ const DialogProfileModify = ({
     let body: any = {};
     if (layout === 'basics') {
       body = JSON.stringify({
-        id: user?.id,
+        category: 'basics',
         firstname: formData.get('firstname'),
         lastname: formData.get('lastname'),
         nickname: formData.get('nickname'),
         birthdate: formData.get('birthdate'),
       });
-    } else if (layout === 'biography') {
+    } else if (layout === 'description') {
       body = JSON.stringify({
-        id: user?.id,
-        biography: biography,
+        category: 'description',
+        description: description,
       });
     } else if (layout === 'location') {
       body = JSON.stringify({
-        id: user?.id,
+        category: 'location',
         latitude: geoCoordinates?.lat,
         longitude: geoCoordinates?.lng,
         address: selectedCityOption?.label,
-      });
-    } else if (layout === 'tags') {
-      if (selectedTags.length < MIN_TAGS_LENGTH) {
-        setError(t('error-minimum-tags-array'));
-        setLoading(false);
-        return;
-      }
-      body = JSON.stringify({
-        id: user?.id,
-        tags: selectedTags,
       });
     }
 
     let response: any;
     try {
-      response = await fetch(`/api/profile/update/${layout}`, {
+      response = await fetch(`/api/users/${user?.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -177,11 +160,6 @@ const DialogProfileModify = ({
 
       const result = await response.json();
       const updatedUserData: TUser = result.user;
-
-      // trigger showing the Modal profile completion if needed
-      if (result.changedToCompleteFlag) {
-        setProfileIsCompleted(true);
-      }
 
       if (response.ok) {
         setSuccessMessage(t(result.message));
@@ -257,21 +235,21 @@ const DialogProfileModify = ({
         </div>
       </div>
     ),
-    biography: (
+    description: (
       <div>
         <div className="flex flex-col">
           <textarea
-            id="biography"
-            name="biography"
+            id="description"
+            name="description"
             placeholder={t(`describe-youself`)}
             className="disabled:opacity-50, m-1 flex h-48 min-w-[36vw] rounded-md border bg-input p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
-            value={biography}
-            onChange={handleBiographyChange}
+            value={description}
+            onChange={handleDescriptionChange}
           />
           <span className="ml-2 mt-1 text-xs text-muted-foreground/80">
-            {t('min') + ' ' + MIN_BIOGRAPHY_LENGTH}
+            {t('min') + ' ' + MIN_DESCRIPTION_LENGTH}
             {', '}
-            {t('max') + ' ' + MAX_BIOGRAPHY_LENGTH} {t('characters')}
+            {t('max') + ' ' + MAX_DESCRIPTION_LENGTH} {t('characters')}
           </span>
         </div>
       </div>
@@ -326,20 +304,9 @@ const DialogProfileModify = ({
         </div>
       </div>
     ),
-    tags: (
-      <div className="m-5">
-        <ChipsGroup
-          name="tags"
-          label={'#' + t(`tags.tags`) + ':'}
-          options={TAGS_LIST || []}
-          selectedChips={selectedTags}
-          setSelectedChips={setSelectedTags}
-        />
-      </div>
-    ),
     photos: (
       <div className="flex">
-        <ImageUploader id={0} setProfileIsCompleted={setProfileIsCompleted} />
+        <ImageUploader id={0} />
       </div>
     ),
   };
@@ -355,15 +322,12 @@ const DialogProfileModify = ({
     setSuccessMessage('');
     switch (layout) {
       case 'basics':
-        setLayout('biography');
+        setLayout('description');
         break;
-      case 'biography':
+      case 'description':
         setLayout('location');
         break;
       case 'location':
-        setLayout('tags');
-        break;
-      case 'tags':
         setLayout('photos');
         break;
       case 'photos':
@@ -378,17 +342,14 @@ const DialogProfileModify = ({
     setError('');
     setSuccessMessage('');
     switch (layout) {
-      case 'biography':
+      case 'description':
         setLayout('basics');
         break;
       case 'location':
-        setLayout('biography');
-        break;
-      case 'tags':
-        setLayout('location');
+        setLayout('description');
         break;
       case 'photos':
-        setLayout('tags');
+        setLayout('location');
         break;
       default:
         break;

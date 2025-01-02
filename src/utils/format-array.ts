@@ -1,5 +1,5 @@
 import { ALL_COUNTRY_ISO_CODES } from '@/constants/all-country-iso-codes';
-import { TSelectorOption } from '@/utils/create-tags';
+import { TSelectorOption } from '@/types/general';
 
 export const getOptionLabelByValue = (
   value: string,
