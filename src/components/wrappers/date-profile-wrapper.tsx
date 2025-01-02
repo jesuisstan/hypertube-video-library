@@ -8,7 +8,6 @@ import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import InterestsWrapper from '@/components/wrappers/interests-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
-import PhotoGalleryWrapper from '@/components/wrappers/photo-gallery-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import { TDateProfile } from '@/types/date-profile';
 
@@ -70,12 +69,6 @@ const DateProfileWrapper = ({
         <div className={clsx('col-span-12 h-max space-y-5', 'lg:col-span-3')}>
           {/* LOCATION */}
           <LocationWrapper address={dateProfile?.address} />
-        </div>
-
-        {/* CENTER SECTOR */}
-        <div className={clsx('col-span-12 space-y-5', 'lg:col-span-6')}>
-          {/* PHOTOS */}
-          <PhotoGalleryWrapper profile={dateProfile} />
         </div>
 
         {/* RIGHT SECTOR */}
