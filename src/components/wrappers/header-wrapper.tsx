@@ -49,8 +49,8 @@ const HeaderWrapper = ({
         src={photoURL}
         nickname={nickname ?? '???'}
         rounded
-        width={200}
-        height={200}
+        width={184}
+        height={184}
         onAvatarChange={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
       />
       <div className="flex flex-col gap-2">

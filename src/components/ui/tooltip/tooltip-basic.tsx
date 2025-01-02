@@ -37,10 +37,7 @@ const TooltipBasic: FC<TooltipBasicProps> = ({ trigger, children, sideOffset = 1
               size="icon"
               className="hover:bg-inherit"
             >
-              <CircleAlert
-                size={21}
-                className="m-1 text-c42orange smooth42transition hover:scale-110"
-              />
+              <CircleAlert size={21} className="text-c42orange" />
             </ButtonCustom>
           )}
         </TooltipTrigger>

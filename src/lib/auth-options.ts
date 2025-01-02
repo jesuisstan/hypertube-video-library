@@ -164,6 +164,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/authentication',
     error: '/authentication',
-    //redirect: '/dashboard',
+    //redirect: '/browse',
   },
 };

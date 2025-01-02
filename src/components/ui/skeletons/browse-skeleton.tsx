@@ -1,4 +1,4 @@
-const DashboardSkeleton = () => {
+const BrowseSkeleton = () => {
   return (
     <div>
       {/* HEADER SKELETON */}
@@ -37,4 +37,4 @@ const DashboardSkeleton = () => {
   );
 };
 
-export default DashboardSkeleton;
+export default BrowseSkeleton;

@@ -7,7 +7,7 @@
   "about-description": "Hypertube is a free video streaming service that allows you to watch movies and TV shows online.\n You can search for movies by genre, year, or title.\n You can also filter movies by rating, release date, and quality.\n Hypertube has a large collection of movies and TV shows in various genres, including action, comedy, drama, horror, and more.",
   "disclamer-curriculum": "This project is a part of the 42 Network curriculum.",
   "disclamer-no-commercial": "It has no commercial purpose, and is intended for educational use only.",
-  "dashboard": "Dashboard",
+  "browse": "Browse",
   "about": "About",
   "error": "Error",
   "something-went-wrong": "Something went wrong",
@@ -82,15 +82,15 @@
   "lastname": "Last name",
   "firstname": "First name",
   "nickname": "Nickname",
-  "rating": "Rating",
   "theme": "Theme",
+  "color-theme": "Color theme",
   "refresh": "Refresh",
   "slide-show": "Slide show",
   "congrats": "Congratulations!",
   "profile-is-complete": "Your profile is complete!",
   "dialog-title": {
     "basics": "Basics",
-    "biography": "Biography",
+    "biography": "Description",
     "location": "Location",
     "tags": "Interests",
     "photos": "Avatar"
@@ -110,7 +110,7 @@
   "click-to-wrap": "Click to wrap the description",
   "click-to-unwrap": "Click to see the full description",
   "no-description": "No description",
-  "bio": "Bio",
+  "description": "Description",
   "last-action": "Last action",
   "invalid-date": "Invalid date",
   "location": "Location",
@@ -172,6 +172,7 @@
   "proceed": "Proceed",
   "save": "Save",
   "app-language": "Application language",
+  "prefered-content-language": "Сontent language",
 
   "search": {
     "search": "Search",

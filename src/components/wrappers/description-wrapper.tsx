@@ -30,22 +30,25 @@ const DescriptionWrapper = ({
       title={isDescriptionExpanded ? t('click-to-wrap') : t('click-to-unwrap')}
       onClick={toggleDescription}
       className={clsx(
-        'relative min-h-[104px] w-full min-w-36 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl bg-card p-4 pb-3 pt-2 shadow-md transition-all duration-300 ease-in-out'
+        'relative min-h-28 w-full min-w-36 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl bg-card p-5 shadow-md transition-all duration-300 ease-in-out'
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }} // Add these styles
+      style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
     >
-      <p className="text-base font-bold">{capitalize(t('bio'))}</p>
-      <p
-        className={clsx(
-          'text-sm smooth42transition ',
-          isDescriptionExpanded ? 'h-auto' : 'line-clamp-3 h-[max-content] text-ellipsis'
-        )}
-        style={{ maxWidth: '100%' }} // Ensure the description doesn't exceed the container width
-      >
-        <TextWithLineBreaks text={text ?? t(`no-description`)} />
-      </p>
+      <div className="flex flex-col justify-start gap-4">
+        <p className="text-xl font-bold">{capitalize(t('description'))}</p>
+        <p
+          className={clsx(
+            'text-sm smooth42transition',
+            isDescriptionExpanded ? 'h-auto' : 'line-clamp-2 h-[max-content] text-ellipsis'
+          )}
+          style={{ maxWidth: '100%' }} // Ensure the description doesn't exceed the container width
+        >
+          <TextWithLineBreaks text={text ?? t(`no-description`)} />
+        </p>
+      </div>
+
       <div
         className={clsx(
           'absolute bottom-0 left-[50%] m-auto w-min translate-x-[-50%]',

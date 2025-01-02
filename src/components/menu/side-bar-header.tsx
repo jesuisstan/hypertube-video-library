@@ -3,7 +3,6 @@ import { useState } from 'react';
 import DialogSettings from '@/components/dialogs-custom/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar/avatar-mini';
-import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import { Separator } from '@/components/ui/separator';
 import { UserNameSkeleton } from '@/components/ui/skeletons/menu-skeleton';
 import { formatUserName } from '@/utils/format-string';
@@ -40,7 +39,6 @@ const SideBarHeader = ({
 
       <Separator />
       <div className="flex flex-row items-center gap-x-1 self-center align-middle">
-        <ThemeToggler translate={translate} />
         <DialogSettings show={showSettingsModal} setShow={setShowSettingsModal} />
         <LogoutButton translate={translate} />
       </div>

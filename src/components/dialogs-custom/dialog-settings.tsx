@@ -8,6 +8,7 @@ import DialogChangePassword from '@/components/dialogs-custom/dialog-change-pass
 import DialogDeleteAccount from '@/components/dialogs-custom/dialog-delete-account';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
+import ThemeToggler from '@/components/ui/buttons/theme-toggler';
 import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -45,6 +46,11 @@ const DialogSettings = ({
     >
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-center justify-center space-y-5 text-center">
+          <div className="flex flex-col items-center justify-center space-y-5 text-center">
+            <Label>{t(`color-theme`) + ':'}</Label>
+            <ThemeToggler translate={t} />
+          </div>
+          <Separator />
           <div className="flex flex-col items-center justify-center space-y-5 text-center">
             <Label>{t(`app-language`) + ':'}</Label>
             <LocaleSwitcher />

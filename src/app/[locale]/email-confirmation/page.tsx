@@ -63,7 +63,7 @@ const EmailConfirmation = () => {
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
           <ButtonCustom type="button" variant="default" size="default" className="min-w-32">
-            <Link href={`/dashboard`}>{t('return-to') + ' ' + t('dashboard')}</Link>
+            <Link href={`/browse`}>{t('return-to') + ' ' + t('browse')}</Link>
           </ButtonCustom>
 
           <a

@@ -29,9 +29,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/authentication', req.url));
   }
 
-  // Redirect to dashboard if token is present and user is on the authentication page
+  // Redirect to browse if token is present and user is on the authentication page
   if (token && normalizedPath === '/authentication') {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/browse', req.url));
   }
 
   // Pass the request through the intlMiddleware

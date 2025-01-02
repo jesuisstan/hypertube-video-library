@@ -144,21 +144,21 @@ const Menu: React.FC = () => {
               <Separator />
 
               {/* DASHBOARD LINK */}
-              <div id="dashboard-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
+              <div id="browse-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
                 <LayoutDashboard />
                 <Link
-                  href={`/dashboard`}
+                  href={`/browse`}
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname === `/dashboard` && 'text-c42green'
+                    pathname === `/browse` && 'text-c42green'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);
                   }}
                   scroll={false}
                 >
-                  {t(`dashboard`)}
+                  {t(`browse`)}
                 </Link>
               </div>
 

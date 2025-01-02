@@ -66,7 +66,6 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
           <div className="flex flex-row items-center gap-x-1 self-center align-middle">
             <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
             <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
-            <div className="mx-2 my-2 h-7 w-7 rounded-full bg-muted dark:bg-muted" />
           </div>
 
           {/* horizontal divider */}

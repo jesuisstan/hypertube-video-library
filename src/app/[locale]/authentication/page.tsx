@@ -115,7 +115,7 @@ const Authentication = () => {
         case 'login':
           if (result) {
             setLoading(true);
-            router.push('/dashboard');
+            router.push('/browse');
           } else {
             if (result.error) {
               setError(t(`auth.${spaceToKebab(result.error).toLocaleLowerCase()}`));
