@@ -35,10 +35,6 @@ export default function MovieList() {
         const data = await fetchMovies({ limit: 42, genre: 'drama', sort_by: 'rating' });
         console.log('MOVIES RAIR DATA', data); // debug
         setMovies(data.data.movies || []);
-        const fDetails = await fetchMovieDetails(data.data.movies[0].id);
-
-        setDetails(fDetails || []);
-        console.log('DETAILS', details); // debug
       } catch (err) {
         console.log('ERROR', err); // debug
         setError('Failed to load movies');
