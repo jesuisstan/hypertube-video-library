@@ -43,3 +43,8 @@ next-env.d.ts
 /.vscode/
 .swc
 /.swc/
+
+# temporary or download files
+.tmp
+/downloads
+/temp
