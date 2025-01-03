@@ -1,4 +1,4 @@
-const YTS_API_BASE_URL = process.env.YTS_API_BASE_URL || 'https://yts.mx/api/v2';
+const PROXY_YTS_API_URL = '/api/yts/proxy';
 
 /**
  * Universal function for fetching data from YTS API
@@ -14,10 +14,10 @@ export async function fetchYTSApi(endpoint: string, params: Record<string, strin
     )
   ).toString();
 
-  const url = `${YTS_API_BASE_URL}/${endpoint}.json?${query}`;
-  console.log('Fetching URL:', url);
+  const targetUrl = `${process.env.YTS_API_BASE_URL || 'https://yts.mx/api/v2'}/${endpoint}.json?${query}`;
+  console.log('Fetching through proxy:', targetUrl);
 
-  const response = await fetch(url);
+  const response = await fetch(`${PROXY_YTS_API_URL}?targetUrl=${encodeURIComponent(targetUrl)}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
   }
