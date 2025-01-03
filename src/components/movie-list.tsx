@@ -13,6 +13,18 @@ export default function MovieList() {
   const [error, setError] = useState<string | null>(null);
   const [details, setDetails] = useState<any>(null);
 
+  async function fetchMoviesViaProxy() {
+    const targetUrl = 'https://yts.mx/api/v2/list_movies.json?limit=50';
+    const response = await fetch(`/api/yts/proxy?targetUrl=${encodeURIComponent(targetUrl)}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch movies via proxy');
+    }
+
+    const data = await response.json();
+    console.log("PROXYYYYYYYYYYYYY",data);
+  }
+
   useEffect(() => {
     async function loadMovies() {
       try {
@@ -34,6 +46,7 @@ export default function MovieList() {
     }
 
     loadMovies();
+    fetchMoviesViaProxy();
   }, []);
 
   async function loadMovieDetails() {
