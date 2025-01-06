@@ -52,3 +52,4 @@ next-env.d.ts
 # ignore files in downloads folder but keep empty subfolders
 /public/downloads/*
 !/public/downloads/*/
+!/public/downloads/*/*/
