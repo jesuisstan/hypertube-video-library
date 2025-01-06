@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     // Загружаем и сохраняем видеофайл
     const videoFilePath = path.join(videosDir, `${torrentMetadata.infoHash}.mp4`);
-    await downloadVideoFile(torrentMetadata);
+    await downloadVideoFile(torrentMetadata, videosDir);
 
     return NextResponse.json({
       success: true,

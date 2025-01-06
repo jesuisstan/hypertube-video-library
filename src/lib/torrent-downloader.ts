@@ -44,7 +44,7 @@ export async function downloadTorrentFile(url: string, destination: string): Pro
 /**
  * Function to connect to peers and download file
  */
-export async function downloadVideoFile(metadata: any) {
+export async function downloadVideoFile(metadata: any, destination: string) {
   const announceList = [...metadata.announce, ...DEFAULT_TRACKERS]; // List of trackers
   const files = metadata.files; // List of files in the torrent
   const totalLength = metadata.length; // Total size of the data
@@ -59,7 +59,7 @@ export async function downloadVideoFile(metadata: any) {
   console.log(`[INFO] Downloading file: ${mainFile.name}, Size: ${mainFile.length} bytes`);
 
   // Prepare to write the downloaded file
-  const fileStream = createWriteStream(mainFile.name);
+  const fileStream = createWriteStream(destination + '/' + mainFile.name);
 
   // Connect to peers and download pieces
   for (const trackerUrl of announceList) {
@@ -67,6 +67,7 @@ export async function downloadVideoFile(metadata: any) {
     try {
       // Fetch peers from the tracker
       const peers = await fetchPeersFromTracker(trackerUrl, metadata.infoHash);
+      console.log("[INFO] !!!!!!!!!!!!!!!!!!!!!!!!! Peers!!!!!!!!!!!!!!!!!!! :", peers);
       console.log(`[INFO] Found ${peers.length} peers`);
 
       for (const peer of peers) {
