@@ -7,11 +7,16 @@ import { useEffect, useState } from 'react';
 import { ButtonCustom } from './ui/buttons/button-custom';
 import VideoPlayer from './video-player';
 
+import { fetchMoviesPopcorn } from '@/lib/popcorn-api';
 import { fetchMovieDetails, fetchMovies } from '@/lib/yts-api';
 
 export default function MovieList() {
   const [movies, setMovies] = useState<any[]>([]);
+  const [moviesPopcorn, setMoviesPopcorn] = useState<any[]>([]);
+
   const [error, setError] = useState<string | null>(null);
+  const [errorPopcorn, setErrorPopcorn] = useState<string | null>(null);
+
   const [details, setDetails] = useState<any>(null);
 
   const [torrentUrl, setTorrentUrl] = useState('');
@@ -20,12 +25,32 @@ export default function MovieList() {
   useEffect(() => {
     async function loadMovies() {
       try {
-        const data = await fetchMovies({ limit: 50, genre: 'adventure', sort_by: 'rating' });
-        console.log('MOVIES RAIR DATA', data); // debug
+        const data = await fetchMovies({ limit: 25, genre: 'adventure', sort_by: 'rating' });
+        //console.log('MOVIES RAIR DATA', data); // debug
         setMovies(data.data.movies || []);
       } catch (err) {
         console.log('ERROR', err); // debug
         setError('Failed to load movies');
+      }
+    }
+
+    loadMovies();
+  }, []);
+
+  useEffect(() => {
+    async function loadMovies() {
+      try {
+        const data = await fetchMoviesPopcorn({
+          sort: 'rating',
+          order: '-1',
+          genre: 'all',
+          keywords: "string",
+        });
+        console.log('MOVIES RAIR DATA', data); // debug
+        setMoviesPopcorn(data.data.movies || []);
+      } catch (err) {
+        console.log('ERROR', err); // debug
+        setErrorPopcorn('Failed to load movies');
       }
     }
 
@@ -66,7 +91,7 @@ export default function MovieList() {
       }
 
       const data = await response.json();
-      console.log('RAIR DATA', data); // debug
+      //console.log('RAIR DATA', data); // debug
       setResult(data);
     } catch (err: any) {
       setError(err.message);
@@ -76,13 +101,22 @@ export default function MovieList() {
   if (error) {
     return <p>{error}</p>;
   }
-
+console.log('RAIR MOVIES POPCORN', moviesPopcorn); // debug
   return (
     <div className="flex flex-row space-x-4">
       <div>
-        <h1 className="font-bold">Movies</h1>
+        <h1 className="font-bold">Movies YTS</h1>
         <ul>
           {movies.map((movie) => (
+            <li key={movie.id}>{movie.title}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h1 className="font-bold">Movies POPCORN</h1>
+        <ul>
+          {moviesPopcorn.map((movie) => (
             <li key={movie.id}>{movie.title}</li>
           ))}
         </ul>
@@ -110,18 +144,14 @@ export default function MovieList() {
 
       <div>
         <h1 className="font-bold">Download</h1>
-        <ButtonCustom onClick={handleDownload}>
-          Download
-        </ButtonCustom>
+        <ButtonCustom onClick={handleDownload}>Download</ButtonCustom>
         <div>
           <p>Downloaded: {String(result?.success)}</p>
           <p>Path: {result?.videoFilePath}</p>
         </div>
       </div>
 
-      <div>
-        {result?.videoFilePath && <VideoPlayer videoUrl={result?.videoFilePath} />}
-      </div>
+      <div>{result?.videoFilePath && <VideoPlayer videoUrl={result?.videoFilePath} />}</div>
     </div>
   );
 }

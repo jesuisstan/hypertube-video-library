@@ -1,4 +1,4 @@
-const PROXY_YTS_API_URL = '/api/yts/proxy';
+const PROXY_YTS_API_URL = '/api/torrents/proxy';
 
 /**
  * Universal function for fetching data from YTS API
