@@ -24,7 +24,7 @@ const Separator = React.forwardRef<
         orientation={orientation}
         className={clsx(
           'shrink-0 bg-border',
-          isHorizontal ? 'h-[1px] flex-1' : 'w-[1px] h-2 flex-1',
+          isHorizontal ? 'h-[1px] flex-1' : 'h-full w-[1px] flex-1',
           className
         )}
         {...props}
@@ -46,7 +46,7 @@ const Separator = React.forwardRef<
         orientation={orientation}
         className={clsx(
           'shrink-0 bg-border',
-          isHorizontal ? 'h-[1px] flex-1' : 'w-[1px] flex-1',
+          isHorizontal ? 'h-[1px] flex-1' : 'h-full w-[1px] flex-1',
           className
         )}
         {...props}

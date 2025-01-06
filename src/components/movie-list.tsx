@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react';
 
 import { ButtonCustom } from './ui/buttons/button-custom';
+import VideoPlayer from './video-player';
 
 import { fetchMovieDetails, fetchMovies } from '@/lib/yts-api';
 
@@ -19,7 +20,7 @@ export default function MovieList() {
   useEffect(() => {
     async function loadMovies() {
       try {
-        const data = await fetchMovies({ limit: 42, genre: 'drama', sort_by: 'rating' });
+        const data = await fetchMovies({ limit: 50, genre: 'adventure', sort_by: 'rating' });
         console.log('MOVIES RAIR DATA', data); // debug
         setMovies(data.data.movies || []);
       } catch (err) {
@@ -38,7 +39,7 @@ export default function MovieList() {
       //  '/api/yts/movies?endpoint=list_movies&limit=50&genre=comedy&sort_by=rating'
       //);
 
-      const fDetails = await fetchMovieDetails(movies[1].id);
+      const fDetails = await fetchMovieDetails(movies[24].id);
 
       setDetails(fDetails.data.movie || []);
       console.log('RAIR DETAILS', fDetails.data.movie.torrents[0].url); // debug
@@ -65,6 +66,7 @@ export default function MovieList() {
       }
 
       const data = await response.json();
+      console.log('RAIR DATA', data); // debug
       setResult(data);
     } catch (err: any) {
       setError(err.message);
@@ -112,9 +114,13 @@ export default function MovieList() {
           Download
         </ButtonCustom>
         <div>
-          <p>Downloaded: {result?.fileName}</p>
-          <p>Path: {result?.videoPath}</p>
+          <p>Downloaded: {String(result?.success)}</p>
+          <p>Path: {result?.videoFilePath}</p>
         </div>
+      </div>
+
+      <div>
+        {result?.videoFilePath && <VideoPlayer videoUrl={result?.videoFilePath} />}
       </div>
     </div>
   );

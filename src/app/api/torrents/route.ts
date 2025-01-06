@@ -4,52 +4,51 @@ import fs from 'fs';
 import parseTorrent, { Instance as TorrentInstance } from 'parse-torrent';
 import path from 'path';
 
-async function fetchTorrentBuffer(url: string): Promise<Buffer> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error('Failed to fetch torrent file');
-  }
-  const arrayBuffer = await response.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-}
+import { downloadTorrentFile, downloadVideoFile } from '@/lib/torrent-downloader';
 
 export async function POST(req: Request) {
   try {
-    const { torrentUrl } = await req.json(); // Получение URL торрента из запроса
-    const tempDir = path.resolve(process.cwd(), 'temp');
-    if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir, { recursive: true }); // Создаёт папку и вложенные директории, если нужно
+    const { torrentUrl } = await req.json();
+    console.log('[INFO] Torrent URL:', torrentUrl);
+
+    if (!torrentUrl) {
+      return NextResponse.json(
+        { success: false, error: 'No torrent URL provided' },
+        { status: 400 }
+      );
     }
 
-    const torrentBuffer = await fetchTorrentBuffer(torrentUrl);
-    const torrent = (await parseTorrent(torrentBuffer)) as TorrentInstance;
-    console.log('------TORRENT:', torrent); // debug
+    // Создаем директории для хранения файлов
+    const torrentsDir = path.resolve(process.cwd(), 'public/downloads/torrents');
+    const videosDir = path.resolve(process.cwd(), 'public/downloads/videos');
+    if (!fs.existsSync(torrentsDir)) fs.mkdirSync(torrentsDir, { recursive: true });
+    if (!fs.existsSync(videosDir)) fs.mkdirSync(videosDir, { recursive: true });
 
-    if (!torrent) {
-      throw new Error('Failed to parse torrent');
+    // Скачиваем .torrent файл
+    const torrentFilePath = path.join(torrentsDir, `${Date.now()}.torrent`);
+    await downloadTorrentFile(torrentUrl, torrentFilePath);
+
+    // Парсим .torrent файл
+    const torrentBuffer = fs.readFileSync(torrentFilePath);
+    const torrentMetadata = (await parseTorrent(torrentBuffer)) as TorrentInstance;
+
+    if (!torrentMetadata || !torrentMetadata.infoHash) {
+      throw new Error('Invalid torrent metadata');
     }
 
-    const videoFile = torrent.files?.find(
-      (file) => file.name.endsWith('.mp4') || file.name.endsWith('.mkv')
-    );
-    console.log('------VIDEO FILE:', videoFile); // debug
-    if (!videoFile) {
-      throw new Error('No video file found in the torrent');
-    }
+    console.log('[INFO] Torrent metadata:', torrentMetadata);
 
-    const videoPath = path.join(tempDir, `${torrent.name}.mp4`);
-    const writeStream = fs.createWriteStream(videoPath);
-
-    // Simplified logic: simulate file writing
-    writeStream.write('Simulated video data');
-    writeStream.end();
+    // Загружаем и сохраняем видеофайл
+    const videoFilePath = path.join(videosDir, `${torrentMetadata.infoHash}.mp4`);
+    await downloadVideoFile(torrentMetadata);
 
     return NextResponse.json({
-      hash: torrent.infoHash,
-      videoPath,
-      fileName: videoFile.name,
+      success: true,
+      infoHash: torrentMetadata.infoHash,
+      videoFilePath,
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('[ERROR] Torrent download failed:', error);
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
