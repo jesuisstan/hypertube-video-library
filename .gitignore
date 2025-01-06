@@ -54,3 +54,4 @@ next-env.d.ts
 !/public/downloads/**/.gitkeep
 # keep empty subfolders
 !/public/downloads/*/
+/public/downloads/**/*
