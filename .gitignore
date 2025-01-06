@@ -46,10 +46,11 @@ next-env.d.ts
 
 # temporary or download files
 .tmp
-/downloads
 /temp
 
-# ignore files in downloads folder but keep empty subfolders
+# ignore all files in downloads folder and subfolders
 /public/downloads/*
+# but allow .gitkeep files in subfolders
+!/public/downloads/**/.gitkeep
+# keep empty subfolders
 !/public/downloads/*/
-!/public/downloads/*/*/
