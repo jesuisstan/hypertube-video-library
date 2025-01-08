@@ -26,31 +26,11 @@ export default function MovieList() {
     async function loadMovies() {
       try {
         const data = await fetchMovies({ limit: 25, genre: 'adventure', sort_by: 'rating' });
-        //console.log('MOVIES RAIR DATA', data); // debug
+        console.log('MOVIES RAIR DATA', data); // debug
         setMovies(data.data.movies || []);
       } catch (err) {
         console.log('ERROR', err); // debug
         setError('Failed to load movies');
-      }
-    }
-
-    loadMovies();
-  }, []);
-
-  useEffect(() => {
-    async function loadMovies() {
-      try {
-        const data = await fetchMoviesPopcorn({
-          sort: 'rating',
-          order: '-1',
-          genre: 'all',
-          keywords: "string",
-        });
-        console.log('MOVIES RAIR DATA', data); // debug
-        setMoviesPopcorn(data.data.movies || []);
-      } catch (err) {
-        console.log('ERROR', err); // debug
-        setErrorPopcorn('Failed to load movies');
       }
     }
 

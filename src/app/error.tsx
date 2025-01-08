@@ -11,6 +11,14 @@ import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 const DefaultErrorPage = () => {
   const t = useTranslations();
 
+  const handleButtonClick = () => {
+    if (window.location.pathname === '/browse') {
+      window.location.reload();
+    } else {
+      window.location.href = '/browse';
+    }
+  };
+
   return (
     <div
       className="flex w-full items-center justify-center"
@@ -36,8 +44,8 @@ const DefaultErrorPage = () => {
         <TextWithLineBreaks text={t('something-went-wrong')} />
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
-          <ButtonCustom type="button" variant="default" size="default" className="min-w-32">
-            <Link href={`/browse`}>{t('return-to') + ' ' + t('browse')}</Link>
+          <ButtonCustom type="button" variant="default" size="default" className="min-w-32" onClick={handleButtonClick}>
+            {t('return-to') + ' ' + t('browse')}
           </ButtonCustom>
 
           <a

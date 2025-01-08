@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com', // Google's avatar URL
       },
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org', // TMDB's image URL
+      },
     ],
   },
   async redirects() {

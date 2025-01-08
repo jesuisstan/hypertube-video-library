@@ -13,7 +13,6 @@ export async function GET(req: Request) {
     const response = await fetch(targetUrl, {
       method: 'GET',
       headers: {
-        // Передача необходимых заголовков, если нужно
         'Content-Type': 'application/json',
       },
     });
