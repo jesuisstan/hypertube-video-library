@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import { Separator } from '@/components/ui/separator';
 
 const MovieProfile = () => {
   const t = useTranslations();
