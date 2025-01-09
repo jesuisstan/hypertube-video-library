@@ -30,27 +30,28 @@ export async function GET(request: Request) {
     const results = await piratebay.search(searchQuery);
 
     // Filter results for exact matches (case-insensitive)
-    const filteredResults = results.filter(
-      (item) =>
-        item.title.toLowerCase().includes('1080') ||
-        item.title.toLowerCase().includes('720') ||
-        item.title.toLowerCase().includes('web-dl') ||
-        item.title.toLowerCase().includes('webrip') ||
-        item.title.toLowerCase().includes('bluray') ||
-        item.title.toLowerCase().includes('brrip') ||
-        item.title.toLowerCase().includes('dvdrip') ||
-        item.title.toLowerCase().includes('hdtv') ||
-        item.title.toLowerCase().includes('x264') ||
-        item.title.toLowerCase().includes('x265') ||
-        item.title.toLowerCase().includes('hevc') ||
-        item.title.toLowerCase().includes('aac') ||
-        item.title.toLowerCase().includes('dts') ||
-        item.title.toLowerCase().includes('ac3') ||
-        item.title.toLowerCase().includes('5.1') ||
-        item.title.toLowerCase().includes('7.1')
-    );
+    const filteredResults = results
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes('1080') ||
+          item.title.toLowerCase().includes('720') ||
+          item.title.toLowerCase().includes('web-dl') ||
+          item.title.toLowerCase().includes('webrip') ||
+          item.title.toLowerCase().includes('bluray') ||
+          item.title.toLowerCase().includes('brrip') ||
+          item.title.toLowerCase().includes('dvdrip') ||
+          item.title.toLowerCase().includes('hdtv') ||
+          item.title.toLowerCase().includes('x264') ||
+          item.title.toLowerCase().includes('x265') ||
+          item.title.toLowerCase().includes('hevc') ||
+          item.title.toLowerCase().includes('aac') ||
+          item.title.toLowerCase().includes('dts') ||
+          item.title.toLowerCase().includes('ac3') ||
+          item.title.toLowerCase().includes('5.1') ||
+          item.title.toLowerCase().includes('7.1')
+      )
+      .slice(0, 9);
 
-    console.log('[INFO] Fetched and filtered PirateBay data:', filteredResults); // debug
     // Return filtered results as JSON
     return NextResponse.json(filteredResults);
   } catch (error) {
