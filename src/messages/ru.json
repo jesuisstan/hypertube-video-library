@@ -172,6 +172,11 @@
   "app-language": "Язык приложения",
   "prefered-content-language": "Язык контента",
   "password-not-found": "Пароль не найден",
+  "release-year": "Год выпуска",
+  "average-rating": "Средний рейтинг",
+  "popular": "Популярные",
+  "top-rated": "Топ рейтинга",
+  "custom-search": "Поиск по критериям",
 
   "search": {
     "search": "Поиск",

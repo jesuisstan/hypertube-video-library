@@ -66,13 +66,6 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         radius: 'hsl(var(--radius))',
       },
-      //backgroundImage: {
-      //  'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      //  'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      //},
-      backgroundImage: {
-        'identity-background': "url('/identity/background.jpg')",
-      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -100,6 +93,7 @@ module.exports = {
       const newUtilities = {
         '.smooth42transition': {
           transition: 'all 300ms ease-in-out',
+          transform: 'translateZ(0)',
         },
       };
       addUtilities(newUtilities, ['responsive', 'hover']);

@@ -112,10 +112,6 @@
   border-radius: 16px;
 }
 
-.custom-button {
-  @apply rounded bg-primary px-4 py-2 text-sm text-muted shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-1 focus:ring-primary focus:ring-opacity-50;
-}
-
 .darkmode-logo {
   filter: invert(25%) saturate(250%);
 }

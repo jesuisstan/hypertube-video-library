@@ -40,3 +40,22 @@ export function formatDateForInput(isoDate: string | undefined | null): string {
     return '';
   }
 }
+
+export const formatDateThumbnail = (apiDate: string | undefined): string => {
+  if (!apiDate) return 'Invalid Date';
+
+  const inputDate = new Date(apiDate);
+
+  // Format the date using options
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  };
+
+  // Use the browser's default locale
+  const formattedDate = inputDate.toLocaleString(undefined, options);
+
+  // Optionally, remove commas from the formatted date
+  return formattedDate.replace(/,/g, '');
+};

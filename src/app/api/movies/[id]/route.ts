@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(req: Request) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
+    const { id } = await params; // Get the movie ID from the request params
     const { searchParams } = new URL(req.url);
-    const list = searchParams.get('list') || 'popular';
     const lang = searchParams.get('lang') || 'en-US';
-    const page = searchParams.get('page') || '1';
 
     const options = {
       method: 'GET',
@@ -17,7 +16,7 @@ export async function GET(req: Request) {
 
     // Fetch popular movies from TMDB
     const response = await fetch(
-      `${process.env.TMDB_API_URL}/movie/${list}?language=${lang}&page=${page}`,
+      `${process.env.TMDB_API_URL}/movie/${id}?language=${lang}`,
       options
     );
 
@@ -26,11 +25,12 @@ export async function GET(req: Request) {
     }
 
     const data = await response.json();
+    console.log('[INFO] Fetched movie-data:', data); // debug
 
     // Return the movies data to the client
     return NextResponse.json(data);
   } catch (error: any) {
-    console.error('Movies fetch error:', error);
+    console.error('Movie fetch error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

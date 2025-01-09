@@ -26,7 +26,7 @@ const DefaultErrorPage = () => {
     >
       <div
         id="access-denied-warning"
-        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
+        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
       >
         <Image
           src="/identity/logo-title-only.png"
@@ -44,7 +44,13 @@ const DefaultErrorPage = () => {
         <TextWithLineBreaks text={t('something-went-wrong')} />
 
         <div id="buttons-block" className="flex w-full flex-col items-center justify-evenly gap-2">
-          <ButtonCustom type="button" variant="default" size="default" className="min-w-32" onClick={handleButtonClick}>
+          <ButtonCustom
+            type="button"
+            variant="default"
+            size="default"
+            className="min-w-32"
+            onClick={handleButtonClick}
+          >
             {t('return-to') + ' ' + t('browse')}
           </ButtonCustom>
 

@@ -85,7 +85,7 @@ const AboutPage = () => {
         <div
           id="powered-by"
           className={clsx(
-            'flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl bg-card p-5 align-middle shadow-md'
+            'flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl bg-card p-5 align-middle shadow-md shadow-primary/20'
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>

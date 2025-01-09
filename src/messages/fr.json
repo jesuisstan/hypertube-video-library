@@ -172,6 +172,11 @@
   "app-language": "Langue de l'application",
   "prefered-content-language": "Langue de contenu",
   "password-not-found": "Mot de passe non trouvé",
+  "release-year": "Année de sortie",
+  "average-rating": "Note moyenne",
+  "popular": "Populaire",
+  "top-rated": "Les mieux notés",
+  "custom-search": "Recherche personnalisée",
 
   "search": {
     "search": "Chercher",

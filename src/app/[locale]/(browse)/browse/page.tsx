@@ -1,44 +1,47 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { TvMinimalPlay } from 'lucide-react';
+import clsx from 'clsx';
 
-import MovieList from '@/components/movie-list';
+import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import EncryptButton from '@/components/ui/buttons/encrypt-button';
 import BrowseSkeleton from '@/components/ui/skeletons/browse-skeleton';
-import { useRouter } from '@/i18n/routing';
+import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
+import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const Browse = () => {
   const t = useTranslations();
+  const localeActive = useLocale();
   const user = useUserStore((state) => state.user);
   const [moviesTMDB, setMoviesTMDB] = useState<any[]>([]);
-  const [moviesPB, setMoviesPB] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [list, setList] = useState('popular');
+
   const [loading, setLoading] = useState(false);
-  const [searchTitle, setSearchTitle] = useState('');
+  const { getValueOfSearchFilter, setValueOfSearchFilter } = useSearchStore();
+  // Retrieve the current layout
+  //const list = (getValueOfSearchFilter('category') || 'popular') as string;
 
-  const scrapePB = async (searchText: string) => {
-    try {
-      const response = await fetch(`/api/torrents/piratebay?query=${searchText}`);
-      //const response = await fetch('/api/torrents/piratebay');
+  const tabs = [
+    { id: 'top_rated', label: t(`top-rated`) },
+    { id: 'popular', label: t(`popular`) },
+    { id: 'custom', label: t(`custom-search`) },
+  ];
 
-      const data = await response.json();
-      console.log(data);
-      setMoviesPB(data);
-    } catch (error) {
-      console.error('Error scraping PirateBay:', error);
-    }
+  // Handle tab changes
+  const handleTabChange = (id: string) => {
+    setValueOfSearchFilter('category', id);
   };
 
   const scrapeTMDB = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/movies');
+      const response = await fetch(`/api/movies?list=${list}&lang=${localeActive}&page=${page}`);
       const data = await response.json();
       setMoviesTMDB(data.results);
     } catch (error) {
@@ -49,38 +52,20 @@ const Browse = () => {
   };
 
   useEffect(() => {
+    if (list === 'custom') return;
     scrapeTMDB();
-  }, []);
+  }, [list, page]);
 
-  useEffect(() => {
-    if (searchTitle) scrapePB(searchTitle);
-  }, [searchTitle]);
-
-  //console.log('moviesTMDB:', moviesTMDB); // debug
+  console.log('moviesTMDB:', moviesTMDB); // debug
   //console.log('moviesPB:', moviesPB); // debug
 
   return !user ? (
     <BrowseSkeleton />
   ) : (
-    <div className="flex flex-col items-center gap-10">
-      {/* scraping PirateBay */}
-      <ButtonCustom onClick={() => scrapePB(searchTitle)} loading={loading} disabled={loading}>
-        Scrape Pirate Bay
-      </ButtonCustom>
-      <EncryptButton Icon={<TvMinimalPlay />} />
-      <div>
-        <h1 className="font-bold">Movies Pirate Bay</h1>
-        <ul key="movies-Pirate-Bay" className="flex flex-col">
-          {moviesPB?.map((movie) => (
-            <li key={movie.link} className="flex flex-col items-center">
-              <p className="mt-2 text-center">{movie.title}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+    <div className="flex flex-col items-center gap-5">
+      <CategoryToggleWrapper tabs={tabs} category={list} setCategory={setList} />
       {/* scraping TMDB */}
-      <ButtonCustom
+      {/*<ButtonCustom
         type="button"
         variant={'default'}
         size={'default'}
@@ -89,33 +74,18 @@ const Browse = () => {
         disabled={loading}
       >
         Scrape TMDB
-      </ButtonCustom>
-      <div>
-        <h1 className="font-bold">Movies TMDB</h1>
-        <ul key="moviesTMDB" className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {moviesTMDB.map((movie) => (
-            <li
-              key={movie.id}
-              className="flex cursor-pointer flex-col items-center"
-              onClick={() => setSearchTitle(movie.title + ' ' + movie.release_date.split('-')[0])}
-            >
-              <Image
-                src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                alt={movie.title}
-                width={300}
-                height={450}
-                className="rounded-md"
-                priority
-              />
-              <p className="mt-2 text-center">{movie.title}</p>
-              <p className="mt-2 text-center">{movie.release_date}</p>
-              <p className="mt-2 text-center">{movie.vote_average}</p>
-              <p className="mt-2 text-center">{movie.overview}</p>
-            </li>
-          ))}
-        </ul>
+      </ButtonCustom>*/}
+
+      <div
+        key="moviesTMDB"
+        className="grid grid-cols-1 items-center gap-5 align-middle smooth42transition sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      >
+        {moviesTMDB?.map((movie) => (
+          <div key={movie.id} className="flex justify-center self-center">
+            <MovieThumbnail movieBasics={movie} />
+          </div>
+        ))}
       </div>
-      {/*<MovieList />*/}
     </div>
   );
 };

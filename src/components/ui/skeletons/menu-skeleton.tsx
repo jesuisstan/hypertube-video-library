@@ -38,7 +38,7 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
     >
       <div
         id="rounded-menu-container"
-        className="relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl bg-card px-3 pt-5 shadow-md"
+        className="relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl bg-card px-3 pt-5 shadow-md shadow-primary/20"
       >
         <div className="mb-3 flex justify-center">
           <Image

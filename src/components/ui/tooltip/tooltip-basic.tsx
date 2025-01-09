@@ -12,13 +12,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip/tooltip-primitives';
 
-interface TooltipBasicProps {
+type TTooltipBasicProps = {
   trigger?: React.ReactNode;
   children: React.ReactNode;
   sideOffset?: number;
-}
+};
 
-const TooltipBasic: FC<TooltipBasicProps> = ({ trigger, children, sideOffset = 1 }) => {
+const TooltipBasic: FC<TTooltipBasicProps> = ({ trigger, children, sideOffset = 1 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -43,7 +43,7 @@ const TooltipBasic: FC<TooltipBasicProps> = ({ trigger, children, sideOffset = 1
         </TooltipTrigger>
         <TooltipContent
           sideOffset={sideOffset}
-          className="rounded-md bg-card px-3 py-1 text-card-foreground shadow-md"
+          className="rounded-md bg-card px-3 py-1 text-card-foreground shadow-md shadow-primary/20"
         >
           {children}
         </TooltipContent>
