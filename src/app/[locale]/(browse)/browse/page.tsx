@@ -5,8 +5,11 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
+import { TvMinimalPlay } from 'lucide-react';
+
 import MovieList from '@/components/movie-list';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import EncryptButton from '@/components/ui/buttons/encrypt-button';
 import BrowseSkeleton from '@/components/ui/skeletons/browse-skeleton';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
@@ -61,7 +64,10 @@ const Browse = () => {
   ) : (
     <div className="flex flex-col items-center gap-10">
       {/* scraping PirateBay */}
-      <ButtonCustom onClick={() => scrapePB(searchTitle)}>Scrape Pirate Bay</ButtonCustom>
+      <ButtonCustom onClick={() => scrapePB(searchTitle)} loading={loading} disabled={loading}>
+        Scrape Pirate Bay
+      </ButtonCustom>
+      <EncryptButton Icon={<TvMinimalPlay />} />
       <div>
         <h1 className="font-bold">Movies Pirate Bay</h1>
         <ul key="movies-Pirate-Bay" className="flex flex-col">
