@@ -47,12 +47,12 @@ const EncryptButton = ({ Icon }: { Icon?: ReactNode }) => {
 
   return (
     <motion.button
-      //whileHover={{
-      //  scale: 1.025,
-      //}}
-      //whileTap={{
-      //  scale: 0.975,
-      //}}
+      whileHover={{
+        scale: 1.025,
+      }}
+      whileTap={{
+        scale: 0.975,
+      }}
       onMouseEnter={scramble}
       onMouseLeave={stopScramble}
       className="group relative overflow-hidden rounded-lg border-[1px] border-neutral-500 bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 transition-colors hover:text-indigo-300"
