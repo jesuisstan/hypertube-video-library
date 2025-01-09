@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await context.params; // Get the movie ID from the request params
     const { searchParams } = new URL(req.url);
