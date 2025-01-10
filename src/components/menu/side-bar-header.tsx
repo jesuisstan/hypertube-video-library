@@ -37,7 +37,6 @@ const SideBarHeader = ({
         </div>
       </div>
 
-      <Separator />
       <div className="flex flex-row items-center gap-x-1 self-center align-middle">
         <DialogSettings show={showSettingsModal} setShow={setShowSettingsModal} />
         <LogoutButton translate={translate} />

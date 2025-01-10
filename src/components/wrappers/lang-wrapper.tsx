@@ -25,7 +25,7 @@ const PrefLangWrapper = ({
         <div className="mt-4">
           <div className="flex items-center">
             {lang ? (
-              <span className="flex items-center gap-2">{lang}</span>
+              <span className="flex items-center">{lang}</span>
             ) : (
               <p className="italic">{t('data-incomplete')}</p>
             )}

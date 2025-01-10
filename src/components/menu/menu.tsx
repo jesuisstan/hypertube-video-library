@@ -6,10 +6,9 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { LayoutDashboard, MenuIcon, ShieldQuestion } from 'lucide-react';
+import { Binoculars, CircleUser, MenuIcon, ShieldQuestion } from 'lucide-react';
 
 import ContactSupportBlock from '@/components/menu/contact-support-block';
-import MenuList from '@/components/menu/menu-list';
 import SideBarHeader from '@/components/menu/side-bar-header';
 import { Separator } from '@/components/ui/separator';
 import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
@@ -143,9 +142,28 @@ const Menu: React.FC = () => {
               {/* Horizontal divider */}
               <Separator />
 
-              {/* DASHBOARD LINK */}
+              {/* PROFILE PAGE LINK */}
+              <div id="profile-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
+                <CircleUser />
+                <Link
+                  href={`/profile`}
+                  className={clsx(
+                    `flex w-full items-center smooth42transition`,
+                    `hover:text-c42orange`,
+                    pathname === `/profile` && 'text-c42green'
+                  )}
+                  onClick={() => {
+                    if (isSidebarOpen) setIsSidebarOpen(false);
+                  }}
+                  scroll={false}
+                >
+                  {t(`profile`)}
+                </Link>
+              </div>
+
+              {/* BROWSE PAGE LINK */}
               <div id="browse-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
-                <LayoutDashboard />
+                <Binoculars />
                 <Link
                   href={`/browse`}
                   className={clsx(
@@ -161,14 +179,6 @@ const Menu: React.FC = () => {
                   {t(`browse`)}
                 </Link>
               </div>
-
-              <MenuList
-                onClick={() => {
-                  if (isSidebarOpen) setIsSidebarOpen(false);
-                }}
-                pathname={pathname}
-                translate={t}
-              />
 
               {/* ABOUT LINK */}
               <div id="about-link" className="ml-3 flex w-fit items-center gap-2 text-sm">

@@ -41,7 +41,7 @@ const DescriptionWrapper = ({
         <p
           className={clsx(
             'text-sm smooth42transition',
-            isDescriptionExpanded ? 'h-auto' : 'line-clamp-2 h-[max-content] text-ellipsis'
+            isDescriptionExpanded ? 'h-auto' : 'line-clamp-6 h-[max-content] text-ellipsis'
           )}
           style={{ maxWidth: '100%' }} // Ensure the description doesn't exceed the container width
         >

@@ -11,6 +11,7 @@ import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import PrefLangWrapper from '@/components/wrappers/lang-wrapper';
+import LastActionWrapper from '@/components/wrappers/last-action-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
@@ -40,41 +41,55 @@ const ProfilePage = () => {
         startLayout={profileCompleteModalLayout as keyof typeof TProfileCompleteLayout}
       />
 
-      {/* HEADER */}
-      <div className={clsx('flex flex-row flex-wrap items-end gap-4')}>
-        <HeaderWrapper
-          photoURL={user?.photos[0]}
-          nickname={user?.nickname ?? '???'}
-          firstName={user?.firstname ?? '???'}
-          lastName={user?.lastname ?? '???'}
-          loading={false}
-          modifiable
-          onModify={handleModifyClick}
-        />
-        {/* STATUS GROUP */}
-        <StatusWrapper confirmed={user?.confirmed} lastAction={user?.last_action} />
-      </div>
-
-      {/* MAIN CONTENT */}
-      <div className={clsx('flex flex-col items-stretch gap-4', 'lg:flex-row lg:items-start')}>
+      {/* PROFILE GRID */}
+      <div
+        className={clsx(
+          'grid gap-4',
+          'auto-rows-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+        )}
+      >
+        {/* HEADER */}
+        <div>
+          <HeaderWrapper
+            photoURL={user?.photos[0]}
+            nickname={user?.nickname ?? '???'}
+            firstName={user?.firstname ?? '???'}
+            lastName={user?.lastname ?? '???'}
+            loading={false}
+            modifiable
+            onModify={handleModifyClick}
+          />
+        </div>
         {/* DESCRIPTION */}
-        <div className="w-full basis-1/3">
+        <div>
           <DescriptionWrapper
             text={user?.biography}
             modifiable
             onModify={() => handleModifyClick('description' as keyof typeof TProfileCompleteLayout)}
           />
         </div>
+
+        {/* STATUS */}
+        <div>
+          <StatusWrapper confirmed={user?.confirmed} />
+        </div>
+
+        {/* LAST ACTION */}
+        <div>
+          <LastActionWrapper date={user?.last_action} />
+        </div>
+
         {/* LOCATION */}
-        <div className="w-full basis-1/3">
+        <div>
           <LocationWrapper
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
           />
         </div>
-        {/* LANGUAGE PREFERED */}
-        <div className="w-full basis-1/3">
+
+        {/* PREFERRED LANGUAGE */}
+        <div>
           <PrefLangWrapper
             lang={user?.preferred_language}
             modifiable
