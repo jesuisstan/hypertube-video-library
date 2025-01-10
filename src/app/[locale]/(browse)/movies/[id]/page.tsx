@@ -63,7 +63,7 @@ const MovieProfile = () => {
   return (
     <div className="flex flex-col gap-5">
       <h1>Movie Profile Page</h1>
-      {movieData ? <MovieThumbnail movieBasics={movieData} /> : <p>Loading...</p>}
+      <MovieThumbnail movieBasics={movieData} loading={loading} />
       {/* scraping PirateBay */}
       <ButtonCustom onClick={() => scrapePB(searchTitle)} loading={loading} disabled={loading}>
         Scrape Pirate Bay

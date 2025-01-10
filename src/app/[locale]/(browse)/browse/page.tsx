@@ -52,12 +52,11 @@ const Browse = () => {
   };
 
   useEffect(() => {
-    if (list === 'custom') return;
+    if (list === 'custom') return; // todo
     scrapeTMDB();
   }, [list, page]);
 
   console.log('moviesTMDB:', moviesTMDB); // debug
-  //console.log('moviesPB:', moviesPB); // debug
 
   return !user ? (
     <BrowseSkeleton />
@@ -82,7 +81,7 @@ const Browse = () => {
       >
         {moviesTMDB?.map((movie) => (
           <div key={movie.id} className="flex justify-center self-center">
-            <MovieThumbnail movieBasics={movie} />
+            <MovieThumbnail movieBasics={movie} loading={loading} />
           </div>
         ))}
       </div>

@@ -72,17 +72,19 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
           <Separator />
         </div>
 
-        {/* DASHBOARD LINK */}
+        {/* Profile LINK */}
         <div className="pb-1">
-          <div className="ml-4 h-2 w-44 rounded-full bg-muted pb-5" />
+          <div className="ml-4 h-2 w-40 rounded-full bg-muted pb-5" />
         </div>
 
-        {/* Smartdata list */}
-        {generateSkeletonItems(2)}
+        {/* Browse LINK */}
+        <div className="pb-1">
+          <div className="ml-4 h-2 w-40 rounded-full bg-muted pb-5" />
+        </div>
 
         {/* ABOUT LINK */}
         <div className="pb-1">
-          <div className="ml-4 h-2 w-44 rounded-full bg-muted pb-5" />
+          <div className="ml-4 h-2 w-40 rounded-full bg-muted pb-5" />
         </div>
 
         {/* horizontal divider */}
