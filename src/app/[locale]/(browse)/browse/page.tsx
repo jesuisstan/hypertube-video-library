@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -13,6 +14,7 @@ import BrowseSkeleton from '@/components/ui/skeletons/browse-skeleton';
 import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
+import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 
 const Browse = () => {
   const t = useTranslations();
@@ -61,7 +63,12 @@ const Browse = () => {
   return !user ? (
     <BrowseSkeleton />
   ) : (
-    <div className="flex flex-col items-center gap-5">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={framerMotion}
+      className="flex flex-col items-center gap-5"
+    >
       <CategoryToggleWrapper tabs={tabs} category={list} setCategory={setList} />
       {/* scraping TMDB */}
       {/*<ButtonCustom
@@ -77,15 +84,19 @@ const Browse = () => {
 
       <div
         key="moviesTMDB"
-        className="grid grid-cols-1 items-center gap-5 align-middle smooth42transition sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
       >
         {moviesTMDB?.map((movie) => (
-          <div key={movie.id} className="flex justify-center self-center">
+          <motion.div
+            variants={slideFromBottom}
+            key={movie.id}
+            className="flex justify-center self-center"
+          >
             <MovieThumbnail movieBasics={movie} loading={loading} />
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -5,15 +5,17 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import { OctagonAlert } from 'lucide-react';
 
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 
 const AboutPage = () => {
   const t = useTranslations();
 
   return (
-    <div className="p-5">
+    <motion.div initial="hidden" animate="visible" variants={framerMotion} className="p-5">
       {/* HEADER */}
       <div className="mb-5 flex flex-col flex-wrap items-center justify-center gap-5">
         <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">{t('welcome')}</h1>
@@ -89,7 +91,11 @@ const AboutPage = () => {
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>
-          <div id="logos-group" className="flex flex-row flex-wrap justify-center gap-14">
+          <motion.div
+            variants={slideFromBottom}
+            id="logos-group"
+            className="flex flex-row flex-wrap justify-center gap-14"
+          >
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-html.png"
@@ -314,10 +320,10 @@ const AboutPage = () => {
               />
               <p>Vercel Blob</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
