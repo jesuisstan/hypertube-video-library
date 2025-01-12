@@ -4,7 +4,7 @@ import DialogSettings from '@/components/dialogs-custom/dialog-settings';
 import LogoutButton from '@/components/menu/logout-button';
 import AvatarMini from '@/components/ui/avatar/avatar-mini';
 import { Separator } from '@/components/ui/separator';
-import { UserNameSkeleton } from '@/components/ui/skeletons/skeleton-menu';
+import { SkeletonUserName } from '@/components/ui/skeletons/skeleton-menu';
 import { formatUserName } from '@/utils/format-string';
 
 const SideBarHeader = ({
@@ -32,7 +32,7 @@ const SideBarHeader = ({
           {name ? (
             <div className="max-w-[180px] truncate">{name && formatUserName(name)}</div>
           ) : (
-            <UserNameSkeleton />
+            <SkeletonUserName />
           )}
         </div>
       </div>
