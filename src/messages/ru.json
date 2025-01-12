@@ -180,6 +180,7 @@
   "error-fetching-genres": "Ошибка загрузки жанров. Попробуйте ещё раз",
   "error-fetching-movies": "Ошибка загрузки фильмов. Попробуйте ещё раз",
   "error-updating-session": "Ошибка обновления сессии",
+  "error-page-limit-reached": "Достигнут предел страниц",
 
   "search": {
     "search": "Поиск",

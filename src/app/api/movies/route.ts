@@ -5,9 +5,13 @@ import { TMovieBasics } from '@/types/movies';
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const list = searchParams.get('list') || 'popular';
+    const category = searchParams.get('category') || 'popular';
     const lang = searchParams.get('lang') || 'en-US';
     const page = searchParams.get('page') || '1';
+
+    if (Number(page) > 500) {
+      return NextResponse.json({ error: 'error-page-limit-reached' }, { status: 400 });
+    }
 
     const options = {
       method: 'GET',
@@ -19,7 +23,7 @@ export async function GET(req: Request) {
 
     // Fetch popular movies from TMDB
     const response = await fetch(
-      `${process.env.TMDB_API_URL}/movie/${list}?language=${lang}&page=${page}`,
+      `${process.env.TMDB_API_URL}/movie/${category}?language=${lang}&page=${page}`,
       options
     );
 

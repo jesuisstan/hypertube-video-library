@@ -67,7 +67,7 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
           {`${t('release')}: ${movieBasics.release_date.split('-')[0] || '----'}`}
         </p>
         <p className="flex flex-row items-center justify-center text-center text-xs">
-          {movieBasics.genre_ids ?? getGenresNames(movieBasics.genre_ids, genresList)}
+          {getGenresNames(movieBasics.genre_ids, genresList)}
         </p>
       </div>
     </Link>

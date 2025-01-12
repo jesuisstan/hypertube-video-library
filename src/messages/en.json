@@ -180,6 +180,7 @@
   "error-fetching-genres": "Error fetching genres. Please try again",
   "error-fetching-movies": "Error fetching movies. Please try again",
   "error-updating-session": "Error updating session",
+  "error-page-limit-reached": "Page limit reached",
 
   "search": {
     "search": "Search",

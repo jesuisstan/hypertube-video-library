@@ -180,6 +180,7 @@
   "error-fetching-genres": "Erreur lors de la récupération des genres. Veuillez réessayer",
   "error-fetching-movies": "Erreur lors de la récupération des films. Veuillez réessayer",
   "error-updating-session": "Erreur lors de la mise à jour de la session",
+  "error-page-limit-reached": "Limite de page atteinte",
 
   "search": {
     "search": "Chercher",
