@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import DateSkeleton from '@/components/ui/skeletons/date-skeleton';
+import SkeletonDate from '@/components/ui/skeletons/skeleton-date';
 import { formatApiDateLastUpdate } from '@/utils/format-date';
 
 const StatusWrapper = ({ confirmed }: { confirmed: boolean | undefined }) => {

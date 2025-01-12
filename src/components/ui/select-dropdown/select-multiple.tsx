@@ -11,7 +11,7 @@ import {
   DropdownMenuMultipleSelector,
   DropdownMenuPortal,
 } from '@/components/ui/dropdown-primitives';
-import SelectSkeleton from '@/components/ui/skeletons/select-skeleton';
+import SelectSkeleton from '@/components/ui/skeletons/skeleton-select';
 import { TSelectMultipleProps, TSelectMultiplePropsSchema } from '@/types/select-multiple';
 import { capitalize } from '@/utils/format-string';
 

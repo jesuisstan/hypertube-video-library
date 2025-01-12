@@ -27,6 +27,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, token: updatedToken });
   } catch (error) {
     console.error('Error updating session:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: 'error-updating-session' }, { status: 500 });
   }
 }

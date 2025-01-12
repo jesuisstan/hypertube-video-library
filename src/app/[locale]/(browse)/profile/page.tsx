@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
+import Loading from '@/app/loading';
 import DialogProfileModify from '@/components/dialogs-custom/dialog-profile-modify';
 import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
-import ProfilePageSkeleton from '@/components/ui/skeletons/profile-page-skeleton';
 import DescriptionWrapper from '@/components/wrappers/description-wrapper';
 import HeaderWrapper from '@/components/wrappers/header-wrapper';
 import PrefLangWrapper from '@/components/wrappers/lang-wrapper';
-import LastActionWrapper from '@/components/wrappers/last-action-wrapper';
+import LastModificationWrapper from '@/components/wrappers/last-modification-wrapper';
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
@@ -32,7 +32,7 @@ const ProfilePage = () => {
   };
 
   return loading || globalLoading || !user ? (
-    <ProfilePageSkeleton />
+    <Loading />
   ) : (
     <div className="flex flex-col items-stretch space-y-4">
       <DialogProfileModify
@@ -76,7 +76,7 @@ const ProfilePage = () => {
 
         {/* LAST ACTION */}
         <div>
-          <LastActionWrapper date={user?.last_action} />
+          <LastModificationWrapper date={user?.last_action} />
         </div>
 
         {/* LOCATION */}

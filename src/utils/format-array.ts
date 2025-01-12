@@ -1,5 +1,6 @@
 import { ALL_COUNTRY_ISO_CODES } from '@/constants/all-country-iso-codes';
 import { TSelectorOption } from '@/types/general';
+import { capitalize } from '@/utils/format-string';
 
 export const getOptionLabelByValue = (
   value: string,
@@ -130,4 +131,17 @@ export const sortOptionsByKeyWord = (
   });
 
   return componentsOptions;
+};
+
+export const getGenresNames = (
+  genreIds: number[],
+  genresList: { id: number; name: string }[]
+): string => {
+  const genreNames = genreIds
+    .map((id) => genresList.find((genre) => genre.id === id)?.name)
+    .filter((name) => name)
+    .map((name) => capitalize(name!))
+    .join(' / ');
+
+  return genreNames;
 };

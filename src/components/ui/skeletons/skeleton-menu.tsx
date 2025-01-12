@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { Separator } from '@/components/ui/separator';
 
-export const UserNameSkeleton = () => {
+export const SkeletonUserName = () => {
   return <div className="flex h-4 w-28 animate-pulse rounded-full bg-muted" />;
 };
 
@@ -25,7 +25,7 @@ export const generateSkeletonItems = (count: number) => {
   return items;
 };
 
-const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
+const SkeletonMenu = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
   return (
     <aside
       id="sidebar"
@@ -58,7 +58,7 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
         <div className="flex flex-col items-center justify-center gap-2 align-middle">
           <div className="mb-2 flex items-center justify-center space-x-4 align-middle font-bold">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-base text-card" />
-            <UserNameSkeleton />
+            <SkeletonUserName />
           </div>
           {/* horizontal divider */}
           <Separator />
@@ -98,4 +98,4 @@ const MenuSkeleton = ({ isSidebarOpen }: { isSidebarOpen?: boolean }) => {
   );
 };
 
-export default MenuSkeleton;
+export default SkeletonMenu;

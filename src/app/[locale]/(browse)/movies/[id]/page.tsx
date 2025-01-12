@@ -7,7 +7,6 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 const MovieProfile = () => {
@@ -63,7 +62,18 @@ const MovieProfile = () => {
   return (
     <div className="flex flex-col gap-5">
       <h1>Movie Profile Page</h1>
-      <MovieThumbnail movieBasics={movieData} loading={loading} />
+      <div>
+        <Image
+          src={`https://image.tmdb.org/t/p/w300${movieData.poster_path}`}
+          blurDataURL={'/identity/logo-thumbnail.png'}
+          alt={'poster'}
+          width={200}
+          height={300}
+          className="rounded-md"
+          priority
+        />
+      </div>
+
       {/* scraping PirateBay */}
       <ButtonCustom onClick={() => scrapePB(searchTitle)} loading={loading} disabled={loading}>
         Scrape Pirate Bay

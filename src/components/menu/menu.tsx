@@ -11,7 +11,7 @@ import { Binoculars, CircleUser, MenuIcon, ShieldQuestion } from 'lucide-react';
 import ContactSupportBlock from '@/components/menu/contact-support-block';
 import SideBarHeader from '@/components/menu/side-bar-header';
 import { Separator } from '@/components/ui/separator';
-import MenuSkeleton from '@/components/ui/skeletons/menu-skeleton';
+import SkeletonMenu from '@/components/ui/skeletons/skeleton-menu';
 import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
@@ -208,7 +208,7 @@ const Menu: React.FC = () => {
           </div>
         </>
       ) : (
-        <MenuSkeleton isSidebarOpen={isSidebarOpen} />
+        <SkeletonMenu isSidebarOpen={isSidebarOpen} />
       )}
     </div>
   );

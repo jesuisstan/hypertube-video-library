@@ -1,4 +1,4 @@
-const ChipsSkeleton = ({ message }: { message?: string }) => {
+const SkeletonChips = ({ message }: { message?: string }) => {
   return (
     <div className="relative flex flex-col">
       <div className="animate-pulse">
@@ -32,4 +32,4 @@ const ChipsSkeleton = ({ message }: { message?: string }) => {
   );
 };
 
-export default ChipsSkeleton;
+export default SkeletonChips;

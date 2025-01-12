@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { TMovieBasics } from '@/types/movies';
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -25,12 +27,12 @@ export async function GET(req: Request) {
       throw new Error(`Request failed with status ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: TMovieBasics[] = await response.json();
 
     // Return the movies data to the client
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Movies fetch error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'error-fetching-movies' }, { status: 500 });
   }
 }

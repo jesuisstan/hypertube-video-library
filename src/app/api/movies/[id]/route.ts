@@ -30,6 +30,6 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Movie fetch error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'error-fetching-movies' }, { status: 500 });
   }
 }

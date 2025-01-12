@@ -3,21 +3,21 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
-import DateSkeleton from '@/components/ui/skeletons/date-skeleton';
+import SkeletonDate from '@/components/ui/skeletons/skeleton-date';
 import { formatApiDateLastUpdate } from '@/utils/format-date';
 
-const LastActionWrapper = ({ date }: { date: string | null | undefined }) => {
+const LastModificationWrapper = ({ date }: { date: string | null | undefined }) => {
   const t = useTranslations();
   const formatedLastActionDate = formatApiDateLastUpdate(date!);
 
   return (
     <div className="relative rounded-2xl bg-card p-5 shadow-md shadow-primary/20">
       <div className="flex flex-col justify-start">
-        <h3 className="text-xl font-bold">{t(`last-action`)}</h3>
+        <h3 className="text-xl font-bold">{t(`last-modification`)}</h3>
         <div className="mt-4">
           <div className="flex items-center">
             {!date || formatedLastActionDate === t('invalid-date') ? (
-              <DateSkeleton />
+              <SkeletonDate />
             ) : (
               <span className="flex items-center" title={formatedLastActionDate}>
                 {formatedLastActionDate}
@@ -30,4 +30,4 @@ const LastActionWrapper = ({ date }: { date: string | null | undefined }) => {
   );
 };
 
-export default LastActionWrapper;
+export default LastModificationWrapper;

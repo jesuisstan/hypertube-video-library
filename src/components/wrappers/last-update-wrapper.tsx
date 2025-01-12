@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DateSkeleton from '@/components/ui/skeletons/date-skeleton';
+import SkeletonDate from '@/components/ui/skeletons/skeleton-date';
 
 type TLastUpdateProps = {
   loading: boolean;
@@ -11,7 +11,7 @@ const LastUpdateWrapper: React.FC<TLastUpdateProps> = ({ loading, date }) => {
   return (
     <div className="mt-4 flex flex-row justify-end gap-1 text-right text-sm text-muted-foreground">
       {/*{t`common:table-overview.last-update`}{' '}*/}
-      {loading || !date ? <DateSkeleton /> : (date ?? '')}
+      {loading || !date ? <SkeletonDate /> : (date ?? '')}
     </div>
   );
 };

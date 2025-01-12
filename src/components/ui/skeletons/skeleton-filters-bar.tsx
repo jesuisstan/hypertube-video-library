@@ -1,7 +1,7 @@
 'use client';
 
-const FiltersBarSkeleton = () => {
+const SkeletonFiltersBar = () => {
   return <div className="h-36 w-full animate-pulse rounded-2xl bg-muted"></div>;
 };
 
-export default FiltersBarSkeleton;
+export default SkeletonFiltersBar;

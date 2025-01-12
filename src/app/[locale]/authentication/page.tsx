@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
@@ -21,6 +21,7 @@ import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
+import useSearchStore from '@/stores/search';
 import { spaceToKebab } from '@/utils/format-string';
 
 const OPTIONS: EmblaOptionsType = { loop: true };
@@ -35,6 +36,22 @@ const Authentication = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [loginMethod, setLoginMethod] = React.useState('email'); // <'email' | 'nickname'>
+
+  const { setGenresList } = useSearchStore();
+
+  const scrapeGenresList = async () => {
+    try {
+      const response = await fetch(`/api/genres`);
+      const data = await response.json();
+      setGenresList(data);
+    } catch (error) {
+      console.error('Error scraping TMDB:', error);
+    }
+  };
+
+  useEffect(() => {
+    scrapeGenresList();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -6,6 +6,12 @@ import { capitalize } from '@/utils/format-string';
 
 export type TSearchFilters = {
   category: 'popular' | 'top_rated' | 'custom';
+  genres_list: {
+    en: { id: number; name: string }[];
+    ru: { id: number; name: string }[];
+    fr: { id: number; name: string }[];
+  };
+  genres: { id: number }[];
 };
 
 export type TSearchStore = {
@@ -18,7 +24,7 @@ export type TSearchStore = {
 
   searchFilters: TSearchFilters;
   setValueOfSearchFilter: (filterKey: string, newValue: string | number) => string | number;
-  getValueOfSearchFilter: (filterKey: string) => string | string[] | number;
+  getValueOfSearchFilter: (filterKey: string) => string | number | (string | number)[];
   addOneItemToSearchFilter: (itemKey: string, newValue: string | number) => void;
   removeOneItemOfSearchFilter: (itemKey: string, valueToRemove: string | number) => void;
   clearAllItemsOfSearchFilter: (filterKey: string) => void;
@@ -26,11 +32,22 @@ export type TSearchStore = {
   resetSearchFilters: () => void;
 
   resetSearchStore: () => void;
+
+  // list of genres methods
+  getGenresListByLanguage: (lang: 'en' | 'ru' | 'fr') => { id: number; name: string }[];
+  getGenresList: () => TSearchFilters['genres_list'];
+  setGenresList: (newGenres: TSearchFilters['genres_list']) => void;
 };
 
 // initial state
 const initialSearchFiltersState: TSearchFilters = {
   category: 'popular',
+  genres_list: {
+    en: [],
+    ru: [],
+    fr: [],
+  },
+  genres: [],
 };
 
 const useSearchStore = create<TSearchStore>()(
@@ -125,9 +142,7 @@ const useSearchStore = create<TSearchStore>()(
 
           getValueOfSearchFilter: (filterKey: string) => {
             {
-              //return get().searchFilters[filterKey as keyof TSearchFilters] as string[];
-              const value = get().searchFilters[filterKey as keyof TSearchFilters];
-              return Array.isArray(value) ? value : [value];
+              return get().searchFilters[filterKey as keyof TSearchFilters] as any[];
             }
           },
 
@@ -156,6 +171,24 @@ const useSearchStore = create<TSearchStore>()(
               searchFilters: initialSearchFiltersState,
               //suggestions: [],
             });
+          },
+
+          setGenresList: (newGenres: TSearchFilters['genres_list']) => {
+            set(
+              produce((draft) => {
+                draft.searchFilters.genres_list = newGenres;
+              }),
+              false,
+              'setGenresList'
+            );
+          },
+
+          getGenresList: () => {
+            return get().searchFilters.genres_list;
+          },
+
+          getGenresListByLanguage: (lang: 'en' | 'ru' | 'fr') => {
+            return get().searchFilters.genres_list[lang];
           },
         }),
         { name: 'hypertube-search-store', storage: createJSONStorage(() => localStorage) }

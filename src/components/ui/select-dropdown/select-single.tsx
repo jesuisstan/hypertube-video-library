@@ -10,7 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSelector,
 } from '@/components/ui/dropdown-primitives';
-import SelectSkeleton from '@/components/ui/skeletons/select-skeleton';
+import SelectSkeleton from '@/components/ui/skeletons/skeleton-select';
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
 
@@ -74,7 +74,11 @@ const SelectSingle = ({
             <DropdownMenuRadioGroup value={selectedItem} onValueChange={handleSelect}>
               {options.map((option) => {
                 return (
-                  <DropdownMenuRadioItem key={option.value} value={option.value} disabled={option.disabled}>
+                  <DropdownMenuRadioItem
+                    key={option.value}
+                    value={option.value}
+                    disabled={option.disabled}
+                  >
                     {option.label}
                   </DropdownMenuRadioItem>
                 );
