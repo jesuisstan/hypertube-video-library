@@ -169,7 +169,7 @@ const Browse = () => {
             key={`${movie.id}-${index}`}
             className="flex justify-center self-center"
           >
-            <MovieThumbnail movieBasics={movie} loading={loading} />
+            <MovieThumbnail movieBasics={movie} loading={false} />
           </motion.div>
         ))}
       </div>
