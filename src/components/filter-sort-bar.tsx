@@ -3,34 +3,37 @@
 import React, { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import useSearchStore from '@/stores/search';
+import ChipsGroup from './ui/chips/chips-group';
 
-const FilterSortBar = () => {
+import useSearchStore from '@/stores/search';
+import { capitalize } from '@/utils/format-string';
+
+const FilterSortBar = ({ movies }: { movies: any[] }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
-  const { getGenresListByLanguage, setValueOfSearchFilter, replaceAllItemsOfSearchFilter } =
-    useSearchStore();
-  const [sortOption, setSortOption] = useState('title-asc');
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const {
+    getGenresListByLanguage,
+    setValueOfSearchFilter,
+    replaceAllItemsOfSearchFilter,
+    getValueOfSearchFilter,
+  } = useSearchStore();
+
+  //const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const selectedGenres = getValueOfSearchFilter('genres') as string[];
   const [year, setYear] = useState('');
   const [rating, setRating] = useState<[number, number]>([0, 10]);
 
-  const genresList = getGenresListByLanguage(locale); // Adjust locale as needed
+  const genresList = getGenresListByLanguage(locale);
 
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value);
-    replaceAllItemsOfSearchFilter('sort', [event.target.value]);
-  };
-
-  const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    setSelectedGenres((prevGenres) =>
-      prevGenres.includes(value)
-        ? prevGenres.filter((genre) => genre !== value)
-        : [...prevGenres, value]
-    );
-    replaceAllItemsOfSearchFilter('genres', selectedGenres);
-  };
+  //const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //  const value = event.target.value;
+  //  setSelectedGenres((prevGenres) =>
+  //    prevGenres.includes(value)
+  //      ? prevGenres.filter((genre) => genre !== value)
+  //      : [...prevGenres, value]
+  //  );
+  //  replaceAllItemsOfSearchFilter('genres', selectedGenres);
+  //};
 
   const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYear(event.target.value);
@@ -45,29 +48,12 @@ const FilterSortBar = () => {
   };
 
   return (
-    <div className="flex flex-row gap-4 rounded-md bg-background p-4 shadow-md">
-      <div className="flex flex-col gap-2">
-        <label htmlFor="sort" className="font-bold">
-          {t('sort-by')}
-        </label>
-        <select
-          id="sort"
-          value={sortOption}
-          onChange={handleSortChange}
-          className="rounded border p-2"
-        >
-          <option value="title-asc">{t('title-asc')}</option>
-          <option value="title-desc">{t('title-desc')}</option>
-          <option value="popularity-asc">{t('popularity-asc')}</option>
-          <option value="popularity-desc">{t('popularity-desc')}</option>
-        </select>
-      </div>
-
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <label htmlFor="genres" className="font-bold">
           {t('genres')}
         </label>
-        <select
+        {/*<select
           id="genres"
           multiple
           value={selectedGenres}
@@ -76,10 +62,20 @@ const FilterSortBar = () => {
         >
           {genresList.map((genre) => (
             <option key={genre.id} value={genre.id}>
-              {genre.name}
+              {capitalize(genre.name)}
             </option>
           ))}
-        </select>
+        </select>*/}
+        <ChipsGroup
+          name="genres"
+          label={t('genres')}
+          options={genresList.map((genre) => genre.name)}
+          selectedChips={selectedGenres}
+          setSelectedChips={(genres) => {
+            //setSelectedTags(tags);
+            replaceAllItemsOfSearchFilter('genres', genres);
+          }}
+        />
       </div>
 
       <div className="flex flex-col gap-2">

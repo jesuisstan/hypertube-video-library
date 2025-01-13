@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -26,7 +25,7 @@ const DefaultErrorPage = () => {
     >
       <div
         id="access-denied-warning"
-        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
+        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
       >
         <Image
           src="/identity/logo-title-only.png"

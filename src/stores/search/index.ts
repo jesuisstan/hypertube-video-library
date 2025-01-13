@@ -14,6 +14,15 @@ export type TSearchFilters = {
   genres: { id: number }[];
   rating: number[];
   year: number;
+  sort_by:
+    | 'popularity-desc'
+    | 'popularity-asc'
+    | 'release-desc'
+    | 'release-asc'
+    | 'title-asc'
+    | 'title-desc'
+    | 'rating-asc'
+    | 'rating-desc';
 };
 
 export type TSearchStore = {
@@ -49,6 +58,7 @@ const initialSearchFiltersState: TSearchFilters = {
     ru: [],
     fr: [],
   },
+  sort_by: 'popularity-desc',
   genres: [],
   rating: [],
   year: 2024,

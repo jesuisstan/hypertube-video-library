@@ -71,7 +71,7 @@ const Menu: React.FC = () => {
       {/* Menu on small screens */}
       <div
         className={clsx(
-          `ml-3 mt-2 inline-flex items-center space-x-1 rounded-lg p-2 text-sm text-foreground`,
+          `fixed ml-3 mt-2 inline-flex items-center space-x-1 rounded-lg bg-background/80 p-2 text-sm text-foreground`,
           `lg:hidden`
         )}
       >
@@ -83,7 +83,9 @@ const Menu: React.FC = () => {
           title={t('menu-open')}
           className="flex w-fit flex-row items-center space-x-3"
         >
-          <MenuIcon />
+          <div>
+            <MenuIcon />
+          </div>
           {isClient && (
             <Image
               src="/identity/logo-title-only.png"

@@ -7,12 +7,14 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { CalendarArrowUp, ScanSearch, Star } from 'lucide-react';
+import { CalendarArrowUp, Filter, ScanSearch, Star } from 'lucide-react';
 
 import Loading from '@/app/loading';
+import FilterDrawer from '@/components/filter-drawer';
 import FilterSortBar from '@/components/filter-sort-bar';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
 import useSearchStore from '@/stores/search';
@@ -40,33 +42,16 @@ const Browse = () => {
   const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const scrollPositionRef = React.useRef<number>(0);
 
+  const sortBy = getValueOfSearchFilter('sort_by') as string;
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setValueOfSearchFilter('sort_by', event.target.value);
+  };
+
   const tabs = [
     { id: 'top_rated', label: t(`top-rated`), Icon: Star },
     { id: 'popular', label: t(`popular`), Icon: CalendarArrowUp },
     { id: 'custom', label: t(`custom-search`), Icon: ScanSearch },
   ];
-
-  const [headerHeight, setHeaderHeight] = useState(221);
-  const headerRef = React.useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const updateHeaderHeight = () => {
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight);
-      }
-    };
-
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => {
-      window.removeEventListener('resize', updateHeaderHeight);
-    };
-  }, []);
-  console.log('headerHeight:', headerHeight); // debug
-  // Handle tab changes
-  const handleTabChange = (id: string) => {
-    setValueOfSearchFilter('category', id);
-  };
 
   const scrapeTMDB = async () => {
     try {
@@ -153,8 +138,23 @@ const Browse = () => {
     }));
   }, [category]);
 
-  //console.log('moviesTMDB:', moviesTMDB); // debug
-  console.log('pages:', pages); // debug
+  const [headerHeight, setHeaderHeight] = useState(100);
+  const headerRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
+  }, []);
+
   return !user ? (
     <Loading />
   ) : (
@@ -169,12 +169,42 @@ const Browse = () => {
         className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
       >
         <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
-        <FilterSortBar />
+        <div className="flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
+            <label htmlFor="sort" className="font-bold">
+              {t('sort-by')}
+            </label>
+            <select
+              id="sort"
+              value={sortBy}
+              onChange={handleSortChange}
+              className="rounded border p-2"
+            >
+              <option value="title-asc">{t('title-asc')}</option>
+              <option value="title-desc">{t('title-desc')}</option>
+              <option value="popularity-asc">{t('popularity-asc')}</option>
+              <option value="popularity-desc">{t('popularity-desc')}</option>
+              <option value="rating-asc">{t('rating-asc')}</option>
+              <option value="rating-desc">{t('rating-desc')}</option>
+              <option value="release-asc">{t('release-asc')}</option>
+              <option value="release-desc">{t('release-desc')}</option>
+            </select>
+          </div>
+          <div className="h-8">
+            <Separator orientation="vertical" />
+          </div>
+          <p>{t('filter-results')}</p>
+          <FilterDrawer
+            movies={moviesTMDB[category]}
+            trigger={<Filter className="smooth42transition hover:scale-110" />}
+          />
+        </div>
       </div>
-      <div className="flex w-full flex-col items-center gap-5" style={{ marginTop: headerHeight }}>
+      <div className="flex w-full flex-col items-center gap-5">
         <div
           key="moviesTMDB"
           className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
+          style={{ marginTop: headerHeight }}
         >
           {moviesTMDB[category]?.map((movie, index) => (
             <motion.div

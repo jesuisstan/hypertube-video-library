@@ -184,11 +184,16 @@
   "enter-year": "Enter year",
   "rating": "Rating",
   "sort-by": "Sort by",
+  "genres": "Genres",
   "title-asc": "Title (A-Z)",
   "title-desc": "Title (Z-A)",
   "popularity-asc": "Popularity (ascending)",
   "popularity-desc": "Popularity (descending)",
-  "genres": "Genres",
+  "rating-asc": "Rating (ascending)",
+  "rating-desc": "Rating (descending)",
+  "release-asc": "Release date (ascending)",
+  "release-desc": "Release date (descending)",
+  "filter-results": "Filter results",
 
   "search": {
     "search": "Search",
