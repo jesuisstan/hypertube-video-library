@@ -181,6 +181,14 @@
   "error-fetching-movies": "Ошибка загрузки фильмов. Попробуйте ещё раз",
   "error-updating-session": "Ошибка обновления сессии",
   "error-page-limit-reached": "Достигнут предел страниц",
+  "enter-year": "Введите год",
+  "rating": "Рейтинг",
+  "sort-by": "Сортировать по",
+  "title-asc": "Названию (А-Я)",
+  "title-desc": "Названию (Я-А)",
+  "popularity-asc": "Популярности (по возрастанию)",
+  "popularity-desc": "Популярности (по убыванию)",
+  "genres": "Жанры",
 
   "search": {
     "search": "Поиск",

@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { CalendarArrowUp, ScanSearch, Star } from 'lucide-react';
 
 import Loading from '@/app/loading';
+import FilterSortBar from '@/components/filter-sort-bar';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import Spinner from '@/components/ui/spinner';
@@ -45,6 +46,23 @@ const Browse = () => {
     { id: 'custom', label: t(`custom-search`), Icon: ScanSearch },
   ];
 
+  const [headerHeight, setHeaderHeight] = useState(221);
+  const headerRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
+  }, []);
+  console.log('headerHeight:', headerHeight); // debug
   // Handle tab changes
   const handleTabChange = (id: string) => {
     setValueOfSearchFilter('category', id);
@@ -146,49 +164,45 @@ const Browse = () => {
       variants={framerMotion}
       className="flex flex-col items-center gap-5"
     >
-      <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
-      {/* scraping TMDB */}
-      {/*<ButtonCustom
-        type="button"
-        variant={'default'}
-        size={'default'}
-        onClick={scrapeTMDB}
-        loading={loading}
-        disabled={loading}
-      >
-        Scrape TMDB
-      </ButtonCustom>*/}
-
       <div
-        key="moviesTMDB"
-        className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
+        ref={headerRef}
+        className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
       >
-        {moviesTMDB[category]?.map((movie, index) => (
+        <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
+        <FilterSortBar />
+      </div>
+      <div className="flex w-full flex-col items-center gap-5" style={{ marginTop: headerHeight }}>
+        <div
+          key="moviesTMDB"
+          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
+        >
+          {moviesTMDB[category]?.map((movie, index) => (
+            <motion.div
+              variants={slideFromBottom}
+              key={`${movie.id}-${index}`}
+              className="flex justify-center self-center"
+            >
+              <MovieThumbnail movieBasics={movie} loading={false} />
+            </motion.div>
+          ))}
+        </div>
+
+        {loading && (
+          <div className="flex flex-col items-center gap-5">
+            <Spinner size={21} />
+            <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
+          </div>
+        )}
+
+        {errorMessage && (
           <motion.div
             variants={slideFromBottom}
-            key={`${movie.id}-${index}`}
-            className="flex justify-center self-center"
+            className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
           >
-            <MovieThumbnail movieBasics={movie} loading={false} />
+            <p className="text-destructive">{t(errorMessage)}</p>
           </motion.div>
-        ))}
+        )}
       </div>
-
-      {loading && (
-        <div className="flex flex-col items-center gap-5">
-          <Spinner size={21} />
-          <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
-        </div>
-      )}
-
-      {errorMessage && (
-        <motion.div
-          variants={slideFromBottom}
-          className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
-        >
-          <p className="text-destructive">{t(errorMessage)}</p>
-        </motion.div>
-      )}
     </motion.div>
   );
 };

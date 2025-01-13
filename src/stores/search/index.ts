@@ -12,6 +12,8 @@ export type TSearchFilters = {
     fr: { id: number; name: string }[];
   };
   genres: { id: number }[];
+  rating: number[];
+  year: number;
 };
 
 export type TSearchStore = {
@@ -48,6 +50,8 @@ const initialSearchFiltersState: TSearchFilters = {
     fr: [],
   },
   genres: [],
+  rating: [],
+  year: 2024,
 };
 
 const useSearchStore = create<TSearchStore>()(

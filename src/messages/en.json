@@ -181,6 +181,14 @@
   "error-fetching-movies": "Error fetching movies. Please try again",
   "error-updating-session": "Error updating session",
   "error-page-limit-reached": "Page limit reached",
+  "enter-year": "Enter year",
+  "rating": "Rating",
+  "sort-by": "Sort by",
+  "title-asc": "Title (A-Z)",
+  "title-desc": "Title (Z-A)",
+  "popularity-asc": "Popularity (ascending)",
+  "popularity-desc": "Popularity (descending)",
+  "genres": "Genres",
 
   "search": {
     "search": "Search",

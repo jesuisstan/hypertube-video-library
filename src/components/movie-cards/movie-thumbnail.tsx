@@ -30,17 +30,17 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
       <div
         id={'movie-thumbnail-' + movieBasics.id}
         key={movieBasics.id}
-        className="relative flex max-w-72 cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition hover:scale-105"
+        className="relative flex max-w-72 cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition"
         title={movieBasics.overview}
       >
-        <div className="relative">
+        <div className="relative overflow-hidden rounded-md">
           <Image
             src={`https://image.tmdb.org/t/p/w300${movieBasics.poster_path}`}
             blurDataURL={'/identity/logo-thumbnail.png'}
             alt={'poster'}
             width={200}
             height={300}
-            className="rounded-md"
+            className="transform rounded-md smooth42transition hover:scale-105"
             priority
           />
           <div

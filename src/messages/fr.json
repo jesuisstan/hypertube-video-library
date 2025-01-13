@@ -181,7 +181,15 @@
   "error-fetching-movies": "Erreur lors de la récupération des films. Veuillez réessayer",
   "error-updating-session": "Erreur lors de la mise à jour de la session",
   "error-page-limit-reached": "Limite de page atteinte",
-
+  "enter-year": "Entrez l'année",
+  "rating": "Note",
+  "sort-by": "Trier par",
+  "title-asc": "Titre (A-Z)",
+  "title-desc": "Titre (Z-A)",
+  "popularity-asc": "Popularité (croissante)",
+  "popularity-desc": "Popularité (décroissante)",
+  "genres": "Genres",
+  
   "search": {
     "search": "Chercher",
     "smart-suggestions": "Suggestions Intelligentes",
