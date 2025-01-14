@@ -52,7 +52,7 @@ const ChipsOption = ({
       aria-labelledby={value}
       title={getTitleFromChildren(children)}
       className={clsx(
-        `flex h-5 min-w-[54px] flex-row items-center justify-center gap-1 whitespace-nowrap break-words rounded-3xl border-[1px] border-secondary px-[9px] py-[2px] text-center text-xs font-normal normal-case leading-loose transition-all duration-300 ease-in-out`,
+        `flex h-6 min-w-[54px] flex-row items-center justify-center gap-1 whitespace-nowrap break-words rounded-3xl border-[1px] border-primary px-[9px] py-[2px] text-center text-xs font-normal normal-case leading-loose smooth42transition`,
         isSelected ? 'bg-foreground text-card dark:bg-foreground' : 'bg-card text-foreground',
         !nonClickable && 'cursor-pointer hover:border-c42orange'
       )}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import FilterSortBar from './filter-sort-bar';
+import FilterSortBar from './filter-bar';
 import { ButtonCustom } from './ui/buttons/button-custom';
 
 import {

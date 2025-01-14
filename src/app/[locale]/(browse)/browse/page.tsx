@@ -11,9 +11,9 @@ import { CalendarArrowUp, Filter, ScanSearch, Star } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import FilterDrawer from '@/components/filter-drawer';
-import FilterSortBar from '@/components/filter-sort-bar';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
@@ -43,8 +43,8 @@ const Browse = () => {
   const scrollPositionRef = React.useRef<number>(0);
 
   const sortBy = getValueOfSearchFilter('sort_by') as string;
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setValueOfSearchFilter('sort_by', event.target.value);
+  const handleSortChange = (value: string) => {
+    setValueOfSearchFilter('sort_by', value);
   };
 
   const tabs = [
@@ -155,6 +155,17 @@ const Browse = () => {
     };
   }, []);
 
+  const sortOptions = [
+    { value: 'title-asc', label: t('title-asc') },
+    { value: 'title-desc', label: t('title-desc') },
+    { value: 'popularity-asc', label: t('popularity-asc') },
+    { value: 'popularity-desc', label: t('popularity-desc') },
+    { value: 'rating-asc', label: t('rating-asc') },
+    { value: 'rating-desc', label: t('rating-desc') },
+    { value: 'release-asc', label: t('release-asc') },
+    { value: 'release-desc', label: t('release-desc') },
+  ];
+
   return !user ? (
     <Loading />
   ) : (
@@ -169,35 +180,28 @@ const Browse = () => {
         className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
       >
         <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
-        <div className="flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
-          <div className="flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
-            <label htmlFor="sort" className="font-bold">
+        <div className="flex w-full flex-row flex-wrap items-center justify-evenly  gap-2 text-sm smooth42transition">
+          <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
+            <label htmlFor="sort" className="font-semibold">
               {t('sort-by')}
             </label>
-            <select
-              id="sort"
-              value={sortBy}
-              onChange={handleSortChange}
-              className="rounded border p-2"
-            >
-              <option value="title-asc">{t('title-asc')}</option>
-              <option value="title-desc">{t('title-desc')}</option>
-              <option value="popularity-asc">{t('popularity-asc')}</option>
-              <option value="popularity-desc">{t('popularity-desc')}</option>
-              <option value="rating-asc">{t('rating-asc')}</option>
-              <option value="rating-desc">{t('rating-desc')}</option>
-              <option value="release-asc">{t('release-asc')}</option>
-              <option value="release-desc">{t('release-desc')}</option>
-            </select>
+            <SelectSingle
+              options={sortOptions}
+              defaultValue="popularity-desc"
+              selectedItem={sortBy}
+              setSelectedItem={(value) => handleSortChange(value)}
+            />
           </div>
-          <div className="h-8">
+          <div className="hidden h-8 sm:block">
             <Separator orientation="vertical" />
           </div>
-          <p>{t('filter-results')}</p>
-          <FilterDrawer
-            movies={moviesTMDB[category]}
-            trigger={<Filter className="smooth42transition hover:scale-110" />}
-          />
+          <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
+            <p>{t('filter-results')}</p>
+            <FilterDrawer
+              movies={moviesTMDB[category]}
+              trigger={<Filter className="m-1 smooth42transition hover:scale-110" />}
+            />
+          </div>
         </div>
       </div>
       <div className="flex w-full flex-col items-center gap-5">

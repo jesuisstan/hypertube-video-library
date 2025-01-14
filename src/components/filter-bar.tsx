@@ -49,34 +49,16 @@ const FilterSortBar = ({ movies }: { movies: any[] }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <label htmlFor="genres" className="font-bold">
-          {t('genres')}
-        </label>
-        {/*<select
-          id="genres"
-          multiple
-          value={selectedGenres}
-          onChange={handleGenreChange}
-          className="rounded border p-2"
-        >
-          {genresList.map((genre) => (
-            <option key={genre.id} value={genre.id}>
-              {capitalize(genre.name)}
-            </option>
-          ))}
-        </select>*/}
-        <ChipsGroup
-          name="genres"
-          label={t('genres')}
-          options={genresList.map((genre) => genre.name)}
-          selectedChips={selectedGenres}
-          setSelectedChips={(genres) => {
-            //setSelectedTags(tags);
-            replaceAllItemsOfSearchFilter('genres', genres);
-          }}
-        />
-      </div>
+      <ChipsGroup
+        name="genres"
+        label={t('genres')}
+        options={genresList.map((genre) => genre.name)}
+        selectedChips={selectedGenres}
+        setSelectedChips={(genres) => {
+          //setSelectedTags(tags);
+          replaceAllItemsOfSearchFilter('genres', genres);
+        }}
+      />
 
       <div className="flex flex-col gap-2">
         <label htmlFor="year" className="font-bold">
