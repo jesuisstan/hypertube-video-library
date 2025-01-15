@@ -8,7 +8,7 @@ import ChipsGroup from './ui/chips/chips-group';
 import useSearchStore from '@/stores/search';
 import { capitalize } from '@/utils/format-string';
 
-const FilterSortBar = ({ movies }: { movies: any[] }) => {
+const FilterBar = ({ movies }: { movies: any[] }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const {
@@ -101,4 +101,4 @@ const FilterSortBar = ({ movies }: { movies: any[] }) => {
   );
 };
 
-export default FilterSortBar;
+export default FilterBar;

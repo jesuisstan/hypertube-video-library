@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 
-import FilterSortBar from './filter-bar';
-import { ButtonCustom } from './ui/buttons/button-custom';
-
+import FilterBar from '@/components/filter-bar';
 import {
   Sheet,
   SheetContent,
@@ -21,7 +19,7 @@ const FilterDrawer = ({ movies, trigger }: { movies: any[]; trigger: ReactNode }
           <SheetTitle>Filter results</SheetTitle>
           <SheetDescription>Filter the results by genre, year, rating, and more</SheetDescription>
         </SheetHeader>
-        <FilterSortBar movies={movies} />
+        <FilterBar movies={movies} />
       </SheetContent>
     </Sheet>
   );
