@@ -16,7 +16,7 @@ const FilterDrawer = ({ movies, trigger }: { movies: any[]; trigger: ReactNode }
   return (
     <Sheet>
       <SheetTrigger>{trigger}</SheetTrigger>
-      <SheetContent>
+      <SheetContent side={'right'}>
         <SheetHeader>
           <SheetTitle>Filter results</SheetTitle>
           <SheetDescription>Filter the results by genre, year, rating, and more</SheetDescription>

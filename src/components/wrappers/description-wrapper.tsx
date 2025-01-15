@@ -37,7 +37,7 @@ const DescriptionWrapper = ({
       style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
     >
       <div className="flex flex-col justify-start gap-4">
-        <p className="text-xl font-bold">{capitalize(t('description'))}</p>
+        <p className="text-base font-bold">{capitalize(t('description'))}</p>
         <p
           className={clsx(
             'text-sm smooth42transition',

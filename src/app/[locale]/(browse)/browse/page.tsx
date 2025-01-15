@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -12,9 +10,7 @@ import { CalendarArrowUp, Filter, ScanSearch, Star } from 'lucide-react';
 import Loading from '@/app/loading';
 import FilterDrawer from '@/components/filter-drawer';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
-import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
-import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
 import useSearchStore from '@/stores/search';
@@ -192,16 +188,16 @@ const Browse = () => {
               setSelectedItem={(value) => handleSortChange(value)}
             />
           </div>
-          <div className="hidden h-8 sm:block">
-            <Separator orientation="vertical" />
-          </div>
-          <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
-            <p>{t('filter-results')}</p>
-            <FilterDrawer
-              movies={moviesTMDB[category]}
-              trigger={<Filter className="m-1 smooth42transition hover:scale-110" />}
-            />
-          </div>
+
+          <FilterDrawer
+            movies={moviesTMDB[category]}
+            trigger={
+              <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
+                <p className="font-semibold">{t('filter-results')}</p>
+                <Filter className="m-1 smooth42transition hover:scale-110" />
+              </div>
+            }
+          />
         </div>
       </div>
       <div className="flex w-full flex-col items-center gap-5">

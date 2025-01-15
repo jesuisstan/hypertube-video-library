@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 import Loading from '@/app/loading';
 import DialogProfileModify from '@/components/dialogs-custom/dialog-profile-modify';
@@ -15,6 +16,7 @@ import LastModificationWrapper from '@/components/wrappers/last-modification-wra
 import LocationWrapper from '@/components/wrappers/location-wrapper';
 import StatusWrapper from '@/components/wrappers/status-wrapper';
 import useUserStore from '@/stores/user';
+import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 
 const ProfilePage = () => {
   const t = useTranslations();
@@ -23,7 +25,6 @@ const ProfilePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [showProfileCompleteModal, setShowProfileCompleteModal] = useState(false);
-  const [showProfileCongratsModal, setShowProfileCongratsModal] = useState(false);
   const [profileCompleteModalLayout, setProfileCompleteModalLayout] = useState('basics');
 
   const handleModifyClick = (layout: keyof typeof TProfileCompleteLayout) => {
@@ -34,7 +35,12 @@ const ProfilePage = () => {
   return loading || globalLoading || !user ? (
     <Loading />
   ) : (
-    <div className="flex flex-col items-stretch space-y-4">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={framerMotion}
+      className="flex flex-col items-stretch space-y-4"
+    >
       <DialogProfileModify
         show={showProfileCompleteModal}
         setShow={setShowProfileCompleteModal}
@@ -42,7 +48,8 @@ const ProfilePage = () => {
       />
 
       {/* PROFILE GRID */}
-      <div
+      <motion.div
+        variants={slideFromBottom}
         className={clsx(
           'grid gap-4',
           'auto-rows-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
@@ -69,35 +76,27 @@ const ProfilePage = () => {
           />
         </div>
 
-        {/* STATUS */}
-        <div>
-          <StatusWrapper confirmed={user?.confirmed} />
-        </div>
-
-        {/* LAST ACTION */}
-        <div>
-          <LastModificationWrapper date={user?.last_action} />
-        </div>
-
-        {/* LOCATION */}
-        <div>
+        {/* LOCATION & LANG */}
+        <div className="flex flex-col gap-4">
           <LocationWrapper
             address={user?.address}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
           />
-        </div>
-
-        {/* PREFERRED LANGUAGE */}
-        <div>
           <PrefLangWrapper
             lang={user?.preferred_language}
             modifiable
             onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
           />
         </div>
-      </div>
-    </div>
+
+        {/* STATUS */}
+        <div className="flex flex-col justify-between gap-4 lg:flex-row xl:flex-col xl:justify-start">
+          <StatusWrapper confirmed={user?.confirmed} />
+          <LastModificationWrapper date={user?.last_action} />
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

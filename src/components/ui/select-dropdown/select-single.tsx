@@ -70,7 +70,7 @@ const SelectSingle = ({
           value={options.find((option) => option.value === selectedItem)?.label || ''}
         />
         <DropdownMenuPortal>
-          <DropdownMenuContent sideOffset={5} side="right" align="start">
+          <DropdownMenuContent sideOffset={5} side="bottom" align="start">
             <DropdownMenuRadioGroup value={selectedItem} onValueChange={handleSelect}>
               {options.map((option) => {
                 return (

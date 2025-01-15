@@ -31,7 +31,7 @@ const DropdownMenuSelector = React.forwardRef<
     <div
       title={value || 'Select value'}
       className={clsx(
-        `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-primary bg-transparent px-3 text-sm font-normal transition-all duration-300 ease-in-out`,
+        `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-primary bg-transparent px-3 text-sm font-normal smooth42transition`,
         `hover:border-c42orange`,
         value ? 'text-foreground' : 'text-muted-foreground',
         className
@@ -39,7 +39,7 @@ const DropdownMenuSelector = React.forwardRef<
     >
       {startIcon}
       <div className="truncate">{value || 'Select'}</div>
-      <ChevronRight
+      <ChevronDown
         className="relative top-[1px] h-4 text-muted-foreground smooth42transition group-data-[state=open]:-rotate-180"
         aria-hidden
       />

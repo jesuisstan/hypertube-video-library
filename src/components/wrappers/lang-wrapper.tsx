@@ -21,9 +21,9 @@ const PrefLangWrapper = ({
   return (
     <div className="relative rounded-2xl bg-card p-5 shadow-md shadow-primary/20">
       <div className="flex flex-col justify-start">
-        <h3 className="text-xl font-bold">{t(`prefered-content-language`)}</h3>
+        <h3 className="text-base font-bold">{t(`prefered-content-language`)}</h3>
         <div className="mt-4">
-          <div className="flex items-center">
+          <div className="flex items-center text-sm">
             {lang ? (
               <span className="flex items-center">{lang}</span>
             ) : (
