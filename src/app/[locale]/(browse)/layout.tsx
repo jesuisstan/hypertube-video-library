@@ -35,7 +35,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <main
           id="main-content"
           role="main"
-          className={clsx('mb-auto w-full max-w-[1700px] items-center p-4')}
+          className={clsx('mb-auto w-full items-center p-4')}
         >
           {children}
         </main>

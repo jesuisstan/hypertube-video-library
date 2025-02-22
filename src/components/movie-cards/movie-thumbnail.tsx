@@ -30,7 +30,7 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
       <div
         id={'movie-thumbnail-' + movieBasics.id}
         key={movieBasics.id}
-        className="relative flex max-w-72 cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition"
+        className="relative flex w-auto cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition xs:w-52"
         title={movieBasics.overview}
       >
         <div className="relative overflow-hidden rounded-md">
