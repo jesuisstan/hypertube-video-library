@@ -162,6 +162,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/authentication',
     error: '/authentication',
-    //redirect: '/browse',
+    //redirect: '/browse/popular',
   },
 };

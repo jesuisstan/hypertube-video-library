@@ -11,10 +11,10 @@ const DefaultErrorPage = () => {
   const t = useTranslations();
 
   const handleButtonClick = () => {
-    if (window.location.pathname === '/browse') {
+    if (window.location.pathname.includes('/browse')) {
       window.location.reload();
     } else {
-      window.location.href = '/browse';
+      window.location.href = '/browse/popular';
     }
   };
 
