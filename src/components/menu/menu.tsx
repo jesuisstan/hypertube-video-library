@@ -167,11 +167,11 @@ const Menu: React.FC = () => {
               <div id="browse-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
                 <Binoculars />
                 <Link
-                  href={`/browse`}
+                  href={`/browse/popular`}
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname === `/browse` && 'text-c42green'
+                    pathname.includes(`/browse`) && 'text-c42green'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);

@@ -1,38 +1,29 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { CalendarArrowUp, Filter, ScanSearch, Star } from 'lucide-react';
+import { Filter } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import FilterDrawer from '@/components/filter-drawer';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
-import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
-import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 import { TMovieBasics } from '@/types/movies';
 
-const Browse = () => {
+const BrowseTop = () => {
+  const category = 'top_rated';
   const t = useTranslations();
   const localeActive = useLocale();
   const user = useUserStore((state) => state.user);
-  const [moviesTMDB, setMoviesTMDB] = useState<{ [key: string]: TMovieBasics[] }>({});
-  const [pages, setPages] = useState<{ [key: string]: number }>({
-    top_rated: 1,
-    popular: 1,
-    custom: 1,
-  });
-  const [category, setCategory] = useState('popular');
+  const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -47,34 +38,21 @@ const Browse = () => {
     setValueOfSearchFilter('sort_by', value);
   };
 
-  const tabs = [
-    { id: 'top_rated', label: t(`top-rated`), Icon: Star },
-    { id: 'popular', label: t(`popular`), Icon: CalendarArrowUp },
-    { id: 'custom', label: t(`custom-search`), Icon: ScanSearch },
-  ];
-
   const scrapeTMDB = async () => {
     try {
-      if (category === 'custom') {
-        return;
-      } else {
-        setErrorMessage(null);
-        setLoading(true);
-        const response = await fetch(
-          `/api/movies?category=${category}&lang=${localeActive}&page=${pages[category]}`
-        );
-        const data = await response.json();
-        const results = data?.results;
-        const error = data?.error;
-        if (results) {
-          setMoviesTMDB((prevMovies) => ({
-            ...prevMovies,
-            [category]: [...(prevMovies[category] || []), ...results],
-          }));
-        }
-        if (error) {
-          setErrorMessage(error);
-        }
+      setErrorMessage(null);
+      setLoading(true);
+      const response = await fetch(
+        `/api/movies?category=${category}&lang=${localeActive}&page=${page}`
+      );
+      const data = await response.json();
+      const results = data?.results;
+      const error = data?.error;
+      if (results) {
+        setMoviesTMDB((prevMovies) => [...prevMovies, ...results]);
+      }
+      if (error) {
+        setErrorMessage(error);
       }
     } catch (error) {
       setErrorMessage('error-fetching-movies');
@@ -92,10 +70,7 @@ const Browse = () => {
     ) {
       setIsFetching(true);
       scrollPositionRef.current = window.scrollY;
-      setPages((prevPages) => ({
-        ...prevPages,
-        [category]: prevPages[category] + 1,
-      }));
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -119,8 +94,7 @@ const Browse = () => {
 
   // Scrape TMDB on page load, when the category changes or when the page changes
   useEffect(() => {
-    if (category === 'custom') return; // todo
-    if (pages[category] > 500) {
+    if (page > 500) {
       setErrorMessage('error-page-limit-reached');
       return;
     } // todo
@@ -128,15 +102,7 @@ const Browse = () => {
       setIsFetching(false);
       window.scrollTo(0, scrollPositionRef.current);
     });
-  }, [category, pages[category]]);
-
-  useEffect(() => {
-    if (pages[category] === 1) return;
-    setPages((prevPages) => ({
-      ...prevPages,
-      [category]: 1,
-    }));
-  }, [category]);
+  }, [page]);
 
   const [headerHeight, setHeaderHeight] = useState(100);
   const headerRef = React.useRef<HTMLDivElement | null>(null);
@@ -179,7 +145,6 @@ const Browse = () => {
         ref={headerRef}
         className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
       >
-        <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
         <div className="flex w-full flex-row flex-wrap items-center justify-evenly  gap-2 text-sm smooth42transition">
           <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
             <label htmlFor="sort" className="font-semibold">
@@ -198,7 +163,7 @@ const Browse = () => {
           <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
             <p>{t('filter-results')}</p>
             <FilterDrawer
-              movies={moviesTMDB[category]}
+              movies={[category]}
               trigger={<Filter className="m-1 smooth42transition hover:scale-110" />}
             />
           </div>
@@ -207,10 +172,10 @@ const Browse = () => {
       <div className="flex w-full flex-col items-center gap-5">
         <div
           key="moviesTMDB"
-          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7"
+          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:flex xl:flex-wrap xl:justify-center"
           style={{ marginTop: headerHeight }}
         >
-          {moviesTMDB[category]?.map((movie, index) => (
+          {moviesTMDB?.map((movie, index) => (
             <motion.div
               variants={slideFromBottom}
               key={`${movie.id}-${index}`}
@@ -241,4 +206,4 @@ const Browse = () => {
   );
 };
 
-export default Browse;
+export default BrowseTop;
