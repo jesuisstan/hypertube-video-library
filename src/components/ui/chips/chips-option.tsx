@@ -39,7 +39,8 @@ const ChipsOption = ({
     } else if (Array.isArray(children)) {
       return children.map(getTitleFromChildren).join(' ');
     } else if (React.isValidElement(children)) {
-      return children.props.children ? getTitleFromChildren(children.props.children) : '';
+      const props = children.props as { children?: React.ReactNode };
+      return props.children ? getTitleFromChildren(props.children) : '';
     } else {
       return '';
     }
