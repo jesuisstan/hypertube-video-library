@@ -14,11 +14,11 @@ const useUpdateSession = () => {
       if (response.ok) {
         const { token } = await response.json();
 
-        // Обновляем сессию локально
+        // Update the session data in the client
         if (update) {
           update({
             ...session,
-            user: token, // Передаём новые данные в локальную сессию
+            user: token, // Transfer the updated user data to the session
           });
         }
       }

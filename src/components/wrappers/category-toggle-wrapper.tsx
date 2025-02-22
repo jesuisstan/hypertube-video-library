@@ -24,7 +24,7 @@ const CategoryToggleWrapper = <T extends string>({
     >
       <TabsList className="flex h-8 w-full gap-1 shadow-sm">
         {tabs.map((tab) => (
-          <Link href={`${tab.id}`} key={tab.id} className="flex-1">
+          <Link href={tab.id === 'popular' ? '/browse' : `/browse/${tab.id}`} key={tab.id} className="flex-1">
             <TabsTrigger
               value={tab.id}
               title={tab.label}

@@ -14,7 +14,7 @@ const DefaultErrorPage = () => {
     if (window.location.pathname.includes('/browse')) {
       window.location.reload();
     } else {
-      window.location.href = '/browse/popular';
+      window.location.href = '/browse';
     }
   };
 

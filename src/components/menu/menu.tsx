@@ -167,7 +167,7 @@ const Menu: React.FC = () => {
               <div id="browse-link" className="ml-3 flex w-fit items-center gap-2 text-sm">
                 <Binoculars />
                 <Link
-                  href={`/browse/popular`}
+                  href={`/browse`}
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,

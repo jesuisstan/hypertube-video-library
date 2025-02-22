@@ -129,7 +129,7 @@ const Authentication = () => {
         case 'login':
           if (result) {
             setLoading(true);
-            router.push('/browse/popular');
+            router.push('/about');
           } else {
             if (result.error) {
               setError(t(`auth.${spaceToKebab(result.error).toLocaleLowerCase()}`));

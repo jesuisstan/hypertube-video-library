@@ -16,7 +16,7 @@ import { usePathname } from '@/i18n/routing';
 const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
   const pathname = usePathname();
-  const [category, setCategory] = useState(pathname.split('/browse/')[1]);
+  const [category, setCategory] = useState(pathname.split('/browse/')[1] ?? 'popular');
 
   const tabs = [
     { id: 'top', label: t(`top-rated`), Icon: CalendarArrowUp },
