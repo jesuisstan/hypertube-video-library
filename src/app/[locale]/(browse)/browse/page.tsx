@@ -207,7 +207,7 @@ const Browse = () => {
       <div className="flex w-full flex-col items-center gap-5">
         <div
           key="moviesTMDB"
-          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
+          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7"
           style={{ marginTop: headerHeight }}
         >
           {moviesTMDB[category]?.map((movie, index) => (
