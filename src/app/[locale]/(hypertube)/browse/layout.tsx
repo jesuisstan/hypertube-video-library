@@ -27,13 +27,13 @@ const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="flex w-full flex-col">
       {user && (
-        <div className="flex flex-col items-center justify-center">
+        <div className="sticky top-0 z-10 flex items-center justify-center bg-background/90 p-4">
           <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
         </div>
       )}
-      {children}
+      <div className="flex-grow">{children}</div>
     </div>
   );
 };

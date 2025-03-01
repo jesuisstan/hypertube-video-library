@@ -174,7 +174,6 @@ const BrowsePopular = () => {
         <div
           key="moviesTMDB"
           className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:flex xl:flex-wrap xl:justify-center"
-          style={{ marginTop: headerHeight }}
         >
           {moviesTMDB?.map((movie, index) => (
             <motion.div

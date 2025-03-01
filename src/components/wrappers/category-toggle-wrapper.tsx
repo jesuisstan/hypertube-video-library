@@ -22,7 +22,7 @@ const CategoryToggleWrapper = <T extends string>({
     <Tabs
       defaultValue={category}
       onValueChange={(value) => setCategory(value as T)}
-      className="flex w-full flex-row items-center justify-center rounded-md border shadow-md shadow-primary/20 "
+      className="flex w-full flex-row items-center justify-center"
     >
       <TabsList className="flex h-auto flex-row items-center justify-center gap-1">
         {tabs.map((tab) => (

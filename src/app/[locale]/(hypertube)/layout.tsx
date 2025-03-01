@@ -8,7 +8,7 @@ import Footer from '@/components/footer';
 import Menu from '@/components/menu/menu';
 import useSearchStore from '@/stores/search';
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const HypertubeLayout = ({ children }: { children: React.ReactNode }) => {
   const { getGenresList, setGenresList } = useSearchStore();
 
   const scrapeGenresList = async () => {
@@ -45,4 +45,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default HypertubeLayout;
