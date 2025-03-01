@@ -3,23 +3,23 @@
 import React, { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { Filter } from 'lucide-react';
 
 import Loading from '@/app/loading';
-import FilterDrawer from '@/components/filter-drawer';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
+import ChipsGroup from '@/components/ui/chips/chips-group';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
-import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 import { TMovieBasics } from '@/types/movies';
 
-const BrowseTop = () => {
+const BrowsePopular = () => {
   const category = 'top_rated';
   const t = useTranslations();
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
   const localeActive = useLocale();
   const user = useUserStore((state) => state.user);
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
@@ -27,15 +27,36 @@ const BrowseTop = () => {
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { getValueOfSearchFilter, setValueOfSearchFilter } = useSearchStore();
   const [isFetching, setIsFetching] = useState(false);
 
   const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const scrollPositionRef = React.useRef<number>(0);
 
+  // sort filter states
+  const getValueOfSearchFilter = useSearchStore((state) => state.getValueOfSearchFilter);
+  const setValueOfSearchFilter = useSearchStore((state) => state.setValueOfSearchFilter);
+  const getGenresListByLanguage = useSearchStore((state) => state.getGenresListByLanguage);
+  const replaceAllItemsOfSearchFilter = useSearchStore(
+    (state) => state.replaceAllItemsOfSearchFilter
+  );
+  const genresList = getGenresListByLanguage(locale);
   const sortBy = getValueOfSearchFilter('sort_by') as string;
+  const selectedGenres = getValueOfSearchFilter('genres') as string[];
+  const [year, setYear] = useState('');
+  const [rating, setRating] = useState<[number, number]>([0, 10]);
+
   const handleSortChange = (value: string) => {
     setValueOfSearchFilter('sort_by', value);
+  };
+  const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setYear(event.target.value);
+    setValueOfSearchFilter('year', event.target.value);
+  };
+  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const newRating = [...rating] as [number, number];
+    newRating[index] = Number(event.target.value);
+    setRating(newRating);
+    replaceAllItemsOfSearchFilter('rating', newRating);
   };
 
   const scrapeTMDB = async () => {
@@ -104,23 +125,6 @@ const BrowseTop = () => {
     });
   }, [page]);
 
-  const [headerHeight, setHeaderHeight] = useState(100);
-  const headerRef = React.useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const updateHeaderHeight = () => {
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight);
-      }
-    };
-
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => {
-      window.removeEventListener('resize', updateHeaderHeight);
-    };
-  }, []);
-
   const sortOptions = [
     { value: 'title-asc', label: t('title-asc') },
     { value: 'title-desc', label: t('title-desc') },
@@ -135,75 +139,122 @@ const BrowseTop = () => {
   return !user ? (
     <Loading />
   ) : (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={framerMotion}
-      className="flex flex-col items-center gap-5"
-    >
+    <div className="flex flex-col items-start gap-5 smooth42transition xs:flex-row">
+      {/* Sort and filter sector */}
       <div
-        ref={headerRef}
-        className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
+        id="sort-filter-sector"
+        className={clsx(
+          'flex w-fit max-w-96 flex-col items-start gap-4 rounded-2xl bg-card p-4 xs:sticky xs:top-20'
+        )}
       >
-        <div className="flex w-full flex-row flex-wrap items-center justify-evenly  gap-2 text-sm smooth42transition">
-          <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
-            <label htmlFor="sort" className="font-semibold">
-              {t('sort-by')}
-            </label>
-            <SelectSingle
-              options={sortOptions}
-              defaultValue="popularity-desc"
-              selectedItem={sortBy}
-              setSelectedItem={(value) => handleSortChange(value)}
+        <div className="flex flex-col justify-center gap-2">
+          <label htmlFor="sort" className="text-2xl font-bold">
+            {t('sort-by') + ':'}
+          </label>
+          <SelectSingle
+            options={sortOptions}
+            defaultValue="popularity-desc"
+            selectedItem={sortBy}
+            setSelectedItem={(value) => handleSortChange(value)}
+          />
+        </div>
+
+        {/* Filter bar */}
+        <div className="flex flex-col justify-center gap-2">
+          <label htmlFor="filter" className="text-2xl font-bold">
+            {t('filter-results') + ':'}
+          </label>
+          <div className="flex flex-col gap-4">
+            <ChipsGroup
+              name="genres"
+              label={t('genres')}
+              options={genresList.map((genre) => genre.name)}
+              selectedChips={selectedGenres}
+              setSelectedChips={(genres) => {
+                //setSelectedTags(tags);
+                replaceAllItemsOfSearchFilter('genres', genres);
+              }}
             />
-          </div>
-          <div className="hidden h-8 sm:block">
-            <Separator orientation="vertical" />
-          </div>
-          <div className="mx-2 flex flex-row flex-wrap items-center justify-center gap-2 text-sm">
-            <p>{t('filter-results')}</p>
-            <FilterDrawer
-              movies={[category]}
-              trigger={<Filter className="m-1 smooth42transition hover:scale-110" />}
-            />
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="year" className="font-bold">
+                {t('release')}
+              </label>
+              <input
+                id="year"
+                type="number"
+                value={year}
+                onChange={handleYearChange}
+                className="rounded border p-2"
+                placeholder={t('enter-year')}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="font-bold">{t('rating')}</label>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  value={rating[0]}
+                  onChange={(e) => handleRatingChange(e, 0)}
+                  className="rounded border p-2"
+                  placeholder={t('min')}
+                  min="0"
+                  max="10"
+                />
+                <input
+                  type="number"
+                  value={rating[1]}
+                  onChange={(e) => handleRatingChange(e, 1)}
+                  className="rounded border p-2"
+                  placeholder={t('max')}
+                  min="0"
+                  max="10"
+                />
+              </div>
+            </div>
           </div>
         </div>
+        {/*</div>*/}
       </div>
-      <div className="flex w-full flex-col items-center gap-5">
-        <div
-          key="moviesTMDB"
-          className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:flex xl:flex-wrap xl:justify-center"
-          style={{ marginTop: headerHeight }}
-        >
-          {moviesTMDB?.map((movie, index) => (
+
+      {/* Movies sector */}
+      <div className="w-full">
+        <motion.div initial="hidden" animate="visible" variants={framerMotion}>
+          <div
+            key="moviesTMDB"
+            className="flex flex-wrap items-center justify-center gap-5 align-middle smooth42transition"
+          >
+            {moviesTMDB?.map((movie, index) => (
+              <motion.div
+                variants={slideFromBottom}
+                key={`${movie.id}-${index}`}
+                className="flex justify-center self-center"
+              >
+                <MovieThumbnail movieBasics={movie} loading={false} />
+              </motion.div>
+            ))}
+          </div>
+
+          {loading && (
+            <div className="flex flex-col items-center gap-5">
+              <Spinner size={21} />
+              <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
+            </div>
+          )}
+
+          {errorMessage && (
             <motion.div
               variants={slideFromBottom}
-              key={`${movie.id}-${index}`}
-              className="flex justify-center self-center"
+              className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
             >
-              <MovieThumbnail movieBasics={movie} loading={false} />
+              <p className="text-destructive">{t(errorMessage)}</p>
             </motion.div>
-          ))}
-        </div>
-
-        {loading && (
-          <div className="flex flex-col items-center gap-5">
-            <Spinner size={21} />
-            <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
-          </div>
-        )}
-
-        {errorMessage && (
-          <motion.div
-            variants={slideFromBottom}
-            className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
-          >
-            <p className="text-destructive">{t(errorMessage)}</p>
-          </motion.div>
-        )}
+          )}
+        </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export default BrowseTop;
+export default BrowsePopular;
