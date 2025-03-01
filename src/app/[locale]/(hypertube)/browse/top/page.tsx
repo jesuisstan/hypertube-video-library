@@ -144,7 +144,7 @@ const BrowsePopular = () => {
       <div
         id="sort-filter-sector"
         className={clsx(
-          'flex w-fit max-w-96 flex-col items-start gap-4 rounded-2xl bg-card p-4 xs:sticky xs:top-20'
+          'flex w-fit max-w-96 flex-col items-start gap-4 rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:top-20'
         )}
       >
         <div className="flex flex-col justify-center gap-2">
