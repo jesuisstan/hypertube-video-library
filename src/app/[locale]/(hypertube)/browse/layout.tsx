@@ -8,6 +8,7 @@ import { CalendarArrowUp, ScanSearch, Star } from 'lucide-react';
 
 import CategoryToggleWrapper from '@/components/wrappers/category-toggle-wrapper';
 import { usePathname } from '@/i18n/routing';
+import useUserStore from '@/stores/user';
 
 //export const metadata: Metadata = {
 //  title: 'Browse Hypertube',
@@ -16,6 +17,7 @@ import { usePathname } from '@/i18n/routing';
 const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
   const pathname = usePathname();
+  const user = useUserStore((state) => state.user);
   const [category, setCategory] = useState(pathname.split('/browse/')[1] ?? 'popular');
 
   const tabs = [
@@ -26,9 +28,11 @@ const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col items-center justify-center">
-        <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
-      </div>
+      {user && (
+        <div className="flex flex-col items-center justify-center">
+          <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
+        </div>
+      )}
       {children}
     </div>
   );

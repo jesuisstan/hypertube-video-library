@@ -7,12 +7,16 @@ import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { OctagonAlert } from 'lucide-react';
+import { Play } from 'lucide-react';
 
+import EncryptButton from '@/components/ui/buttons/encrypt-button';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import { useRouter } from '@/i18n/routing';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 
 const AboutPage = () => {
   const t = useTranslations();
+  const router = useRouter();
 
   return (
     <motion.div initial="hidden" animate="visible" variants={framerMotion} className="p-5">
@@ -79,6 +83,15 @@ const AboutPage = () => {
                   {t('disclamer-no-commercial')}
                 </a>
               </p>
+            </div>
+            <div className="pt-3">
+              <EncryptButton
+                text={t('dive-into')}
+                onClick={() => {
+                  router.push('/browse');
+                }}
+                Icon={<Play />}
+              ></EncryptButton>
             </div>
           </div>
         </div>

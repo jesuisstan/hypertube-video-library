@@ -1,9 +1,9 @@
-import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
 import { LogOut } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 
 const LogoutButton = ({ translate }: { translate: (key: string) => string }) => {

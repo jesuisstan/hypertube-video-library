@@ -2,22 +2,32 @@ import { ReactNode, useRef, useState } from 'react';
 
 import { motion } from 'framer-motion';
 
-const TARGET_TEXT = 'Encrypt';
 const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 50;
 
 const CHARS = '!@#$%^&*():{};|,.<>/?';
 
-const EncryptButton = ({ Icon }: { Icon?: ReactNode }) => {
+const EncryptButton = ({
+  text,
+  onClick,
+  Icon,
+}: {
+  text: string;
+  onClick?: () => void;
+  Icon?: ReactNode;
+}) => {
+  const displayText = text && text.length > 0 ? text : 'Press';
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [text, setText] = useState(TARGET_TEXT);
+  const [currentText, setCurrentText] = useState(displayText);
 
   const scramble = () => {
     let pos = 0;
 
     intervalRef.current = setInterval(() => {
-      const scrambled = TARGET_TEXT.split('')
+      const scrambled = displayText
+        .split('')
         .map((char, index) => {
           if (pos / CYCLES_PER_LETTER > index) {
             return char;
@@ -30,10 +40,10 @@ const EncryptButton = ({ Icon }: { Icon?: ReactNode }) => {
         })
         .join('');
 
-      setText(scrambled);
+      setCurrentText(scrambled);
       pos++;
 
-      if (pos >= TARGET_TEXT.length * CYCLES_PER_LETTER) {
+      if (pos >= displayText.length * CYCLES_PER_LETTER) {
         stopScramble();
       }
     }, SHUFFLE_TIME);
@@ -42,24 +52,25 @@ const EncryptButton = ({ Icon }: { Icon?: ReactNode }) => {
   const stopScramble = () => {
     clearInterval(intervalRef.current || undefined);
 
-    setText(TARGET_TEXT);
+    setCurrentText(displayText);
   };
 
   return (
     <motion.button
-      whileHover={{
-        scale: 1.025,
-      }}
-      whileTap={{
-        scale: 0.975,
-      }}
+      //whileHover={{
+      //  scale: 1.025,
+      //}}
+      //whileTap={{
+      //  scale: 0.975,
+      //}}
       onMouseEnter={scramble}
       onMouseLeave={stopScramble}
-      className="group relative overflow-hidden rounded-lg border-[1px] border-neutral-500 bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 transition-colors hover:text-indigo-300"
+      onClick={onClick}
+      className="group relative cursor-pointer overflow-hidden rounded-lg bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 transition-colors hover:text-[#01a2a4]"
     >
       <div className="relative z-10 flex items-center gap-2">
         {Icon}
-        <span>{text}</span>
+        <span>{currentText}</span>
       </div>
 
       <motion.span
@@ -75,7 +86,7 @@ const EncryptButton = ({ Icon }: { Icon?: ReactNode }) => {
           duration: 1,
           ease: 'linear',
         }}
-        className="absolute inset-0 z-0 scale-125 bg-gradient-to-t from-indigo-400/0 from-40% via-indigo-400/100 to-indigo-400/0 to-60% opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="absolute inset-0 z-0 bg-gradient-to-t from-[#01a2a4]/0 from-40% via-[#01a2a4]/100 to-[#01a2a4]/0 to-60% opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       />
     </motion.button>
   );

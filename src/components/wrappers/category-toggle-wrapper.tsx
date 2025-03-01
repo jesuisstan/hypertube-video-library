@@ -2,7 +2,7 @@
 import { LucideIcon } from 'lucide-react';
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Link } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 
 // Define the component props as generic
 type TCategoryTabsProps<T extends string> = {
@@ -16,26 +16,30 @@ const CategoryToggleWrapper = <T extends string>({
   category,
   setCategory,
 }: TCategoryTabsProps<T>) => {
+  const router = useRouter();
+
   return (
     <Tabs
       defaultValue={category}
       onValueChange={(value) => setCategory(value as T)}
-      className="flex w-full flex-row items-center justify-center rounded-md border shadow-md shadow-primary/20 xs:w-4/6"
+      className="flex w-full flex-row items-center justify-center rounded-md border shadow-md shadow-primary/20 "
     >
-      <TabsList className="flex h-8 w-full gap-1 shadow-sm">
+      <TabsList className="flex h-auto flex-row items-center justify-center gap-1">
         {tabs.map((tab) => (
-          <Link href={tab.id === 'popular' ? '/browse' : `/browse/${tab.id}`} key={tab.id} className="flex-1">
-            <TabsTrigger
-              value={tab.id}
-              title={tab.label}
-              className="w-full flex-1 cursor-pointer overflow-hidden truncate text-center smooth42transition
-                        data-[state=active]:bg-c42green data-[state=inactive]:bg-card
-                        data-[state=active]:text-foreground data-[state=inactive]:text-muted-foreground"
-            >
-              {tab.Icon && <tab.Icon size={18} className="mr-2 inline-block" />}
-              <span className="truncate whitespace-nowrap text-sm">{tab.label}</span>
-            </TabsTrigger>
-          </Link>
+          <TabsTrigger
+            key={tab.id}
+            value={tab.id}
+            title={tab.label}
+            className="w-30 cursor-pointer overflow-hidden truncate text-center smooth42transition data-[state=active]:bg-c42green data-[state=inactive]:bg-card
+              data-[state=active]:text-foreground data-[state=inactive]:text-muted-foreground
+              xs:w-36 sm:w-60"
+            onClick={() => {
+              router.push(tab.id === 'popular' ? '/browse' : `/browse/${tab.id}`);
+            }}
+          >
+            <div>{tab.Icon && <tab.Icon size={18} className="mr-2 inline-block" />}</div>
+            <span className="truncate whitespace-nowrap text-sm">{tab.label}</span>
+          </TabsTrigger>
         ))}
       </TabsList>
     </Tabs>

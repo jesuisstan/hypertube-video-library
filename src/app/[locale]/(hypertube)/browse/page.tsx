@@ -135,13 +135,8 @@ const BrowsePopular = () => {
   return !user ? (
     <Loading />
   ) : (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={framerMotion}
-      className="flex flex-col items-center gap-5"
-    >
-      <div
+    <div className="flex flex-col items-center gap-5">
+      {/*<div
         ref={headerRef}
         className="fixed z-10 flex w-full flex-col items-center gap-2 bg-background/70 p-2"
       >
@@ -168,8 +163,14 @@ const BrowsePopular = () => {
             />
           </div>
         </div>
-      </div>
-      <div className="flex w-full flex-col items-center gap-5">
+      </div>*/}
+
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={framerMotion}
+        className="flex w-full flex-col items-center gap-5"
+      >
         <div
           key="moviesTMDB"
           className="grid grid-cols-2 items-center gap-5 align-middle smooth42transition sm:grid-cols-3 md:grid-cols-4 xl:flex xl:flex-wrap xl:justify-center"
@@ -201,8 +202,8 @@ const BrowsePopular = () => {
             <p className="text-destructive">{t(errorMessage)}</p>
           </motion.div>
         )}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
