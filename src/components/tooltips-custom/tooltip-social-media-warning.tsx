@@ -13,7 +13,7 @@ import useUserStore from '@/stores/user';
 
 const TooltipSocialMediaWarning = () => {
   const t = useTranslations();
-  const { logout } = useUserStore();
+  const logout = useUserStore((state) => state.logout);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

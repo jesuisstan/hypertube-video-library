@@ -1,4 +1,4 @@
-# Project Documentation: Matcha Dating App
+# Project Documentation: Hypertube Video Library
 
 ## Objective
 
@@ -19,7 +19,7 @@ The project was implemented using functional components and popular hooks in Rea
 
 3. **Styling**: Tailwind CSS is used for styling, providing a modern and consistent design. The application features utility-first CSS, enabling rapid styling adjustments. The application supports 2 color themes: light and dark.
 
-4. **Language Support**: Matcha the dating app allows users select between 3 main languages for the interface: English, Français & Русский.
+4. **Language Support**: Hypertube app allows users select between 3 main languages for the interface: English, Français & Русский.
 
 5. **Real-Time Features**: Implemented chat functionality allows users to communicate once matched. Notifications for likes and visits are provided to enhance user engagement.
 
