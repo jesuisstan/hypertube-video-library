@@ -10,6 +10,7 @@ import Loading from '@/app/loading';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
+import { Slider } from '@/components/ui/slider';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
@@ -33,17 +34,19 @@ const BrowsePopular = () => {
   const scrollPositionRef = React.useRef<number>(0);
 
   // sort filter states
-  const getValueOfSearchFilter = useSearchStore((state) => state.getValueOfSearchFilter);
-  const setValueOfSearchFilter = useSearchStore((state) => state.setValueOfSearchFilter);
-  const getGenresListByLanguage = useSearchStore((state) => state.getGenresListByLanguage);
-  const replaceAllItemsOfSearchFilter = useSearchStore(
-    (state) => state.replaceAllItemsOfSearchFilter
-  );
+  const {
+    getValueOfSearchFilter,
+    setValueOfSearchFilter,
+    getGenresListByLanguage,
+    replaceAllItemsOfSearchFilter,
+  } = useSearchStore();
+
   const genresList = getGenresListByLanguage(locale);
   const sortBy = getValueOfSearchFilter('sort_by') as string;
   const selectedGenres = getValueOfSearchFilter('genres') as string[];
+  const rating = getValueOfSearchFilter('genres') as string[];
+
   const [year, setYear] = useState('');
-  const [rating, setRating] = useState<[number, number]>([0, 10]);
 
   const handleSortChange = (value: string) => {
     setValueOfSearchFilter('sort_by', value);
@@ -52,11 +55,9 @@ const BrowsePopular = () => {
     setYear(event.target.value);
     setValueOfSearchFilter('year', event.target.value);
   };
-  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newRating = [...rating] as [number, number];
-    newRating[index] = Number(event.target.value);
-    setRating(newRating);
-    replaceAllItemsOfSearchFilter('rating', newRating);
+  const handleRatingChange = (values: number[]) => {
+    const [start, end] = values;
+    replaceAllItemsOfSearchFilter('rating', [start, end]);
   };
 
   const scrapeTMDB = async () => {
@@ -192,25 +193,25 @@ const BrowsePopular = () => {
 
             <div className="flex flex-col gap-2">
               <label className="font-bold">{t('rating')}</label>
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  value={rating[0]}
-                  onChange={(e) => handleRatingChange(e, 0)}
-                  className="rounded border p-2"
-                  placeholder={t('min')}
-                  min="0"
-                  max="10"
-                />
-                <input
-                  type="number"
-                  value={rating[1]}
-                  onChange={(e) => handleRatingChange(e, 1)}
-                  className="rounded border p-2"
-                  placeholder={t('max')}
-                  min="0"
-                  max="10"
-                />
+              <Slider
+                min={0}
+                max={10}
+                step={1}
+                defaultValue={[5, 10]}
+                value={rating}
+                onValueChange={handleRatingChange}
+              />
+              <div className="mt-2 flex justify-between text-xs text-foreground">
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+                  <span
+                    key={item}
+                    className={clsx('cursor-pointer', {
+                      'font-bold': item >= Number(rating[0]) && item <= Number(rating[1]),
+                    })}
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

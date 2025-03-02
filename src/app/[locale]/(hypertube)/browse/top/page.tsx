@@ -33,15 +33,18 @@ const BrowsePopular = () => {
   const scrollPositionRef = React.useRef<number>(0);
 
   // sort filter states
-  const getValueOfSearchFilter = useSearchStore((state) => state.getValueOfSearchFilter);
-  const setValueOfSearchFilter = useSearchStore((state) => state.setValueOfSearchFilter);
-  const getGenresListByLanguage = useSearchStore((state) => state.getGenresListByLanguage);
-  const replaceAllItemsOfSearchFilter = useSearchStore(
-    (state) => state.replaceAllItemsOfSearchFilter
-  );
+  const { getValueOfSearchFilter, setValueOfSearchFilter, getGenresListByLanguage, replaceAllItemsOfSearchFilter } = useSearchStore();
+  //const getValueOfSearchFilter = useSearchStore((state) => state.getValueOfSearchFilter);
+  //const setValueOfSearchFilter = useSearchStore((state) => state.setValueOfSearchFilter);
+  //const getGenresListByLanguage = useSearchStore((state) => state.getGenresListByLanguage);
+  //const replaceAllItemsOfSearchFilter = useSearchStore(
+  //  (state) => state.replaceAllItemsOfSearchFilter
+  //);
+
   const genresList = getGenresListByLanguage(locale);
   const sortBy = getValueOfSearchFilter('sort_by') as string;
   const selectedGenres = getValueOfSearchFilter('genres') as string[];
+
   const [year, setYear] = useState('');
   const [rating, setRating] = useState<[number, number]>([0, 10]);
 
