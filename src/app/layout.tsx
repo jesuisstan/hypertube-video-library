@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
 };
 
-/* Note! To avoid hydration warnings, add suppressHydrationWarning to <html>, because next-themes updates that element.
+/* (!) To avoid hydration warnings, add suppressHydrationWarning to <html>, because next-themes updates that element.
     This property only applies one level deep, so it won't block hydration warnings on other elements. */
 const RootLayout = async ({
   children,
@@ -46,9 +46,11 @@ const RootLayout = async ({
   return (
     <html suppressHydrationWarning lang={locale}>
       {/* dev tool to control rerendering the elements */}
-      <head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
-      </head>
+      {process.env.NODE_ENV === 'development' && (
+        <head>
+          <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+        </head>
+      )}
       <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
         <ThemeProvider
           attribute="class"
