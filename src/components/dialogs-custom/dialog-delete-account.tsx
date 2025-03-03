@@ -10,6 +10,7 @@ import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import { useRouter } from '@/i18n/routing';
+import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const DialogDeleteAccount = ({
@@ -23,6 +24,7 @@ const DialogDeleteAccount = ({
   const t = useTranslations();
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
+  const resetSearchStore = useSearchStore((state) => state.resetSearchStore);
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -56,6 +58,7 @@ const DialogDeleteAccount = ({
         setSuccessMessage(t(result.message));
         setTimeout(async () => {
           logout(); // clear local user state
+          resetSearchStore(); // clear search filters store
 
           // Use NextAuth's signOut method
           await signOut({

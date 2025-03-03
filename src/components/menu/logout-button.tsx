@@ -4,17 +4,20 @@ import { LogOut } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { useRouter } from '@/i18n/routing';
+import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 
 const LogoutButton = ({ translate }: { translate: (key: string) => string }) => {
   const router = useRouter();
   const logout = useUserStore((state) => state.logout);
+  const resetSearchStore = useSearchStore((state) => state.resetSearchStore);
   const setGlobalLoading = useUserStore((state) => state.setGlobalLoading);
 
   const handleLogout = async () => {
     setGlobalLoading(true); // set global loading
 
     logout(); // clear local user state
+    resetSearchStore(); // clear search filters store
 
     // Use NextAuth's signOut method
     await signOut({

@@ -46,7 +46,7 @@ const initialSearchFiltersState: TSearchFilters = {
   },
   sort_by: 'popularity-desc',
   genres: [],
-  rating: [0, 10],
+  rating: [6, 10],
   year: 2024,
 };
 
