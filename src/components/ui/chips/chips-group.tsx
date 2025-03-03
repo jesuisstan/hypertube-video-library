@@ -63,13 +63,13 @@ const ChipsGroup = ({
 
         <div className="flex flex-row gap-7 text-xs font-normal text-secondary-foreground">
           <button
-            className="min-w-fit text-left italic hover:text-c42green"
+            className="min-w-fit cursor-pointer text-left italic smooth42transition hover:text-c42green"
             onClick={handleSelectAll}
           >
             {t(`selector.select-all`)}
           </button>
           <button
-            className="min-w-fit text-left italic hover:text-c42orange"
+            className="min-w-fit cursor-pointer text-left italic smooth42transition hover:text-c42orange"
             onClick={handleUnselectAll}
           >
             {t(`selector.unselect-all`)}

@@ -32,11 +32,7 @@ const HypertubeLayout = ({ children }: { children: React.ReactNode }) => {
     <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>
       <Menu />
       <div className="flex w-full flex-grow flex-col items-center justify-between">
-        <main
-          id="main-content"
-          role="main"
-          className={clsx('mb-auto w-full items-center p-4')}
-        >
+        <main id="main-content" role="main" className={clsx('mb-auto w-full items-center p-4')}>
           {children}
         </main>
         <Footer />

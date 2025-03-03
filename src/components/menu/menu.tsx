@@ -81,7 +81,7 @@ const Menu: React.FC = () => {
           type="button"
           onClick={toggleSidebar}
           title={t('menu-open')}
-          className="flex w-fit flex-row items-center space-x-3"
+          className="flex w-fit cursor-pointer flex-row items-center space-x-3"
         >
           <div>
             <MenuIcon />

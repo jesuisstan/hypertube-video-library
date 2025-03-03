@@ -92,7 +92,7 @@ module.exports = {
     function ({ addUtilities }: { addUtilities: Function }) {
       const newUtilities = {
         '.smooth42transition': {
-          transition: 'all 300ms ease-in-out',
+          transition: 'all 200ms ease-in-out',
           transform: 'translateZ(0)',
         },
       };

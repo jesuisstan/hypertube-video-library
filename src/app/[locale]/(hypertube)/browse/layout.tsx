@@ -29,11 +29,14 @@ const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full flex-col">
       {user && (
-        <div className="sticky top-0 z-10 flex items-center justify-center bg-background/90 p-4">
-          <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
+        <div className="sticky top-0 z-10 flex items-center justify-center bg-background/90 p-4 pt-0">
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-3xl font-bold">{t('browse-the-library')}</h1>
+            <CategoryToggleWrapper tabs={tabs} category={category} setCategory={setCategory} />
+          </div>
         </div>
       )}
-      <div className="flex-grow">{children}</div>
+      <div className="mt-4 flex-grow">{children}</div>
     </div>
   );
 };
