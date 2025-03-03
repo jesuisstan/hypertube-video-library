@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -13,7 +13,6 @@ import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Slider } from '@/components/ui/slider';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
-import useUserStore from '@/stores/user';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 import { TMovieBasics } from '@/types/movies';
 
@@ -21,7 +20,6 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const localeActive = useLocale();
-  const user = useUserStore((state) => state.user);
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -29,8 +27,8 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState(false);
 
-  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const scrollPositionRef = React.useRef<number>(0);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollPositionRef = useRef<number>(0);
 
   // sort filter states
   const {
@@ -136,9 +134,7 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
     { value: 'release-desc', label: t('release-desc') },
   ];
 
-  return !user ? (
-    <Loading />
-  ) : (
+  return (
     <div className="flex flex-col items-start gap-5 smooth42transition xs:flex-row">
       {/* Sort and filter sector */}
       <div
