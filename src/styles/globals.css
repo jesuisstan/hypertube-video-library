@@ -23,7 +23,7 @@
 @layer base {
   :root {
     --c42orange: 4 65% 59%;
-    --c42green: 181 99% 32%;
+    --positive: 180.6 100% 36.9%;
 
     --background: 0 0% 96%;
     --foreground: 240 10% 3.9%;
@@ -51,7 +51,7 @@
 
   .dark {
     --c42orange: 4 65% 59%;
-    --c42green: 181 99% 32%;
+    --positive: 181 99% 32%;
 
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -126,7 +126,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--c42green));
+  background: hsl(var(--positive));
   border-radius: 16px;
 }
 

@@ -154,7 +154,7 @@ const DialogDeleteAccount = ({
         <div className="min-h-6">
           {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
-            <p className="mb-5 text-center text-sm text-c42green">{successMessage}</p>
+            <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
           )}
         </div>
       </div>

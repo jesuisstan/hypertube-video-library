@@ -66,7 +66,7 @@ const EncryptButton = ({
       onMouseEnter={scramble}
       onMouseLeave={stopScramble}
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-lg bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 transition-colors hover:text-[#01a2a4]"
+      className="group relative cursor-pointer overflow-hidden rounded-md bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 ring-offset-background transition-colors hover:text-[#01a2a4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
     >
       <div className="relative z-10 flex items-center gap-2">
         {Icon}

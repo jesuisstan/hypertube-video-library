@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Filter } from 'lucide-react';
 
 import Loading from '@/app/loading';
-import FilterDrawer from '@/components/filter-drawer';
+import FilterDrawer from '@/components/filter-sort/filter-drawer';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Separator } from '@/components/ui/separator';
@@ -23,7 +23,7 @@ const BrowseCustom = () => {
   const localeActive = useLocale();
   const user = useUserStore((state) => state.user);
 
-  return !user ? <Loading /> : <div className=''>Custom search</div>;
+  return !user ? <Loading /> : <div className="">Custom search</div>;
 };
 
 export default BrowseCustom;

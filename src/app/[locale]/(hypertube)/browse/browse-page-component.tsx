@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
+import DatesRangePicker from '@/components/filter-sort/dates-range-picker';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
@@ -20,7 +21,7 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const localeActive = useLocale();
-  const sortOptions = useSortOptions();
+  const sortOptions = useSortOptions() as any[];
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -43,16 +44,20 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
   const sortBy = getValueOfSearchFilter('sort_by') as string;
   const selectedGenres = getValueOfSearchFilter('genres') as string[];
   const rating = getValueOfSearchFilter('rating') as number[];
+  const startDate = getValueOfSearchFilter('start_date') as Date;
+  const endDate = getValueOfSearchFilter('end_date') as Date;
 
-  const [year, setYear] = useState('');
+  const handleStartDateChange = (date: Date) => {
+    setValueOfSearchFilter('start_date', date);
+  };
+  const handleEndDateChange = (date: Date) => {
+    setValueOfSearchFilter('end_date', date);
+  };
 
   const handleSortChange = (value: string) => {
     setValueOfSearchFilter('sort_by', value);
   };
-  const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setYear(event.target.value);
-    setValueOfSearchFilter('year', event.target.value);
-  };
+
   const handleRatingChange = (values: number[]) => {
     const [start, end] = values;
     replaceAllItemsOfSearchFilter('rating', [start, end]);
@@ -130,7 +135,7 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
       <div
         id="sort-filter-sector"
         className={clsx(
-          'flex w-full flex-col items-start gap-4 rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:top-20 xs:max-w-72'
+          'flex w-full flex-col items-start gap-4 overflow-x-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:top-20 xs:max-w-72 xs:overflow-x-hidden'
         )}
       >
         <div className="flex flex-col justify-center gap-2">
@@ -166,13 +171,11 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
               <label htmlFor="year" className="font-bold">
                 {t('release')}
               </label>
-              <input
-                id="year"
-                type="number"
-                value={year}
-                onChange={handleYearChange}
-                className="rounded border p-2"
-                placeholder={t('enter-year')}
+              <DatesRangePicker
+                startDate={startDate}
+                setStartDate={handleStartDateChange}
+                endDate={endDate}
+                setEndDate={handleEndDateChange}
               />
             </div>
 
@@ -191,7 +194,7 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
                   <span
                     key={item}
                     className={clsx({
-                      'font-bold text-c42green':
+                      'text-positive font-bold':
                         item >= Number(rating[0]) && item <= Number(rating[1]),
                     })}
                   >

@@ -69,7 +69,7 @@ const AboutPage = () => {
                 <a
                   href={`https://42.fr/en/the-program/software-engineer-degree/`}
                   target="_blank"
-                  className="my-6 text-center text-lg text-c42green transition-all duration-300 ease-in-out hover:text-c42orange"
+                  className="text-positive my-6 text-center text-lg transition-all duration-300 ease-in-out hover:text-c42orange"
                 >
                   {t('disclamer-curriculum')}
                 </a>
@@ -78,7 +78,7 @@ const AboutPage = () => {
                 <a
                   href={`https://github.com/jesuisstan/hypertube-video-library`}
                   target="_blank"
-                  className="my-6 text-center text-lg text-c42green transition-all duration-300 ease-in-out hover:text-c42orange"
+                  className="text-positive my-6 text-center text-lg transition-all duration-300 ease-in-out hover:text-c42orange"
                 >
                   {t('disclamer-no-commercial')}
                 </a>

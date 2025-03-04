@@ -152,7 +152,7 @@ const Menu: React.FC = () => {
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname === `/profile` && 'text-c42green'
+                    pathname === `/profile` && 'text-positive'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);
@@ -171,7 +171,7 @@ const Menu: React.FC = () => {
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname.includes(`/browse`) && 'text-c42green'
+                    pathname.includes(`/browse`) && 'text-positive'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);
@@ -190,7 +190,7 @@ const Menu: React.FC = () => {
                   className={clsx(
                     `flex w-full items-center smooth42transition`,
                     `hover:text-c42orange`,
-                    pathname === `/about` && 'text-c42green'
+                    pathname === `/about` && 'text-positive'
                   )}
                   onClick={() => {
                     if (isSidebarOpen) setIsSidebarOpen(false);

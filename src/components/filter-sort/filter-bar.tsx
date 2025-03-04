@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import ChipsGroup from './ui/chips/chips-group';
+import ChipsGroup from '../ui/chips/chips-group';
 
 import useSearchStore from '@/stores/search';
 import { capitalize } from '@/utils/format-string';

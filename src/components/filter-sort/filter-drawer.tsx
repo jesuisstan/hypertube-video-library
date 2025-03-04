@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import FilterBar from '@/components/filter-bar';
+import FilterBar from '@/components/filter-sort/filter-bar';
 import {
   Sheet,
   SheetContent,

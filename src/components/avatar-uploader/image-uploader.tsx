@@ -1,5 +1,5 @@
 'use client';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
@@ -163,7 +163,7 @@ const ImageUploader = ({ id }: { id: number }) => {
               ) : (
                 <CirclePlus
                   size={21}
-                  className="cursor-pointer text-muted-foreground smooth42transition hover:text-c42green"
+                  className="hover:text-positive cursor-pointer text-muted-foreground smooth42transition"
                 />
               )}
             </label>
@@ -217,7 +217,7 @@ const ImageUploader = ({ id }: { id: number }) => {
         ) : (
           <div>
             {error && <div className="text-xs text-destructive">{error}</div>}
-            {successMessage && <div className="text-xs text-c42green">{successMessage}</div>}
+            {successMessage && <div className="text-positive text-xs">{successMessage}</div>}
             {!error && !successMessage && !loading && commonMessage && (
               <div className="text-xs text-foreground">{commonMessage}</div>
             )}

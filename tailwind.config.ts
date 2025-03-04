@@ -29,7 +29,7 @@ module.exports = {
       },
       colors: {
         c42orange: 'hsl(var(--c42orange))',
-        c42green: 'hsl(var(--c42green))',
+        positive: 'hsl(var(--positive))',
 
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

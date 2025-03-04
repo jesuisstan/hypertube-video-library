@@ -53,7 +53,7 @@ const DescriptionWrapper = ({
         className={clsx(
           'absolute bottom-0 left-[50%] m-auto w-min translate-x-[-50%]',
           isHovered
-            ? 'text-c42green transition-all duration-300 ease-in-out'
+            ? 'text-positive transition-all duration-300 ease-in-out'
             : 'text-slate-200 transition-all duration-300 ease-in-out'
         )}
       >
