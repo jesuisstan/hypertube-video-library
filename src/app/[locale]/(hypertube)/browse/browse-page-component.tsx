@@ -6,12 +6,12 @@ import { useLocale, useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
-import Loading from '@/app/loading';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Slider } from '@/components/ui/slider';
 import Spinner from '@/components/ui/spinner';
+import useSortOptions from '@/hooks/useSortOptions';
 import useSearchStore from '@/stores/search';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
 import { TMovieBasics } from '@/types/movies';
@@ -20,6 +20,7 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const localeActive = useLocale();
+  const sortOptions = useSortOptions();
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -123,17 +124,6 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
     });
   }, [page]);
 
-  const sortOptions = [
-    { value: 'title-asc', label: t('title-asc') },
-    { value: 'title-desc', label: t('title-desc') },
-    { value: 'popularity-asc', label: t('popularity-asc') },
-    { value: 'popularity-desc', label: t('popularity-desc') },
-    { value: 'rating-asc', label: t('rating-asc') },
-    { value: 'rating-desc', label: t('rating-desc') },
-    { value: 'release-asc', label: t('release-asc') },
-    { value: 'release-desc', label: t('release-desc') },
-  ];
-
   return (
     <div className="flex flex-col items-start gap-5 smooth42transition xs:flex-row">
       {/* Sort and filter sector */}
@@ -201,7 +191,8 @@ const BrowsePageComponent = ({ category }: { category: string }) => {
                   <span
                     key={item}
                     className={clsx({
-                      'font-bold': item >= Number(rating[0]) && item <= Number(rating[1]),
+                      'font-bold text-c42green':
+                        item >= Number(rating[0]) && item <= Number(rating[1]),
                     })}
                   >
                     {item}

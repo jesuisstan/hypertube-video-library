@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import clsx from 'clsx';
 
@@ -8,7 +8,7 @@ import Footer from '@/components/footer';
 import Menu from '@/components/menu/menu';
 import useSearchStore from '@/stores/search';
 
-const HypertubeLayout = ({ children }: { children: React.ReactNode }) => {
+const HypertubeLayout = ({ children }: { children: ReactNode }) => {
   const { getGenresList, setGenresList } = useSearchStore();
 
   const scrapeGenresList = async () => {
