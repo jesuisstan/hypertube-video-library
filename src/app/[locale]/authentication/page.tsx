@@ -29,6 +29,8 @@ const OPTIONS: EmblaOptionsType = { loop: true };
 const Authentication = () => {
   const t = useTranslations();
   const router = useRouter();
+  const resetSearchStore = useSearchStore((state) => state.resetSearchStore);
+  const setGenresList = useSearchStore((state) => state.setGenresList);
   const [pageLayout, setPageLayout] = React.useState('login');
   const formRef = React.useRef<HTMLFormElement>(null);
   const [error, setError] = React.useState('');
@@ -36,8 +38,6 @@ const Authentication = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [loginMethod, setLoginMethod] = React.useState('email'); // <'email' | 'nickname'>
-
-  const { setGenresList } = useSearchStore();
 
   const scrapeGenresList = async () => {
     try {
@@ -127,9 +127,10 @@ const Authentication = () => {
     if (response.ok) {
       switch (pageLayout) {
         case 'login':
+          resetSearchStore(); // clear search filters store;
           if (result) {
             setLoading(true);
-            router.push('/about');
+            router.push('/browse');
           } else {
             if (result.error) {
               setError(t(`auth.${spaceToKebab(result.error).toLocaleLowerCase()}`));
@@ -384,7 +385,7 @@ const Authentication = () => {
         </form>
         {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
         {successMessage && (
-          <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+          <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
         )}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (

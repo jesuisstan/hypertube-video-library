@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import useSearchStore from '@/stores/search';
 
 const SocialMediaAuth = ({
   translate,
@@ -13,12 +14,15 @@ const SocialMediaAuth = ({
   translate: (key: string) => string;
   setError: Dispatch<React.SetStateAction<string>>;
 }) => {
+  const resetSearchStore = useSearchStore((state) => state.resetSearchStore);
   const [loadingGithub, setLoadingGithub] = useState(false);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loading42, setLoading42] = useState(false);
 
   const authenticateUser = async (provider: string) => {
     try {
+      resetSearchStore(); // clear search filters store;
+
       if (provider === 'github') {
         setLoadingGithub(true);
       } else if (provider === 'google') {
@@ -54,7 +58,7 @@ const SocialMediaAuth = ({
           loading={loading42}
           disabled={loading42 || loadingGoogle || loadingGithub}
         >
-          <div className="bg-positive flex items-center justify-center rounded-full p-[5px]">
+          <div className="flex items-center justify-center rounded-full bg-positive p-[5px]">
             <Image
               src="/icons/icon-42.png"
               blurDataURL="/icons/icon-42.png"
