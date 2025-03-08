@@ -34,7 +34,18 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={date ?? undefined}
-          onSelect={setDate}
+          onSelect={(selectedDate) => {
+            if (selectedDate) {
+              const utcDate = new Date(
+                Date.UTC(
+                  selectedDate.getFullYear(),
+                  selectedDate.getMonth(),
+                  selectedDate.getDate()
+                )
+              );
+              setDate(utcDate);
+            }
+          }}
           required={true}
           defaultMonth={date ?? undefined}
         />

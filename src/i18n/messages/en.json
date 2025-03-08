@@ -197,6 +197,7 @@
   "dive-into": "Dive into",
   "browse-the-library": "Browse the library",
   "pick-a-date": "Pick a date",
+  "range-warning": "Start date should be less than end date",
 
   "search": {
     "search": "Search",

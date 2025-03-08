@@ -16,8 +16,8 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
   const handleLogout = async () => {
     setGlobalLoading(true); // set global loading
 
-    logout(); // clear local user state
     resetSearchStore(); // clear search filters store
+    logout(); // clear local user state
 
     // Use NextAuth's signOut method
     await signOut({

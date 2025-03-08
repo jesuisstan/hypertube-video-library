@@ -74,7 +74,7 @@ function Calendar({
     to: number;
   }>(
     React.useMemo(() => {
-      const currentYear = new Date().getFullYear();
+      const currentYear = new Date().getUTCFullYear();
       return {
         from: currentYear - Math.floor(yearRange / 2 - 1),
         to: currentYear + Math.ceil(yearRange / 2),
@@ -257,8 +257,8 @@ function Nav({
     if (navView === 'years') {
       return (
         (startMonth &&
-          differenceInCalendarDays(new Date(displayYears.from - 1, 0, 1), startMonth) < 0) ||
-        (endMonth && differenceInCalendarDays(new Date(displayYears.from - 1, 0, 1), endMonth) > 0)
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), startMonth) < 0) ||
+        (endMonth && differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), endMonth) > 0)
       );
     }
     return !previousMonth;
@@ -268,8 +268,8 @@ function Nav({
     if (navView === 'years') {
       return (
         (startMonth &&
-          differenceInCalendarDays(new Date(displayYears.to + 1, 0, 1), startMonth) < 0) ||
-        (endMonth && differenceInCalendarDays(new Date(displayYears.to + 1, 0, 1), endMonth) > 0)
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), startMonth) < 0) ||
+        (endMonth && differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), endMonth) > 0)
       );
     }
     return !nextMonth;
@@ -282,11 +282,17 @@ function Nav({
         from: prev.from - (prev.to - prev.from + 1),
         to: prev.to - (prev.to - prev.from + 1),
       }));
-      onPrevClick?.(new Date(displayYears.from - (displayYears.to - displayYears.from), 0, 1));
+      onPrevClick?.(
+        new Date(Date.UTC(displayYears.from - (displayYears.to - displayYears.from), 0, 1))
+      );
       return;
     }
     goToMonth(previousMonth);
-    onPrevClick?.(previousMonth);
+    onPrevClick?.(
+      new Date(
+        Date.UTC(previousMonth.getUTCFullYear(), previousMonth.getUTCMonth(), previousMonth.getUTCDate())
+      )
+    );
   }, [previousMonth, goToMonth]);
 
   const handleNextClick = React.useCallback(() => {
@@ -296,11 +302,15 @@ function Nav({
         from: prev.from + (prev.to - prev.from + 1),
         to: prev.to + (prev.to - prev.from + 1),
       }));
-      onNextClick?.(new Date(displayYears.from + (displayYears.to - displayYears.from), 0, 1));
+      onNextClick?.(
+        new Date(Date.UTC(displayYears.from + (displayYears.to - displayYears.from), 0, 1))
+      );
       return;
     }
     goToMonth(nextMonth);
-    onNextClick?.(nextMonth);
+    onNextClick?.(
+      new Date(Date.UTC(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth(), nextMonth.getUTCDate()))
+    );
   }, [goToMonth, nextMonth]);
 
   return (
@@ -428,28 +438,29 @@ function YearGrid({
     <div className={clsx('grid grid-cols-4 gap-y-2', className)} {...props}>
       {Array.from({ length: displayYears.to - displayYears.from + 1 }, (_, i) => {
         const isBefore =
-          differenceInCalendarDays(new Date(displayYears.from + i, 11, 31), startMonth!) < 0;
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from + i, 11, 31)), startMonth!) < 0;
 
         const isAfter =
-          differenceInCalendarDays(new Date(displayYears.from + i, 0, 0), endMonth!) > 0;
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from + i, 0, 0)), endMonth!) > 0;
 
         const isDisabled = isBefore || isAfter;
         return (
           <ButtonCustom
             key={i}
             className={clsx(
-              'h-7 w-full text-sm font-normal text-foreground',
-              displayYears.from + i === new Date().getFullYear() &&
+              'h-7 w-full text-xs font-normal text-foreground',
+              displayYears.from + i === new Date().getUTCFullYear() &&
                 'bg-accent font-medium text-accent-foreground'
             )}
             variant="ghost"
             onClick={() => {
               setNavView('days');
               goToMonth(
-                new Date(displayYears.from + i, (selected as Date | undefined)?.getMonth() ?? 0)
+                new Date(Date.UTC(displayYears.from + i, 0)) // setting month to 0 (January)
               );
             }}
             disabled={navView === 'years' ? isDisabled : undefined}
+            title={String(displayYears.from + i)}
           >
             {displayYears.from + i}
           </ButtonCustom>

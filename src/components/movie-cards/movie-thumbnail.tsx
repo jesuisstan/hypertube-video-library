@@ -46,9 +46,9 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
           />
           <div
             className={clsx(
-              'absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full border bg-primary font-bold text-primary-foreground shadow-md',
+              'absolute right-1 top-1 flex h-10 w-10 items-center justify-center rounded-full border bg-primary font-bold text-primary-foreground shadow-md',
               movieBasics.vote_average > 7
-                ? 'border-c42green shadow-c42green'
+                ? 'border-positive shadow-positive'
                 : movieBasics.vote_average >= 6
                   ? 'border-amber-400 shadow-amber-400'
                   : 'border-destructive shadow-destructive'

@@ -48,9 +48,9 @@ const initialSearchFiltersState: TSearchFilters = {
   },
   sort_by: 'popularity-desc',
   genres: [],
-  rating: [6, 10],
-  start_date: new Date('1895-12-28'), // Date of the first movie release ever
-  end_date: new Date(),
+  rating: [0, 10],
+  start_date: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
+  end_date: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
 };
 
 const useSearchStore = create<TSearchStore>()(
@@ -61,12 +61,18 @@ const useSearchStore = create<TSearchStore>()(
         filterKey: string,
         newValue: string | number | Date
       ): string | number | Date => {
+        const formattedValue =
+          newValue instanceof Date
+            ? new Date(
+                Date.UTC(newValue.getUTCFullYear(), newValue.getUTCMonth(), newValue.getUTCDate())
+              )
+            : newValue;
         set(
           produce((draft) => {
-            draft.searchFilters[filterKey] = newValue || '';
+            draft.searchFilters[filterKey] = formattedValue || '';
           })
         );
-        return newValue || '';
+        return formattedValue || '';
       },
       addOneItemToSearchFilter: (filterKey: string, newValue: string | number | Date) => {
         set(

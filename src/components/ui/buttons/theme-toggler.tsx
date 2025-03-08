@@ -10,41 +10,46 @@ import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => {
   const { theme, setTheme } = useTheme();
 
-  const SWITCH = () => {
-    switch (theme) {
-      case 'light':
-        setTheme('dark');
-        break;
-      case 'dark':
-        setTheme('light');
-        break;
-      default:
-        break;
-    }
+  const switchTheme = (theme: string) => {
+    //@ts-ignore
+    if (!document.startViewTransition) setTheme(theme);
+
+    //@ts-ignore
+    document.startViewTransition(() => setTheme(theme));
   };
 
-  const toggleTheme = () => {
-    //@ts-ignore
-    if (!document.startViewTransition) SWITCH();
+  const switchToLight = () => {
+    if (theme === 'light') return;
+    switchTheme('light');
+  };
 
-    //@ts-ignore
-    document.startViewTransition(SWITCH);
+  const switchToDark = () => {
+    if (theme === 'dark') return;
+    switchTheme('dark');
   };
 
   return (
-    <ButtonCustom
-      variant="ghost"
-      size="icon"
-      title={translate(`theme-toggle`)}
-      onClick={toggleTheme}
-      className="smooth42transition hover:bg-transparent hover:text-c42orange"
-    >
-      <div className="flex flex-row items-center gap-2">
-        {theme === 'light' ? <Sun /> : <MoonStar />}
-        {/*<p>{translate(`${theme}`)}</p>*/}
-        <span className="sr-only">{translate(`${theme}`)}</span>
-      </div>
-    </ButtonCustom>
+    <div className={`flex flex-row items-center gap-4`}>
+      <ButtonCustom
+        variant="ghost"
+        size="icon"
+        title={translate(`theme-toggle`) + ': ' + translate('light')}
+        onClick={switchToLight}
+        className="smooth42transition hover:bg-transparent hover:text-c42orange"
+      >
+        <Sun />
+      </ButtonCustom>
+      {' / '}
+      <ButtonCustom
+        variant="ghost"
+        size="icon"
+        title={translate(`theme-toggle`) + ': ' + translate('dark')}
+        onClick={switchToDark}
+        className="smooth42transition hover:bg-transparent hover:text-c42orange"
+      >
+        <MoonStar />
+      </ButtonCustom>
+    </div>
   );
 };
 
