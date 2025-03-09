@@ -198,6 +198,8 @@
   "browse-the-library": "Parcourez la bibliothèque",
   "pick-a-date": "Choisissez une date",
   "range-warning": "La date de début doit être inférieure à la date de fin",
+  "fetch-more": "Charger plus",
+  "total-results": "Résultats totaux",
 
   "search": {
     "search": "Chercher",

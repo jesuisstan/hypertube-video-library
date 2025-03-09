@@ -32,7 +32,7 @@ const ToastNotification = ({
   return (
     <Toast.Provider swipeDirection="right">
       <Toast.Root
-        className="data-[state=closed]:animate-hide min-h-80 data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border border-destructive p-[15px] text-background shadow-xl shadow-destructive/50 [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+        className="data-[state=closed]:animate-hide min-h-32 data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border border-destructive p-[15px] text-background shadow-xl shadow-destructive/50 [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
         open={open}
         onOpenChange={setOpen}
         duration={duration ?? 15000}
