@@ -36,7 +36,11 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
       >
         <div className="relative overflow-hidden rounded-md">
           <Image
-            src={`https://image.tmdb.org/t/p/w300${movieBasics.poster_path}`}
+            src={
+              movieBasics.poster_path
+                ? `https://image.tmdb.org/t/p/w300${movieBasics.poster_path}`
+                : '/identity/logo-thumbnail.png'
+            }
             blurDataURL={'/identity/logo-thumbnail.png'}
             alt={'poster'}
             width={200}
