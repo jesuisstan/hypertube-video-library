@@ -10,6 +10,7 @@
   "browse": "Browse",
   "about": "About",
   "error": "Error",
+  "attention": "Attention",
   "something-went-wrong": "Something went wrong",
   "go-back": "Go back",
   "return-to": "Return to",
@@ -195,11 +196,12 @@
   "release-desc": "Release date (descending)",
   "filter-results": "Filter results",
   "dive-into": "Dive into",
-  "browse-the-library": "Browse the library",
+  "browsing-the-library": "Browsing the library",
   "pick-a-date": "Pick a date",
   "range-warning": "Start date should be less than end date",
   "fetch-more": "Fetch more",
   "total-results": "Total results",
+  "include-adult-content": "Include adult content",
 
   "search": {
     "search": "Search",

@@ -5,11 +5,19 @@ import { TMovieBasics } from '@/types/movies';
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category') || 'popular';
+    const total_pages_available = searchParams.get('total_pages_available') || '500'; // default to 500 pages
     const lang = searchParams.get('lang') || 'en-US';
     const page = searchParams.get('page') || '1';
+    const include_adult = searchParams.get('include_adult') || 'false';
+    const sort_by = searchParams.get('sort_by') || 'popularity.desc';
+    const rating_min = searchParams.get('rating_min') || '0';
+    const rating_max = searchParams.get('rating_max') || '10';
+    const release_date_min = searchParams.get('release_date_min') || '1895-11-28'; // Date of the first movie release ever in UTC
+    const release_date_max =
+      searchParams.get('release_date_max') || new Date().toISOString().split('T')[0]; // Date without timezone shift
+    const with_genres = searchParams.get('with_genres') || '';
 
-    if (Number(page) > 500) {
+    if (Number(page) > Number(total_pages_available)) {
       return NextResponse.json({ error: 'error-page-limit-reached' }, { status: 400 });
     }
 
@@ -23,7 +31,7 @@ export async function GET(req: Request) {
 
     // Fetch popular movies from TMDB
     const response = await fetch(
-      `${process.env.TMDB_API_URL}/movie/${category}?language=${lang}&page=${page}`,
+      `${process.env.TMDB_API_URL}/discover/movie?include_adult=${include_adult}&sort_by=${sort_by}&vote_average.gte=${rating_min}&vote_average.lte=${rating_max}&release_date.gte=${release_date_min}&release_date.lte=${release_date_max}&with_genres=${with_genres}&language=${lang}&page=${page}`,
       options
     );
 

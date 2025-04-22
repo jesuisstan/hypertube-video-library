@@ -10,6 +10,7 @@
   "browse": "Обзор",
   "about": "О нас",
   "error": "Ошибка",
+  "attention": "Внимание",
   "something-went-wrong": "Что-то пошло не так",
   "go-back": "Вернуться назад",
   "return-to": "Вернуться на",
@@ -195,11 +196,12 @@
   "release-desc": "Дате выпуска (по убыванию)",
   "filter-results": "Фильтровать результаты",
   "dive-into": "Погрузиться",
-  "browse-the-library": "Обзор библиотеки",
+  "browsing-the-library": "Обзор библиотеки",
   "pick-a-date": "Выберите дату",
   "range-warning": "Дата начала должна быть раньше даты окончания",
   "fetch-more": "Загрузить еще",
   "total-results": "Всего результатов",
+  "include-adult-content": "Включить контент для взрослых",
 
   "search": {
     "search": "Поиск",

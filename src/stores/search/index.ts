@@ -11,16 +11,17 @@ export type TSearchFilters = {
   genres: { id: number }[];
   rating: number[];
   sort_by:
-    | 'popularity-desc'
-    | 'popularity-asc'
-    | 'release-desc'
-    | 'release-asc'
-    | 'title-asc'
-    | 'title-desc'
-    | 'rating-asc'
-    | 'rating-desc';
-  start_date: Date;
-  end_date: Date;
+    | 'title.asc'
+    | 'title.desc'
+    | 'popularity.asc'
+    | 'popularity.desc'
+    | 'vote_average.asc'
+    | 'vote_average.desc'
+    | 'primary_release_date.asc'
+    | 'primary_release_date.desc';
+  release_date_min: Date;
+  release_date_max: Date;
+  include_adult: string;
 };
 
 export type TSearchStore = {
@@ -46,11 +47,12 @@ const initialSearchFiltersState: TSearchFilters = {
     ru: [],
     fr: [],
   },
-  sort_by: 'popularity-desc',
+  sort_by: 'popularity.desc',
   genres: [],
   rating: [0, 10],
-  start_date: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
-  end_date: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
+  include_adult: 'false',
+  release_date_min: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
+  release_date_max: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
 };
 
 const useSearchStore = create<TSearchStore>()(

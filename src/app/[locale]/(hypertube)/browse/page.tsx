@@ -11,6 +11,7 @@ import DatesRangePicker from '@/components/filter-sort/dates-range-picker';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
+import RadioGroup from '@/components/ui/radio/radio-group';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
@@ -30,6 +31,7 @@ const BrowsePage = () => {
   const sortOptions = useSortOptions() as any[];
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(500);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -37,9 +39,7 @@ const BrowsePage = () => {
 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollPositionRef = useRef<number>(0);
-  console.log('sortOptions', sortOptions); // debug
-  console.log('page', page); // debug
-  console.log('isFetching', isFetching); // debug
+
   // sort filter states
   const {
     getValueOfSearchFilter,
@@ -50,25 +50,27 @@ const BrowsePage = () => {
 
   const genresList = getGenresListByLanguage(locale);
   const sortBy = getValueOfSearchFilter('sort_by') as string;
+  const includeAdultContent = getValueOfSearchFilter('include_adult') as string;
   const selectedGenres = getValueOfSearchFilter('genres') as string[];
   const rating = getValueOfSearchFilter('rating') as number[];
-  const startDate = getValueOfSearchFilter('start_date') as Date;
-  const endDate = getValueOfSearchFilter('end_date') as Date;
+  const releaseDateMin = getValueOfSearchFilter('release_date_min') as Date;
+  const releaseDateMax = getValueOfSearchFilter('release_date_max') as Date;
 
-  const handleStartDateChange = (date: Date) => {
-    setValueOfSearchFilter('start_date', date);
+  const handleReleaseDateMinChange = (date: Date) => {
+    setValueOfSearchFilter('release_date_min', date);
   };
-  const handleEndDateChange = (date: Date) => {
-    setValueOfSearchFilter('end_date', date);
+  const handleReleaseDateMaxChange = (date: Date) => {
+    setValueOfSearchFilter('release_date_max', date);
   };
-
   const handleSortChange = (value: string) => {
     setValueOfSearchFilter('sort_by', value);
   };
-
   const handleRatingChange = (values: number[]) => {
     const [start, end] = values;
     replaceAllItemsOfSearchFilter('rating', [start, end]);
+  };
+  const handleAdultContentChange = (value: string) => {
+    setValueOfSearchFilter('include_adult', value);
   };
 
   const filterAndSortMovies = (movies: TMovieBasics[]) => {
@@ -76,8 +78,8 @@ const BrowsePage = () => {
       .filter((movie) => {
         const movieReleaseDate = new Date(movie.release_date);
         const isWithinDateRange =
-          (!startDate || movieReleaseDate >= startDate) &&
-          (!endDate || movieReleaseDate <= endDate);
+          (!releaseDateMin || movieReleaseDate >= releaseDateMin) &&
+          (!releaseDateMax || movieReleaseDate <= releaseDateMax);
         const isWithinRatingRange =
           (!rating[0] || movie.vote_average >= rating[0]) &&
           (!rating[1] || movie.vote_average <= rating[1]);
@@ -112,28 +114,29 @@ const BrowsePage = () => {
       });
   };
 
-  useEffect(() => {
-    const filteredAndSortedMovies = filterAndSortMovies(moviesTMDB);
-    setMoviesTMDB(filteredAndSortedMovies);
-  }, [sortBy, selectedGenres, rating, startDate, endDate]);
-
   const scrapeTMDB = async (reset = false) => {
     try {
       setErrorMessage(null);
       setLoading(true);
+      const selectedGenresCodes = selectedGenres.map(
+        (genre) => genresList.find((g) => g.name === genre)?.id
+      );
+
       const response = await fetch(
-        `/api/movies?category=popular&lang=${localeActive}&page=${page}`
+        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenresCodes}&lang=${localeActive}&page=${page}`
       );
       const data = await response.json();
       const results = data?.results;
       const error = data?.error;
+      const totalPages = data?.total_pages || 500;
+      setTotalPagesAvailable(totalPages); // Set the total pages available for pagination for the current request parameters
+
       if (results) {
         const newMovies = reset ? results : [...moviesTMDB, ...results];
         const uniqueMovies = Array.from(
           new Set(newMovies.map((movie: TMovieBasics) => movie.id))
         ).map((id) => newMovies.find((movie: TMovieBasics) => movie.id === id));
-        const filteredAndSortedMovies = filterAndSortMovies(uniqueMovies);
-        setMoviesTMDB(filteredAndSortedMovies);
+        setMoviesTMDB(uniqueMovies);
       }
       if (error) {
         setErrorMessage(error);
@@ -160,7 +163,7 @@ const BrowsePage = () => {
   };
 
   const fetchMoreMovies = () => {
-    if (page >= 500) {
+    if (page >= totalPagesAvailable) {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
@@ -193,7 +196,7 @@ const BrowsePage = () => {
   }, [localeActive]);
 
   useEffect(() => {
-    if (page > 500) {
+    if (page > totalPagesAvailable) {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
@@ -202,29 +205,28 @@ const BrowsePage = () => {
     });
   }, [page]);
 
-  useEffect(() => {
-    console.log('moviesTMDB from USEEFFECT', moviesTMDB); // debug
-    const filteredAndSortedMovies = filterAndSortMovies(moviesTMDB);
-    console.log('filteredAndSortedMovies', filteredAndSortedMovies); // debug
-
-    setMoviesTMDB(filteredAndSortedMovies);
-  }, [sortBy, selectedGenres, rating, startDate, endDate]);
+  //useEffect(() => {
+  //  const filteredAndSortedMovies = filterAndSortMovies(moviesTMDB);
+  //  setMoviesTMDB(filteredAndSortedMovies);
+  //}, [sortBy, selectedGenres, rating, releaseDateMin, releaseDateMax]);
 
   const rangeWarning = useMemo(() => {
-    const formattedStartDate = new Date(startDate).toISOString().split('T')[0];
-    const formattedEndDate = new Date(endDate).toISOString().split('T')[0];
+    const formattedStartDate = new Date(releaseDateMin).toISOString().split('T')[0];
+    const formattedEndDate = new Date(releaseDateMax).toISOString().split('T')[0];
     if (!loading && moviesTMDB.length > 0 && formattedStartDate > formattedEndDate) {
       return t('range-warning');
     }
     return;
-  }, [moviesTMDB, startDate, endDate]);
+  }, [moviesTMDB, releaseDateMin, releaseDateMax]);
 
   return !user ? (
     <Loading />
   ) : (
     <div>
       {rangeWarning && <ToastNotification isOpen={true} text={rangeWarning} />}
-      {errorMessage && <ToastNotification isOpen={true} title={t('error')} text={errorMessage} />}
+      {errorMessage && (
+        <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
+      )}
       <div className="flex flex-col items-start gap-5 smooth42transition xs:flex-row">
         {/* Sort and filter sector */}
         <div
@@ -233,8 +235,13 @@ const BrowsePage = () => {
             'top-0 flex w-full flex-col items-start gap-4 overflow-x-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-72 xs:overflow-x-hidden'
           )}
         >
-          <div className="flex flex-col justify-center gap-2">
+          <div className="flex w-full flex-col justify-center gap-2">
             <label htmlFor="sort" className="text-2xl font-bold">
+              {t('browsing-the-library')}
+            </label>
+            <Separator />
+
+            <label htmlFor="sort" className="text-xl font-bold">
               {t('sort-by') + ':'}
             </label>
             <SelectSingle
@@ -245,9 +252,11 @@ const BrowsePage = () => {
             />
           </div>
 
+          <Separator />
+
           {/* Filter bar */}
           <div className="flex flex-col justify-center gap-2">
-            <label htmlFor="filter" className="text-2xl font-bold">
+            <label htmlFor="filter" className="text-xl font-bold">
               {t('filter-results') + ':'}
             </label>
             <div className="flex flex-col gap-4">
@@ -262,21 +271,21 @@ const BrowsePage = () => {
                 }}
               />
 
-              <Separator />
+              {/*<Separator />*/}
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="year" className="font-bold">
                   {t('release')}
                 </label>
                 <DatesRangePicker
-                  startDate={startDate}
-                  setStartDate={handleStartDateChange}
-                  endDate={endDate}
-                  setEndDate={handleEndDateChange}
+                  startDate={releaseDateMin}
+                  setStartDate={handleReleaseDateMinChange}
+                  endDate={releaseDateMax}
+                  setEndDate={handleReleaseDateMaxChange}
                 />
               </div>
 
-              <Separator />
+              {/*<Separator />*/}
 
               <div className="flex flex-col gap-2">
                 <label className="font-bold">{t('rating')}</label>
@@ -302,6 +311,20 @@ const BrowsePage = () => {
                   ))}
                 </div>
               </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="font-bold">{t('include-adult-content')}</label>
+                <RadioGroup
+                  options={[
+                    { value: 'true', label: t('yes') },
+                    { value: 'false', label: t('no') },
+                  ]}
+                  selectedItem={getValueOfSearchFilter('include_adult') as string}
+                  onSelectItem={(args_0) => handleAdultContentChange(args_0)}
+                  defaultValue="false"
+                />
+              </div>
+
               <Separator />
 
               <p className="font-semibold">{t('total-results') + ': ' + moviesTMDB.length}</p>
