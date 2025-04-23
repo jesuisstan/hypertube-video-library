@@ -177,7 +177,7 @@ const DialogProfileModify = ({
         setError(t(result.error));
       }
     } catch (error) {
-      setError(t(error));
+      setError(t(error as string));
     } finally {
       setLoading(false);
     }
