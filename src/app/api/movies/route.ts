@@ -17,7 +17,11 @@ export async function GET(req: Request) {
       searchParams.get('release_date_max') || new Date().toISOString().split('T')[0]; // Date without timezone shift
     const with_genres = searchParams.get('with_genres') || '';
 
-    if (Number(page) > Number(total_pages_available)) {
+    if (
+      Number(page) > Number(total_pages_available) &&
+      Number(page) !== 1 &&
+      Number(total_pages_available) > 5
+    ) {
       return NextResponse.json({ error: 'error-page-limit-reached' }, { status: 400 });
     }
 

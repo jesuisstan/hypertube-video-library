@@ -11,6 +11,7 @@
   "about": "About",
   "error": "Error",
   "attention": "Attention",
+  "warning": "Warning",
   "something-went-wrong": "Something went wrong",
   "go-back": "Go back",
   "return-to": "Return to",
@@ -213,7 +214,6 @@
     "advanced-search-note": "Choose the characteristics your ideal match should have (age, tags, preferences, etc.), focusing on what you're looking for in a partner, not about yourself.",
     "no-suggestions-for-filters-sorting": "No suggestions found for the selected filters / sorting"
   },
-  "attension": "Attention!",
   "complete-profile": "Complete profile",
   "ignore": "Ignore",
   "personal-data": "Personal Data",

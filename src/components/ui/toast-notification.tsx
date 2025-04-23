@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import * as Toast from '@radix-ui/react-toast';
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -32,13 +33,18 @@ const ToastNotification = ({
   return (
     <Toast.Provider swipeDirection="right">
       <Toast.Root
-        className="data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 grid min-h-32 grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border border-destructive p-[15px] text-background shadow-xl shadow-destructive/50 [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+        className="data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 grid min-h-32 grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border border-c42orange p-[15px] text-background shadow-xl shadow-c42orange/50 [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
         open={open}
         onOpenChange={setOpen}
         duration={duration ?? 15000}
       >
-        <Toast.Title className="mb-1 text-2xl font-semibold text-destructive [grid-area:_title]">
-          {title ? title : t('attension')}
+        <Toast.Title
+          className={clsx(
+            'mb-1 text-2xl font-semibold text-c42orange [grid-area:_title]',
+            title?.includes('error') && 'text-destructive'
+          )}
+        >
+          {title ? title : t('attention')}
         </Toast.Title>
         <Toast.Description asChild>
           <p className="text-lg font-normal">{text}</p>

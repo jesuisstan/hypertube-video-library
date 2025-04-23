@@ -139,10 +139,10 @@ const BrowsePage = () => {
         setMoviesTMDB(uniqueMovies);
       }
       if (error) {
-        setErrorMessage(error);
+        setErrorMessage(t(error));
       }
     } catch (error) {
-      setErrorMessage('error-fetching-movies');
+      setErrorMessage(t('error-fetching-movies'));
     } finally {
       setLoading(false);
       setIsFetching(false);
@@ -163,7 +163,13 @@ const BrowsePage = () => {
   };
 
   const fetchMoreMovies = () => {
-    if (page >= totalPagesAvailable) {
+    if (
+      page >= totalPagesAvailable &&
+      page !== 1 &&
+      !loading &&
+      !isFetching &&
+      totalPagesAvailable > 5
+    ) {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
@@ -195,20 +201,44 @@ const BrowsePage = () => {
     scrapeTMDB(true);
   }, [localeActive]);
 
+  // Scrape TMDB when the page changes (user scrolls down)
   useEffect(() => {
-    if (page > totalPagesAvailable) {
+    if (
+      page > totalPagesAvailable &&
+      page !== 1 &&
+      !loading &&
+      !isFetching &&
+      totalPagesAvailable > 5
+    ) {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
+    // no reset of results on page change
     scrapeTMDB().finally(() => {
       window.scrollTo(0, scrollPositionRef.current);
     });
   }, [page]);
 
-  //useEffect(() => {
-  //  const filteredAndSortedMovies = filterAndSortMovies(moviesTMDB);
-  //  setMoviesTMDB(filteredAndSortedMovies);
-  //}, [sortBy, selectedGenres, rating, releaseDateMin, releaseDateMax]);
+  // Scrape TMDB when the sort or filter changes
+  useEffect(() => {
+    setMoviesTMDB([]);
+    // reset the page to 1
+    setPage(1);
+    // reset the scroll position
+    scrollPositionRef.current = 0;
+    // reset the loading state
+    setLoading(false);
+    // reset the error message
+    setErrorMessage(null);
+    // scrape TMDB with the new filters
+    if (
+      releaseDateMin &&
+      releaseDateMax &&
+      new Date(releaseDateMin).getTime() <= new Date(releaseDateMax).getTime()
+    ) {
+      scrapeTMDB(true);
+    }
+  }, [sortBy, selectedGenres, rating, releaseDateMin, releaseDateMax, includeAdultContent]);
 
   const rangeWarning = useMemo(() => {
     const formattedStartDate = new Date(releaseDateMin).toISOString().split('T')[0];
@@ -223,7 +253,7 @@ const BrowsePage = () => {
     <Loading />
   ) : (
     <div>
-      {rangeWarning && <ToastNotification isOpen={true} text={rangeWarning} />}
+      {rangeWarning && <ToastNotification title={t('warning')} isOpen={true} text={rangeWarning} />}
       {errorMessage && (
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
@@ -232,7 +262,7 @@ const BrowsePage = () => {
         <div
           id="sort-filter-sector"
           className={clsx(
-            'top-0 flex w-full flex-col items-start gap-4 overflow-x-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-72 xs:overflow-x-hidden'
+            'top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-72 xs:overflow-x-hidden'
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">
