@@ -163,7 +163,7 @@ const ImageUploader = ({ id }: { id: number }) => {
               ) : (
                 <CirclePlus
                   size={21}
-                  className="hover:text-positive cursor-pointer text-muted-foreground smooth42transition"
+                  className="cursor-pointer text-muted-foreground smooth42transition hover:text-positive"
                 />
               )}
             </label>
@@ -217,7 +217,7 @@ const ImageUploader = ({ id }: { id: number }) => {
         ) : (
           <div>
             {error && <div className="text-xs text-destructive">{error}</div>}
-            {successMessage && <div className="text-positive text-xs">{successMessage}</div>}
+            {successMessage && <div className="text-xs text-positive">{successMessage}</div>}
             {!error && !successMessage && !loading && commonMessage && (
               <div className="text-xs text-foreground">{commonMessage}</div>
             )}

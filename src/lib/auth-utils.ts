@@ -25,16 +25,7 @@ export async function findOrCreateUser(profileData: any) {
         VALUES ($1, true, $2, $3, $4, $5, '{}', false, 0, 0, $6, NOW(), NOW(), $7, '1970-01-01', $8)
         RETURNING *;
       `;
-      const insertValues = [
-        email,
-        firstname,
-        lastname,
-        nickname,
-        bio,
-        location,
-        [avatarUrl],
-        sex,
-      ];
+      const insertValues = [email, firstname, lastname, nickname, bio, location, [avatarUrl], sex];
       const insertResult = await client.query(insertQuery, insertValues);
       user = insertResult.rows[0];
     }

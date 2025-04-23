@@ -29,11 +29,11 @@ export async function GET(req: Request) {
     );
 
     const result = {
-			en: data[0].genres,
+      en: data[0].genres,
       ru: data[1].genres,
       fr: data[2].genres,
     };
-		
+
     // Return the genres data to the client
     return NextResponse.json(result);
   } catch (error: any) {

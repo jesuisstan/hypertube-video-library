@@ -257,8 +257,10 @@ function Nav({
     if (navView === 'years') {
       return (
         (startMonth &&
-          differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), startMonth) < 0) ||
-        (endMonth && differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), endMonth) > 0)
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), startMonth) <
+            0) ||
+        (endMonth &&
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from - 1, 0, 1)), endMonth) > 0)
       );
     }
     return !previousMonth;
@@ -268,8 +270,10 @@ function Nav({
     if (navView === 'years') {
       return (
         (startMonth &&
-          differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), startMonth) < 0) ||
-        (endMonth && differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), endMonth) > 0)
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), startMonth) <
+            0) ||
+        (endMonth &&
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.to + 1, 0, 1)), endMonth) > 0)
       );
     }
     return !nextMonth;
@@ -290,7 +294,11 @@ function Nav({
     goToMonth(previousMonth);
     onPrevClick?.(
       new Date(
-        Date.UTC(previousMonth.getUTCFullYear(), previousMonth.getUTCMonth(), previousMonth.getUTCDate())
+        Date.UTC(
+          previousMonth.getUTCFullYear(),
+          previousMonth.getUTCMonth(),
+          previousMonth.getUTCDate()
+        )
       )
     );
   }, [previousMonth, goToMonth]);
@@ -309,7 +317,9 @@ function Nav({
     }
     goToMonth(nextMonth);
     onNextClick?.(
-      new Date(Date.UTC(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth(), nextMonth.getUTCDate()))
+      new Date(
+        Date.UTC(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth(), nextMonth.getUTCDate())
+      )
     );
   }, [goToMonth, nextMonth]);
 
@@ -438,7 +448,8 @@ function YearGrid({
     <div className={clsx('grid grid-cols-4 gap-y-2', className)} {...props}>
       {Array.from({ length: displayYears.to - displayYears.from + 1 }, (_, i) => {
         const isBefore =
-          differenceInCalendarDays(new Date(Date.UTC(displayYears.from + i, 11, 31)), startMonth!) < 0;
+          differenceInCalendarDays(new Date(Date.UTC(displayYears.from + i, 11, 31)), startMonth!) <
+          0;
 
         const isAfter =
           differenceInCalendarDays(new Date(Date.UTC(displayYears.from + i, 0, 0)), endMonth!) > 0;

@@ -81,7 +81,7 @@ export default function MovieList() {
   if (error) {
     return <p>{error}</p>;
   }
-console.log('RAIR MOVIES POPCORN', moviesPopcorn); // debug
+  console.log('RAIR MOVIES POPCORN', moviesPopcorn); // debug
   return (
     <div className="flex flex-row space-x-4">
       <div>

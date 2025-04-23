@@ -67,7 +67,7 @@ export async function downloadVideoFile(metadata: any, destination: string) {
     try {
       // Fetch peers from the tracker
       const peers = await fetchPeersFromTracker(trackerUrl, metadata.infoHash);
-      console.log("[INFO] !!!!!!!!!!!!!!!!!!!!!!!!! Peers!!!!!!!!!!!!!!!!!!! :", peers);
+      console.log('[INFO] !!!!!!!!!!!!!!!!!!!!!!!!! Peers!!!!!!!!!!!!!!!!!!! :', peers);
       console.log(`[INFO] Found ${peers.length} peers`);
 
       for (const peer of peers) {

@@ -30,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "tailwind.config.ts"
-, "src/app/api/torrents/piratebay/route.ts"  ],
+    "tailwind.config.ts",
+    "src/app/api/torrents/piratebay/route.ts"
+  ],
   "exclude": ["node_modules"]
 }

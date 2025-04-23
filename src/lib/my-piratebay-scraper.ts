@@ -14,9 +14,9 @@ export async function search(query: string, type: number = 0) {
       );
       // Ensure the response is HTML
       if (typeof response.data !== 'string') {
-				throw new Error('Unexpected response type, expected HTML.');
+        throw new Error('Unexpected response type, expected HTML.');
       }
-			
+
       const $ = cheerio.load(response.data);
       const tableRows = $('table tbody tr:not(:last-child)');
 

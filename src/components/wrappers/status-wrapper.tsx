@@ -15,7 +15,7 @@ const StatusWrapper = ({ confirmed }: { confirmed: boolean | undefined }) => {
         <div className="mt-4">
           <div className="flex items-center">
             {confirmed ? (
-              <span className="text-positive flex items-center text-sm">{t('confirmed')}</span>
+              <span className="flex items-center text-sm text-positive">{t('confirmed')}</span>
             ) : (
               <span className="flex items-center text-sm text-destructive">
                 {t('not-confirmed')}

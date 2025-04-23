@@ -436,7 +436,7 @@ const DialogProfileModify = ({
         <div className="min-h-6">
           {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
-            <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
           )}
         </div>
       </div>

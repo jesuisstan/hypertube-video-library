@@ -30,12 +30,7 @@ const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
   return (
     <div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <video
-        controls
-        width="600"
-        onError={handlePlaybackError}
-        src={videoUrl}
-      >
+      <video controls width="600" onError={handlePlaybackError} src={videoUrl}>
         Your browser does not support the video tag.
       </video>
     </div>
