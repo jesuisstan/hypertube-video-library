@@ -16,7 +16,6 @@ const SkeletonChips = ({ message }: { message?: string }) => {
           <div className="h-5 w-20 rounded-full bg-muted" />
           <div className="h-5 w-24 rounded-full bg-muted" />
           <div className="h-5 w-20 rounded-full bg-muted" />
-          <div className="h-5 w-28 rounded-full bg-muted" />
         </div>
       </div>
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import clsx from 'clsx';
 
@@ -50,7 +49,7 @@ const ChipsOption = ({
     <div
       role="option"
       aria-selected={isSelected}
-      aria-labelledby={value}
+      aria-labelledby={String(value)} // Ensure value is converted to a string
       title={getTitleFromChildren(children)}
       className={clsx(
         `flex h-6 min-w-[54px] flex-row items-center justify-center gap-1 whitespace-nowrap break-words rounded-3xl border-[1px] border-primary px-[9px] py-[2px] text-center text-xs font-normal normal-case leading-loose smooth42transition`,
@@ -59,17 +58,6 @@ const ChipsOption = ({
       )}
       onClick={() => onSelect(value)}
     >
-      {paramName.includes('countries') && (
-        <div className="ml-[-7px] overflow-hidden rounded-full">
-          <Image
-            src={`/country-flags/${value.split('_')[0]?.toLowerCase()}.svg`}
-            alt="national-flag"
-            width={0}
-            height={0}
-            className="h-[14px] w-[14px] object-cover"
-          />
-        </div>
-      )}
       <div className={clsx(`flex overflow-hidden text-ellipsis`, isSelected ? 'selected' : '')}>
         {children}
       </div>

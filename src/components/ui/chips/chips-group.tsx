@@ -20,7 +20,7 @@ const ChipsGroup = ({
 
   const handleSelectAll = (event: React.FormEvent) => {
     event.preventDefault();
-    setSelectedChips(options);
+    setSelectedChips(options.map((option) => option.id)); // Convert ids to strings
   };
 
   const handleUnselectAll = (event: React.FormEvent) => {
@@ -28,13 +28,14 @@ const ChipsGroup = ({
     setSelectedChips([]);
   };
 
-  const handleChipSelect = (value: string) => {
-    if (selectedChips?.includes(value)) {
+  const handleChipSelect = (value: string | number) => {
+    const stringValue = value;
+    if (selectedChips?.includes(stringValue)) {
       // If the chip is already selected, remove it from the array
-      setSelectedChips(selectedChips.filter((chip) => chip !== value));
+      setSelectedChips(selectedChips.filter((chip) => chip !== stringValue));
     } else {
       // If the chip is not selected, add it to the array
-      setSelectedChips([...selectedChips, value]);
+      setSelectedChips([...selectedChips, stringValue]);
     }
   };
 
@@ -77,16 +78,16 @@ const ChipsGroup = ({
         </div>
       </div>
       <div className="relative flex max-h-80 flex-row flex-wrap justify-start gap-2 overflow-y-auto p-1 sm:max-h-[350px]">
-        {options.map((option: string, index: number) => {
+        {options.map((option: any, index: number) => {
           return (
             <ChipsOption
-              key={`${option}-${index}`}
+              key={`${option.id}-${index}`}
               paramName={name}
-              value={option}
-              isSelected={selectedChips!.includes(option)}
+              value={option.id}
+              isSelected={selectedChips!.includes(option.id)}
               onSelect={handleChipSelect}
             >
-              <div>{capitalize(option)}</div>
+              <div>{capitalize(option.name)}</div>
             </ChipsOption>
           );
         })}

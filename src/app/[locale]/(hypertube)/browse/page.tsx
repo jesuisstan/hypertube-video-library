@@ -73,57 +73,13 @@ const BrowsePage = () => {
     setValueOfSearchFilter('include_adult', value);
   };
 
-  const filterAndSortMovies = (movies: TMovieBasics[]) => {
-    return movies
-      .filter((movie) => {
-        const movieReleaseDate = new Date(movie.release_date);
-        const isWithinDateRange =
-          (!releaseDateMin || movieReleaseDate >= releaseDateMin) &&
-          (!releaseDateMax || movieReleaseDate <= releaseDateMax);
-        const isWithinRatingRange =
-          (!rating[0] || movie.vote_average >= rating[0]) &&
-          (!rating[1] || movie.vote_average <= rating[1]);
-        const hasSelectedGenres =
-          selectedGenres.length === 0 ||
-          selectedGenres.every((genre) =>
-            movie.genre_ids.includes(genresList.find((g) => g.name === genre)?.id || -1)
-          );
-
-        //return isWithinDateRange && isWithinRatingRange && hasSelectedGenres;
-        return isWithinRatingRange && hasSelectedGenres;
-      })
-      .sort((a, b) => {
-        switch (sortBy) {
-          case 'title-asc':
-            return a.title.localeCompare(b.title);
-          case 'title-desc':
-            return b.title.localeCompare(a.title);
-          case 'popularity-asc':
-            return a.popularity - b.popularity;
-          case 'popularity-desc':
-            return b.popularity - a.popularity;
-          case 'rating-asc':
-            return a.vote_average - b.vote_average;
-          case 'rating-desc':
-            return b.vote_average - a.vote_average;
-          case 'release-asc':
-            return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
-          default:
-            return 0;
-        }
-      });
-  };
-
   const scrapeTMDB = async (reset = false) => {
     try {
       setErrorMessage(null);
       setLoading(true);
-      const selectedGenresCodes = selectedGenres.map(
-        (genre) => genresList.find((g) => g.name === genre)?.id
-      );
 
       const response = await fetch(
-        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenresCodes}&lang=${localeActive}&page=${page}`
+        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenres}&lang=${localeActive}&page=${page}`
       );
       const data = await response.json();
       const results = data?.results;
@@ -173,7 +129,8 @@ const BrowsePage = () => {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
-    setPage((prevPage) => prevPage + 1);
+    //setPage((prevPage) => prevPage + 1); // original logic (todo: uncomment after 42 evaluation, delete all below)
+    setValueOfSearchFilter('sort_by', 'title.asc');
   };
 
   // Control the scroll event
@@ -248,7 +205,8 @@ const BrowsePage = () => {
     }
     return;
   }, [moviesTMDB, releaseDateMin, releaseDateMax]);
-
+  console.log('genresList', genresList); // debug
+  console.log('genres', selectedGenres); // debug
   return !user ? (
     <Loading />
   ) : (
@@ -293,10 +251,9 @@ const BrowsePage = () => {
               <ChipsGroup
                 name="genres"
                 label={t('genres')}
-                options={genresList.map((genre) => genre.name)}
+                options={genresList}
                 selectedChips={selectedGenres}
                 setSelectedChips={(genres) => {
-                  //setSelectedTags(tags);
                   replaceAllItemsOfSearchFilter('genres', genres);
                 }}
               />
@@ -359,7 +316,8 @@ const BrowsePage = () => {
 
               <p className="font-semibold">{t('total-results') + ': ' + moviesTMDB.length}</p>
               <ButtonCustom onClick={fetchMoreMovies} variant="default">
-                {t('fetch-more')}
+                {/* replace with {t('fetch-more')} after 42 evaluation */}
+                {t('browse')}
               </ButtonCustom>
             </div>
           </div>

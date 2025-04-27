@@ -4,11 +4,11 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type TSearchFilters = {
   genres_list: {
-    en: { id: number; name: string }[];
-    ru: { id: number; name: string }[];
-    fr: { id: number; name: string }[];
+    en: { id: string; name: string }[];
+    ru: { id: string; name: string }[];
+    fr: { id: string; name: string }[];
   };
-  genres: { id: number }[];
+  genres: { id: string }[];
   rating: number[];
   sort_by:
     | 'title.asc'
@@ -34,9 +34,9 @@ export type TSearchStore = {
   addOneItemToSearchFilter: (itemKey: string, newValue: string | number | Date) => void;
   removeOneItemOfSearchFilter: (itemKey: string, valueToRemove: string | number | Date) => void;
   clearAllItemsOfSearchFilter: (filterKey: string) => void;
-  replaceAllItemsOfSearchFilter: (itemKey: string, newValue: string[] | number[]) => void;
+  replaceAllItemsOfSearchFilter: (itemKey: string, newValue: (string | number)[]) => void;
   resetSearchStore: () => void;
-  getGenresListByLanguage: (lang: 'en' | 'ru' | 'fr') => { id: number; name: string }[];
+  getGenresListByLanguage: (lang: 'en' | 'ru' | 'fr') => { id: string; name: string }[];
   getGenresList: () => TSearchFilters['genres_list'];
   setGenresList: (newGenres: TSearchFilters['genres_list']) => void;
 };
@@ -49,7 +49,7 @@ const initialSearchFiltersState: TSearchFilters = {
   },
   sort_by: 'popularity.desc',
   genres: [],
-  rating: [0, 10],
+  rating: [5, 10],
   include_adult: 'false',
   release_date_min: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
   release_date_max: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
@@ -106,7 +106,7 @@ const useSearchStore = create<TSearchStore>()(
       getValueOfSearchFilter: (filterKey: string) => {
         return get().searchFilters[filterKey as keyof TSearchFilters] as any[];
       },
-      replaceAllItemsOfSearchFilter: (filterKey: string, newValue: string[] | number[]) => {
+      replaceAllItemsOfSearchFilter: (filterKey: string, newValue: (string | number)[]) => {
         set(
           produce((draft) => {
             if (!newValue) return;
