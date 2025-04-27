@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import FilterBar from '@/components/filter-sort/filter-bar';
 import {
   Sheet,
   SheetContent,
@@ -10,16 +9,16 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet-primitives';
 
-const FilterDrawer = ({ movies, trigger }: { movies: any[]; trigger: ReactNode }) => {
+const FilterDrawer = ({ trigger }: { trigger: ReactNode }) => {
   return (
     <Sheet>
       <SheetTrigger>{trigger}</SheetTrigger>
       <SheetContent side={'right'}>
         <SheetHeader>
-          <SheetTitle>Filter results</SheetTitle>
-          <SheetDescription>Filter the results by genre, year, rating, and more</SheetDescription>
+          <SheetTitle>TITLE</SheetTitle>
+          <SheetDescription>DESCRIPTION</SheetDescription>
         </SheetHeader>
-        <FilterBar movies={movies} />
+        {'CONTENT'}
       </SheetContent>
     </Sheet>
   );

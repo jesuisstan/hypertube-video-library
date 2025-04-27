@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
 import Loading from '@/app/loading';
-import DatesRangePicker from '@/components/filter-sort/dates-range-picker';
+import DatesRangePicker from '@/components/dates-range-picker';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
