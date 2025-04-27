@@ -134,8 +134,8 @@ export const sortOptionsByKeyWord = (
 };
 
 export const getGenresNames = (
-  genreIds: number[],
-  genresList: { id: number; name: string }[]
+  genreIds: (number | string)[],
+  genresList: { id: number | string; name: string }[]
 ): string => {
   const genreNames = genreIds
     .map((id) => genresList.find((genre) => genre.id === id)?.name)
