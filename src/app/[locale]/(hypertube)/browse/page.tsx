@@ -205,8 +205,7 @@ const BrowsePage = () => {
     }
     return;
   }, [moviesTMDB, releaseDateMin, releaseDateMax]);
-  console.log('genresList', genresList); // debug
-  console.log('genres', selectedGenres); // debug
+
   return !user ? (
     <Loading />
   ) : (
