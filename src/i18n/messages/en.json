@@ -203,6 +203,11 @@
   "fetch-more": "Fetch more",
   "total-results": "Total results",
   "include-adult-content": "Include adult content",
+  "add-keywords": "Add keywords",
+  "search-for-keywords": "Search for keywords",
+  "no-results-found": "No results found",
+  "error-fetching-keywords": "Error fetching keywords. Please try again",
+  "min-votes": "Minimum votes",
 
   "search": {
     "search": "Search",

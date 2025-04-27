@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 import Loading from '@/app/loading';
 import DatesRangePicker from '@/components/dates-range-picker';
+import { KeywordMultiSelect } from '@/components/keyword-multi-select';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
@@ -21,13 +22,13 @@ import useSortOptions from '@/hooks/useSortOptions';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
+import { TKeyword } from '@/types/general';
 import { TMovieBasics } from '@/types/movies';
 
 const BrowsePage = () => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
-  const localeActive = useLocale();
   const sortOptions = useSortOptions() as any[];
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -55,6 +56,9 @@ const BrowsePage = () => {
   const rating = getValueOfSearchFilter('rating') as number[];
   const releaseDateMin = getValueOfSearchFilter('release_date_min') as Date;
   const releaseDateMax = getValueOfSearchFilter('release_date_max') as Date;
+  const selectedKeywords = getValueOfSearchFilter('keywords') as TKeyword[];
+  const selectedKeywordsCodes = selectedKeywords.map((keyword) => keyword.id).join(',');
+  const minVotes = getValueOfSearchFilter('min_votes') as number;
 
   const handleReleaseDateMinChange = (date: Date) => {
     setValueOfSearchFilter('release_date_min', date);
@@ -72,6 +76,9 @@ const BrowsePage = () => {
   const handleAdultContentChange = (value: string) => {
     setValueOfSearchFilter('include_adult', value);
   };
+  const handleMinVotes = (value: number[]) => {
+    setValueOfSearchFilter('min_votes', value[0]);
+  };
 
   const scrapeTMDB = async (reset = false) => {
     try {
@@ -79,7 +86,7 @@ const BrowsePage = () => {
       setLoading(true);
 
       const response = await fetch(
-        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenres}&lang=${localeActive}&page=${page}`
+        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&min_votes=${minVotes}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenres}&with_keywords=${selectedKeywordsCodes}&lang=${locale}&page=${page}`
       );
       const data = await response.json();
       const results = data?.results;
@@ -156,7 +163,7 @@ const BrowsePage = () => {
     setPage(1);
     setMoviesTMDB([]);
     scrapeTMDB(true);
-  }, [localeActive]);
+  }, [locale]);
 
   // Scrape TMDB when the page changes (user scrolls down)
   useEffect(() => {
@@ -195,7 +202,16 @@ const BrowsePage = () => {
     ) {
       scrapeTMDB(true);
     }
-  }, [sortBy, selectedGenres, rating, releaseDateMin, releaseDateMax, includeAdultContent]);
+  }, [
+    sortBy,
+    selectedGenres,
+    rating,
+    releaseDateMin,
+    releaseDateMax,
+    includeAdultContent,
+    selectedKeywordsCodes,
+    minVotes,
+  ]);
 
   const rangeWarning = useMemo(() => {
     const formattedStartDate = new Date(releaseDateMin).toISOString().split('T')[0];
@@ -219,7 +235,7 @@ const BrowsePage = () => {
         <div
           id="sort-filter-sector"
           className={clsx(
-            'top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-72 xs:overflow-x-hidden'
+            'top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-80 xs:overflow-x-hidden'
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">
@@ -228,7 +244,7 @@ const BrowsePage = () => {
             </label>
             <Separator />
 
-            <label htmlFor="sort" className="text-xl font-bold">
+            <label htmlFor="sort" className="font-bold">
               {t('sort-by') + ':'}
             </label>
             <SelectSingle
@@ -241,11 +257,15 @@ const BrowsePage = () => {
 
           <Separator />
 
+          <KeywordMultiSelect />
+
+          <Separator />
+
           {/* Filter bar */}
           <div className="flex flex-col justify-center gap-2">
-            <label htmlFor="filter" className="text-xl font-bold">
+            {/*<label htmlFor="filter" className="text-xl font-bold">
               {t('filter-results') + ':'}
-            </label>
+            </label>*/}
             <div className="flex flex-col gap-4">
               <ChipsGroup
                 name="genres"
@@ -298,6 +318,31 @@ const BrowsePage = () => {
                 </div>
               </div>
 
+              {/* min-votes slider */}
+              <div className="flex flex-col gap-2">
+                <label className="font-bold">{t('min-votes')}</label>
+                <Slider
+                  min={0}
+                  max={1000}
+                  step={200}
+                  value={[minVotes]} // Ensure it's an array with a single value
+                  onValueChange={(value) => handleMinVotes(value)} // Handle slider value change
+                />
+                <div className="mt-2 flex justify-between text-xs text-foreground">
+                  {[0, 200, 400, 600, 800, 1000].map((item) => (
+                    <span
+                      key={item}
+                      className={clsx({
+                        'font-bold smooth42transition':
+                          item === getValueOfSearchFilter('min_votes'),
+                      })}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex flex-col gap-2">
                 <label className="font-bold">{t('include-adult-content')}</label>
                 <RadioGroup
@@ -313,7 +358,12 @@ const BrowsePage = () => {
 
               <Separator />
 
-              <p className="font-semibold">{t('total-results') + ': ' + moviesTMDB.length}</p>
+              {/* Results display */}
+              <p className="text-xs font-semibold">
+                {t('total-results') + ': ' + moviesTMDB.length}
+              </p>
+
+              {/* Fetch button */}
               <ButtonCustom onClick={fetchMoreMovies} variant="default">
                 {/* replace with {t('fetch-more')} after 42 evaluation */}
                 {t('browse')}

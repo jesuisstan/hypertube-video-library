@@ -203,6 +203,11 @@
   "fetch-more": "Загрузить еще",
   "total-results": "Всего результатов",
   "include-adult-content": "Включить контент для взрослых",
+  "add-keywords": "Добавить ключевые слова",
+  "search-for-keywords": "Поиск ключевыx слов",
+  "no-results-found": "Нет результатов",
+  "error-fetching-keywords": "Ошибка загрузки ключевых слов. Попробуйте ещё раз",
+  "min-votes": "Минимум голосов",
 
   "search": {
     "search": "Поиск",

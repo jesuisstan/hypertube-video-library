@@ -203,6 +203,11 @@
   "fetch-more": "Charger plus",
   "total-results": "Résultats totaux",
   "include-adult-content": "Inclure le contenu pour adultes",
+  "add-keywords": "Ajouter des mots-clés",
+  "search-for-keywords": "Rechercher des mots-clés",
+  "no-results-found": "Aucun résultat trouvé",
+  "error-fetching-keywords": "Erreur lors de la récupération des mots-clés. Veuillez réessayer",
+  "min-votes": "Votes minimum",
 
   "search": {
     "search": "Chercher",

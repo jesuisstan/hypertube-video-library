@@ -2,6 +2,8 @@ import { produce } from 'immer';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { TKeyword } from '@/types/general';
+
 export type TSearchFilters = {
   genres_list: {
     en: { id: string; name: string }[];
@@ -22,6 +24,8 @@ export type TSearchFilters = {
   release_date_min: Date;
   release_date_max: Date;
   include_adult: string;
+  keywords: TKeyword[];
+  min_votes: number;
 };
 
 export type TSearchStore = {
@@ -30,9 +34,14 @@ export type TSearchStore = {
     filterKey: string,
     newValue: string | number | Date
   ) => string | number | Date;
-  getValueOfSearchFilter: (filterKey: string) => string | number | Date | (string | number)[];
-  addOneItemToSearchFilter: (itemKey: string, newValue: string | number | Date) => void;
-  removeOneItemOfSearchFilter: (itemKey: string, valueToRemove: string | number | Date) => void;
+  getValueOfSearchFilter: (
+    filterKey: string
+  ) => string | number | Date | (string | number | TKeyword)[];
+  addOneItemToSearchFilter: (itemKey: string, newValue: string | number | Date | TKeyword) => void;
+  removeOneItemOfSearchFilter: (
+    itemKey: string,
+    valueToRemove: string | number | Date | TKeyword
+  ) => void;
   clearAllItemsOfSearchFilter: (filterKey: string) => void;
   replaceAllItemsOfSearchFilter: (itemKey: string, newValue: (string | number)[]) => void;
   resetSearchStore: () => void;
@@ -53,6 +62,8 @@ const initialSearchFiltersState: TSearchFilters = {
   include_adult: 'false',
   release_date_min: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
   release_date_max: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
+  keywords: [],
+  min_votes: 600,
 };
 
 const useSearchStore = create<TSearchStore>()(
@@ -76,7 +87,10 @@ const useSearchStore = create<TSearchStore>()(
         );
         return formattedValue || '';
       },
-      addOneItemToSearchFilter: (filterKey: string, newValue: string | number | Date) => {
+      addOneItemToSearchFilter: (
+        filterKey: string,
+        newValue: string | number | Date | TKeyword
+      ) => {
         set(
           produce((draft) => {
             if (!newValue) return;
@@ -86,13 +100,20 @@ const useSearchStore = create<TSearchStore>()(
           })
         );
       },
-      removeOneItemOfSearchFilter: (filterKey: string, valueToRemove: string | number | Date) => {
+      removeOneItemOfSearchFilter: (
+        filterKey: string,
+        valueToRemove: string | number | Date | TKeyword
+      ) => {
         set(
           produce((draft) => {
-            const index = draft.searchFilters[filterKey]?.findIndex(
-              (el: string) => el === valueToRemove
+            const isKeyword = typeof valueToRemove === 'object' && 'id' in valueToRemove;
+            const index = draft.searchFilters[filterKey]?.findIndex((el: any) =>
+              isKeyword ? el.id === (valueToRemove as TKeyword).id : el === valueToRemove
             );
-            draft.searchFilters[filterKey]?.splice(index, 1);
+
+            if (index !== -1) {
+              draft.searchFilters[filterKey]?.splice(index, 1);
+            }
           })
         );
       },
