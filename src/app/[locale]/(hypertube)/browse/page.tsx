@@ -321,10 +321,31 @@ const BrowsePage = () => {
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
                     <span
                       key={item}
-                      className={clsx({
-                        'font-bold smooth42transition':
-                          item >= Number(rating[0]) && item <= Number(rating[1]),
-                      })}
+                      className={clsx(
+                        {
+                          'font-bold smooth42transition':
+                            item >= Number(rating[0]) && item <= Number(rating[1]),
+                        },
+                        'cursor-pointer'
+                      )}
+                      onClick={() => {
+                        if (item < rating[0]) {
+                          // If the clicked item is less than the current min, update the min
+                          handleRatingChange([item, rating[1]]);
+                        } else if (item > rating[1]) {
+                          // If the clicked item is greater than the current max, update the max
+                          handleRatingChange([rating[0], item]);
+                        } else {
+                          // If the clicked item is within the range, adjust the closest boundary
+                          const distanceToMin = Math.abs(item - rating[0]);
+                          const distanceToMax = Math.abs(item - rating[1]);
+                          if (distanceToMin < distanceToMax) {
+                            handleRatingChange([item, rating[1]]);
+                          } else {
+                            handleRatingChange([rating[0], item]);
+                          }
+                        }
+                      }}
                     >
                       {item}
                     </span>
@@ -342,14 +363,20 @@ const BrowsePage = () => {
                   value={[minVotes]} // Ensure it's an array with a single value
                   onValueChange={(value) => handleMinVotes(value)} // Handle slider value change
                 />
-                <div className="mt-2 flex justify-between text-xs text-foreground">
+                <div className="mt-2 flex items-end justify-between text-xs text-foreground">
                   {[0, 300, 600, 900, 1200, 1500].map((item) => (
                     <span
                       key={item}
-                      className={clsx({
-                        'font-bold smooth42transition':
-                          item === getValueOfSearchFilter('min_votes'),
-                      })}
+                      className={clsx(
+                        {
+                          'font-bold smooth42transition':
+                            item === getValueOfSearchFilter('min_votes'),
+                        },
+                        'cursor-pointer'
+                      )}
+                      onClick={() => {
+                        handleMinVotes([item]); // Set the min votes to the clicked value
+                      }}
                     >
                       {item}
                     </span>
