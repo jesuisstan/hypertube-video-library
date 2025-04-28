@@ -39,3 +39,41 @@ The deployed version of the app allows users to:
 ## Demonstration
 
 _(Add demonstration details, screenshots, or links to demo videos here)_ Coming soon...
+
+## Additional info
+
+To request token, produced by this app, you can run the curl cmd (in dev mode, update client_id and client_secret if needed):
+
+on UNIX:
+
+```sh
+curl -X POST http://localhost:4242/api/auth/oauth/token \
+-H "Content-Type: application/json" \
+-d '{"client_id": "my-local-client-id", "client_secret": "my-local-client-secret"}'
+```
+
+on WINDOWS (PowerShell):
+
+```sh
+curl -X POST http://localhost:4242/api/auth/oauth/token `
+-H "Content-Type: application/json" `
+-d '{"client_id": "my-local-client-id", "client_secret": "my-local-client-secret"}'
+```
+
+in Browser (firstly allow pasting in console):
+
+```sh
+fetch('http://localhost:4242/api/auth/oauth/token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    client_id: 'my-local-client-id',
+    client_secret: 'my-local-client-secret',
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error('Error:', error));
+```
