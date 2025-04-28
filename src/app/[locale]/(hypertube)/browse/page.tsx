@@ -85,13 +85,27 @@ const BrowsePage = () => {
       setErrorMessage(null);
       setLoading(true);
 
-      const response = await fetch(
-        `/api/movies?total_pages_available=${totalPagesAvailable}&sort_by=${sortBy}&include_adult=${includeAdultContent}&&rating_min=${rating[0]}&rating_max=${rating[1]}&min_votes=${minVotes}&release_date_min=${new Date(releaseDateMin).toISOString().split('T')[0]}&release_date_max=${new Date(releaseDateMax).toISOString().split('T')[0]}&with_genres=${selectedGenres}&with_keywords=${selectedKeywordsCodes}&lang=${locale}&page=${page}`
-      );
+      const queryParams = new URLSearchParams({
+        total_pages_available: totalPagesAvailable.toString(),
+        sort_by: sortBy,
+        include_adult: includeAdultContent,
+        rating_min: rating[0].toString(),
+        rating_max: rating[1].toString(),
+        min_votes: minVotes.toString(),
+        release_date_min: new Date(releaseDateMin).toISOString().split('T')[0],
+        release_date_max: new Date(releaseDateMax).toISOString().split('T')[0],
+        with_genres: selectedGenres.join(','),
+        with_keywords: selectedKeywordsCodes,
+        lang: locale,
+        page: page <= totalPagesAvailable ? page.toString() : '1',
+      });
+
+      const response = await fetch(`/api/movies?${queryParams.toString()}`);
+
       const data = await response.json();
       const results = data?.results;
       const error = data?.error;
-      const totalPages = data?.total_pages || 500;
+      const totalPages = data?.total_pages || 1;
       setTotalPagesAvailable(totalPages); // Set the total pages available for pagination for the current request parameters
 
       if (results) {
@@ -323,13 +337,13 @@ const BrowsePage = () => {
                 <label className="font-bold">{t('min-votes')}</label>
                 <Slider
                   min={0}
-                  max={1000}
-                  step={200}
+                  max={1500}
+                  step={300}
                   value={[minVotes]} // Ensure it's an array with a single value
                   onValueChange={(value) => handleMinVotes(value)} // Handle slider value change
                 />
                 <div className="mt-2 flex justify-between text-xs text-foreground">
-                  {[0, 200, 400, 600, 800, 1000].map((item) => (
+                  {[0, 300, 600, 900, 1200, 1500].map((item) => (
                     <span
                       key={item}
                       className={clsx({

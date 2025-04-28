@@ -10,9 +10,9 @@ export async function GET(req: Request) {
     const page = searchParams.get('page') || '1';
     const include_adult = searchParams.get('include_adult') || 'false';
     const sort_by = searchParams.get('sort_by') || 'popularity.desc';
-    const rating_min = searchParams.get('rating_min') || '5';
+    const rating_min = searchParams.get('rating_min') || '6';
     const rating_max = searchParams.get('rating_max') || '10';
-    const min_votes = searchParams.get('min_votes') || '600';
+    const min_votes = searchParams.get('min_votes') || '0';
     const release_date_min = searchParams.get('release_date_min') || '1895-11-28'; // Date of the first movie release ever in UTC
     const release_date_max =
       searchParams.get('release_date_max') || new Date().toISOString().split('T')[0]; // Date without timezone shift
@@ -35,9 +35,23 @@ export async function GET(req: Request) {
       },
     };
 
+    const queryParams = new URLSearchParams({
+      include_adult,
+      sort_by,
+      'vote_average.gte': rating_min,
+      'vote_average.lte': rating_max,
+      'vote_count.gte': min_votes,
+      'release_date.gte': release_date_min,
+      'release_date.lte': release_date_max,
+      with_genres,
+      with_keywords,
+      language: lang,
+      page,
+    });
+
     // Fetch popular movies from TMDB
     const response = await fetch(
-      `${process.env.TMDB_API_URL}/discover/movie?include_adult=${include_adult}&sort_by=${sort_by}&vote_average.gte=${rating_min}&vote_average.lte=${rating_max}&vote_count.gte=${min_votes}&release_date.gte=${release_date_min}&release_date.lte=${release_date_max}&with_genres=${with_genres}&with_keywords=${with_keywords}&language=${lang}&page=${page}`,
+      `${process.env.TMDB_API_URL}/discover/movie?${queryParams.toString()}`,
       options
     );
 

@@ -58,12 +58,12 @@ const initialSearchFiltersState: TSearchFilters = {
   },
   sort_by: 'popularity.desc',
   genres: [],
-  rating: [5, 10],
+  rating: [6, 10],
   include_adult: 'false',
   release_date_min: new Date(Date.UTC(1895, 11, 28)), // Date of the first movie release ever in UTC
   release_date_max: new Date(new Date().toISOString().split('T')[0]), // Date without timezone shift
   keywords: [],
-  min_votes: 600,
+  min_votes: 900,
 };
 
 const useSearchStore = create<TSearchStore>()(

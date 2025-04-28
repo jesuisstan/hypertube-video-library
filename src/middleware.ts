@@ -20,8 +20,8 @@ export async function middleware(req: NextRequest) {
   const normalizedPath = req.nextUrl.pathname.replace(/^\/(en|fr|ru)/, '');
 
   // Define public pages (excluding locale prefix)
-  const isPublicPage = ['/authentication', '/email-confirmation', '/password'].some((path) =>
-    normalizedPath.startsWith(path)
+  const isPublicPage = ['/authentication', '/email-confirmation', '/password', '/about'].some(
+    (path) => normalizedPath.startsWith(path)
   );
 
   // Redirect if token is missing and page is not public
