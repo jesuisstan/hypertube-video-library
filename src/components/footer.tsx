@@ -8,14 +8,16 @@ const Footer = () => {
       <div>
         Hypertube Video Library {t(`rights-reserved`)}
         {'. '}
-        {t(`service-provided`)}{' '}
-        <a
+        {t(`service-provided`)}
+        {/* TODO the link */}
+        {/*<a
           href={`https://www.krivtsoff.site/`}
           target="_blank"
           className="my-6 text-center text-sm text-positive transition-all duration-300 ease-in-out hover:text-c42orange"
         >
           Stan Krivtsoff
-        </a>
+        </a>*/}
+        {' ' + t(`students-ecole-42`)}
         {'. '}
       </div>
     </div>

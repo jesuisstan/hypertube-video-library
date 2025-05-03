@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -12,6 +11,7 @@ import ContactSupportBlock from '@/components/menu/contact-support-block';
 import SideBarHeader from '@/components/menu/side-bar-header';
 import { Separator } from '@/components/ui/separator';
 import SkeletonMenu from '@/components/ui/skeletons/skeleton-menu';
+import { Link } from '@/i18n/routing';
 import { usePathname } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 

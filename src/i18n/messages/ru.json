@@ -208,6 +208,8 @@
   "no-results-found": "Нет результатов",
   "error-fetching-keywords": "Ошибка загрузки ключевых слов. Попробуйте ещё раз",
   "min-votes": "Минимум голосов",
+  "popular-now": "Популярные сейчас",
+  "students-ecole-42": "cтудентами Школы 42",
 
   "search": {
     "search": "Поиск",

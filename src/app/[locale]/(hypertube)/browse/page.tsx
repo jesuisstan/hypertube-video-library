@@ -57,7 +57,7 @@ const BrowsePage = () => {
   const releaseDateMin = getValueOfSearchFilter('release_date_min') as Date;
   const releaseDateMax = getValueOfSearchFilter('release_date_max') as Date;
   const selectedKeywords = getValueOfSearchFilter('keywords') as TKeyword[];
-  const selectedKeywordsCodes = selectedKeywords.map((keyword) => keyword.id).join(',');
+  const selectedKeywordsCodes = selectedKeywords.map((keyword) => keyword.id).join(' '); // TMDB api preferes space separated values for keywords
   const minVotes = getValueOfSearchFilter('min_votes') as number;
 
   const handleReleaseDateMinChange = (date: Date) => {

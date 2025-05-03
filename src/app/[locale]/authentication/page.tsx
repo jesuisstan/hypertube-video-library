@@ -20,7 +20,7 @@ import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
-import { useRouter } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import useSearchStore from '@/stores/search';
 import { spaceToKebab } from '@/utils/format-string';
 
@@ -452,6 +452,9 @@ const Authentication = () => {
         >
           {t(`need-help`)}
         </a>
+        <div className="text-center text-sm text-muted-foreground transition-all duration-300 ease-in-out hover:text-c42orange">
+          <Link href={`/about`}>{t('about')}</Link>
+        </div>
       </div>
     </div>
   );

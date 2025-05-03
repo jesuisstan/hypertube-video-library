@@ -1,22 +1,71 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { OctagonAlert } from 'lucide-react';
 import { Play } from 'lucide-react';
 
+import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import EncryptButton from '@/components/ui/buttons/encrypt-button';
+import Spinner from '@/components/ui/spinner';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/i18n/routing';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
+import { TMovieBasics } from '@/types/movies';
 
 const AboutPage = () => {
   const t = useTranslations();
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
   const router = useRouter();
+  const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
+  const [loading, setLoading] = React.useState(false);
+
+  const scrapeTMDB = async (reset = false) => {
+    try {
+      setLoading(true);
+
+      const queryParams = new URLSearchParams({
+        sort_by: 'popularity.desc',
+        include_adult: 'false',
+        rating_min: '6',
+        rating_max: '10',
+        min_votes: '542',
+        lang: locale,
+        page: '1',
+      });
+
+      const response = await fetch(`/api/movies?${queryParams.toString()}`);
+
+      const data = await response.json();
+      const results = data?.results;
+      const error = data?.error;
+
+      if (results) {
+        const newMovies = reset ? results : [...moviesTMDB, ...results];
+        const uniqueMovies = Array.from(
+          new Set(newMovies.map((movie: TMovieBasics) => movie.id))
+        ).map((id) => newMovies.find((movie: TMovieBasics) => movie.id === id));
+        setMoviesTMDB(uniqueMovies);
+      }
+      if (error) {
+        console.error('Error fetching movies:', error);
+      }
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Scrape TMDB on page load, when the category changes or when the page changes
+  useEffect(() => {
+    setMoviesTMDB([]);
+    scrapeTMDB(true);
+  }, [locale]);
 
   return (
     <motion.div initial="hidden" animate="visible" variants={framerMotion} className="p-5">
@@ -97,18 +146,15 @@ const AboutPage = () => {
         </div>
 
         {/* POWERED BY */}
-        <div
+        <motion.div
+          variants={slideFromBottom}
           id="powered-by"
           className={clsx(
             'flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl bg-card p-5 align-middle shadow-md shadow-primary/20'
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>
-          <motion.div
-            variants={slideFromBottom}
-            id="logos-group"
-            className="flex flex-row flex-wrap justify-center gap-14"
-          >
+          <div id="logos-group" className="flex flex-row flex-wrap justify-center gap-14">
             <div className="flex flex-col items-center justify-between gap-3">
               <Image
                 src="/powered-by/logo-html.png"
@@ -333,6 +379,38 @@ const AboutPage = () => {
               />
               <p>Vercel Blob</p>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Movies sector */}
+        <div className="w-full">
+          <motion.div initial="hidden" animate="visible" variants={framerMotion}>
+            {moviesTMDB.length > 0 && (
+              <h2 className="mb-5 text-center text-xl md:text-2xl lg:text-2xl">
+                {t('popular-now')}
+              </h2>
+            )}
+            <div
+              key="moviesTMDB"
+              className="flex flex-wrap items-center justify-center gap-5 align-middle smooth42transition"
+            >
+              {moviesTMDB?.map((movie, index) => (
+                <motion.div
+                  variants={slideFromBottom}
+                  key={`${movie.id}-${index}`}
+                  className="flex justify-center self-center"
+                >
+                  <MovieThumbnail movieBasics={movie} loading={false} />
+                </motion.div>
+              ))}
+            </div>
+
+            {loading && (
+              <div className="m-5 flex flex-col items-center gap-5">
+                <Spinner size={21} />
+                <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>

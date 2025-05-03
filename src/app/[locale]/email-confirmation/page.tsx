@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
@@ -10,6 +9,7 @@ import clsx from 'clsx';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Separator } from '@/components/ui/separator';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import { Link } from '@/i18n/routing';
 
 const EmailConfirmation = () => {
   const t = useTranslations();

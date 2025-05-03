@@ -208,6 +208,8 @@
   "no-results-found": "Aucun résultat trouvé",
   "error-fetching-keywords": "Erreur lors de la récupération des mots-clés. Veuillez réessayer",
   "min-votes": "Votes minimum",
+  "popular-now": "Populaire maintenant",
+  "students-ecole-42": "étudiants de l'école 42",
 
   "search": {
     "search": "Chercher",

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { Eye, EyeOff } from 'lucide-react';
@@ -11,6 +10,7 @@ import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import { Separator } from '@/components/ui/separator';
+import { Link } from '@/i18n/routing';
 
 const PasswordResetPage = () => {
   const t = useTranslations();
