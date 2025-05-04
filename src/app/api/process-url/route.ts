@@ -4,6 +4,7 @@ import * as magnet from 'magnet-uri';
 import torrentStream from 'torrent-stream';
 
 const torrents: Map<string, magnet.Instance> = new Map();
+let currentStream: { destroy: (arg0: () => void) => void } | null = null;
 
 export async function POST(request: Request) {
   const { url } = await request.json();
@@ -54,9 +55,12 @@ export async function GET(request: NextRequest) {
       start = parseInt(rangeStart, 10);
       if (rangeEnd) end = parseInt(rangeEnd, 10);
     }
-
+    console.log('Range:', start, end);
     const stream = file.createReadStream({ start, end });
-
+    if (currentStream !== null) {
+      currentStream?.destroy(() => {});
+    }
+    currentStream = stream;
     const response = new NextResponse(stream as any, {
       status: rangeHeader ? 206 : 200,
       headers: {
@@ -77,7 +81,7 @@ function parseMagnetLink(uri: string): magnet.Instance {
   return magnet.decode(uri);
 }
 
-function getVideoFile(engine: TorrentStream.TorrentEngine): Promise<any> {
+function getVideoFile(engine: TorrentStream.TorrentEngine): Promise<TorrentStream.TorrentFile> {
   return new Promise((resolve, reject) => {
     engine.on('ready', () => {
       console.log('Engine is ready');
@@ -86,8 +90,12 @@ function getVideoFile(engine: TorrentStream.TorrentEngine): Promise<any> {
         if (!ext) return false;
         return ['mp4', 'mkv', 'avi', 'ogg'].includes(ext);
       });
-      if (videoFile) resolve(videoFile);
-      else reject('No video file found.');
+      if (videoFile) {
+        videoFile.select();
+        resolve(videoFile);
+      } else {
+        reject('No video file found.');
+      }
     });
   });
 }
