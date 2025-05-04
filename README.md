@@ -44,9 +44,8 @@ To set up and run the Hypertube Video Library project locally, follow these step
 
 1. Ensure you have the following installed on your system:
 
-   - **Node.js** (v16 or later)
-   - **npm** (v7 or later) or **yarn**
-   - **PostgreSQL** (if running the database locally)
+   - **Node.js** (v20.19.1 LTE or later)
+   - **npm** (v10.8.2 or later) or **yarn**
 
 2. Clone the repository:
    ```sh
