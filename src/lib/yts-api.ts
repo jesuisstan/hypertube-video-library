@@ -15,11 +15,12 @@ export async function fetchYTSApi(endpoint: string, params: Record<string, strin
   ).toString();
 
   const targetUrl = `${process.env.YTS_API_BASE_URL || 'https://yts.mx/api/v2'}/${endpoint}.json?${query}`;
-  console.log('Fetching through proxy:', targetUrl);
-
   const response = await fetch(`${PROXY_YTS_API_URL}?targetUrl=${encodeURIComponent(targetUrl)}`);
+
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
+    console.log('Error fetching YTS API:', response.statusText); // to avoid throwing an error in case the API is blocked by internet provider
+    return;
+    //throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
   }
 
   return response.json();

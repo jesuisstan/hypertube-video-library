@@ -1,0 +1,16 @@
+export type TTorrentDataYTS = {
+  url: string; // Download link for the torrent
+  hash: string; // Torrent hash
+  quality: string; // Video quality (e.g., 720p, 1080p)
+  type: string; // Release type (e.g., bluray, web)
+  is_repack: string; // Indicates if this is a repack (1 or 0)
+  video_codec: string; // Video codec (e.g., x264, x265)
+  bit_depth: string; // Bit depth (e.g., 8, 10)
+  audio_channels: string; // Number of audio channels (e.g., 2.0, 5.1)
+  seeds: number; // Number of seeders
+  peers: number; // Number of peers
+  size: string; // File size in a human-readable format (e.g., 1.43 GB)
+  size_bytes: number; // File size in bytes
+  date_uploaded: string; // Upload date in string format
+  date_uploaded_unix: number; // Upload date in Unix timestamp format
+};

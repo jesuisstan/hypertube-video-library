@@ -13,4 +13,5 @@ export type TMovieBasics = {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  imdb_id?: string;
 };
