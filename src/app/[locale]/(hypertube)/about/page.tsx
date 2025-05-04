@@ -101,9 +101,9 @@ const AboutPage = () => {
       <div className={clsx('flex w-[100%] flex-col content-center items-center gap-5')}>
         {/* DESCRIPTION */}
         <div
-          id="navigation-buttons"
+          id="description"
           className={clsx(
-            'flex w-[100%] flex-col flex-wrap content-center items-center justify-center gap-10 p-2 align-middle'
+            'flex w-[100%] flex-col flex-wrap content-center items-center justify-center gap-5 p-2 align-middle'
           )}
         >
           <p className="text-center text-xl font-normal">
@@ -132,15 +132,6 @@ const AboutPage = () => {
                   {t('disclamer-no-commercial')}
                 </a>
               </p>
-            </div>
-            <div className="pt-3">
-              <EncryptButton
-                text={t('dive-into')}
-                onClick={() => {
-                  router.push('/browse');
-                }}
-                Icon={<Play />}
-              ></EncryptButton>
             </div>
           </div>
         </div>
@@ -412,6 +403,16 @@ const AboutPage = () => {
               </div>
             )}
           </motion.div>
+        </div>
+        {/* BUTTON to BROWSE PAGE */}
+        <div className="pt-3">
+          <EncryptButton
+            text={t('dive-into')}
+            onClick={() => {
+              router.push('/browse');
+            }}
+            Icon={<Play />}
+          ></EncryptButton>
         </div>
       </div>
     </motion.div>
