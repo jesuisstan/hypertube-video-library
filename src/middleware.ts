@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
+import { addTorrent } from './file_manager/downloader';
+
 const intlMiddleware = createMiddleware({
   locales: ['en', 'fr', 'ru'],
   localePrefix: 'always',
@@ -20,9 +22,14 @@ export async function middleware(req: NextRequest) {
   const normalizedPath = req.nextUrl.pathname.replace(/^\/(en|fr|ru)/, '');
 
   // Define public pages (excluding locale prefix)
-  const isPublicPage = ['/authentication', '/email-confirmation', '/password', '/about'].some(
-    (path) => normalizedPath.startsWith(path)
-  );
+  const isPublicPage = [
+    '/authentication',
+    '/email-confirmation',
+    '/password',
+    '/about',
+    '/viewstream',
+    '/viewstream/[hash]',
+  ].some((path) => normalizedPath.startsWith(path));
 
   // Redirect if token is missing and page is not public
   if (!token && !isPublicPage) {
