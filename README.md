@@ -36,6 +36,85 @@ The deployed version of the app allows users to:
 - Connect with other users based on mutual interests and preferences.
 - Chat with users with whome you have matched.
 
+## Installation
+
+To set up and run the Hypertube Video Library project locally, follow these steps:
+
+### Prerequisites
+
+1. Ensure you have the following installed on your system:
+
+   - **Node.js** (v16 or later)
+   - **npm** (v7 or later) or **yarn**
+   - **PostgreSQL** (if running the database locally)
+
+2. Clone the repository:
+   ```sh
+   git clone https://github.com/jesuisstan/hypertube-video-library.git
+   cd hypertube-video-library
+   ```
+
+### DEV mode
+
+1. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+   or
+
+   ```sh
+   yarn install
+   ```
+
+2. Set up the environment variables:
+
+   - Create a `.env.local` file in the root directory.
+   - Fill it following the .env.local.example file
+
+3. Start the development server:
+
+   ```sh
+   npm run dev
+   ```
+
+   or
+
+   ```sh
+   yarn dev
+   ```
+
+4. Open the application in your browser:
+   ```
+   http://localhost:4242
+   ```
+
+### PROD mode
+
+1. Build the application for production:
+
+   ```sh
+   npm run build
+   ```
+
+   or
+
+   ```sh
+   yarn build
+   ```
+
+2. Start the production server:
+   ```sh
+   npm start
+   ```
+   or
+   ```sh
+   yarn start
+   ```
+
+The application should now be running locally or in production mode!
+
 ## Demonstration
 
 _(Add demonstration details, screenshots, or links to demo videos here)_ Coming soon...
