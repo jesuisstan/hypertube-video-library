@@ -91,7 +91,7 @@ const BrowsePage = () => {
         include_adult: includeAdultContent,
         rating_min: rating[0].toString(),
         rating_max: rating[1].toString(),
-        min_votes: minVotes.toString(),
+        min_votes: minVotes >= 300 ? minVotes.toString() : '142',
         release_date_min: new Date(releaseDateMin).toISOString().split('T')[0],
         release_date_max: new Date(releaseDateMax).toISOString().split('T')[0],
         with_genres: selectedGenres.join(','),
@@ -378,7 +378,7 @@ const BrowsePage = () => {
                         handleMinVotes([item]); // Set the min votes to the clicked value
                       }}
                     >
-                      {item}
+                      {item >= 300 ? item : t('any')}
                     </span>
                   ))}
                 </div>

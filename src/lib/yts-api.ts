@@ -52,3 +52,17 @@ export async function fetchMovieSuggestions(movieId: number) {
 export async function fetchMovieComments(movieId: number) {
   return fetchYTSApi('movie_comments', { movie_id: movieId });
 }
+
+/**
+ * Search movies by title
+ */
+export async function fetchMoviesByTitle(
+  title: string,
+  additionalParams: Record<string, string | number> = {}
+) {
+  // 'query_term' is used to search movies by title or other identifying term
+  return fetchYTSApi('list_movies', {
+    query_term: title,
+    ...additionalParams,
+  });
+}

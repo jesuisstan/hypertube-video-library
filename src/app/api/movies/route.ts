@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const sort_by = searchParams.get('sort_by') || 'popularity.desc';
     const rating_min = searchParams.get('rating_min') || '6';
     const rating_max = searchParams.get('rating_max') || '10';
-    const min_votes = searchParams.get('min_votes') || '0';
+    const min_votes = searchParams.get('min_votes') || '142';
     const release_date_min = searchParams.get('release_date_min') || '1895-11-28'; // Date of the first movie release ever in UTC
     const release_date_max =
       searchParams.get('release_date_max') || new Date().toISOString().split('T')[0]; // Date without timezone shift

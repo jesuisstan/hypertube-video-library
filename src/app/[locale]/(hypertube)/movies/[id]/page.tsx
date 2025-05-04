@@ -15,11 +15,14 @@ const MovieProfile = () => {
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<any>({});
+  const [searchTitle, setSearchTitle] = useState('');
+  const [searchYear, setSearchYear] = useState('');
+  const [moviesPB, setMoviesPB] = useState<any[]>([]);
 
   const scrapeTMDB = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/movies/${movieId}/?lang=${localeActive}`);
+      const response = await fetch(`/api/movies/${movieId}/?lang=en-EN`);
       const data = await response.json();
       setMovieData(data);
     } catch (error) {
@@ -33,14 +36,13 @@ const MovieProfile = () => {
     scrapeTMDB();
   }, []);
 
-  const [searchTitle, setSearchTitle] = useState('');
-  const [moviesPB, setMoviesPB] = useState<any[]>([]);
-
-  const scrapePB = async (searchText: string) => {
+  const scrapePB = async (searchText: string, searchYear: string) => {
     try {
-      const response = await fetch(`/api/torrents/piratebay?query=${searchText}`);
+      const response = await fetch(
+        `/api/torrents/piratebay?title=${searchText}&year=${searchYear}`
+      );
       const data = await response.json();
-      console.log(data);
+      console.log(data); // debug
       setMoviesPB(data);
     } catch (error) {
       console.error('Error scraping PirateBay:', error);
@@ -48,23 +50,30 @@ const MovieProfile = () => {
   };
 
   useEffect(() => {
-    if (movieData) {
-      setSearchTitle(movieData.original_title + ' ' + movieData.release_date?.split('-')[0]);
+    if (movieData?.title && movieData.release_date) {
+      setSearchTitle(movieData.title);
+      setSearchYear(movieData.release_date?.split('-')[0]);
     }
   }, [movieData]);
+
   useEffect(() => {
-    if (searchTitle) scrapePB(searchTitle);
+    if (searchTitle) scrapePB(searchTitle, searchYear);
   }, [searchTitle]);
 
   console.log('searchTitle:', searchTitle); // debug
-  console.log(movieData); // debug
+  console.log('TMBB movieData', movieData); // debug
+  console.log('PirateBay moviesPB', moviesPB); // debug
 
   return (
     <div className="flex flex-col gap-5">
       <h1>Movie Profile Page</h1>
       <div>
         <Image
-          src={`https://image.tmdb.org/t/p/w300${movieData.poster_path}`}
+          src={
+            movieData.poster_path
+              ? `https://image.tmdb.org/t/p/w300${movieData.poster_path}`
+              : '/identity/logo-thumbnail.png'
+          }
           blurDataURL={'/identity/logo-thumbnail.png'}
           alt={'poster'}
           width={200}
@@ -75,7 +84,11 @@ const MovieProfile = () => {
       </div>
 
       {/* scraping PirateBay */}
-      <ButtonCustom onClick={() => scrapePB(searchTitle)} loading={loading} disabled={loading}>
+      <ButtonCustom
+        onClick={() => scrapePB(searchTitle, searchYear)}
+        loading={loading}
+        disabled={loading}
+      >
         Scrape Pirate Bay
       </ButtonCustom>
       <div>
