@@ -150,7 +150,7 @@ const ImageUploader = ({ id }: { id: number }) => {
               }
             }}
             className={clsx(
-              'flex h-20 w-20 max-w-xs flex-col items-center justify-center border-dashed border-muted-foreground bg-input',
+              'border-muted-foreground bg-input flex h-20 w-20 max-w-xs flex-col items-center justify-center border-dashed',
               fileEnter ? 'border-4' : 'border-2'
             )}
           >
@@ -163,7 +163,7 @@ const ImageUploader = ({ id }: { id: number }) => {
               ) : (
                 <CirclePlus
                   size={21}
-                  className="cursor-pointer text-muted-foreground smooth42transition hover:text-positive"
+                  className="text-muted-foreground smooth42transition hover:text-positive cursor-pointer"
                 />
               )}
             </label>
@@ -202,8 +202,8 @@ const ImageUploader = ({ id }: { id: number }) => {
             <button
               disabled={loading}
               className={clsx(
-                'absolute right-1 top-1 flex rounded-full border bg-card/80 p-1 text-muted-foreground smooth42transition',
-                loading ? 'opacity-60' : 'opacity-100 hover:text-destructive'
+                'bg-card/80 text-muted-foreground smooth42transition absolute top-1 right-1 flex rounded-full border p-1',
+                loading ? 'opacity-60' : 'hover:text-destructive opacity-100'
               )}
             >
               <Trash2 size={15} onClick={handleFileDeletion} />
@@ -216,10 +216,10 @@ const ImageUploader = ({ id }: { id: number }) => {
           <Spinner size={21} />
         ) : (
           <div>
-            {error && <div className="text-xs text-destructive">{error}</div>}
-            {successMessage && <div className="text-xs text-positive">{successMessage}</div>}
+            {error && <div className="text-destructive text-xs">{error}</div>}
+            {successMessage && <div className="text-positive text-xs">{successMessage}</div>}
             {!error && !successMessage && !loading && commonMessage && (
-              <div className="text-xs text-foreground">{commonMessage}</div>
+              <div className="text-foreground text-xs">{commonMessage}</div>
             )}
           </div>
         )}

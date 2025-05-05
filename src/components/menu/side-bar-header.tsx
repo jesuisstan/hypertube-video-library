@@ -28,7 +28,7 @@ const SideBarHeader = ({
         <AvatarMini src={photoUrl} nickname={name ?? ''} rounded />
 
         {/* Nickname */}
-        <div className="text-2xl text-foreground">
+        <div className="text-foreground text-2xl">
           {name ? (
             <div className="max-w-[180px] truncate">{name && formatUserName(name)}</div>
           ) : (

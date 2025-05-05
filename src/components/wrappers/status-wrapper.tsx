@@ -9,15 +9,15 @@ const StatusWrapper = ({ confirmed }: { confirmed: boolean | undefined }) => {
   const t = useTranslations();
 
   return (
-    <div className="relative rounded-2xl bg-card p-5 shadow-md shadow-primary/20">
+    <div className="bg-card shadow-primary/20 relative rounded-2xl p-5 shadow-md">
       <div className="flex flex-col justify-start">
         <h3 className="text-base font-bold">{t(`status`)}</h3>
         <div className="mt-4">
           <div className="flex items-center">
             {confirmed ? (
-              <span className="flex items-center text-sm text-positive">{t('confirmed')}</span>
+              <span className="text-positive flex items-center text-sm">{t('confirmed')}</span>
             ) : (
-              <span className="flex items-center text-sm text-destructive">
+              <span className="text-destructive flex items-center text-sm">
                 {t('not-confirmed')}
               </span>
             )}

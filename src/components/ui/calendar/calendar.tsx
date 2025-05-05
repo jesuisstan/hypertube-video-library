@@ -459,9 +459,9 @@ function YearGrid({
           <ButtonCustom
             key={i}
             className={clsx(
-              'h-7 w-full text-xs font-normal text-foreground',
+              'text-foreground h-7 w-full text-xs font-normal',
               displayYears.from + i === new Date().getUTCFullYear() &&
-                'bg-accent font-medium text-accent-foreground'
+                'bg-accent text-accent-foreground font-medium'
             )}
             variant="ghost"
             onClick={() => {

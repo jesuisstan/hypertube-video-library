@@ -58,7 +58,7 @@ const SocialMediaAuth = ({
           loading={loading42}
           disabled={loading42 || loadingGoogle || loadingGithub}
         >
-          <div className="flex items-center justify-center rounded-full bg-positive p-[5px]">
+          <div className="bg-positive flex items-center justify-center rounded-full p-[5px]">
             <Image
               src="/icons/icon-42.png"
               blurDataURL="/icons/icon-42.png"
@@ -98,7 +98,7 @@ const SocialMediaAuth = ({
           loading={loadingGithub}
           disabled={loading42 || loadingGoogle || loadingGithub}
         >
-          <div className="flex items-center justify-center rounded-full  bg-muted-foreground p-[5px]">
+          <div className="bg-muted-foreground flex items-center justify-center rounded-full p-[5px]">
             <Image
               src="/icons/icon-github.svg"
               blurDataURL="/icons/icon-github.svg"

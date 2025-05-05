@@ -2,11 +2,11 @@ const SelectSkeleton = ({ showLabel, showTitle }: { showLabel?: boolean; showTit
   return (
     <div className={'w-full'}>
       {showLabel && (
-        <div className="mb-5 block text-base font-normal text-foreground">
-          <div className="h-4 w-24 animate-pulse rounded-full bg-muted" />
+        <div className="text-foreground mb-5 block text-base font-normal">
+          <div className="bg-muted h-4 w-24 animate-pulse rounded-full" />
         </div>
       )}
-      <div className="h-[38px] w-40 animate-pulse rounded-full bg-muted" />
+      <div className="bg-muted h-[38px] w-40 animate-pulse rounded-full" />
     </div>
   );
 };

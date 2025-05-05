@@ -71,7 +71,7 @@ const Menu: React.FC = () => {
       {/* Menu on small screens */}
       <div
         className={clsx(
-          `fixed ml-3 mt-2 inline-flex items-center space-x-1 rounded-lg bg-background/80 p-2 text-sm text-foreground`,
+          `bg-background/80 text-foreground fixed mt-2 ml-3 inline-flex items-center space-x-1 rounded-lg p-2 text-sm`,
           `lg:hidden`
         )}
       >
@@ -106,16 +106,16 @@ const Menu: React.FC = () => {
           <div
             id="menu-sidebar"
             className={clsx(
-              `fixed left-0 top-0 z-50 h-fit max-h-screen w-fit bg-transparent p-4 transition-transform`, // basic part
+              `fixed top-0 left-0 z-50 h-fit max-h-screen w-fit bg-transparent p-4 transition-transform`, // basic part
               `lg:translate-x-0`, // sm + md + xl (responsive part)
-              isSidebarOpen ? 'translate-x-0 drop-shadow-2xl' : ' -translate-x-96' // Conditional style
+              isSidebarOpen ? 'translate-x-0 drop-shadow-2xl' : '-translate-x-96' // Conditional style
             )}
             aria-label="menuSidebar"
             ref={menuRef}
           >
             <div
               id="rounded-menu-container"
-              className="relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl bg-card px-3 pt-5 shadow-md shadow-primary/20"
+              className="bg-card shadow-primary/20 relative flex max-h-[97vh] w-64 flex-col space-y-3 rounded-2xl px-3 pt-5 shadow-md"
             >
               <div className="mb-3 flex justify-center">
                 <Image
@@ -150,7 +150,7 @@ const Menu: React.FC = () => {
                 <Link
                   href={`/profile`}
                   className={clsx(
-                    `flex w-full items-center smooth42transition`,
+                    `smooth42transition flex w-full items-center`,
                     `hover:text-c42orange`,
                     pathname === `/profile` && 'text-positive'
                   )}
@@ -169,7 +169,7 @@ const Menu: React.FC = () => {
                 <Link
                   href={`/browse`}
                   className={clsx(
-                    `flex w-full items-center smooth42transition`,
+                    `smooth42transition flex w-full items-center`,
                     `hover:text-c42orange`,
                     pathname.includes(`/browse`) && 'text-positive'
                   )}
@@ -188,7 +188,7 @@ const Menu: React.FC = () => {
                 <Link
                   href={`/about`}
                   className={clsx(
-                    `flex w-full items-center smooth42transition`,
+                    `smooth42transition flex w-full items-center`,
                     `hover:text-c42orange`,
                     pathname === `/about` && 'text-positive'
                   )}

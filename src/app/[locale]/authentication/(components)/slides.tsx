@@ -3,7 +3,7 @@ import Image from 'next/image';
 export const SLIDES = [
   <div
     key="slide1"
-    className="m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center smooth42transition lg:h-[70vh] lg:w-[70vw]"
+    className="smooth42transition m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center lg:h-[70vh] lg:w-[70vw]"
   >
     <Image
       src="/identity/hypertube-high-resolution-logo-transparent.png"
@@ -21,7 +21,7 @@ export const SLIDES = [
   </div>,
   <div
     key="slide2"
-    className="m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center smooth42transition lg:h-[70vh] lg:w-[70vw]"
+    className="smooth42transition m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center lg:h-[70vh] lg:w-[70vw]"
   >
     <Image
       src="/identity/logo-title-only.png"
@@ -39,7 +39,7 @@ export const SLIDES = [
   </div>,
   <div
     key="slide3"
-    className="m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center smooth42transition md:h-[70vh] md:w-[70vw]"
+    className="smooth42transition m-3 mx-10 flex h-[60vh] w-[60vw] justify-center self-center md:h-[70vh] md:w-[70vw]"
   >
     <Image
       src="/identity/logo-square.png"

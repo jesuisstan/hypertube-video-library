@@ -35,7 +35,7 @@ const TooltipSocialMediaWarning = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-x-1 xs:flex-row">
+    <div className="xs:flex-row flex flex-col items-center space-x-1">
       <p>{t('auth.social-media-authenticated')}</p>
       <TooltipBasic>
         <div className="m-5 flex flex-col items-center gap-5">
