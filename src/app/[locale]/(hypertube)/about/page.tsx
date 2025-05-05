@@ -72,7 +72,7 @@ const AboutPage = () => {
       {/* HEADER */}
       <div className="mb-5 flex flex-col flex-wrap items-center justify-center gap-5">
         <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">{t('welcome')}</h1>
-        <div className="flex flex-col items-center justify-center gap-5 xs:flex-row">
+        <div className="xs:flex-row flex flex-col items-center justify-center gap-5">
           <Image
             src="/identity/logo-square.png"
             blurDataURL={'/identity/logo-square.png'}
@@ -118,7 +118,7 @@ const AboutPage = () => {
                 <a
                   href={`https://42.fr/en/the-program/software-engineer-degree/`}
                   target="_blank"
-                  className="my-6 text-center text-lg text-positive transition-all duration-300 ease-in-out hover:text-c42orange"
+                  className="text-positive hover:text-c42orange my-6 text-center text-lg transition-all duration-300 ease-in-out"
                 >
                   {t('disclamer-curriculum')}
                 </a>
@@ -127,7 +127,7 @@ const AboutPage = () => {
                 <a
                   href={`https://github.com/jesuisstan/hypertube-video-library`}
                   target="_blank"
-                  className="my-6 text-center text-lg text-positive transition-all duration-300 ease-in-out hover:text-c42orange"
+                  className="text-positive hover:text-c42orange my-6 text-center text-lg transition-all duration-300 ease-in-out"
                 >
                   {t('disclamer-no-commercial')}
                 </a>
@@ -141,7 +141,7 @@ const AboutPage = () => {
           variants={slideFromBottom}
           id="powered-by"
           className={clsx(
-            'flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl bg-card p-5 align-middle shadow-md shadow-primary/20'
+            'bg-card shadow-primary/20 flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl p-5 align-middle shadow-md'
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>
@@ -154,7 +154,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -169,7 +169,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -184,7 +184,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -199,7 +199,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -214,7 +214,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -229,7 +229,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -244,7 +244,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -259,7 +259,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -274,7 +274,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -289,7 +289,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -304,7 +304,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -319,7 +319,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -334,7 +334,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -349,7 +349,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -364,7 +364,7 @@ const AboutPage = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className={clsx(`h-auto w-16 smooth42transition hover:scale-125`)}
+                className={clsx(`smooth42transition h-auto w-16 hover:scale-125`)}
                 placeholder="blur"
                 priority
               />
@@ -375,34 +375,35 @@ const AboutPage = () => {
 
         {/* Movies sector */}
         <div className="w-full">
-          <motion.div initial="hidden" animate="visible" variants={framerMotion}>
+          <motion.div variants={slideFromBottom} className="flex justify-center self-center">
             {moviesTMDB.length > 0 && (
               <h2 className="mb-5 text-center text-xl md:text-2xl lg:text-2xl">
                 {t('popular-now')}
               </h2>
             )}
-            <div
-              key="moviesTMDB"
-              className="flex flex-wrap items-center justify-center gap-5 align-middle smooth42transition"
-            >
-              {moviesTMDB?.map((movie, index) => (
-                <motion.div
-                  variants={slideFromBottom}
-                  key={`${movie.id}-${index}`}
-                  className="flex justify-center self-center"
-                >
-                  <MovieThumbnail movieBasics={movie} loading={false} />
-                </motion.div>
-              ))}
-            </div>
-
-            {loading && (
-              <div className="m-5 flex flex-col items-center gap-5">
-                <Spinner size={21} />
-                <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
-              </div>
-            )}
           </motion.div>
+
+          <div
+            key="moviesTMDB"
+            className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
+          >
+            {moviesTMDB?.map((movie, index) => (
+              <motion.div
+                variants={slideFromBottom}
+                key={`${movie.id}-${index}`}
+                className="flex justify-center self-center"
+              >
+                <MovieThumbnail movieBasics={movie} loading={false} />
+              </motion.div>
+            ))}
+          </div>
+
+          {loading && (
+            <div className="m-5 flex flex-col items-center gap-5">
+              <Spinner size={21} />
+              <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
+            </div>
+          )}
         </div>
         {/* BUTTON to BROWSE PAGE */}
         <div className="pt-3">

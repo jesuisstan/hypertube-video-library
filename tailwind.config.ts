@@ -1,11 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ['class'],
+import type { Config } from 'tailwindcss';
+
+export default {
+  darkMode: ['class', 'dark'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/not-found.tsx',
+    //'./src/styles/globals.css',
   ],
   theme: {
     container: {
@@ -101,4 +103,4 @@ module.exports = {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
   ],
-};
+} satisfies Config;

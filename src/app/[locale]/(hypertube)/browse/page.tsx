@@ -244,12 +244,12 @@ const BrowsePage = () => {
       {errorMessage && (
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
-      <div className="flex flex-col items-start gap-5 smooth42transition xs:flex-row">
+      <div className="smooth42transition xs:flex-row flex flex-col items-start gap-5">
         {/* Sort and filter sector */}
         <div
           id="sort-filter-sector"
           className={clsx(
-            'top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl bg-card p-5 shadow-md shadow-primary/20 xs:sticky xs:max-w-80 xs:overflow-x-hidden'
+            'bg-card shadow-primary/20 xs:sticky xs:max-w-80 xs:overflow-x-hidden top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl p-5 shadow-md'
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">
@@ -317,13 +317,13 @@ const BrowsePage = () => {
                   value={rating}
                   onValueChange={handleRatingChange}
                 />
-                <div className="mt-2 flex justify-between text-xs text-foreground">
+                <div className="text-foreground mt-2 flex justify-between text-xs">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
                     <span
                       key={item}
                       className={clsx(
                         {
-                          'font-bold smooth42transition':
+                          'smooth42transition font-bold':
                             item >= Number(rating[0]) && item <= Number(rating[1]),
                         },
                         'cursor-pointer'
@@ -363,13 +363,13 @@ const BrowsePage = () => {
                   value={[minVotes]} // Ensure it's an array with a single value
                   onValueChange={(value) => handleMinVotes(value)} // Handle slider value change
                 />
-                <div className="mt-2 flex items-end justify-between text-xs text-foreground">
+                <div className="text-foreground mt-2 flex items-end justify-between text-xs">
                   {[0, 300, 600, 900, 1200, 1500].map((item) => (
                     <span
                       key={item}
                       className={clsx(
                         {
-                          'font-bold smooth42transition':
+                          'smooth42transition font-bold':
                             item === getValueOfSearchFilter('min_votes'),
                         },
                         'cursor-pointer'
@@ -418,7 +418,7 @@ const BrowsePage = () => {
           <motion.div initial="hidden" animate="visible" variants={framerMotion}>
             <div
               key="moviesTMDB"
-              className="flex flex-wrap items-center justify-center gap-5 align-middle smooth42transition"
+              className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
             >
               {moviesTMDB?.map((movie, index) => (
                 <motion.div
@@ -434,7 +434,7 @@ const BrowsePage = () => {
             {loading && (
               <div className="m-5 flex flex-col items-center gap-5">
                 <Spinner size={21} />
-                <p className="animate-pulse text-base font-normal leading-[19px]">{t(`loading`)}</p>
+                <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
               </div>
             )}
           </motion.div>
