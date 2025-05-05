@@ -1,13 +1,12 @@
-import type { Config } from 'tailwindcss';
-
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ['class', 'dark'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/not-found.tsx',
-    //'./src/styles/globals.css',
+    './src/styles/globals.css',
   ],
   theme: {
     container: {
@@ -91,7 +90,7 @@ export default {
     },
   },
   plugins: [
-    function ({ addUtilities }: { addUtilities: Function }) {
+    function ({ addUtilities }) {
       const newUtilities = {
         '.smooth42transition': {
           transition: 'all 200ms ease-in-out',
@@ -103,4 +102,4 @@ export default {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
   ],
-} satisfies Config;
+};

@@ -1,8 +1,10 @@
 @import 'tailwindcss';
 
+@tailwind utilities;
+
 @custom-variant dark (&:is(.dark *));
 
-@config '../../tailwind.config.ts';
+@config '../../tailwind.config.js';
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
