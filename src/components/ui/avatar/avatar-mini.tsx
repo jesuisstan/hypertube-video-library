@@ -18,7 +18,7 @@ const AvatarMini = ({
 }) => (
   <Avatar.Root
     className={clsx(
-      'border-foreground bg-foreground inline-flex items-center justify-center overflow-hidden border-[1px] align-middle select-none',
+      'inline-flex select-none items-center justify-center overflow-hidden border-[1px] border-foreground bg-foreground align-middle',
       rounded ? 'rounded-full' : 'rounded-2xl',
       width ? `w-${width}` : 'w-11',
       height ? `h-${height}` : 'h-11'
@@ -30,7 +30,7 @@ const AvatarMini = ({
       alt={nickname}
     />
     <Avatar.Fallback
-      className="bg-foreground text-card flex h-full w-full items-center justify-center text-base"
+      className="flex h-full w-full items-center justify-center bg-foreground text-base text-card"
       //delayMs={100}
     >
       {nickname && formatUserNameOneLetter(nickname)}

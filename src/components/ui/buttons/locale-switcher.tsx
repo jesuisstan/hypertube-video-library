@@ -25,9 +25,9 @@ const LocaleSwitcher = () => {
     <div className="flex space-x-4 self-center align-middle">
       <div
         className={clsx(
-          `smooth42transition flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px]`,
+          `flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px] smooth42transition`,
           `hover:border-c42orange`,
-          localeActive === 'fr' ? 'border-foreground border-[1px]' : 'bg-card'
+          localeActive === 'fr' ? 'border-[1px] border-foreground' : 'bg-card'
         )}
         title="Français"
         onClick={() => handleLocaleChange('fr')}
@@ -49,9 +49,9 @@ const LocaleSwitcher = () => {
 
       <div
         className={clsx(
-          `smooth42transition flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px]`,
+          `flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px] smooth42transition`,
           `hover:border-c42orange`,
-          localeActive === 'en' ? 'border-foreground border-[1px]' : 'bg-card'
+          localeActive === 'en' ? 'border-[1px] border-foreground' : 'bg-card'
         )}
         title="English"
         onClick={() => handleLocaleChange('en')}
@@ -73,9 +73,9 @@ const LocaleSwitcher = () => {
 
       <div
         className={clsx(
-          `smooth42transition flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px]`,
+          `flex cursor-pointer items-center justify-center rounded-full border-[1px] px-[2px] py-[2px] smooth42transition`,
           `hover:border-c42orange`,
-          localeActive === 'ru' ? 'border-foreground border-[1px]' : 'bg-card'
+          localeActive === 'ru' ? 'border-[1px] border-foreground' : 'bg-card'
         )}
         title="Русский"
         onClick={() => handleLocaleChange('ru')}

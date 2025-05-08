@@ -95,7 +95,8 @@
     "biography": "Описание",
     "description": "Описание",
     "location": "Местоположение",
-    "photos": "Аватар"
+    "photos": "Аватар",
+    "preferred_language": "Предпочтительный язык контента"
   },
   "menu-open": "Открыть меню",
   "email-change": "Изменить почту",

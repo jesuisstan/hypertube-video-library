@@ -14,6 +14,8 @@ export const isProfileCategoryFilled = (
     return !!user?.biography;
   } else if (layout === 'location') {
     return !!user?.address;
+  } else if (layout === 'preferred_language') {
+    return !!user?.preferred_language;
   } else if (layout === 'photos') {
     return user?.photos?.length! >= 1; // At least one photo
   } else return false;
@@ -26,8 +28,10 @@ export const isProfileComplete = (user: TUser | undefined | null): boolean => {
   if (isProfileCategoryFilled('basics', user)) {
     if (isProfileCategoryFilled('description', user)) {
       if (isProfileCategoryFilled('location', user)) {
-        if (isProfileCategoryFilled('photos', user)) {
-          isComplete = true;
+        if (isProfileCategoryFilled('preferred_language', user)) {
+          if (isProfileCategoryFilled('photos', user)) {
+            isComplete = true;
+          }
         }
       }
     }

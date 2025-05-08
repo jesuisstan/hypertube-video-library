@@ -95,7 +95,8 @@
     "biography": "Description",
     "description": "Description",
     "location": "Emplacement",
-    "photos": "Avatar"
+    "photos": "Avatar",
+    "preferred_language": "Langue de contenu préférée"
   },
   "menu-open": "Ouvrir le menu",
   "email-change": "Changer l'email",

@@ -28,7 +28,7 @@ const AvatarGeneral = ({
     <div className="group relative" style={avatarSizeStyle}>
       <Avatar.Root
         className={clsx(
-          'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden border-2 align-middle select-none',
+          'inline-flex cursor-pointer select-none items-center justify-center overflow-hidden border-2 border-foreground bg-foreground align-middle',
           rounded ? 'rounded-full' : 'rounded-2xl'
         )}
         style={avatarSizeStyle}
@@ -39,13 +39,13 @@ const AvatarGeneral = ({
           src={src}
           alt={nickname}
         />
-        <Avatar.Fallback className="bg-foreground text-card flex h-full w-full items-center justify-center text-base">
+        <Avatar.Fallback className="flex h-full w-full items-center justify-center bg-foreground text-base text-card">
           {nickname && formatUserNameOneLetter(nickname)}
         </Avatar.Fallback>
       </Avatar.Root>
       <button
         onClick={onAvatarChange}
-        className="text-muted-foreground absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/60 p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/60 p-1 text-muted-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ boxShadow: 'none' }}
       >
         <PencilLine className="h-6 w-6 text-white" />

@@ -62,7 +62,7 @@ const SelectSingle = ({
     <DropdownMenu>
       <div className="flex flex-col items-start justify-start align-middle">
         <div className="mb-1 flex">
-          {label && <div className="text-foreground text-sm font-normal">{capitalize(label)}</div>}
+          {label && <div className="text-sm font-normal text-foreground">{capitalize(label)}</div>}
         </div>
         <DropdownMenuSelector
           disabled={disabled}

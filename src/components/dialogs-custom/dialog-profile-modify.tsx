@@ -4,6 +4,7 @@ import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
+import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
 import { CircleAlert, MapPinned, MapPinOff, Save } from 'lucide-react';
 
@@ -13,7 +14,13 @@ import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
+import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import {
+  popularLanguagesOptionsEN,
+  popularLanguagesOptionsFR,
+  popularLanguagesOptionsRU,
+} from '@/constants/popular-languages';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 import { TGeoCoordinates, TSelectGeoOption } from '@/types/geolocation';
@@ -29,7 +36,12 @@ import { isProfileCategoryFilled } from '@/utils/user-handlers';
 const MIN_DESCRIPTION_LENGTH = 42;
 const MAX_DESCRIPTION_LENGTH = 442;
 
-export type TProfileCompleteLayout = 'basics' | 'description' | 'location' | 'photos' | 'lang';
+export type TProfileCompleteLayout =
+  | 'basics'
+  | 'description'
+  | 'location'
+  | 'photos'
+  | 'preferred_language';
 
 const DialogProfileModify = ({
   show,
@@ -42,8 +54,8 @@ const DialogProfileModify = ({
 }) => {
   const { updateSession } = useUpdateSession();
   const t = useTranslations();
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
-  const localeActive = useLocale();
   const [layout, setLayout] = useState<TProfileCompleteLayout>(startLayout ?? 'photos');
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
@@ -61,6 +73,14 @@ const DialogProfileModify = ({
     createTGeoCoordinates(user?.latitude, user?.longitude)
   );
 
+  // Determine the correct language options array based on the locale
+  const languageOptions =
+    locale === 'en'
+      ? popularLanguagesOptionsEN
+      : locale === 'fr'
+        ? popularLanguagesOptionsFR
+        : popularLanguagesOptionsRU;
+
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
     if (text.length <= MAX_DESCRIPTION_LENGTH) {
@@ -73,7 +93,7 @@ const DialogProfileModify = ({
   const handleFakeLocatorClick = () => {
     setError('');
     setSuccessMessage('');
-    const fakeLocation = getFakeLocation(localeActive);
+    const fakeLocation = getFakeLocation(locale);
     setGeoCoordinates({ lat: fakeLocation.latitude, lng: fakeLocation.longitude });
     setSelectedCityOption({ value: fakeLocation.address, label: fakeLocation.address });
   };
@@ -147,9 +167,9 @@ const DialogProfileModify = ({
         longitude: geoCoordinates?.lng,
         address: selectedCityOption?.label,
       });
-    } else if (layout === 'lang') {
+    } else if (layout === 'preferred_language') {
       body = JSON.stringify({
-        category: 'lang',
+        category: 'preferred_language',
         preferred_language: preferredLanguage,
       });
     }
@@ -189,7 +209,7 @@ const DialogProfileModify = ({
         id="basics"
         className={clsx(
           'flex flex-col items-center justify-center self-center align-middle',
-          `sm:flex-row sm:items-center sm:justify-center sm:space-y-0 sm:space-x-10 sm:self-center sm:align-middle`
+          `sm:flex-row sm:items-center sm:justify-center sm:space-x-10 sm:space-y-0 sm:self-center sm:align-middle`
         )}
       >
         <div className="flex flex-col self-start">
@@ -248,11 +268,11 @@ const DialogProfileModify = ({
             id="description"
             name="description"
             placeholder={t(`describe-youself`)}
-            className="disabled:opacity-50, bg-input ring-offset-background focus-visible:ring-primary m-1 flex h-48 min-w-[36vw] rounded-md border p-2 text-sm focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:outline-none disabled:cursor-not-allowed"
+            className="disabled:opacity-50, m-1 flex h-48 min-w-[36vw] rounded-md border bg-input p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
             value={description}
             onChange={handleDescriptionChange}
           />
-          <span className="text-muted-foreground/80 mt-1 ml-2 text-xs">
+          <span className="ml-2 mt-1 text-xs text-muted-foreground/80">
             {t('min') + ' ' + MIN_DESCRIPTION_LENGTH}
             {', '}
             {t('max') + ' ' + MAX_DESCRIPTION_LENGTH} {t('characters')}
@@ -288,7 +308,7 @@ const DialogProfileModify = ({
                 {t(`city`)}
               </Label>
               <AsyncSelect
-                className="text-foreground/85 placeholder-foreground placeholder-opacity-25 w-52 text-xs"
+                className="w-52 text-xs text-foreground/85 placeholder-foreground placeholder-opacity-25"
                 value={selectedCityOption}
                 onChange={setSelectedCityOption}
                 loadOptions={(input) => loadCityOptions(input, setError, t)}
@@ -304,9 +324,32 @@ const DialogProfileModify = ({
           <div className="text-c42orange">
             <CircleAlert size={25} />
           </div>
-          <div className="max-w-96 text-xs text-pretty">
+          <div className="max-w-96 text-pretty text-xs">
             <TextWithLineBreaks text={t('location-need-message')} />
           </div>
+        </div>
+      </div>
+    ),
+    preferred_language: (
+      <div className="flex flex-col">
+        <div className="flex flex-col items-center justify-center gap-2">
+          <Avatar.Root
+            className={
+              'inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full border-2 border-foreground bg-foreground align-middle'
+            }
+          >
+            <Avatar.Image
+              className="h-5 w-5 rounded-[inherit] object-cover"
+              src={`/country-flags/${preferredLanguage?.toLowerCase()}.svg`}
+              alt="national-flag"
+            />
+          </Avatar.Root>
+          <SelectSingle
+            options={languageOptions}
+            defaultValue="en"
+            selectedItem={preferredLanguage.toUpperCase()}
+            setSelectedItem={(value) => setPreferredLanguage(value.toLocaleLowerCase())}
+          />
         </div>
       </div>
     ),
@@ -334,6 +377,9 @@ const DialogProfileModify = ({
         setLayout('location');
         break;
       case 'location':
+        setLayout('preferred_language');
+        break;
+      case 'preferred_language':
         setLayout('photos');
         break;
       case 'photos':
@@ -354,8 +400,11 @@ const DialogProfileModify = ({
       case 'location':
         setLayout('description');
         break;
-      case 'photos':
+      case 'preferred_language':
         setLayout('location');
+        break;
+      case 'photos':
+        setLayout('preferred_language');
         break;
       default:
         break;
@@ -394,6 +443,10 @@ const DialogProfileModify = ({
       trigger={null}
       description={t(`dialog-title.${layout}`)}
     >
+      <div className="flex flex-row items-center gap-2">
+        <p className="text-xs italic">{t('category-filled-?')}</p>
+        <FilledOrNot size={18} filled={isProfileCategoryFilled(layout, user)} />
+      </div>
       <div className="max-h-[70vh] overflow-y-auto">
         <div
           className={clsx(
@@ -407,36 +460,30 @@ const DialogProfileModify = ({
               ref={formRef}
             >
               {layouts[layout as keyof typeof layouts]}
-              <div className="flex flex-col items-center justify-center gap-1 self-center text-center">
-                <div className="flex flex-row items-center gap-2">
-                  <p className="text-xs italic">{t('category-filled-?')}</p>
-                  <FilledOrNot size={18} filled={isProfileCategoryFilled(layout, user)} />
-                </div>
-                <ButtonCustom
-                  type="submit"
-                  size="default"
-                  disabled={!user || loading}
-                  title={t('save')}
-                  loading={loading}
-                  className="min-w-32"
-                >
-                  <div className="flex flex-row items-center space-x-3">
-                    <div>
-                      <Save size={20} />
-                    </div>
-                    <span>{t('save')}</span>
+              <ButtonCustom
+                type="submit"
+                size="default"
+                disabled={!user || loading}
+                title={t('save')}
+                loading={loading}
+                className="min-w-32"
+              >
+                <div className="flex flex-row items-center space-x-3">
+                  <div>
+                    <Save size={20} />
                   </div>
-                </ButtonCustom>
-              </div>
+                  <span>{t('save')}</span>
+                </div>
+              </ButtonCustom>
             </form>
           ) : (
             <div>{layouts[layout as keyof typeof layouts]}</div>
           )}
         </div>
         <div className="min-h-6">
-          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+          {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
-            <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
           )}
         </div>
       </div>
@@ -444,7 +491,7 @@ const DialogProfileModify = ({
       {/* Next and Previous buttons */}
       <div
         className={clsx(
-          'xs:flex-row flex flex-col items-center gap-2',
+          'flex flex-col items-center gap-2 xs:flex-row',
           layout === 'basics' ? 'justify-end' : 'justify-between'
         )}
       >

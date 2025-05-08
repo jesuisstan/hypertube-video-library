@@ -74,7 +74,16 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: any }
   const { category } = body;
 
   try {
-    const { firstname, lastname, nickname, description, latitude, longitude, address } = body;
+    const {
+      firstname,
+      lastname,
+      nickname,
+      description,
+      latitude,
+      longitude,
+      address,
+      preferred_language,
+    } = body;
     const currentDate = new Date().toISOString();
     let updateQuery = '';
     let updateValues: (string | number)[] = [];
@@ -147,6 +156,34 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: any }
         RETURNING id, biography, last_action;
       `;
       updateValues = [id, description, currentDate];
+    } else if (category === 'preferred_language') {
+      // Step 1: Check if the user exists
+      const selectQuery = `
+        SELECT preferred_language
+        FROM users 
+        WHERE id = $1
+      `;
+      const currentDataResult = await client.query(selectQuery, [id]);
+
+      if (currentDataResult.rowCount === 0) {
+        return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
+      }
+
+      const currentData = currentDataResult.rows[0];
+
+      // Step 2: Check if the data is up-to-date
+      if (currentData.preferred_language === preferred_language) {
+        return NextResponse.json({ message: 'data-is-up-to-date' });
+      }
+
+      // Step 3: Conditionally update the preferred_language, last action in one query
+      updateQuery = `
+        UPDATE users
+        SET preferred_language = $2, last_action = $3
+        WHERE id = $1
+        RETURNING id, preferred_language, last_action;
+      `;
+      updateValues = [id, preferred_language, currentDate];
     } else if (category === 'location') {
       // Step 1: Check if the user exists
       const selectQuery = `
