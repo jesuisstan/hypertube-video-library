@@ -35,7 +35,7 @@ const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => 
         size="icon"
         title={translate(`theme-toggle`) + ': ' + translate('light')}
         onClick={switchToLight}
-        className="smooth42transition hover:text-c42orange hover:bg-transparent"
+        className="smooth42transition hover:bg-transparent hover:text-c42orange"
       >
         <Sun />
       </ButtonCustom>
@@ -45,7 +45,7 @@ const ThemeToggler = ({ translate }: { translate: (key: string) => string }) => 
         size="icon"
         title={translate(`theme-toggle`) + ': ' + translate('dark')}
         onClick={switchToDark}
-        className="smooth42transition hover:text-c42orange hover:bg-transparent"
+        className="smooth42transition hover:bg-transparent hover:text-c42orange"
       >
         <MoonStar />
       </ButtonCustom>

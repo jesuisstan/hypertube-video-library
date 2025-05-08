@@ -28,7 +28,7 @@ const DatesRangePicker: FC<TDatesRangePickerProps> = ({
   };
 
   return (
-    <div className="text-foreground flex items-center justify-center gap-1 text-center text-sm">
+    <div className="flex items-center justify-center gap-1 text-center text-sm text-foreground">
       <DatePicker date={startDate} setDate={handleSetStartDate} />
       <MoveRight size={16} />
       <DatePicker date={endDate} setDate={handleSetEndDate} />

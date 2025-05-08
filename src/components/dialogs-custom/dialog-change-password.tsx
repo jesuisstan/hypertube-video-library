@@ -58,7 +58,7 @@ const DialogChangePassword = ({
       }
     >
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-10 text-center">
-        <div className="text-c42orange mb-5">
+        <div className="mb-5 text-c42orange">
           <OctagonAlert size={60} className="smooth42transition hover:scale-150" />
         </div>
         <TextWithLineBreaks text={t('auth.password-change-message')} />

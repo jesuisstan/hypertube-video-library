@@ -33,12 +33,12 @@ const EmailConfirmation = () => {
 
   return (
     <div
-      className="smooth42transition flex w-full items-center justify-center"
+      className="flex w-full items-center justify-center smooth42transition"
       style={{ minHeight: 'calc(100vh - 56px)' }}
     >
       <div
         id="email-confirmation"
-        className="bg-card shadow-primary/20 flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl p-5 text-center shadow-md"
+        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md shadow-primary/20"
       >
         <Image
           src="/identity/logo-title-only.png"

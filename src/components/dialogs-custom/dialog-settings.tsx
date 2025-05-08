@@ -35,7 +35,7 @@ const DialogSettings = ({
           variant="ghost"
           size="icon"
           title={t(`settings`)}
-          className="smooth42transition hover:text-c42orange hover:bg-transparent"
+          className="smooth42transition hover:bg-transparent hover:text-c42orange"
         >
           <div className="flex flex-row items-center gap-2">
             <Settings />

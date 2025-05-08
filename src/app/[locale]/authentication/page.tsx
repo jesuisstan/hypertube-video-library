@@ -161,10 +161,10 @@ const Authentication = () => {
   };
 
   return (
-    <div className={clsx('bg-card flex h-screen w-screen items-center justify-center')}>
+    <div className={clsx('flex h-screen w-screen items-center justify-center bg-card')}>
       <div
         className={clsx(
-          'bg-card hidden h-screen items-center justify-center',
+          'hidden h-screen items-center justify-center bg-card',
           'md:flex md:w-2/3',
           'lg:flex lg:w-3/4'
         )}
@@ -189,7 +189,7 @@ const Authentication = () => {
               className="max-w-[70vw]"
             />
           </div>
-          <div className="text-foreground absolute bottom-0 z-10 p-4">
+          <div className="absolute bottom-0 z-10 p-4 text-foreground">
             <Footer />
           </div>
         </div>
@@ -197,7 +197,7 @@ const Authentication = () => {
 
       <div
         className={clsx(
-          'm-auto flex h-full w-full flex-col overflow-y-scroll pr-5 pl-5',
+          'm-auto flex h-full w-full flex-col overflow-y-scroll pl-5 pr-5',
           'md:w-1/3',
           'lg:w-1/4'
         )}
@@ -227,7 +227,7 @@ const Authentication = () => {
         <div className="my-5 flex self-center">
           <LocaleSwitcher />
         </div>
-        <h2 className="text-foreground mb-5 text-center text-2xl">
+        <h2 className="mb-5 text-center text-2xl text-foreground">
           {pageLayout === 'login' && t(`auth.sign-in`)}
           {pageLayout === 'register' && t(`auth.register-new`)}
           {pageLayout === 'confirmation' && t(`auth.confirm-email`)}
@@ -366,7 +366,7 @@ const Authentication = () => {
                 />
                 <button
                   type="button"
-                  className="text-muted-foreground absolute top-[7px] right-2"
+                  className="absolute right-2 top-[7px] text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
@@ -383,9 +383,9 @@ const Authentication = () => {
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
           </ButtonCustom>
         </form>
-        {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+        {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
         {successMessage && (
-          <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+          <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
         )}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (
@@ -405,7 +405,7 @@ const Authentication = () => {
           {pageLayout === 'login' && (
             <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">
               <Separator text={t(`or`).toUpperCase()} />
-              <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
+              <div className="flex flex-col items-center justify-center gap-2 xs:flex-row">
                 <ButtonCustom
                   variant="link"
                   onClick={() => {
@@ -448,11 +448,11 @@ const Authentication = () => {
         </div>
         <a
           href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
-          className="text-muted-foreground hover:text-c42orange my-6 text-center text-sm transition-all duration-300 ease-in-out"
+          className="my-6 text-center text-sm text-muted-foreground transition-all duration-300 ease-in-out hover:text-c42orange"
         >
           {t(`need-help`)}
         </a>
-        <div className="text-muted-foreground hover:text-c42orange text-center text-sm transition-all duration-300 ease-in-out">
+        <div className="text-center text-sm text-muted-foreground transition-all duration-300 ease-in-out hover:text-c42orange">
           <Link href={`/about`}>{t('about')}</Link>
         </div>
       </div>

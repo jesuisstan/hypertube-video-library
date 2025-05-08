@@ -23,7 +23,7 @@ const Separator = React.forwardRef<
         decorative={decorative}
         orientation={orientation}
         className={clsx(
-          'bg-border shrink-0',
+          'shrink-0 bg-border',
           isHorizontal ? 'h-[1px] flex-1' : 'h-full w-[1px] flex-1',
           className
         )}
@@ -33,7 +33,7 @@ const Separator = React.forwardRef<
       {text && (
         <span
           className={clsx(
-            'text-muted-foreground px-2 text-sm font-medium select-none',
+            'select-none px-2 text-sm font-medium text-muted-foreground',
             isHorizontal ? 'whitespace-nowrap' : 'rotate-90'
           )}
         >
@@ -45,7 +45,7 @@ const Separator = React.forwardRef<
         decorative={decorative}
         orientation={orientation}
         className={clsx(
-          'bg-border shrink-0',
+          'shrink-0 bg-border',
           isHorizontal ? 'h-[1px] flex-1' : 'h-full w-[1px] flex-1',
           className
         )}

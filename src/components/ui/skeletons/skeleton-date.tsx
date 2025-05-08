@@ -1,5 +1,5 @@
 const SkeletonDate = () => {
-  return <div className="bg-muted mt-1 h-3 w-36 animate-pulse rounded-full" />;
+  return <div className="mt-1 h-3 w-36 animate-pulse rounded-full bg-muted" />;
 };
 
 export default SkeletonDate;

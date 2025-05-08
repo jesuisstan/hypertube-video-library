@@ -36,7 +36,7 @@ const LogoutButton = ({ translate }: { translate: (key: string) => string }) => 
         size="icon"
         title={translate(`auth.logout`)}
         onClick={handleLogout}
-        className="smooth42transition hover:text-c42orange hover:bg-transparent"
+        className="smooth42transition hover:bg-transparent hover:text-c42orange"
       >
         <div className="flex flex-row items-center gap-2">
           <LogOut />

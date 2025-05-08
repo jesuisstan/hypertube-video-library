@@ -120,7 +120,7 @@ export function KeywordMultiSelect() {
             />
             <CommandList onScroll={handleScroll}>
               {isLoading && page === 1 ? (
-                <div className="text-muted-foreground p-4 text-center text-sm">{t('loading')}</div>
+                <div className="p-4 text-center text-sm text-muted-foreground">{t('loading')}</div>
               ) : (
                 <>
                   <CommandEmpty>{t('no-results-found')}</CommandEmpty>
@@ -134,7 +134,7 @@ export function KeywordMultiSelect() {
                     </CommandItem>
                   ))}
                   {isLoading && page > 1 && (
-                    <div className="text-muted-foreground p-4 text-center text-sm">
+                    <div className="p-4 text-center text-sm text-muted-foreground">
                       {t('loading')}
                     </div>
                   )}
@@ -151,7 +151,7 @@ export function KeywordMultiSelect() {
           {selectedKeywords.map((keyword) => (
             <Badge
               key={keyword.id}
-              className="hover:bg-primary/80 hover:text-primary-foreground flex items-center justify-center gap-1 align-middle"
+              className="flex items-center justify-center gap-1 align-middle hover:bg-primary/80 hover:text-primary-foreground"
             >
               {keyword.name}
               <ButtonShad

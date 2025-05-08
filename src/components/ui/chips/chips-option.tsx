@@ -52,9 +52,9 @@ const ChipsOption = ({
       aria-labelledby={String(value)} // Ensure value is converted to a string
       title={getTitleFromChildren(children)}
       className={clsx(
-        `border-primary smooth42transition flex h-6 min-w-[54px] flex-row items-center justify-center gap-1 rounded-3xl border-[1px] px-[9px] py-[2px] text-center text-xs leading-loose font-normal break-words whitespace-nowrap normal-case`,
+        `flex h-6 min-w-[54px] flex-row items-center justify-center gap-1 whitespace-nowrap break-words rounded-3xl border-[1px] border-primary px-[9px] py-[2px] text-center text-xs font-normal normal-case leading-loose smooth42transition`,
         isSelected ? 'bg-foreground text-card dark:bg-foreground' : 'bg-card text-foreground',
-        !nonClickable && 'hover:border-c42orange cursor-pointer'
+        !nonClickable && 'cursor-pointer hover:border-c42orange'
       )}
       onClick={() => onSelect(value)}
     >

@@ -33,14 +33,14 @@ const ToastNotification = ({
   return (
     <Toast.Provider swipeDirection="right">
       <Toast.Root
-        className="data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 border-c42orange text-background shadow-c42orange/50 grid min-h-32 grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border p-[15px] shadow-xl [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]"
+        className="data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut bg-foreground/97 grid min-h-32 grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-2xl border border-c42orange p-[15px] text-background shadow-xl shadow-c42orange/50 [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
         open={open}
         onOpenChange={setOpen}
         duration={duration ?? 15000}
       >
         <Toast.Title
           className={clsx(
-            'text-c42orange mb-1 text-2xl font-semibold [grid-area:_title]',
+            'mb-1 text-2xl font-semibold text-c42orange [grid-area:_title]',
             title?.includes('error') && 'text-destructive'
           )}
         >
@@ -61,7 +61,7 @@ const ToastNotification = ({
           </ButtonCustom>
         </Toast.Action>
       </Toast.Root>
-      <Toast.Viewport className="fixed right-0 bottom-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
+      <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
     </Toast.Provider>
   );
 };

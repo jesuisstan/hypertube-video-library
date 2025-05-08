@@ -71,12 +71,12 @@ const PasswordResetPage = () => {
 
   return (
     <div
-      className="smooth42transition flex w-full items-center justify-center"
+      className="flex w-full items-center justify-center smooth42transition"
       style={{ minHeight: 'calc(100vh - 56px)' }}
     >
       <div
         id="email-confirmation"
-        className="bg-card flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl p-5 text-center shadow-md"
+        className="flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl bg-card p-5 text-center shadow-md"
       >
         <Image
           src="/identity/logo-title-only.png"
@@ -92,7 +92,7 @@ const PasswordResetPage = () => {
 
         <h1 className="text-2xl font-bold">{t(`auth.change-password`)}</h1>
         {resetToken === 'invalid-token' ? (
-          <p className="text-destructive pt-2 text-lg">{t(`auth.invalid-token`)}</p>
+          <p className="pt-2 text-lg text-destructive">{t(`auth.invalid-token`)}</p>
         ) : !resetToken ? (
           <p className="animate-pulse pt-2 text-lg">{t(`auth.processing`)}</p>
         ) : (
@@ -119,7 +119,7 @@ const PasswordResetPage = () => {
                   />
                   <button
                     type="button"
-                    className="text-muted-foreground absolute top-2 right-2"
+                    className="absolute right-2 top-2 text-muted-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loading || !!successMessage}
                   >
@@ -142,7 +142,7 @@ const PasswordResetPage = () => {
                   />
                   <button
                     type="button"
-                    className="text-muted-foreground absolute top-2 right-2"
+                    className="absolute right-2 top-2 text-muted-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loading || !!successMessage}
                   >
@@ -160,9 +160,9 @@ const PasswordResetPage = () => {
                 {t(`auth.change-password`)}
               </ButtonCustom>
             </form>
-            {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+            {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
             {successMessage && (
-              <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+              <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
             )}
           </>
         )}

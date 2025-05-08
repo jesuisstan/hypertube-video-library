@@ -4,7 +4,7 @@ const Footer = () => {
   const t = useTranslations();
 
   return (
-    <div className="flex flex-row items-center self-end p-2 text-right text-xs leading-4 font-normal tracking-normal">
+    <div className="flex flex-row items-center self-end p-2 text-right text-xs font-normal leading-4 tracking-normal">
       <div>
         Hypertube Video Library {t(`rights-reserved`)}
         {'. '}

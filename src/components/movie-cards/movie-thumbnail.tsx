@@ -31,7 +31,7 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
         id={'movie-thumbnail-' + movieBasics.id}
         key={movieBasics.id}
         //className="relative flex max-w-72 cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition"
-        className="bg-card shadow-primary/20 smooth42transition xs:w-52 relative flex w-auto cursor-pointer flex-col items-center gap-2 rounded-md p-2 shadow-md"
+        className="relative flex w-auto cursor-pointer flex-col items-center gap-2 rounded-md bg-card p-2 shadow-md shadow-primary/20 smooth42transition xs:w-52"
         title={movieBasics.overview}
       >
         <div className="relative overflow-hidden rounded-md">
@@ -45,12 +45,12 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
             alt={'poster'}
             width={200}
             height={300}
-            className="smooth42transition transform rounded-md hover:scale-105"
+            className="transform rounded-md smooth42transition hover:scale-105"
             priority
           />
           <div
             className={clsx(
-              'bg-primary text-primary-foreground absolute top-1 right-1 flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
+              'absolute right-1 top-1 flex h-10 w-10 items-center justify-center rounded-full border bg-primary font-bold text-primary-foreground shadow-md',
               movieBasics.vote_average > 7
                 ? 'border-positive shadow-positive'
                 : movieBasics.vote_average >= 6

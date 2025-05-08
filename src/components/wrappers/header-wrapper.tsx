@@ -39,7 +39,7 @@ const HeaderWrapper = ({
   return (
     <div
       className={clsx(
-        'bg-card shadow-primary/20 smooth42transition relative flex max-h-fit min-h-[104px] w-full min-w-64 flex-row flex-wrap items-center justify-center gap-x-10 gap-y-1 rounded-2xl p-5 align-middle shadow-md transition-all duration-300 ease-in-out'
+        'relative flex max-h-fit min-h-[104px] w-full min-w-64 flex-row flex-wrap items-center justify-center gap-x-10 gap-y-1 rounded-2xl bg-card p-5 align-middle shadow-md shadow-primary/20 transition-all duration-300 ease-in-out smooth42transition'
       )}
     >
       {/* AVATAR */}
@@ -53,7 +53,7 @@ const HeaderWrapper = ({
       />
       <div className="flex flex-col gap-2">
         <div className="w-max">
-          <h1 title={nickname} className="xs:max-w-fit max-w-96 truncate text-4xl font-bold">
+          <h1 title={nickname} className="max-w-96 truncate text-4xl font-bold xs:max-w-fit">
             {nickname}
           </h1>
         </div>
@@ -61,7 +61,7 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('firstname')}</p>
           <p
             title={firstName}
-            className="smooth42transition xs:max-w-min max-w-44 flex-wrap truncate text-sm lg:max-w-32"
+            className="max-w-44 flex-wrap truncate text-sm smooth42transition xs:max-w-min lg:max-w-32"
           >
             {firstName}
           </p>
@@ -70,7 +70,7 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('lastname')}</p>
           <p
             title={lastName}
-            className="smooth42transition xs:max-w-min max-w-44 flex-wrap truncate text-sm lg:max-w-32"
+            className="max-w-44 flex-wrap truncate text-sm smooth42transition xs:max-w-min lg:max-w-32"
           >
             {lastName}
           </p>
@@ -78,10 +78,10 @@ const HeaderWrapper = ({
       </div>
 
       {modifiable && (
-        <div className={'absolute top-2 right-2 flex gap-1'}>
+        <div className={'absolute right-2 top-2 flex gap-1'}>
           <FilledOrNot size={15} filled={!!lastName || !!firstName} />
           <div
-            className={'text-foreground smooth42transition opacity-60 hover:opacity-100'}
+            className={'text-foreground opacity-60 smooth42transition hover:opacity-100'}
             title={t('click-to-modify')}
           >
             <PencilLine

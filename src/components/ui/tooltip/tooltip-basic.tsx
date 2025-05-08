@@ -43,7 +43,7 @@ const TooltipBasic: FC<TTooltipBasicProps> = ({ trigger, children, sideOffset = 
         </TooltipTrigger>
         <TooltipContent
           sideOffset={sideOffset}
-          className="bg-card text-card-foreground shadow-primary/20 rounded-md px-3 py-1 shadow-md"
+          className="rounded-md bg-card px-3 py-1 text-card-foreground shadow-md shadow-primary/20"
         >
           {children}
         </TooltipContent>

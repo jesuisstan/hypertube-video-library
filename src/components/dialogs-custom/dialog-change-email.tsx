@@ -164,7 +164,7 @@ const DialogChangeEmail = ({
                 />
                 <button
                   type="button"
-                  className="text-muted-foreground absolute top-2 right-2"
+                  className="absolute right-2 top-2 text-muted-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
@@ -190,9 +190,9 @@ const DialogChangeEmail = ({
           </ButtonCustom>
         </form>
         <div className="min-h-6">
-          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
+          {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
           {successMessage && (
-            <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
+            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
           )}
         </div>
       </div>
