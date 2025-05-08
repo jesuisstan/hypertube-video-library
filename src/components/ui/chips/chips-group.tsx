@@ -60,17 +60,17 @@ const ChipsGroup = ({
   ) : (
     <div id={`${label}-chips`} className="relative flex flex-col justify-center">
       <div className="mb-4 flex flex-row items-end gap-8">
-        {label && <div className="text-base font-semibold text-foreground">{label}</div>}
+        {label && <div className="text-foreground text-base font-semibold">{label}</div>}
 
-        <div className="flex flex-row gap-7 text-xs font-normal text-secondary-foreground">
+        <div className="text-secondary-foreground flex flex-row gap-7 text-xs font-normal">
           <button
-            className="min-w-fit cursor-pointer text-left italic smooth42transition hover:text-positive"
+            className="smooth42transition hover:text-positive min-w-fit cursor-pointer text-left italic"
             onClick={handleSelectAll}
           >
             {t(`selector.select-all`)}
           </button>
           <button
-            className="min-w-fit cursor-pointer text-left italic smooth42transition hover:text-c42orange"
+            className="smooth42transition hover:text-c42orange min-w-fit cursor-pointer text-left italic"
             onClick={handleUnselectAll}
           >
             {t(`selector.unselect-all`)}

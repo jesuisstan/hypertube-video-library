@@ -78,7 +78,7 @@ const AutoCarousel: FC<TCarouselProps> = ({
               type="button"
               variant="ghost"
               size={'icon'}
-              className={`absolute ${direction === 'horizontal' ? 'left-0 top-1/2 -translate-y-1/2' : 'left-1/2 top-0 -translate-x-1/2'}`}
+              className={`absolute ${direction === 'horizontal' ? 'top-1/2 left-0 -translate-y-1/2' : 'top-0 left-1/2 -translate-x-1/2'}`}
               onClick={() => setIndex(index - 1)}
             >
               {direction === 'horizontal' ? <ChevronLeft /> : <ChevronUp />}
@@ -88,7 +88,7 @@ const AutoCarousel: FC<TCarouselProps> = ({
               type="button"
               variant="ghost"
               size={'icon'}
-              className={`absolute ${direction === 'horizontal' ? 'right-0 top-1/2 -translate-y-1/2' : 'bottom-0 left-1/2 -translate-x-1/2'}`}
+              className={`absolute ${direction === 'horizontal' ? 'top-1/2 right-0 -translate-y-1/2' : 'bottom-0 left-1/2 -translate-x-1/2'}`}
               onClick={() => setIndex(index + 1)}
             >
               {direction === 'horizontal' ? <ChevronRight /> : <ChevronDown />}

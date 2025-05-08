@@ -209,7 +209,7 @@ const DialogProfileModify = ({
         id="basics"
         className={clsx(
           'flex flex-col items-center justify-center self-center align-middle',
-          `sm:flex-row sm:items-center sm:justify-center sm:space-x-10 sm:space-y-0 sm:self-center sm:align-middle`
+          `sm:flex-row sm:items-center sm:justify-center sm:space-y-0 sm:space-x-10 sm:self-center sm:align-middle`
         )}
       >
         <div className="flex flex-col self-start">
@@ -268,11 +268,11 @@ const DialogProfileModify = ({
             id="description"
             name="description"
             placeholder={t(`describe-youself`)}
-            className="disabled:opacity-50, m-1 flex h-48 min-w-[36vw] rounded-md border bg-input p-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:cursor-not-allowed"
+            className="disabled:opacity-50, bg-input ring-offset-background focus-visible:ring-primary m-1 flex h-48 min-w-[36vw] rounded-md border p-2 text-sm focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:outline-none disabled:cursor-not-allowed"
             value={description}
             onChange={handleDescriptionChange}
           />
-          <span className="ml-2 mt-1 text-xs text-muted-foreground/80">
+          <span className="text-muted-foreground/80 mt-1 ml-2 text-xs">
             {t('min') + ' ' + MIN_DESCRIPTION_LENGTH}
             {', '}
             {t('max') + ' ' + MAX_DESCRIPTION_LENGTH} {t('characters')}
@@ -308,7 +308,7 @@ const DialogProfileModify = ({
                 {t(`city`)}
               </Label>
               <AsyncSelect
-                className="w-52 text-xs text-foreground/85 placeholder-foreground placeholder-opacity-25"
+                className="text-foreground/85 placeholder-foreground placeholder-opacity-25 w-52 text-xs"
                 value={selectedCityOption}
                 onChange={setSelectedCityOption}
                 loadOptions={(input) => loadCityOptions(input, setError, t)}
@@ -324,7 +324,7 @@ const DialogProfileModify = ({
           <div className="text-c42orange">
             <CircleAlert size={25} />
           </div>
-          <div className="max-w-96 text-pretty text-xs">
+          <div className="max-w-96 text-xs text-pretty">
             <TextWithLineBreaks text={t('location-need-message')} />
           </div>
         </div>
@@ -335,7 +335,7 @@ const DialogProfileModify = ({
         <div className="flex flex-col items-center justify-center gap-2">
           <Avatar.Root
             className={
-              'inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full border-2 border-foreground bg-foreground align-middle'
+              'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
             }
           >
             <Avatar.Image
@@ -481,9 +481,9 @@ const DialogProfileModify = ({
           )}
         </div>
         <div className="min-h-6">
-          {error && <p className="mb-5 text-center text-sm text-destructive">{error}</p>}
+          {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
           {successMessage && (
-            <p className="mb-5 text-center text-sm text-positive">{successMessage}</p>
+            <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
           )}
         </div>
       </div>
@@ -491,7 +491,7 @@ const DialogProfileModify = ({
       {/* Next and Previous buttons */}
       <div
         className={clsx(
-          'flex flex-col items-center gap-2 xs:flex-row',
+          'xs:flex-row flex flex-col items-center gap-2',
           layout === 'basics' ? 'justify-end' : 'justify-between'
         )}
       >

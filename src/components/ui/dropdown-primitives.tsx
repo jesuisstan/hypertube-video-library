@@ -31,7 +31,7 @@ const DropdownMenuSelector = React.forwardRef<
     <div
       title={value || 'Select value'}
       className={clsx(
-        `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-primary bg-transparent px-3 text-sm font-normal smooth42transition`,
+        `group border-primary smooth42transition flex h-10 max-w-[300px] min-w-36 cursor-pointer items-center justify-between gap-2 rounded-md border bg-transparent px-3 text-sm font-normal select-none`,
         `hover:border-c42orange`,
         value ? 'text-foreground' : 'text-muted-foreground',
         className
@@ -40,7 +40,7 @@ const DropdownMenuSelector = React.forwardRef<
       {startIcon}
       <div className="truncate">{value || 'Select'}</div>
       <ChevronDown
-        className="relative top-[1px] h-4 text-muted-foreground smooth42transition group-data-[state=open]:-rotate-180"
+        className="text-muted-foreground smooth42transition relative top-[1px] h-4 group-data-[state=open]:-rotate-180"
         aria-hidden
       />
     </div>
@@ -59,18 +59,18 @@ const DropdownMenuMultipleSelector = React.forwardRef<
     <div
       title={value || 'Select value'}
       className={clsx(
-        `group flex h-10 min-w-36 max-w-[300px] cursor-pointer select-none items-center justify-between gap-2 rounded-md border border-primary bg-transparent px-3 text-sm font-normal transition-all duration-300 ease-in-out`,
+        `group border-primary flex h-10 max-w-[300px] min-w-36 cursor-pointer items-center justify-between gap-2 rounded-md border bg-transparent px-3 text-sm font-normal transition-all duration-300 ease-in-out select-none`,
         `hover:border-c42orange`,
         `xl: max-w-xl, lg: max-w-full`,
         value ? 'text-foreground' : 'text-muted-foreground',
         className
       )}
     >
-      <div className="flex-1 overflow-hidden truncate text-ellipsis whitespace-nowrap">
+      <div className="flex-1 truncate overflow-hidden text-ellipsis whitespace-nowrap">
         {value || 'Select'}
       </div>
       <ChevronDown
-        className="relative top-[1px] h-4 shrink-0 text-muted-foreground transition-transform ease-in group-data-[state=open]:-rotate-180"
+        className="text-muted-foreground relative top-[1px] h-4 shrink-0 transition-transform ease-in group-data-[state=open]:-rotate-180"
         aria-hidden
       />
     </div>
@@ -87,7 +87,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={clsx(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[state=open]:bg-accent',
+      'data-[state=open]:bg-accent flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none',
       'focus:text-c42orange',
       inset && 'pl-8',
       className
@@ -107,7 +107,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={clsx(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      'bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg',
       className
     )}
     {...props}
@@ -124,7 +124,7 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={clsx(
-        'z-50 max-h-96 min-w-[10rem] max-w-[242px] overflow-y-auto rounded-md border border-border bg-card p-1 text-popover-foreground shadow-md shadow-primary/20 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+        'border-border bg-card text-popover-foreground shadow-primary/20 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-96 max-w-[242px] min-w-[10rem] overflow-y-auto rounded-md border p-1 shadow-md',
         className
       )}
       {...props}
@@ -142,7 +142,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={clsx(
-      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       'focus:text-c42orange',
       inset && 'pl-8',
       className
@@ -159,7 +159,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={clsx(
-      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex cursor-pointer items-center rounded-sm py-1.5 pr-2 pl-8 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       'focus:text-c42orange',
       className
     )}
@@ -186,7 +186,7 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={clsx(
-      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm font-normal text-foreground outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'text-foreground relative flex cursor-pointer items-center rounded-sm py-1.5 pr-2 pl-8 text-sm font-normal transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       'focus:text-c42orange',
       className
     )}
@@ -195,7 +195,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     <div title={children?.toString()} className="flex items-center truncate">
       <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <Circle className="h-2 w-2 fill-current text-foreground" />
+          <Circle className="text-foreground h-2 w-2 fill-current" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       <div className="overflow-hidden text-ellipsis">{children}</div>
@@ -224,7 +224,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={clsx('-mx-1 my-1 h-px bg-muted', className)}
+    className={clsx('bg-muted -mx-1 my-1 h-px', className)}
     {...props}
   />
 ));

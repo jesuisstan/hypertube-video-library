@@ -38,7 +38,7 @@ const PrefLangWrapper = ({
     languageOptions.find((option) => option.value.toLowerCase() === lang)?.label || lang;
 
   return (
-    <div className="relative rounded-2xl bg-card p-5 shadow-md shadow-primary/20">
+    <div className="bg-card shadow-primary/20 relative rounded-2xl p-5 shadow-md">
       <div className="flex flex-col justify-start">
         <h3 className="text-base font-bold">{t(`prefered-content-language`)}</h3>
         <div className="mt-4">
@@ -47,7 +47,7 @@ const PrefLangWrapper = ({
               <div className="flex flex-row items-center gap-2">
                 <Avatar.Root
                   className={
-                    'inline-flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full border-2 border-foreground bg-foreground align-middle'
+                    'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
                   }
                 >
                   <Avatar.Image
@@ -63,10 +63,10 @@ const PrefLangWrapper = ({
             )}
 
             {modifiable && (
-              <div className={'absolute right-2 top-2 flex gap-1'}>
+              <div className={'absolute top-2 right-2 flex gap-1'}>
                 <FilledOrNot size={15} filled={!!lang} />
                 <div
-                  className={'text-foreground opacity-60 smooth42transition hover:opacity-100'}
+                  className={'text-foreground smooth42transition opacity-60 hover:opacity-100'}
                   title={t('click-to-modify')}
                 >
                   <PencilLine size={15} onClick={onModify} />
