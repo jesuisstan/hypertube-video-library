@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category') || 'discover';
     const search = searchParams.get('search') || '';
-    const total_pages_available = searchParams.get('total_pages_available') || '500'; // default to 500 pages
+    const total_pages_available = searchParams.get('total_pages_available') || '42'; // default to 42 pages
     const lang = searchParams.get('lang') || 'en-US';
     const page = searchParams.get('page') || '1';
     const include_adult = searchParams.get('include_adult') || 'false';

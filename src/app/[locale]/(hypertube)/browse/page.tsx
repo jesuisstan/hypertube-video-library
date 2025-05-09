@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 import Loading from '@/app/loading';
 import DatesRangePicker from '@/components/dates-range-picker';
+import DrawerSearchByQuery from '@/components/drawers-custom/drawer-search-by-query';
 import { KeywordMultiSelect } from '@/components/keyword-multi-select';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -32,7 +33,7 @@ const BrowsePage = () => {
   const sortOptions = useSortOptions() as any[];
   const [moviesTMDB, setMoviesTMDB] = useState<TMovieBasics[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(500);
+  const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(42);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -237,47 +238,6 @@ const BrowsePage = () => {
     return;
   }, [moviesTMDB, releaseDateMin, releaseDateMax]);
 
-  const [moviesTMDBByName, setMoviesTMDBByName] = useState<TMovieBasics[]>([]);
-  const scrapeTMDBbyName = async (reset = false) => {
-    try {
-      setErrorMessage(null);
-      setLoading(true);
-
-      const queryParams = new URLSearchParams({
-        category: 'search',
-        search: 'the lord',
-        include_adult: includeAdultContent,
-        lang: locale,
-        page: '1',
-      });
-
-      const response = await fetch(`/api/movies?${queryParams.toString()}`);
-
-      const data = await response.json();
-      const results = data?.results;
-      const error = data?.error;
-      const totalPages = data?.total_pages || 1;
-      setTotalPagesAvailable(totalPages); // Set the total pages available for pagination for the current request parameters
-
-      if (results) {
-        const newMovies = reset ? results : [...moviesTMDBByName, ...results];
-        const uniqueMovies = Array.from(
-          new Set(newMovies.map((movie: TMovieBasics) => movie.id))
-        ).map((id) => newMovies.find((movie: TMovieBasics) => movie.id === id));
-        setMoviesTMDBByName(uniqueMovies);
-      }
-      if (error) {
-        setErrorMessage(t(error));
-      }
-    } catch (error) {
-      setErrorMessage(t('error-fetching-movies'));
-    } finally {
-      setLoading(false);
-      setIsFetching(false);
-    }
-  };
-  console.log('moviesTMDBByName', moviesTMDBByName); // debug
-
   return !user ? (
     <Loading />
   ) : (
@@ -287,12 +247,8 @@ const BrowsePage = () => {
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
       <div className="smooth42transition xs:flex-row flex flex-col items-start gap-5">
-        {/* TODO delete*/}
-        <div className="hidden">
-          <ButtonCustom variant="default" onClick={() => scrapeTMDBbyName()}>
-            SEARCH !!!!!!!!!
-          </ButtonCustom>
-        </div>
+        {/* Search by query */}
+        <DrawerSearchByQuery />
         {/* Sort and filter sector */}
         <div
           id="sort-filter-sector"

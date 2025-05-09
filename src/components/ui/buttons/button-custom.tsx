@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import Spinner from '@/components/ui/spinner';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center space-x-2 rounded-md text-sm font-medium ring-offset-background smooth42transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex cursor-pointer items-center justify-center space-x-2 rounded-md text-sm font-medium ring-offset-background smooth42transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
