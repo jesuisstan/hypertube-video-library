@@ -45,10 +45,10 @@ const AvatarGeneral = ({
       </Avatar.Root>
       <button
         onClick={onAvatarChange}
-        className="text-muted-foreground absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/60 p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="text-muted-foreground bg-foreground/60 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ boxShadow: 'none' }}
       >
-        <PencilLine className="h-6 w-6 text-white" />
+        <PencilLine className="text-background h-6 w-6" />
       </button>
     </div>
   );

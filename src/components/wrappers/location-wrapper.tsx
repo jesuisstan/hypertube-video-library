@@ -24,21 +24,17 @@ const LocationWrapper = ({
         <h3 className="text-base font-bold">{t(`location`)}</h3>
         <div className="mt-4">
           <div className="flex items-center text-sm">
-            {address ? (
-              <span className="flex items-center gap-2">{address}</span>
-            ) : (
-              <p className="italic">{t('data-incomplete')}</p>
-            )}
+            <div className="cursor-pointer" onClick={onModify}>
+              {address ? (
+                <span className="flex items-center gap-2">{address}</span>
+              ) : (
+                <p className="italic">{t('data-incomplete')}</p>
+              )}
+            </div>
 
             {modifiable && (
-              <div className={'absolute top-2 right-2 flex gap-1'}>
+              <div className="absolute top-2 right-2 flex cursor-pointer gap-1" onClick={onModify}>
                 <FilledOrNot size={15} filled={!!address} />
-                <div
-                  className={'text-foreground smooth42transition opacity-60 hover:opacity-100'}
-                  title={t('click-to-modify')}
-                >
-                  <PencilLine size={15} onClick={onModify} />
-                </div>
               </div>
             )}
           </div>

@@ -44,7 +44,7 @@ const PrefLangWrapper = ({
         <div className="mt-4">
           <div className="flex items-center text-sm">
             {lang ? (
-              <div className="flex flex-row items-center gap-2">
+              <div className="flex cursor-pointer flex-row items-center gap-2" onClick={onModify}>
                 <Avatar.Root
                   className={
                     'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
@@ -63,14 +63,8 @@ const PrefLangWrapper = ({
             )}
 
             {modifiable && (
-              <div className={'absolute top-2 right-2 flex gap-1'}>
+              <div className="absolute top-2 right-2 cursor-pointer" onClick={onModify}>
                 <FilledOrNot size={15} filled={!!lang} />
-                <div
-                  className={'text-foreground smooth42transition opacity-60 hover:opacity-100'}
-                  title={t('click-to-modify')}
-                >
-                  <PencilLine size={15} onClick={onModify} />
-                </div>
               </div>
             )}
           </div>

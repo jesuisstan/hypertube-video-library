@@ -42,18 +42,33 @@ const HeaderWrapper = ({
         'bg-card shadow-primary/20 smooth42transition relative flex max-h-fit min-h-[104px] w-full min-w-64 flex-row flex-wrap items-center justify-center gap-x-10 gap-y-1 rounded-2xl p-5 align-middle shadow-md transition-all duration-300 ease-in-out'
       )}
     >
-      {/* AVATAR */}
-      <AvatarGeneral
-        src={photoURL}
-        nickname={nickname ?? '???'}
-        rounded
-        width={184}
-        height={184}
-        onAvatarChange={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
-      />
-      <div className="flex flex-col gap-2">
+      <div className="relative">
+        {/* AVATAR */}
+        <AvatarGeneral
+          src={photoURL}
+          nickname={nickname ?? '???'}
+          rounded
+          width={184}
+          height={184}
+          onAvatarChange={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
+        />
+        {modifiable && (
+          <div
+            className={'absolute top-1 right-1 cursor-pointer'}
+            onClick={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
+          >
+            <FilledOrNot size={15} filled={!!photoURL} />
+          </div>
+        )}
+      </div>
+
+      <div
+        id="basic-user-info"
+        className="relative flex w-full flex-col gap-2 overflow-hidden"
+        onClick={() => handleModify('basics' as keyof typeof TProfileCompleteLayout)}
+      >
         <div className="w-max">
-          <h1 title={nickname} className="xs:max-w-fit max-w-96 truncate text-4xl font-bold">
+          <h1 title={nickname} className="cursor-pointer truncate text-4xl font-bold">
             {nickname}
           </h1>
         </div>
@@ -61,7 +76,7 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('firstname')}</p>
           <p
             title={firstName}
-            className="smooth42transition xs:max-w-min max-w-44 flex-wrap truncate text-sm lg:max-w-32"
+            className="smooth42transition cursor-pointer flex-wrap truncate text-sm"
           >
             {firstName}
           </p>
@@ -70,27 +85,20 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('lastname')}</p>
           <p
             title={lastName}
-            className="smooth42transition xs:max-w-min max-w-44 flex-wrap truncate text-sm lg:max-w-32"
+            className="smooth42transition cursor-pointer flex-wrap truncate text-sm"
           >
             {lastName}
           </p>
         </div>
-      </div>
-
-      {modifiable && (
-        <div className={'absolute top-2 right-2 flex gap-1'}>
-          <FilledOrNot size={15} filled={!!lastName || !!firstName} />
+        {modifiable && (
           <div
-            className={'text-foreground smooth42transition opacity-60 hover:opacity-100'}
-            title={t('click-to-modify')}
+            className="bg-card/70 absolute right-0 cursor-pointer rounded-2xl"
+            onClick={() => handleModify('basics' as keyof typeof TProfileCompleteLayout)}
           >
-            <PencilLine
-              size={15}
-              onClick={() => handleModify('basics' as keyof typeof TProfileCompleteLayout)}
-            />
+            <FilledOrNot size={15} filled={!!lastName && !!firstName} />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
