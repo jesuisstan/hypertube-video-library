@@ -87,6 +87,7 @@ const BrowsePage = () => {
 
       const queryParams = new URLSearchParams({
         total_pages_available: totalPagesAvailable.toString(),
+        category: 'discover',
         sort_by: sortBy,
         include_adult: includeAdultContent,
         rating_min: rating[0].toString(),
@@ -236,6 +237,47 @@ const BrowsePage = () => {
     return;
   }, [moviesTMDB, releaseDateMin, releaseDateMax]);
 
+  const [moviesTMDBByName, setMoviesTMDBByName] = useState<TMovieBasics[]>([]);
+  const scrapeTMDBbyName = async (reset = false) => {
+    try {
+      setErrorMessage(null);
+      setLoading(true);
+
+      const queryParams = new URLSearchParams({
+        category: 'search',
+        search: 'the lord',
+        include_adult: includeAdultContent,
+        lang: locale,
+        page: '1',
+      });
+
+      const response = await fetch(`/api/movies?${queryParams.toString()}`);
+
+      const data = await response.json();
+      const results = data?.results;
+      const error = data?.error;
+      const totalPages = data?.total_pages || 1;
+      setTotalPagesAvailable(totalPages); // Set the total pages available for pagination for the current request parameters
+
+      if (results) {
+        const newMovies = reset ? results : [...moviesTMDBByName, ...results];
+        const uniqueMovies = Array.from(
+          new Set(newMovies.map((movie: TMovieBasics) => movie.id))
+        ).map((id) => newMovies.find((movie: TMovieBasics) => movie.id === id));
+        setMoviesTMDBByName(uniqueMovies);
+      }
+      if (error) {
+        setErrorMessage(t(error));
+      }
+    } catch (error) {
+      setErrorMessage(t('error-fetching-movies'));
+    } finally {
+      setLoading(false);
+      setIsFetching(false);
+    }
+  };
+  console.log('moviesTMDBByName', moviesTMDBByName); // debug
+
   return !user ? (
     <Loading />
   ) : (
@@ -245,6 +287,12 @@ const BrowsePage = () => {
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
       <div className="smooth42transition xs:flex-row flex flex-col items-start gap-5">
+        {/* TODO delete*/}
+        <div className="hidden">
+          <ButtonCustom variant="default" onClick={() => scrapeTMDBbyName()}>
+            SEARCH !!!!!!!!!
+          </ButtonCustom>
+        </div>
         {/* Sort and filter sector */}
         <div
           id="sort-filter-sector"

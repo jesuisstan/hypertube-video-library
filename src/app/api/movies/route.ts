@@ -5,6 +5,8 @@ import { TMovieBasics } from '@/types/movies';
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
+    const category = searchParams.get('category') || 'discover';
+    const search = searchParams.get('search') || '';
     const total_pages_available = searchParams.get('total_pages_available') || '500'; // default to 500 pages
     const lang = searchParams.get('lang') || 'en-US';
     const page = searchParams.get('page') || '1';
@@ -35,28 +37,45 @@ export async function GET(req: Request) {
       },
     };
 
-    const queryParams = new URLSearchParams({
-      include_adult,
-      sort_by,
-      'vote_average.gte': rating_min,
-      'vote_average.lte': rating_max,
-      'vote_count.gte': min_votes,
-      'release_date.gte': release_date_min,
-      'release_date.lte': release_date_max,
-      with_genres,
-      with_keywords,
-      language: lang,
-      page,
-    });
+    let response: Response | undefined; // Initialize as undefined to avoid TypeScript warning
 
-    // Fetch popular movies from TMDB
-    const response = await fetch(
-      `${process.env.TMDB_API_URL}/discover/movie?${queryParams.toString()}`,
-      options
-    );
+    if (category === 'discover') {
+      const queryParams = new URLSearchParams({
+        include_adult,
+        sort_by,
+        'vote_average.gte': rating_min,
+        'vote_average.lte': rating_max,
+        'vote_count.gte': min_votes,
+        'release_date.gte': release_date_min,
+        'release_date.lte': release_date_max,
+        with_genres,
+        with_keywords,
+        language: lang,
+        page,
+      });
 
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      response = await fetch(
+        `${process.env.TMDB_API_URL}/discover/movie?${queryParams.toString()}`,
+        options
+      );
+    } else if (category === 'search') {
+      const queryParams = new URLSearchParams({
+        query: search,
+        include_adult,
+        language: lang,
+        page,
+      });
+
+      response = await fetch(
+        `${process.env.TMDB_API_URL}/search/movie?${queryParams.toString()}`,
+        options
+      );
+    } else {
+      throw new Error(`Invalid category: ${category}`); // Handle invalid category
+    }
+
+    if (!response || !response.ok) {
+      throw new Error(`Request failed with status ${response?.status}`);
     }
 
     const data: TMovieBasics[] = await response.json();

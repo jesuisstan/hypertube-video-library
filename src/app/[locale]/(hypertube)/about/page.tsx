@@ -29,6 +29,7 @@ const AboutPage = () => {
       setLoading(true);
 
       const queryParams = new URLSearchParams({
+        category: 'discover',
         sort_by: 'popularity.desc',
         include_adult: 'false',
         rating_min: '6',
