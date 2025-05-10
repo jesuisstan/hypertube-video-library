@@ -14,7 +14,7 @@ import {
 const DrawerBasic = ({
   trigger,
   title,
-  description,
+  description = '',
   side = 'right',
   children,
   size,
@@ -39,7 +39,7 @@ const DrawerBasic = ({
       >
         <SheetHeader className="flex-shrink-0">
           <SheetTitle>{title}</SheetTitle>
-          {description && <SheetDescription>{description}</SheetDescription>}
+          <SheetDescription>{description}</SheetDescription>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto">{children}</div>
       </SheetContent>

@@ -23,8 +23,8 @@ export async function GET(req: Request) {
 
     if (
       Number(page) > Number(total_pages_available) &&
-      Number(page) !== 1 &&
-      Number(total_pages_available) > 5
+      Number(page) !== 1
+      //Number(total_pages_available) > 5
     ) {
       return NextResponse.json({ error: 'error-page-limit-reached' }, { status: 400 });
     }

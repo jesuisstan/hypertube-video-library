@@ -172,6 +172,7 @@ const BrowsePage = () => {
       }
       window.removeEventListener('scroll', debounceScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, isFetching]);
 
   // Scrape TMDB on page load, when the category changes or when the page changes
@@ -179,6 +180,7 @@ const BrowsePage = () => {
     setPage(1);
     setMoviesTMDB([]);
     scrapeTMDB(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale]);
 
   // Scrape TMDB when the page changes (user scrolls down)
@@ -197,6 +199,7 @@ const BrowsePage = () => {
     scrapeTMDB().finally(() => {
       window.scrollTo(0, scrollPositionRef.current);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   // Scrape TMDB when the sort or filter changes
@@ -259,7 +262,7 @@ const BrowsePage = () => {
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">
-            <label htmlFor="sort" className="text-2xl font-bold">
+            <label htmlFor="browse" className="text-2xl font-bold">
               {t('browsing-the-library')}
             </label>
             <Separator />

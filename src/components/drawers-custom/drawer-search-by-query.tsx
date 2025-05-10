@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 
-import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 
@@ -10,6 +9,15 @@ import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Command, CommandInput } from '@/components/ui/command';
 import DrawerBasic from '@/components/ui/drawer-template';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
@@ -36,16 +44,17 @@ const Trigger = () => {
 const DrawerSearchByQuery = () => {
   const t = useTranslations();
   const title = t('search.search-by-phrase');
-
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const { getValueOfSearchFilter } = useSearchStore();
   const includeAdultContent = getValueOfSearchFilter('include_adult') as string;
   const [query, setQuery] = useState<string>('');
   const [moviesTMDBbyQuery, setMoviesTMDBbyQuery] = useState<TMovieBasics[]>([]);
-  const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(42);
+  const [page, setPage] = useState<number>(1);
+  const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState(false);
+  const moviesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrapeTMDBbyQuery = async (reset = false) => {
     if (!query) {
@@ -60,14 +69,13 @@ const DrawerSearchByQuery = () => {
 
       const queryParams = new URLSearchParams({
         category: 'search',
+        total_pages_available: totalPagesAvailable.toString(),
         search: query,
         include_adult: includeAdultContent,
         lang: locale,
-        page: '1',
+        page: page.toString(),
       });
-
       const response = await fetch(`/api/movies?${queryParams.toString()}`);
-
       const data = await response.json();
       const results = data?.results;
       const error = data?.error;
@@ -91,19 +99,31 @@ const DrawerSearchByQuery = () => {
       setIsFetching(false);
     }
   };
-  console.log('moviesTMDBbyQuery', moviesTMDBbyQuery); // debug
-  console.log('query', query); // debug
 
   const handleSearch = () => {
     setMoviesTMDBbyQuery([]);
+    setPage(1);
     setErrorMessage(null);
     scrapeTMDBbyQuery(true);
   };
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPagesAvailable) return;
+    setPage(newPage);
+  };
+
+  useEffect(() => {
+    scrapeTMDBbyQuery(true);
+
+    // Scroll to the top of movies container
+    moviesContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
   return (
     <DrawerBasic trigger={<Trigger />} title={title} side="right" size="1/2">
-      <div className="flex w-full flex-col gap-4">
-        <div className="flex flex-row items-center gap-2">
+      <div ref={moviesContainerRef} className="flex w-full flex-col gap-4">
+        <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
           <Command shouldFilter={false}>
             <CommandInput
               placeholder={t('search.enter-request')}
@@ -118,7 +138,7 @@ const DrawerSearchByQuery = () => {
             />
           </Command>
           <ButtonCustom
-            className="w-1/6"
+            className="w-1/6 min-w-16"
             variant="default"
             onClick={handleSearch}
             disabled={isFetching || !query || loading}
@@ -149,6 +169,75 @@ const DrawerSearchByQuery = () => {
               <Spinner size={21} />
               <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
             </div>
+          )}
+          {moviesTMDBbyQuery?.length > 0 && totalPagesAvailable > 1 && (
+            <>
+              <Pagination className="mt-4">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      text={t('search.previous')}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(page - 1);
+                      }}
+                    />
+                  </PaginationItem>
+
+                  {[...Array(Math.min(totalPagesAvailable, 2))].map((_, index) => {
+                    const pageNumber = index + 1;
+                    return (
+                      <PaginationItem key={pageNumber}>
+                        <PaginationLink
+                          href="#"
+                          isActive={page === pageNumber}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePageChange(pageNumber);
+                          }}
+                        >
+                          {pageNumber}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  })}
+
+                  {totalPagesAvailable > 2 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                  <PaginationItem key={totalPagesAvailable}>
+                    <PaginationLink
+                      href="#"
+                      isActive={page === totalPagesAvailable}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(totalPagesAvailable);
+                      }}
+                    >
+                      {totalPagesAvailable}
+                    </PaginationLink>
+                  </PaginationItem>
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      text={t('search.next')}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(page + 1);
+                      }}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+              <p className="text-muted-foreground mt-2 text-center text-sm">
+                {t('page')} {page} {t('of')} {totalPagesAvailable}
+              </p>
+            </>
           )}
         </motion.div>
       </div>
