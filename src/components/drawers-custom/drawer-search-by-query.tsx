@@ -18,7 +18,7 @@ const Trigger = () => {
   const t = useTranslations();
 
   const triggerButton = (
-    <div className="fixed top-4 right-4">
+    <div className="animate-fade-up-down fixed top-2 right-2 z-50">
       <ButtonCustom variant="default" className="rounded-full shadow-lg">
         <div className="flex flex-row items-center justify-center gap-2 align-middle">
           <Search width={18} height={18} />
@@ -92,7 +92,7 @@ const DrawerSearchByQuery = () => {
       title={title}
       description={description}
       side="right"
-      width="1/2"
+      size="1/2"
     >
       <div className="flex w-full flex-col gap-4 overflow-auto">
         <ButtonCustom variant="default" onClick={() => scrapeTMDBbyQuery()}>

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import clsx from 'clsx';
+
 import {
   Sheet,
   SheetContent,
@@ -15,19 +17,26 @@ const DrawerBasic = ({
   description,
   side = 'right',
   children,
-  width,
+  size,
 }: {
   trigger: ReactNode;
   title: string;
   description?: string;
   side?: 'left' | 'right' | 'top' | 'bottom';
   children: ReactNode;
-  width: 'fill' | '1/2' | '1/3' | '1/4' | '3/4' | '1/6';
+  size?: 'fill' | '1/2' | '1/3' | '1/4' | '3/4' | '1/6';
 }) => {
   return (
     <Sheet>
       <SheetTrigger>{trigger}</SheetTrigger>
-      <SheetContent side={side} className={`w-${width} flex flex-col`}>
+      <SheetContent
+        side={side}
+        className={clsx(
+          `flex flex-col`,
+          (side === 'top' || 'bottom') && `h-${size}`,
+          (side === 'left' || 'right') && `w-${size}`
+        )}
+      >
         <SheetHeader className="flex-shrink-0">
           <SheetTitle>{title}</SheetTitle>
           {description && <SheetDescription>{description}</SheetDescription>}
