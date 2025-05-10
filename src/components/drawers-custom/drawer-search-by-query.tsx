@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -8,6 +8,7 @@ import { Search } from 'lucide-react';
 
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import { Command, CommandInput } from '@/components/ui/command';
 import DrawerBasic from '@/components/ui/drawer-template';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
@@ -33,13 +34,13 @@ const Trigger = () => {
 };
 
 const DrawerSearchByQuery = () => {
-  const title = 'Search by query';
-  const description = 'Search for movies, series, and more by query.';
-
   const t = useTranslations();
+  const title = t('search.search-by-phrase');
+
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const { getValueOfSearchFilter } = useSearchStore();
   const includeAdultContent = getValueOfSearchFilter('include_adult') as string;
+  const [query, setQuery] = useState<string>('');
   const [moviesTMDBbyQuery, setMoviesTMDBbyQuery] = useState<TMovieBasics[]>([]);
   const [totalPagesAvailable, setTotalPagesAvailable] = useState<number>(42);
   const [loading, setLoading] = useState(false);
@@ -47,13 +48,19 @@ const DrawerSearchByQuery = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const scrapeTMDBbyQuery = async (reset = false) => {
+    if (!query) {
+      setMoviesTMDBbyQuery([]);
+      setErrorMessage(null);
+      return;
+    }
+
     try {
       setErrorMessage(null);
       setLoading(true);
 
       const queryParams = new URLSearchParams({
         category: 'search',
-        search: 'the lord',
+        search: query,
         include_adult: includeAdultContent,
         lang: locale,
         page: '1',
@@ -85,19 +92,41 @@ const DrawerSearchByQuery = () => {
     }
   };
   console.log('moviesTMDBbyQuery', moviesTMDBbyQuery); // debug
+  console.log('query', query); // debug
+
+  const handleSearch = () => {
+    setMoviesTMDBbyQuery([]);
+    setErrorMessage(null);
+    scrapeTMDBbyQuery(true);
+  };
 
   return (
-    <DrawerBasic
-      trigger={<Trigger />}
-      title={title}
-      description={description}
-      side="right"
-      size="1/2"
-    >
-      <div className="flex w-full flex-col gap-4 overflow-auto">
-        <ButtonCustom variant="default" onClick={() => scrapeTMDBbyQuery()}>
-          SEARCH !!!!!!!!!
-        </ButtonCustom>
+    <DrawerBasic trigger={<Trigger />} title={title} side="right" size="1/2">
+      <div className="flex w-full flex-col gap-4">
+        <div className="flex flex-row items-center gap-2">
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder={t('search.enter-request')}
+              value={query}
+              onValueChange={setQuery}
+              className="h-9"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+            />
+          </Command>
+          <ButtonCustom
+            className="w-1/6"
+            variant="default"
+            onClick={handleSearch}
+            disabled={isFetching || !query || loading}
+            loading={isFetching || loading}
+          >
+            {t('search.search')}
+          </ButtonCustom>
+        </div>
         {/* Movies sector */}
         <motion.div initial="hidden" animate="visible" variants={framerMotion}>
           <div

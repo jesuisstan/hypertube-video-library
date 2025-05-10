@@ -218,6 +218,7 @@ const BrowsePage = () => {
     ) {
       scrapeTMDB(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     sortBy,
     selectedGenres,
@@ -236,12 +237,13 @@ const BrowsePage = () => {
       return t('range-warning');
     }
     return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moviesTMDB, releaseDateMin, releaseDateMax]);
 
   return !user ? (
     <Loading />
   ) : (
-    <div>
+    <>
       {rangeWarning && <ToastNotification title={t('warning')} isOpen={true} text={rangeWarning} />}
       {errorMessage && (
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
@@ -444,7 +446,7 @@ const BrowsePage = () => {
           </motion.div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -224,7 +224,8 @@
     "refresh-suggestions": "Refresh Suggestions",
     "advanced-search-note": "Choose the characteristics your ideal match should have (age, tags, preferences, etc.), focusing on what you're looking for in a partner, not about yourself.",
     "no-suggestions-for-filters-sorting": "No suggestions found for the selected filters / sorting",
-    "search-by-phrase": "Search by phrase"
+    "search-by-phrase": "Search by phrase",
+    "enter-request": "Enter your request"
   },
   "complete-profile": "Complete profile",
   "ignore": "Ignore",
