@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { motion } from 'framer-motion';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -124,19 +124,22 @@ const DrawerSearchByQuery = () => {
     <DrawerBasic trigger={<Trigger />} title={title} side="right" size="1/2">
       <div ref={moviesContainerRef} className="flex w-full flex-col gap-4">
         <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
-          <Command shouldFilter={false}>
-            <CommandInput
-              placeholder={t('search.enter-request')}
-              value={query}
-              onValueChange={setQuery}
-              className="h-9"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                }
-              }}
-            />
-          </Command>
+          <div className="flex w-full items-center gap-2">
+            <Command shouldFilter={false}>
+              <CommandInput
+                placeholder={t('search.enter-request')}
+                value={query}
+                onValueChange={setQuery}
+                className="h-9"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
+              />
+            </Command>
+            <X className="size-4 shrink-0 cursor-pointer opacity-50" onClick={() => setQuery('')} />
+          </div>
           <ButtonCustom
             className="w-1/6 min-w-16"
             variant="default"
@@ -148,6 +151,9 @@ const DrawerSearchByQuery = () => {
           </ButtonCustom>
         </div>
         {/* Movies sector */}
+        {!moviesTMDBbyQuery.length && !loading && (
+          <p className="text-center">{t('no-results-found')}</p>
+        )}
         <motion.div initial="hidden" animate="visible" variants={framerMotion}>
           <div
             key="moviesTMDB"
@@ -170,6 +176,12 @@ const DrawerSearchByQuery = () => {
               <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
             </div>
           )}
+          {errorMessage && (
+            <p className="text-destructive m-5 animate-pulse text-center text-base font-normal">
+              {errorMessage}
+            </p>
+          )}
+          {/* Pagination */}
           {moviesTMDBbyQuery?.length > 0 && totalPagesAvailable > 1 && (
             <>
               <Pagination className="mt-4">

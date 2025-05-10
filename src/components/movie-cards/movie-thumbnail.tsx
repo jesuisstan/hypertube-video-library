@@ -64,7 +64,10 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
         </div>
         <p
           title={movieBasics.title}
-          className="flex flex-row items-center justify-center text-center text-base font-bold"
+          className={clsx(
+            'flex flex-row items-center justify-center text-center text-base font-bold',
+            !movieBasics.title.includes(' ') && 'break-all' // Fix for long titles without spaces
+          )}
         >
           {movieBasics.title}
         </p>
