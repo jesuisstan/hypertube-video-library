@@ -92,38 +92,36 @@ const DrawerSearchByQuery = () => {
       title={title}
       description={description}
       side="right"
-      maxWidth="1/3"
+      width="1/2"
     >
       <div className="flex w-full flex-col gap-4 overflow-auto">
         <ButtonCustom variant="default" onClick={() => scrapeTMDBbyQuery()}>
           SEARCH !!!!!!!!!
         </ButtonCustom>
         {/* Movies sector */}
-        <div className="max-h-[80vh] w-full overflow-auto">
-          <motion.div initial="hidden" animate="visible" variants={framerMotion}>
-            <div
-              key="moviesTMDB"
-              className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
-            >
-              {moviesTMDBbyQuery?.map((movie, index) => (
-                <motion.div
-                  variants={slideFromBottom}
-                  key={`${movie.id}-${index}`}
-                  className="flex justify-center self-center"
-                >
-                  <MovieThumbnail movieBasics={movie} loading={false} />
-                </motion.div>
-              ))}
-            </div>
+        <motion.div initial="hidden" animate="visible" variants={framerMotion}>
+          <div
+            key="moviesTMDB"
+            className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
+          >
+            {moviesTMDBbyQuery?.map((movie, index) => (
+              <motion.div
+                variants={slideFromBottom}
+                key={`${movie.id}-${index}`}
+                className="flex justify-center self-center"
+              >
+                <MovieThumbnail movieBasics={movie} loading={false} />
+              </motion.div>
+            ))}
+          </div>
 
-            {loading && (
-              <div className="m-5 flex flex-col items-center gap-5">
-                <Spinner size={21} />
-                <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
-              </div>
-            )}
-          </motion.div>
-        </div>
+          {loading && (
+            <div className="m-5 flex flex-col items-center gap-5">
+              <Spinner size={21} />
+              <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
+            </div>
+          )}
+        </motion.div>
       </div>
     </DrawerBasic>
   );
