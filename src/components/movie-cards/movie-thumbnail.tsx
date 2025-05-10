@@ -66,13 +66,13 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
           title={movieBasics.title}
           className={clsx(
             'flex flex-row items-center justify-center text-center text-base font-bold',
-            !movieBasics.title.includes(' ') && 'break-all' // Fix for long titles without spaces
+            !movieBasics.title?.includes(' ') && 'break-all' // Fix for long titles without spaces
           )}
         >
           {movieBasics.title}
         </p>
         <p className="flex flex-row items-center justify-center text-center text-sm">
-          {`${t('release')}: ${movieBasics.release_date.split('-')[0] || '----'}`}
+          {`${t('release')}: ${movieBasics.release_date?.split('-')[0] || '----'}`}
         </p>
         <p className="flex flex-row items-center justify-center text-center text-xs">
           {getGenresNames(movieBasics.genre_ids, genresList)}

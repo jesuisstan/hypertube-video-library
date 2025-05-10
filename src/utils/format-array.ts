@@ -138,7 +138,7 @@ export const getGenresNames = (
   genresList: { id: number | string; name: string }[]
 ): string => {
   const genreNames = genreIds
-    .map((id) => genresList.find((genre) => genre.id === id)?.name)
+    ?.map((id) => genresList.find((genre) => genre.id === id)?.name)
     .filter((name) => name)
     .map((name) => capitalize(name!))
     .join(' / ');
