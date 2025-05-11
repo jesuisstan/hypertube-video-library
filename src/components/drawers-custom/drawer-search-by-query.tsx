@@ -161,9 +161,6 @@ const DrawerSearchByQuery = () => {
             </Command>
             <X className="size-4 shrink-0 cursor-pointer opacity-50" onClick={() => setQuery('')} />
           </div>
-          <div className="xs:flex hidden h-11">
-            <Separator orientation="vertical" />
-          </div>
           <ButtonCustom
             className="w-1/6 min-w-16"
             variant="default"

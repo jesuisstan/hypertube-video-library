@@ -15,4 +15,7 @@ export type TMovieBasics = {
   vote_average: number;
   vote_count: number;
   imdb_id?: string;
+  tagline?: string;
+  budget?: number;
+  revenue?: number;
 };

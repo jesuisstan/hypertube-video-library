@@ -223,6 +223,11 @@
   },
   "page": "Page",
   "of": "of",
+  "original-title": "Original title",
+  "genre": "Genre",
+  "original-language": "Original language",
+  "budget": "Budget",
+  "revenue": "Revenue",
 
   "complete-profile": "Complete profile",
   "ignore": "Ignore",

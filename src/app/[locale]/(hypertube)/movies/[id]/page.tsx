@@ -92,11 +92,12 @@ const MovieProfile = () => {
       scrapeYTS(searchTitle, searchYear);
       scrapePB(searchTitle, searchYear);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTitle]);
 
   console.log('TMBB movieData', movieData); // debug
-  //console.log('PirateBay magnetsPB', magnetsPB); // debug
-  //console.log('YTS torrents', torrentsYTS); // debug
+  console.log('YTS torrents', torrentsYTS); // debug
+  console.log('PirateBay magnetsPB', magnetsPB); // debug
 
   return loading ? (
     <Loading />
@@ -133,28 +134,56 @@ const MovieProfile = () => {
         {/* Details */}
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-8">
           {/* Left column: title, subtitle, overview */}
-          <div className="flex flex-col gap-4 md:w-2/3">
+          <div className="flex flex-col gap-2 md:w-2/3">
             <h1 className="text-primary-foreground text-3xl font-bold">{movieData?.title}</h1>
 
             <p className="text-secondary italic">
-              {movieData?.original_title !== movieData?.title && movieData?.original_title}
+              {movieData?.original_title !== movieData?.title && (
+                <>
+                  <span className="font-bold">{t('original-title')}:</span>{' '}
+                  {movieData?.original_title}
+                </>
+              )}
             </p>
-
+            <p className="text-secondary italic">
+              {movieData?.tagline && '"' + movieData.tagline + '"'}
+            </p>
             <p className="text-secondary mt-2 max-w-2xl leading-relaxed">{movieData?.overview}</p>
           </div>
 
           {/* Right column: metadata */}
-          <div className="flex flex-col gap-2 md:w-1/3">
+          <div className="flex flex-col gap-2 text-xl md:w-1/3">
             <p className="text-secondary">
-              {t('release') + ': ' + formatDateThumbnail(movieData?.release_date)}
+              <span className="font-bold">{t('release')}:</span>{' '}
+              {formatDateThumbnail(movieData?.release_date)}
             </p>
 
-            <p className="text-muted text-sm">{movieData?.original_language?.toUpperCase()}</p>
+            <p className="text-muted">
+              <span className="font-bold">{t('original-language')}:</span>{' '}
+              {movieData?.original_language?.toUpperCase()}
+            </p>
 
-            <p className="text-muted text-sm">{movieData?.release_date}</p>
-
-            <p className="text-muted text-sm">
+            <p className="text-muted">
+              <span className="font-bold">{t('genre')}:</span>{' '}
               {movieData?.genres?.map((genre) => capitalize(genre.name)).join(', ')}
+            </p>
+
+            <p className="text-muted">
+              {movieData?.budget && (
+                <>
+                  <span className="font-bold">{t('budget')}:</span>{' '}
+                  {movieData.budget.toLocaleString()}
+                </>
+              )}
+            </p>
+
+            <p className="text-muted">
+              {movieData?.revenue && (
+                <>
+                  <span className="font-bold">{t('revenue')}:</span>{' '}
+                  {movieData.revenue.toLocaleString()}
+                </>
+              )}
             </p>
           </div>
         </div>
