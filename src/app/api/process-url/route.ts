@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import ffmpeg from 'fluent-ffmpeg';
+import fs from 'fs';
 import * as magnet from 'magnet-uri';
+import { PassThrough, Readable } from 'stream';
 import torrentStream from 'torrent-stream';
 
 const torrents: Map<string, magnet.Instance> = new Map();
-let currentStream: { destroy: (arg0: () => void) => void } | null = null;
+let currentStream: PassThrough | null = null;
 
 export async function POST(request: Request) {
   const { url } = await request.json();
@@ -43,6 +46,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const file = await getVideoFile(engine);
+    const format = getVideoFileFormatFrom(file.name);
     const total = file.length;
 
     const rangeHeader = request.headers.get('range') || '';
@@ -58,13 +62,26 @@ export async function GET(request: NextRequest) {
     console.log('Range:', start, end);
     const stream = file.createReadStream({ start, end });
     if (currentStream !== null) {
-      currentStream?.destroy(() => {});
+      currentStream = null;
     }
-    currentStream = stream;
-    const response = new NextResponse(stream as any, {
+    if (canStreamDirectly(format)) {
+      currentStream = stream;
+    } else {
+      console.log('Transcoding video with ffmpeg');
+      currentStream = ffmpeg(stream)
+        .outputFormat('mp4')
+        .outputOptions([
+          '-movflags frag_keyframe+empty_moov', // for streaming
+        ])
+        .on('error', (err) => {
+          console.error('FFmpeg error:', err);
+        })
+        .pipe() as PassThrough;
+    }
+    const response = new NextResponse(currentStream as any, {
       status: rangeHeader ? 206 : 200,
       headers: {
-        'Content-Range': `bytes ${start}-${end}/${total}`,
+        'Content-Range': `bytes ${start}-${end}/${canStreamDirectly(format) ? total : '*'}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': (end - start + 1).toString(),
         'Content-Type': 'video/mp4',
@@ -86,9 +103,11 @@ function getVideoFile(engine: TorrentStream.TorrentEngine): Promise<TorrentStrea
     engine.on('ready', () => {
       console.log('Engine is ready');
       const videoFile = engine.files.find((file) => {
-        const ext = file.name.split('.').pop();
-        if (!ext) return false;
-        return ['mp4', 'mkv', 'avi', 'ogg'].includes(ext);
+        let format = getVideoFileFormatFrom(file.name);
+        if (format === VideoFileFormat.UNKNOWN) {
+          return false;
+        }
+        return true;
       });
       if (videoFile) {
         videoFile.select();
@@ -98,4 +117,40 @@ function getVideoFile(engine: TorrentStream.TorrentEngine): Promise<TorrentStrea
       }
     });
   });
+}
+
+function getVideoFileFormatFrom(fileName: string): VideoFileFormat {
+  const ext = fileName.split('.').pop();
+  if (!ext) return VideoFileFormat.UNKNOWN;
+  switch (ext.toLowerCase()) {
+    case 'mp4':
+      return VideoFileFormat.MP4;
+    case 'mkv':
+      return VideoFileFormat.MKV;
+    case 'avi':
+      return VideoFileFormat.AVI;
+    case 'ogg':
+      return VideoFileFormat.OGG;
+    default:
+      return VideoFileFormat.UNKNOWN;
+  }
+}
+
+function isVideoFormat(format: VideoFileFormat): boolean {
+  if (format === VideoFileFormat.UNKNOWN) {
+    return false;
+  }
+  return true;
+}
+
+function canStreamDirectly(format: VideoFileFormat): boolean {
+  return format === VideoFileFormat.MP4 || format === VideoFileFormat.OGG;
+}
+
+enum VideoFileFormat {
+  MP4 = 'mp4',
+  MKV = 'mkv',
+  AVI = 'avi',
+  OGG = 'ogg',
+  UNKNOWN = 'unknown',
 }
