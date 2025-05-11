@@ -11,19 +11,15 @@ import Loading from '@/app/loading';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
-import useSearchStore from '@/stores/search';
 import { TMagnetDataPirateBay } from '@/types/magnet-data-piratebay';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
-import { getGenresNames } from '@/utils/format-array';
+import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
-import { formatApiDateLastUpdate, formatDateThumbnail } from '@/utils/format-date';
 
 const MovieProfile = () => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
-  const { getGenresListByLanguage } = useSearchStore();
-  const genresList = getGenresListByLanguage(locale);
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
