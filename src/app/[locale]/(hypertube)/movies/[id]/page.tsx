@@ -7,16 +7,23 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { ArrowRight, BookCopy, Download } from 'lucide-react';
 
+import Loading from '@/app/loading';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
+import useSearchStore from '@/stores/search';
 import { TMagnetDataPirateBay } from '@/types/magnet-data-piratebay';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
+import { getGenresNames } from '@/utils/format-array';
+import { capitalize } from '@/utils/format-string';
+import { formatApiDateLastUpdate, formatDateThumbnail } from '@/utils/format-date';
 
 const MovieProfile = () => {
   const t = useTranslations();
-  const localeActive = useLocale();
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
+  const { getGenresListByLanguage } = useSearchStore();
+  const genresList = getGenresListByLanguage(locale);
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
@@ -28,7 +35,7 @@ const MovieProfile = () => {
   const scrapeTMDB = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/movies/${movieId}/?lang=en-EN`);
+      const response = await fetch(`/api/movies/${movieId}/?lang=${locale}`); // todo fetch EN data to avoid torrent-scraping issues coused by original titles
       const data = await response.json();
       setMovieData(data);
     } catch (error) {
@@ -78,8 +85,8 @@ const MovieProfile = () => {
   };
 
   useEffect(() => {
-    if (movieData?.title && movieData?.release_date) {
-      setSearchTitle(movieData?.title);
+    if (movieData?.original_title && movieData?.release_date) {
+      setSearchTitle(movieData?.original_title);
       setSearchYear(movieData?.release_date?.split('-')[0]);
     }
   }, [movieData]);
@@ -91,81 +98,134 @@ const MovieProfile = () => {
     }
   }, [searchTitle]);
 
-  //console.log('TMBB movieData', movieData); // debug
-  //console.log('searchTitle:', searchTitle); // debug
+  console.log('TMBB movieData', movieData); // debug
   //console.log('PirateBay magnetsPB', magnetsPB); // debug
-  console.log('YTS torrents', torrentsYTS); // debug
+  //console.log('YTS torrents', torrentsYTS); // debug
 
-  return (
-    <div className="flex flex-col gap-5">
-      <h1>Movie Profile Page</h1>
-      <div>
-        <Image
-          src={
-            movieData?.poster_path
-              ? `https://image.tmdb.org/t/p/w300${movieData?.poster_path}`
-              : '/identity/logo-thumbnail.png'
-          }
-          blurDataURL={'/identity/logo-thumbnail.png'}
-          alt={'poster'}
-          width={200}
-          height={300}
-          className="rounded-md"
-          priority
-        />
+  return loading ? (
+    <Loading />
+  ) : (
+    <div className="w-full">
+      {/* Main content with backdrop */}
+      <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[200px_1fr]">
+        {movieData?.backdrop_path && (
+          <div className="absolute inset-0 -z-10 overflow-hidden rounded-md">
+            <Image
+              src={`https://image.tmdb.org/t/p/w780${movieData.backdrop_path}`}
+              alt="backdrop"
+              fill
+              className="object-cover opacity-30"
+            />
+            <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
+          </div>
+        )}
+        {/* Poster */}
+        <div>
+          <Image
+            src={
+              movieData?.poster_path
+                ? `https://image.tmdb.org/t/p/w300${movieData.poster_path}`
+                : '/identity/logo-thumbnail.png'
+            }
+            alt="poster"
+            width={200}
+            height={300}
+            className="rounded-md shadow-md"
+          />
+        </div>
+
+        {/* Details */}
+        <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-8">
+          {/* Left column: title, subtitle, overview */}
+          <div className="flex flex-col gap-4 md:w-2/3">
+            <h1 className="text-primary-foreground text-3xl font-bold">{movieData?.title}</h1>
+
+            <p className="text-secondary italic">
+              {movieData?.original_title !== movieData?.title && movieData?.original_title}
+            </p>
+
+            <p className="text-secondary mt-2 max-w-2xl leading-relaxed">{movieData?.overview}</p>
+          </div>
+
+          {/* Right column: metadata */}
+          <div className="flex flex-col gap-2 md:w-1/3">
+            <p className="text-secondary">
+              {t('release') + ': ' + formatDateThumbnail(movieData?.release_date)}
+            </p>
+
+            <p className="text-muted text-sm">{movieData?.original_language?.toUpperCase()}</p>
+
+            <p className="text-muted text-sm">{movieData?.release_date}</p>
+
+            <p className="text-muted text-sm">
+              {movieData?.genres?.map((genre) => capitalize(genre.name)).join(', ')}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* scraping PirateBay */}
-      <ButtonCustom
-        onClick={() => scrapeYTS(searchTitle, searchYear)}
-        loading={loading}
-        disabled={loading}
-        className="w-60"
-      >
-        Scrape YTS base
-      </ButtonCustom>
-      <div>
-        <h1 className="font-bold">Torrents from YTS:</h1>
-        <p>{searchTitle}</p>
-        <ul key="movies-Pirate-Bay" className="flex flex-col">
+      {/* Cast and Crew */}
+      <div className="relative z-10 mx-auto max-w-screen px-6 py-10">
+        <h2 className="mb-4 text-2xl font-bold">Top Billed Cast</h2>
+        <div className="flex gap-4 overflow-x-auto pb-4">
+          {/* Dummy map — replace with actual cast from movieData if available */}
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="w-32 flex-shrink-0">
+              <div className="aspect-[2/3] w-full rounded-md bg-gray-700" />
+              <p className="mt-2 text-sm font-semibold">Actor Name</p>
+              <p className="text-xs text-gray-400">Character</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Preserve scraping UI below this */}
+      <div className="relative z-10 mx-auto max-w-screen px-6 py-10">
+        <ButtonCustom
+          onClick={() => scrapeYTS(searchTitle, searchYear)}
+          loading={loading}
+          disabled={loading}
+          className="w-60"
+        >
+          Scrape YTS base
+        </ButtonCustom>
+
+        <h1 className="mt-6 font-bold">Torrents from YTS:</h1>
+        <ul className="flex flex-col gap-2">
           {torrentsYTS?.map((movie, index) => (
-            <li key={index} className="flex flex-row items-center gap-2 align-middle">
-              <p className="mt-2 text-center">{movie.quality}</p>
+            <li key={index} className="flex items-center gap-2">
+              <p>{movie.quality}</p>
               <ArrowRight className="h-4 w-4" />
-              <p className="mt-2 text-center">{movie.size}</p>
+              <p>{movie.size}</p>
               <ArrowRight className="h-4 w-4" />
-              <p className="mt-2 text-center">{t('download') + ' torrent'}</p>
-              <ButtonCustom size={'icon'} variant={'default'} title={t('download') + ' torrent'}>
-                <Link href={`${movie.url}`}>
+              <ButtonCustom size="icon" variant="default" title="Download torrent">
+                <Link href={movie.url}>
                   <Download className="h-4 w-4" />
                 </Link>
               </ButtonCustom>
             </li>
           ))}
         </ul>
-      </div>
 
-      {/* scraping PirateBay */}
-      <ButtonCustom
-        onClick={() => scrapePB(searchTitle, searchYear)}
-        loading={loading}
-        disabled={loading}
-        className="w-60"
-      >
-        Scrape Pirate Bay
-      </ButtonCustom>
-      <div>
-        <h1 className="font-bold">Magnets from Pirate Bay:</h1>
-        <ul key="movies-Pirate-Bay" className="flex flex-col">
+        <ButtonCustom
+          onClick={() => scrapePB(searchTitle, searchYear)}
+          loading={loading}
+          disabled={loading}
+          className="mt-6 w-60"
+        >
+          Scrape Pirate Bay
+        </ButtonCustom>
+
+        <h1 className="mt-6 font-bold">Magnets from Pirate Bay:</h1>
+        <ul className="flex flex-col gap-2">
           {magnetsPB?.map((movie) => (
-            <li key={movie.link} className="flex flex-row items-center gap-2 align-middle">
-              <p className="mt-2 text-center">{movie.title}</p>
+            <li key={movie.link} className="flex items-center gap-2">
+              <p>{movie.title}</p>
               <ArrowRight className="h-4 w-4" />
-              <p className="mt-2 text-center">{movie.size}</p>
+              <p>{movie.size}</p>
               <ArrowRight className="h-4 w-4" />
-              <p className="mt-2 text-center">{t('copy') + ' magnet'}</p>
-              <ButtonCustom size={'icon'} variant={'default'} title={t('copy') + ' magnet'}>
-                <Link href={`${movie.link}`}>
+              <ButtonCustom size="icon" variant="default" title="Copy magnet">
+                <Link href={movie.link}>
                   <BookCopy className="h-4 w-4" />
                 </Link>
               </ButtonCustom>

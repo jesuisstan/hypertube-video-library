@@ -29,7 +29,7 @@ const AvatarGeneral = ({
       <Avatar.Root
         className={clsx(
           'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden border-2 align-middle select-none',
-          rounded ? 'rounded-full' : 'rounded-2xl'
+          rounded ? 'rounded-full' : 'rounded-md'
         )}
         style={avatarSizeStyle}
         onClick={onAvatarChange}

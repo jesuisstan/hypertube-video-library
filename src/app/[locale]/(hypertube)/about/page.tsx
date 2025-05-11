@@ -142,7 +142,7 @@ const AboutPage = () => {
           variants={slideFromBottom}
           id="powered-by"
           className={clsx(
-            'bg-card shadow-primary/20 flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-2xl p-5 align-middle shadow-md'
+            'bg-card shadow-primary/20 flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-md p-5 align-middle shadow-md'
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>

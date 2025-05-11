@@ -39,7 +39,7 @@ const HeaderWrapper = ({
   return (
     <div
       className={clsx(
-        'bg-card shadow-primary/20 smooth42transition relative flex max-h-fit min-h-[104px] w-full min-w-64 flex-row flex-wrap items-center justify-center gap-x-10 gap-y-1 rounded-2xl p-5 align-middle shadow-md transition-all duration-300 ease-in-out'
+        'bg-card shadow-primary/20 smooth42transition relative flex max-h-fit min-h-[104px] w-full min-w-64 flex-row flex-wrap items-center justify-center gap-x-10 gap-y-1 rounded-md p-5 align-middle shadow-md transition-all duration-300 ease-in-out'
       )}
     >
       <div className="relative">
@@ -92,7 +92,7 @@ const HeaderWrapper = ({
         </div>
         {modifiable && (
           <div
-            className="bg-card/70 absolute right-0 cursor-pointer rounded-2xl"
+            className="bg-card/70 absolute right-0 cursor-pointer rounded-md"
             onClick={() => handleModify('basics' as keyof typeof TProfileCompleteLayout)}
           >
             <FilledOrNot size={15} filled={!!lastName && !!firstName} />

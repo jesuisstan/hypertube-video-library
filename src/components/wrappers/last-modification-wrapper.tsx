@@ -11,7 +11,7 @@ const LastModificationWrapper = ({ date }: { date: string | null | undefined }) 
   const formatedLastActionDate = formatApiDateLastUpdate(date!);
 
   return (
-    <div className="bg-card shadow-primary/20 relative rounded-2xl p-5 shadow-md">
+    <div className="bg-card shadow-primary/20 relative rounded-md p-5 shadow-md">
       <div className="flex flex-col justify-start">
         <h3 className="text-base font-bold">{t(`last-modification`)}</h3>
         <div className="mt-4">

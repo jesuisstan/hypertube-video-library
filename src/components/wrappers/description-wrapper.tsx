@@ -30,7 +30,7 @@ const DescriptionWrapper = ({
       title={isDescriptionExpanded ? t('click-to-wrap') : t('click-to-unwrap')}
       onClick={toggleDescription}
       className={clsx(
-        'bg-card shadow-primary/20 relative min-h-28 w-full min-w-36 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl p-5 shadow-md transition-all duration-300 ease-in-out'
+        'bg-card shadow-primary/20 relative min-h-28 w-full min-w-36 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-md p-5 shadow-md transition-all duration-300 ease-in-out'
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

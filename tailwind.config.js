@@ -19,6 +19,11 @@ module.exports = {
       md: '900px', // => @media (min-width: 900px)
       lg: '1200px', // => @media (min-width: 1200px)
       xl: '1500px', // => @media (min-width: 1500px)
+      '2xl': '1800px', // => @media (min-width: 1800px)
+      '3xl': '2100px', // => @media (min-width: 2100px)
+      '4xl': '2400px', // => @media (min-width: 2400px)
+      '5xl': '2700px', // => @media (min-width: 2700px)
+      '6xl': '3000px', // => @media (min-width: 3000px)
     },
     extend: {
       typography: {

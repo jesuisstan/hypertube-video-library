@@ -258,7 +258,7 @@ const BrowsePage = () => {
         <div
           id="sort-filter-sector"
           className={clsx(
-            'bg-card shadow-primary/20 xs:sticky xs:max-w-80 xs:overflow-x-hidden top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-2xl p-5 shadow-md'
+            'bg-card shadow-primary/20 xs:sticky xs:max-w-80 xs:overflow-x-hidden top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-md p-5 shadow-md'
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">

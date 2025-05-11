@@ -76,7 +76,7 @@ const PasswordResetPage = () => {
     >
       <div
         id="email-confirmation"
-        className="bg-card flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-2xl p-5 text-center shadow-md"
+        className="bg-card flex w-fit min-w-96 flex-col items-center justify-center gap-5 rounded-md p-5 text-center shadow-md"
       >
         <Image
           src="/identity/logo-title-only.png"
