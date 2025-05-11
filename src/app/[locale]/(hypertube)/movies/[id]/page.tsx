@@ -6,10 +6,16 @@ import { useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
-import { ArrowRight, BookCopy, Download } from 'lucide-react';
+import clsx from 'clsx';
+import { ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import {
+  popularLanguagesOptionsEN,
+  popularLanguagesOptionsFR,
+  popularLanguagesOptionsRU,
+} from '@/constants/popular-languages';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
 import { TMagnetDataPirateBay } from '@/types/magnet-data-piratebay';
@@ -17,11 +23,6 @@ import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
 import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
-import {
-  popularLanguagesOptionsEN,
-  popularLanguagesOptionsFR,
-  popularLanguagesOptionsRU,
-} from '@/constants/popular-languages';
 
 const MovieProfile = () => {
   const t = useTranslations();
@@ -151,7 +152,39 @@ const MovieProfile = () => {
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-8">
           {/* Left column: title, subtitle, overview */}
           <div className="flex flex-col gap-2 md:w-2/3">
-            <h1 className="text-primary-foreground text-3xl font-bold">{movieData?.title}</h1>
+            <div className="flex flex-row flex-wrap items-center justify-start gap-4">
+              <h1 className="text-primary-foreground text-3xl font-bold">{movieData?.title}</h1>
+              <div className="flex flex-row flex-wrap items-center gap-4">
+                <div
+                  className={clsx(
+                    'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
+                    movieData?.vote_average! > 7
+                      ? 'border-positive shadow-positive'
+                      : movieData?.vote_average! >= 6
+                        ? 'border-amber-400 shadow-amber-400'
+                        : 'border-destructive shadow-destructive'
+                  )}
+                  title={`${t('average-rating')}: ${movieData?.vote_average}`}
+                >
+                  {movieData?.vote_average?.toFixed(1)}
+                </div>
+
+                <div
+                  className={clsx(
+                    'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                  )}
+                >
+                  <Heart className="smooth42transition hover:scale-110" />
+                </div>
+                <div
+                  className={clsx(
+                    'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                  )}
+                >
+                  <CircleCheck className="smooth42transition hover:scale-110" />
+                </div>
+              </div>
+            </div>
 
             <p className="text-secondary italic">
               {movieData?.original_title !== movieData?.title && (
@@ -176,30 +209,32 @@ const MovieProfile = () => {
             </p>
 
             {movieData?.original_language ? (
-              <div className="text-secondary flex flex-row items-center gap-2">
+              <div className="text-secondary flex flex-row flex-wrap items-center gap-2">
                 <span className="font-bold">
                   {t('original-language')}
                   {': '}
                 </span>
-                <Avatar.Root
-                  className={
-                    'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
-                  }
-                >
-                  <Avatar.Image
-                    className="h-4 w-4 rounded-[inherit] object-cover"
-                    src={`/country-flags/${movieData?.original_language?.toLowerCase()}.svg`}
-                    alt="national-flag"
-                  />
-                </Avatar.Root>
-                <span className="italic">
-                  {
-                    languageOptions.find(
-                      (option) =>
-                        option.value.toLowerCase() === movieData?.original_language?.toLowerCase()
-                    )?.label
-                  }
-                </span>
+                <>
+                  <Avatar.Root
+                    className={
+                      'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
+                    }
+                  >
+                    <Avatar.Image
+                      className="h-4 w-4 rounded-[inherit] object-cover"
+                      src={`/country-flags/${movieData?.original_language?.toLowerCase()}.svg`}
+                      alt="national-flag"
+                    />
+                  </Avatar.Root>
+                  <span className="italic">
+                    {
+                      languageOptions.find(
+                        (option) =>
+                          option.value.toLowerCase() === movieData?.original_language?.toLowerCase()
+                      )?.label
+                    }
+                  </span>
+                </>
               </div>
             ) : null}
 
