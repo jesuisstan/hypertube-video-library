@@ -4,7 +4,6 @@ import React from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
-import { PencilLine } from 'lucide-react';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import {

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 
+import * as Avatar from '@radix-ui/react-avatar';
 import { ArrowRight, BookCopy, Download } from 'lucide-react';
 
 import Loading from '@/app/loading';
@@ -16,6 +17,11 @@ import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
 import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
+import {
+  popularLanguagesOptionsEN,
+  popularLanguagesOptionsFR,
+  popularLanguagesOptionsRU,
+} from '@/constants/popular-languages';
 
 const MovieProfile = () => {
   const t = useTranslations();
@@ -80,6 +86,14 @@ const MovieProfile = () => {
     }
   };
 
+  // Determine the correct language options array based on the locale
+  const languageOptions =
+    locale === 'en'
+      ? popularLanguagesOptionsEN
+      : locale === 'fr'
+        ? popularLanguagesOptionsFR
+        : popularLanguagesOptionsRU;
+
   useEffect(() => {
     if (movieData?.original_title && movieData?.release_date) {
       setSearchTitle(movieData?.original_title);
@@ -105,17 +119,19 @@ const MovieProfile = () => {
     <div className="w-full">
       {/* Main content with backdrop */}
       <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[200px_1fr]">
-        {movieData?.backdrop_path && (
-          <div className="absolute inset-0 -z-10 overflow-hidden rounded-md">
-            <Image
-              src={`https://image.tmdb.org/t/p/w780${movieData.backdrop_path}`}
-              alt="backdrop"
-              fill
-              className="object-cover opacity-30"
-            />
-            <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
-          </div>
-        )}
+        <div className="absolute inset-0 -z-10 overflow-hidden rounded-md">
+          <Image
+            src={
+              movieData?.backdrop_path
+                ? `https://image.tmdb.org/t/p/w780${movieData.backdrop_path}`
+                : '/identity/logo-title-only.png'
+            }
+            alt="backdrop"
+            fill
+            className="object-cover opacity-30"
+          />
+          <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
+        </div>
         {/* Poster */}
         <div>
           <Image
@@ -145,46 +161,77 @@ const MovieProfile = () => {
                 </>
               )}
             </p>
-            <p className="text-secondary italic">
-              {movieData?.tagline && '"' + movieData.tagline + '"'}
-            </p>
+            <p className="text-secondary italic">{movieData?.tagline && movieData.tagline}</p>
             <p className="text-secondary mt-2 max-w-2xl leading-relaxed">{movieData?.overview}</p>
           </div>
 
           {/* Right column: metadata */}
-          <div className="flex flex-col gap-2 text-xl md:w-1/3">
+          <div className="flex flex-col gap-2 text-[18px] md:w-1/3">
             <p className="text-secondary">
-              <span className="font-bold">{t('release')}:</span>{' '}
-              {formatDateThumbnail(movieData?.release_date)}
+              <span className="font-bold">
+                {t('release')}
+                {': '}
+              </span>
+              <span className="italic">{formatDateThumbnail(movieData?.release_date)}</span>
             </p>
 
-            <p className="text-muted">
-              <span className="font-bold">{t('original-language')}:</span>{' '}
-              {movieData?.original_language?.toUpperCase()}
-            </p>
+            {movieData?.original_language ? (
+              <div className="text-secondary flex flex-row items-center gap-2">
+                <span className="font-bold">
+                  {t('original-language')}
+                  {': '}
+                </span>
+                <Avatar.Root
+                  className={
+                    'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
+                  }
+                >
+                  <Avatar.Image
+                    className="h-4 w-4 rounded-[inherit] object-cover"
+                    src={`/country-flags/${movieData?.original_language?.toLowerCase()}.svg`}
+                    alt="national-flag"
+                  />
+                </Avatar.Root>
+                <span className="italic">
+                  {
+                    languageOptions.find(
+                      (option) =>
+                        option.value.toLowerCase() === movieData?.original_language?.toLowerCase()
+                    )?.label
+                  }
+                </span>
+              </div>
+            ) : null}
 
             <p className="text-muted">
-              <span className="font-bold">{t('genre')}:</span>{' '}
-              {movieData?.genres?.map((genre) => capitalize(genre.name)).join(', ')}
+              <span className="font-bold">
+                {t('genre')}
+                {': '}
+              </span>
+              <span className="italic">
+                {movieData?.genres?.map((genre) => capitalize(genre.name)).join(', ')}
+              </span>
             </p>
 
-            <p className="text-muted">
-              {movieData?.budget && (
-                <>
-                  <span className="font-bold">{t('budget')}:</span>{' '}
-                  {movieData.budget.toLocaleString()}
-                </>
-              )}
-            </p>
+            {movieData?.budget && movieData?.budget > 0 ? (
+              <p className="text-muted">
+                <span className="font-bold">
+                  {t('budget')}
+                  {': '}
+                </span>
+                <span className="italic">{movieData.budget.toLocaleString()}</span>
+              </p>
+            ) : null}
 
-            <p className="text-muted">
-              {movieData?.revenue && (
-                <>
-                  <span className="font-bold">{t('revenue')}:</span>{' '}
-                  {movieData.revenue.toLocaleString()}
-                </>
-              )}
-            </p>
+            {movieData?.revenue && movieData?.revenue > 0 ? (
+              <p className="text-muted">
+                <span className="font-bold">
+                  {t('revenue')}
+                  {': '}
+                </span>
+                <span className="italic">{movieData.revenue.toLocaleString()}</span>
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
