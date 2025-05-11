@@ -18,6 +18,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import RadioGroup from '@/components/ui/radio/radio-group';
+import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
@@ -45,7 +47,7 @@ const DrawerSearchByQuery = () => {
   const t = useTranslations();
   const title = t('search.search-by-phrase');
   const locale = useLocale() as 'en' | 'ru' | 'fr';
-  const { getValueOfSearchFilter } = useSearchStore();
+  const { getValueOfSearchFilter, setValueOfSearchFilter } = useSearchStore();
   const includeAdultContent = getValueOfSearchFilter('include_adult') as string;
   const [query, setQuery] = useState<string>('');
   const [moviesTMDBbyQuery, setMoviesTMDBbyQuery] = useState<TMovieBasics[]>([]);
@@ -112,18 +114,37 @@ const DrawerSearchByQuery = () => {
     setPage(newPage);
   };
 
+  const handleAdultContentChange = (value: string) => {
+    setValueOfSearchFilter('include_adult', value);
+  };
+
   useEffect(() => {
     scrapeTMDBbyQuery(true);
 
     // Scroll to the top of movies container
     moviesContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, includeAdultContent]);
 
   return (
     <DrawerBasic trigger={<Trigger />} title={title} side="right" size="1/2">
       <div ref={moviesContainerRef} className="flex w-full flex-col gap-4">
         <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
+          <div className="flex w-full max-w-32 flex-col gap-2 self-center">
+            <label className="font-bold">18+</label>
+            <RadioGroup
+              options={[
+                { value: 'true', label: t('yes') },
+                { value: 'false', label: t('no') },
+              ]}
+              selectedItem={getValueOfSearchFilter('include_adult') as string}
+              onSelectItem={(args_0) => handleAdultContentChange(args_0)}
+              defaultValue="false"
+            />
+          </div>
+          <div className="xs:flex hidden h-11">
+            <Separator orientation="vertical" />
+          </div>
           <div className="flex w-full items-center gap-2">
             <Command shouldFilter={false}>
               <CommandInput
@@ -139,6 +160,9 @@ const DrawerSearchByQuery = () => {
               />
             </Command>
             <X className="size-4 shrink-0 cursor-pointer opacity-50" onClick={() => setQuery('')} />
+          </div>
+          <div className="xs:flex hidden h-11">
+            <Separator orientation="vertical" />
           </div>
           <ButtonCustom
             className="w-1/6 min-w-16"
