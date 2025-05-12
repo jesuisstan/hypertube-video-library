@@ -186,6 +186,7 @@
   "error-page-limit-reached": "Достигнут предел страниц",
   "error-fetching-keywords": "Ошибка загрузки ключевых слов. Попробуйте ещё раз",
   "error-fetching-credits": "Ошибка загрузки каста. Попробуйте ещё раз",
+  "error-movie-id-is-required": "ID фильма обязателен",
   "enter-year": "Введите год",
   "rating": "Рейтинг",
   "sort-by": "Сортировать по",

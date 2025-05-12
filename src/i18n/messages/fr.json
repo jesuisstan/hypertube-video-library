@@ -186,6 +186,7 @@
   "error-page-limit-reached": "Limite de page atteinte",
   "error-fetching-keywords": "Erreur lors de la récupération des mots-clés. Veuillez réessayer",
   "error-fetching-credits": "Erreur lors de la récupération des crédits. Veuillez réessayer",
+  "error-movie-id-is-required": "L'ID du film est requis",
   "enter-year": "Entrez l'année",
   "rating": "Note",
   "sort-by": "Trier par",

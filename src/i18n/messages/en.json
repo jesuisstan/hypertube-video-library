@@ -186,6 +186,7 @@
   "error-page-limit-reached": "Page limit reached",
   "error-fetching-keywords": "Error fetching keywords. Please try again",
   "error-fetching-credits": "Error fetching credits. Please try again",
+  "error-movie-id-is-required": "Movie ID is required",
   "enter-year": "Enter year",
   "rating": "Rating",
   "sort-by": "Sort by",

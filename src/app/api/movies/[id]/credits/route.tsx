@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 
 import { TMovieCredits } from '@/types/movies';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id: movieId } = await context.params; // Get the movie ID from the request params
     const { searchParams } = new URL(req.url);
     const lang = searchParams.get('lang') || 'en-US';
-    const movieId = params.id; // Получаем ID фильма из маршрута
 
     if (!movieId) {
-      return NextResponse.json({ error: 'Movie ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'error-movie-id-is-required' }, { status: 400 });
     }
 
     const options = {
@@ -30,8 +30,6 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     }
 
     const data: TMovieCredits = await response.json();
-    console.log('DEBUG: ID', movieId); // debug
-    console.log('DEBUG: data', data);
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Credits fetch error:', error);
