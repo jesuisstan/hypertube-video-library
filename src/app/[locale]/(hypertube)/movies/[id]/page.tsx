@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
-import { ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
+import { ArrowBigRight, ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -19,7 +19,7 @@ import {
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
 import { TMagnetDataPirateBay } from '@/types/magnet-data-piratebay';
-import { TMovieBasics } from '@/types/movies';
+import { TMovieBasics, TMovieCredits } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
 import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
@@ -34,6 +34,15 @@ const MovieProfile = () => {
   const [searchYear, setSearchYear] = useState('');
   const [magnetsPB, setMagnetsPB] = useState<TMagnetDataPirateBay[]>([]);
   const [torrentsYTS, setTorrentsYTS] = useState<TTorrentDataYTS[]>([]);
+  const [creditsData, setCreditsData] = useState<TMovieCredits | null>(null);
+
+  // Determine the correct language options array based on the locale
+  const languageOptions =
+    locale === 'en'
+      ? popularLanguagesOptionsEN
+      : locale === 'fr'
+        ? popularLanguagesOptionsFR
+        : popularLanguagesOptionsRU;
 
   const scrapeTMDB = async () => {
     try {
@@ -48,10 +57,6 @@ const MovieProfile = () => {
     }
   };
 
-  useEffect(() => {
-    scrapeTMDB();
-  }, []);
-
   const scrapePB = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
 
@@ -61,7 +66,6 @@ const MovieProfile = () => {
         `/api/torrents/piratebay?title=${searchText}&year=${searchYear}`
       );
       const data = await response.json();
-      console.log('PB data', data); // debug
       setMagnetsPB(data);
     } catch (error) {
       console.error('Error scraping PirateBay:', error);
@@ -79,7 +83,6 @@ const MovieProfile = () => {
     try {
       const data = await fetchMoviesByTitle(searchQuery);
       setTorrentsYTS(data?.data?.movies?.[0].torrents || []);
-      console.log('YTS data', data?.data); // debug
     } catch (error) {
       console.error('Error scraping YTS:', error);
     } finally {
@@ -87,13 +90,20 @@ const MovieProfile = () => {
     }
   };
 
-  // Determine the correct language options array based on the locale
-  const languageOptions =
-    locale === 'en'
-      ? popularLanguagesOptionsEN
-      : locale === 'fr'
-        ? popularLanguagesOptionsFR
-        : popularLanguagesOptionsRU;
+  const fetchCredits = async () => {
+    try {
+      const response = await fetch(`/api/movies/${movieId}/credits?lang=${locale}`);
+      const data: TMovieCredits = await response.json();
+      setCreditsData(data);
+    } catch (error) {
+      console.error('Error fetching credits:', error);
+    }
+  };
+
+  useEffect(() => {
+    scrapeTMDB();
+    fetchCredits();
+  }, []);
 
   useEffect(() => {
     if (movieData?.original_title && movieData?.release_date) {
@@ -110,17 +120,23 @@ const MovieProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTitle]);
 
-  console.log('TMBB movieData', movieData); // debug
-  console.log('YTS torrents', torrentsYTS); // debug
-  console.log('PirateBay magnetsPB', magnetsPB); // debug
+  useEffect(() => {
+    if (movieId) {
+    }
+  }, []);
 
+  console.log('TMBB movieData', movieData); // debug
+  //console.log('YTS torrents', torrentsYTS); // debug
+  //console.log('PirateBay magnetsPB', magnetsPB); // debug
+  console.log('Credits data', creditsData); // debug
+  //console.log('Search title', searchTitle); // debu
   return loading ? (
     <Loading />
   ) : (
-    <div className="w-full">
+    <div className="w-full space-y-5">
       {/* Main content with backdrop */}
       <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[200px_1fr]">
-        <div className="absolute inset-0 -z-10 overflow-hidden rounded-md">
+        <div className="shadow-primary/40 absolute inset-0 -z-10 overflow-hidden rounded-md shadow-md">
           <Image
             src={
               movieData?.backdrop_path
@@ -271,23 +287,94 @@ const MovieProfile = () => {
         </div>
       </div>
 
-      {/* Cast and Crew */}
-      <div className="relative z-10 mx-auto max-w-screen px-6 py-10">
-        <h2 className="mb-4 text-2xl font-bold">Top Billed Cast</h2>
-        <div className="flex gap-4 overflow-x-auto pb-4">
-          {/* Dummy map — replace with actual cast from movieData if available */}
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="w-32 flex-shrink-0">
-              <div className="aspect-[2/3] w-full rounded-md bg-gray-700" />
-              <p className="mt-2 text-sm font-semibold">Actor Name</p>
-              <p className="text-xs text-gray-400">Character</p>
+      {/* Cast */}
+      <div className="bg-card shadow-primary/20 max-w-fit rounded-md p-5 shadow-md">
+        <h3 className="mb-4 text-xl font-semibold">
+          {t('top-billed-cast')}
+          {':'}
+        </h3>
+        <div className="flex flex-wrap items-center justify-center gap-4 align-middle md:justify-start">
+          {creditsData?.cast?.slice(0, 10).map((actor) => (
+            <div key={actor.id} className="w-32">
+              <div className="w-full overflow-hidden rounded-md">
+                <Image
+                  src={
+                    actor.profile_path
+                      ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                      : '/identity/logo-thumbnail.png'
+                  }
+                  alt={actor.name}
+                  width={128}
+                  height={192}
+                  className="rounded-md object-cover"
+                />
+              </div>
+              <p className="mt-2 text-center text-sm font-semibold">{actor.name}</p>
+              <p className="text-muted-foreground text-center text-xs">{actor.character}</p>
             </div>
           ))}
+          <ButtonCustom
+            onClick={() => {
+              // todo Handle "See all" button click
+            }}
+            variant="outline"
+            size="sm"
+          >
+            <div className="flex min-w-16 flex-row items-center justify-center gap-1">
+              {t('more')}
+              <>
+                <ArrowBigRight className="h-4 w-4" />
+              </>
+            </div>
+          </ButtonCustom>
         </div>
       </div>
 
-      {/* Preserve scraping UI below this */}
-      <div className="relative z-10 mx-auto max-w-screen px-6 py-10">
+      {/* Crew */}
+      <div className="bg-card shadow-primary/20 max-w-fit rounded-md p-5 shadow-md">
+        <h3 className="mb-4 text-xl font-semibold">
+          {t('crew')}
+          {':'}
+        </h3>
+        <div className="flex flex-wrap items-center justify-center gap-4 align-middle md:justify-start">
+          {creditsData?.crew?.slice(0, 10).map((crewMember) => (
+            <div key={crewMember.id} className="w-32">
+              <div className="w-full overflow-hidden rounded-md">
+                <Image
+                  src={
+                    crewMember.profile_path
+                      ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
+                      : '/identity/logo-thumbnail.png'
+                  }
+                  alt={crewMember.name}
+                  width={128}
+                  height={192}
+                  className="rounded-md object-cover"
+                />
+              </div>
+              <p className="mt-2 text-center text-sm font-semibold">{crewMember.name}</p>
+              <p className="text-muted-foreground text-center text-xs">{crewMember.job}</p>
+            </div>
+          ))}
+          <ButtonCustom
+            onClick={() => {
+              // todo Handle "See all" button click
+            }}
+            variant="outline"
+            size="sm"
+          >
+            <div className="flex min-w-16 flex-row items-center justify-center gap-1">
+              {t('more')}
+              <>
+                <ArrowBigRight className="h-4 w-4" />
+              </>
+            </div>
+          </ButtonCustom>
+        </div>
+      </div>
+
+      {/* scraping torrents */}
+      <div className="bg-card shadow-primary/20 relative z-10 mx-auto max-w-screen p-5 shadow-md">
         <ButtonCustom
           onClick={() => scrapeYTS(searchTitle, searchYear)}
           loading={loading}

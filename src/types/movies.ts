@@ -19,3 +19,27 @@ export type TMovieBasics = {
   budget?: number;
   revenue?: number;
 };
+
+export type TMovieCredits = {
+  id: number;
+  cast: TCastMember[];
+  crew: TCrewMember[];
+};
+
+export type TCastMember = {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+  gender: number | null;
+  order: number;
+};
+
+export type TCrewMember = {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
+  profile_path: string | null;
+  gender: number | null;
+};
