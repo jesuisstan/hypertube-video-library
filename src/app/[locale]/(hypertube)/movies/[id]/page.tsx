@@ -7,9 +7,10 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
-import { ArrowBigRight, ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
+import { ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
 
 import Loading from '@/app/loading';
+import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import {
   popularLanguagesOptionsEN,
@@ -313,20 +314,10 @@ const MovieProfile = () => {
               <p className="text-muted-foreground text-center text-xs">{actor.character}</p>
             </div>
           ))}
-          <ButtonCustom
-            onClick={() => {
-              // todo Handle "See all" button click
-            }}
-            variant="outline"
-            size="sm"
-          >
-            <div className="flex min-w-16 flex-row items-center justify-center gap-1">
-              {t('more')}
-              <>
-                <ArrowBigRight className="h-4 w-4" />
-              </>
-            </div>
-          </ButtonCustom>
+          <DrawerCredits
+            title={movieData?.title ? movieData?.title : ''}
+            description={t('top-billed-cast')}
+          />
         </div>
       </div>
 
@@ -356,20 +347,7 @@ const MovieProfile = () => {
               <p className="text-muted-foreground text-center text-xs">{crewMember.job}</p>
             </div>
           ))}
-          <ButtonCustom
-            onClick={() => {
-              // todo Handle "See all" button click
-            }}
-            variant="outline"
-            size="sm"
-          >
-            <div className="flex min-w-16 flex-row items-center justify-center gap-1">
-              {t('more')}
-              <>
-                <ArrowBigRight className="h-4 w-4" />
-              </>
-            </div>
-          </ButtonCustom>
+          <DrawerCredits title={movieData?.title ? movieData?.title : ''} description={t('crew')} />
         </div>
       </div>
 

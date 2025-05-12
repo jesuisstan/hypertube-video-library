@@ -127,7 +127,7 @@ const DrawerSearchByQuery = () => {
   }, [page, includeAdultContent]);
 
   return (
-    <DrawerBasic trigger={<Trigger />} title={title} side="right" size="1/2">
+    <DrawerBasic trigger={<Trigger />} title={title} side="left" size="1/2">
       <div ref={moviesContainerRef} className="flex w-full flex-col gap-4">
         <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
           <div className="flex w-full max-w-32 flex-col gap-2 self-center">
