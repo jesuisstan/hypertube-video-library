@@ -130,7 +130,7 @@ const MovieProfile = () => {
   console.log('YTS torrents', torrentsYTS); // debug
   console.log('PirateBay magnetsPB', magnetsPB); // debug
 
-  return loading ? (
+  return loading || !movieData || !creditsData ? (
     <Loading />
   ) : (
     <div className="w-full space-y-5">
@@ -297,7 +297,7 @@ const MovieProfile = () => {
         <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
           {creditsData?.cast?.slice(0, 10).map((actor, index) => (
             <div key={index} className="flex w-32 flex-col">
-              <div className="bg-muted w-full overflow-hidden rounded-md">
+              <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
                 <Image
                   src={
                     actor.profile_path
@@ -305,9 +305,10 @@ const MovieProfile = () => {
                       : '/icons/person.png'
                   }
                   alt={actor.name}
-                  width={128}
-                  height={192}
-                  className="rounded-md object-cover"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="h-[192px] w-[128px] rounded-md object-cover"
                 />
               </div>
               <p className="mt-2 text-center text-sm font-semibold">{actor.name}</p>
@@ -333,7 +334,7 @@ const MovieProfile = () => {
         <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
           {creditsData?.crew?.slice(0, 10).map((crewMember, index) => (
             <div key={index} className="flex w-32 flex-col">
-              <div className="bg-muted w-full overflow-hidden rounded-md">
+              <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
                 <Image
                   src={
                     crewMember.profile_path
@@ -341,9 +342,10 @@ const MovieProfile = () => {
                       : '/icons/person.png'
                   }
                   alt={crewMember.name}
-                  width={128}
-                  height={192}
-                  className="rounded-md object-cover"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="h-[192px] w-[128px] rounded-md object-cover"
                 />
               </div>
               <p className="mt-2 text-center text-sm font-semibold">{crewMember.name}</p>

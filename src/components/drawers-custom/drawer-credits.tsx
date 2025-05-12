@@ -10,7 +10,7 @@ const Trigger = () => {
   const t = useTranslations();
 
   return (
-    <div className="smooth42transition hover:text-c42orange flex min-w-16 cursor-pointer flex-row items-center justify-center gap-1">
+    <div className="smooth42transition hover:text-c42orange flex w-32 cursor-pointer flex-row items-center justify-center gap-1">
       {t('all')}
       <>
         <ArrowBigRight className="h-4 w-4" />
@@ -37,10 +37,12 @@ const DrawerCredits = ({
       size="1/2"
     >
       <div className="flex w-full flex-col gap-4">
-        <div key="credits" className="flex flex-wrap justify-center gap-5">
+        <div key="credits" className="flex flex-wrap justify-center gap-5 p-2">
           {data.map((person, index) => (
-            <div key={index} className="flex w-32 flex-col items-center">
-              <div className="bg-muted w-full overflow-hidden rounded-md">
+            <div key={index} className="shadow-primary/20 flex w-32 flex-col p-1 shadow-md">
+              <div
+                className={'bg-muted flex justify-center overflow-hidden rounded-md align-middle'}
+              >
                 <Image
                   src={
                     person.profile_path
@@ -48,9 +50,10 @@ const DrawerCredits = ({
                       : '/icons/person.png'
                   }
                   alt={person.name}
-                  width={128}
-                  height={192}
-                  className="rounded-md object-cover"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="h-[192px] w-[128px] rounded-md object-cover"
                 />
               </div>
               <p className="mt-2 text-center text-sm font-semibold">{person.name}</p>
