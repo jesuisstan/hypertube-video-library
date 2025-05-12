@@ -126,11 +126,10 @@ const MovieProfile = () => {
     }
   }, []);
 
-  console.log('TMBB movieData', movieData); // debug
-  //console.log('YTS torrents', torrentsYTS); // debug
-  //console.log('PirateBay magnetsPB', magnetsPB); // debug
-  console.log('Credits data', creditsData); // debug
-  //console.log('Search title', searchTitle); // debu
+  //console.log('TMBB movieData', movieData); // debug
+  console.log('YTS torrents', torrentsYTS); // debug
+  console.log('PirateBay magnetsPB', magnetsPB); // debug
+
   return loading ? (
     <Loading />
   ) : (
@@ -142,11 +141,12 @@ const MovieProfile = () => {
             src={
               movieData?.backdrop_path
                 ? `https://image.tmdb.org/t/p/w780${movieData.backdrop_path}`
-                : '/identity/logo-title-only.png'
+                : '/icons/logo-title-only.png'
             }
             alt="backdrop"
             fill
             className="object-cover opacity-30"
+            priority
           />
           <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
         </div>
@@ -294,15 +294,15 @@ const MovieProfile = () => {
           {t('top-billed-cast')}
           {':'}
         </h3>
-        <div className="flex flex-wrap items-center justify-center gap-4 align-middle md:justify-start">
-          {creditsData?.cast?.slice(0, 10).map((actor) => (
-            <div key={actor.id} className="w-32">
-              <div className="w-full overflow-hidden rounded-md">
+        <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
+          {creditsData?.cast?.slice(0, 10).map((actor, index) => (
+            <div key={index} className="flex w-32 flex-col">
+              <div className="bg-muted w-full overflow-hidden rounded-md">
                 <Image
                   src={
                     actor.profile_path
                       ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                      : '/identity/logo-thumbnail.png'
+                      : '/icons/person.png'
                   }
                   alt={actor.name}
                   width={128}
@@ -314,10 +314,13 @@ const MovieProfile = () => {
               <p className="text-muted-foreground text-center text-xs">{actor.character}</p>
             </div>
           ))}
-          <DrawerCredits
-            title={movieData?.title ? movieData?.title : ''}
-            description={t('top-billed-cast')}
-          />
+          {creditsData?.cast && (
+            <DrawerCredits
+              title={movieData?.title ? movieData?.title : ''}
+              description={t('top-billed-cast')}
+              data={creditsData?.cast}
+            />
+          )}
         </div>
       </div>
 
@@ -327,15 +330,15 @@ const MovieProfile = () => {
           {t('crew')}
           {':'}
         </h3>
-        <div className="flex flex-wrap items-center justify-center gap-4 align-middle md:justify-start">
-          {creditsData?.crew?.slice(0, 10).map((crewMember) => (
-            <div key={crewMember.id} className="w-32">
-              <div className="w-full overflow-hidden rounded-md">
+        <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
+          {creditsData?.crew?.slice(0, 10).map((crewMember, index) => (
+            <div key={index} className="flex w-32 flex-col">
+              <div className="bg-muted w-full overflow-hidden rounded-md">
                 <Image
                   src={
                     crewMember.profile_path
                       ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
-                      : '/identity/logo-thumbnail.png'
+                      : '/icons/person.png'
                   }
                   alt={crewMember.name}
                   width={128}
@@ -347,7 +350,13 @@ const MovieProfile = () => {
               <p className="text-muted-foreground text-center text-xs">{crewMember.job}</p>
             </div>
           ))}
-          <DrawerCredits title={movieData?.title ? movieData?.title : ''} description={t('crew')} />
+          {creditsData?.crew && (
+            <DrawerCredits
+              title={movieData?.title ? movieData?.title : ''}
+              description={t('crew')}
+              data={creditsData?.crew}
+            />
+          )}
         </div>
       </div>
 
