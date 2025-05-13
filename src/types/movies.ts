@@ -18,6 +18,7 @@ export type TMovieBasics = {
   tagline?: string;
   budget?: number;
   revenue?: number;
+  production_countries?: { iso_3166_1: string; name: string }[];
 };
 
 export type TMovieCredits = {
