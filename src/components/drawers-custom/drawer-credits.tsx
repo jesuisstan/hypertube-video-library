@@ -34,7 +34,7 @@ const DrawerCredits = ({
       title={title}
       description={description}
       side="right"
-      size="1/2"
+      size="3/4"
     >
       <div className="flex w-full flex-col gap-4">
         <div key="credits" className="flex flex-wrap justify-center gap-5 p-2">

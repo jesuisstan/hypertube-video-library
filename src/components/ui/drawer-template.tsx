@@ -24,10 +24,10 @@ const DrawerBasic = ({
   description?: string;
   side?: 'left' | 'right' | 'top' | 'bottom';
   children: ReactNode;
-  size?: 'fill' | '1/2' | '1/3' | '1/4' | '3/4' | '1/6';
+  size?: 'fit' | '1/2' | '1/3' | '1/4' | '3/4' | '1/6';
 }) => {
   const sizeClassMap: Record<string, string> = {
-    fill: 'sm:w-full',
+    fit: 'sm:w-fit',
     '1/2': 'sm:w-1/2',
     '1/3': 'sm:w-1/3',
     '1/4': 'sm:w-1/4',

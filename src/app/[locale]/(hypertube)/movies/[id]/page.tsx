@@ -135,7 +135,7 @@ const MovieProfile = () => {
   ) : (
     <div className="w-full space-y-5">
       {/* Main content with backdrop */}
-      <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[200px_1fr]">
+      <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[300px_1fr]">
         <div className="shadow-primary/40 absolute inset-0 -z-10 overflow-hidden rounded-md shadow-md">
           <Image
             src={
@@ -151,7 +151,7 @@ const MovieProfile = () => {
           <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
         </div>
         {/* Poster */}
-        <div>
+        <div className="flex items-center justify-center overflow-hidden rounded-md align-middle">
           <Image
             src={
               movieData?.poster_path
@@ -159,51 +159,57 @@ const MovieProfile = () => {
                 : '/identity/logo-thumbnail.png'
             }
             alt="poster"
-            width={200}
-            height={300}
-            className="rounded-md shadow-md"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="h-[450px] w-[300px] rounded-md object-cover shadow-md"
           />
         </div>
 
         {/* Details */}
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-8">
           {/* Left column: title, subtitle, overview */}
-          <div className="flex flex-col gap-2 md:w-2/3">
-            <div className="flex flex-row flex-wrap items-center justify-start gap-4">
-              <h1 className="text-primary-foreground text-3xl font-bold">{movieData?.title}</h1>
-              <div className="flex flex-row flex-wrap items-center gap-4">
-                <div
-                  className={clsx(
-                    'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
-                    movieData?.vote_average! > 7
-                      ? 'border-positive shadow-positive'
-                      : movieData?.vote_average! >= 6
-                        ? 'border-amber-400 shadow-amber-400'
-                        : 'border-destructive shadow-destructive'
-                  )}
-                  title={`${t('average-rating')}: ${movieData?.vote_average}`}
-                >
-                  {movieData?.vote_average?.toFixed(1)}
-                </div>
+          <div className="flex flex-col justify-center gap-4 md:w-2/3">
+            <h1 className="text-primary-foreground text-3xl font-bold">
+              {movieData?.title}{' '}
+              <span className="text-secondary font-normal">
+                {movieData?.release_date && `(${new Date(movieData.release_date).getFullYear()})`}
+              </span>
+            </h1>
 
-                <div
-                  className={clsx(
-                    'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
-                  )}
-                >
-                  <Heart className="smooth42transition hover:scale-110" />
-                </div>
-                <div
-                  className={clsx(
-                    'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
-                  )}
-                >
-                  <CircleCheck className="smooth42transition hover:scale-110" />
-                </div>
+            <div className="flex flex-row flex-wrap items-center gap-4">
+              <div
+                className={clsx(
+                  'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
+                  movieData?.vote_average! > 7
+                    ? 'border-positive shadow-positive'
+                    : movieData?.vote_average! >= 6
+                      ? 'border-amber-400 shadow-amber-400'
+                      : 'border-destructive shadow-destructive'
+                )}
+                title={`${t('average-rating')}: ${movieData?.vote_average}`}
+              >
+                {movieData?.vote_average?.toFixed(1)}
+              </div>
+
+              <div
+                className={clsx(
+                  'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                )}
+              >
+                <Heart className="smooth42transition hover:scale-110" />
+              </div>
+
+              <div
+                className={clsx(
+                  'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                )}
+              >
+                <CircleCheck className="smooth42transition hover:scale-110" />
               </div>
             </div>
 
-            <p className="text-secondary italic">
+            <p className="text-secondary text-lg italic">
               {movieData?.original_title !== movieData?.title && (
                 <>
                   <span className="font-bold">{t('original-title')}:</span>{' '}
@@ -211,12 +217,16 @@ const MovieProfile = () => {
                 </>
               )}
             </p>
-            <p className="text-secondary italic">{movieData?.tagline && movieData.tagline}</p>
-            <p className="text-secondary mt-2 max-w-2xl leading-relaxed">{movieData?.overview}</p>
+            <p className="text-secondary text-lg italic">
+              {movieData?.tagline && movieData.tagline}
+            </p>
+            <p className="text-secondary mt-2 max-w-5xl text-lg leading-relaxed">
+              {movieData?.overview}
+            </p>
           </div>
 
           {/* Right column: metadata */}
-          <div className="flex flex-col gap-2 text-[18px] md:w-1/3">
+          <div className="flex flex-col justify-center gap-2 text-lg md:w-1/3">
             <p className="text-secondary">
               <span className="font-bold">
                 {t('release')}
