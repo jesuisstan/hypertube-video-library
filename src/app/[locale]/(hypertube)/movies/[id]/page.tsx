@@ -198,11 +198,11 @@ const MovieProfile = () => {
               </div>
             </div>
             {/* Original title */}
-            <p className="text-secondary text-lg italic">
-              {movieData?.original_title !== movieData?.title && (
+            <p className="text-secondary text-lg">
+              {movieData?.original_title && (
                 <span className="flex flex-row flex-wrap items-center gap-2">
                   <span className="font-bold">{t('original-title')}:</span>
-                  {movieData?.original_title}
+                  <span className="italic">{movieData?.original_title}</span>
                 </span>
               )}
             </p>
