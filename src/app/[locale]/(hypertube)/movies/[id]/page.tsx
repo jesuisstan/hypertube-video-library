@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
-import { ArrowRight, BookCopy, CircleCheck, Download, Heart } from 'lucide-react';
+import { ArrowRight, BookCopy, BookMarked, Download, Eye } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import DrawerCredits from '@/components/drawers-custom/drawer-credits';
@@ -32,6 +32,8 @@ const MovieProfile = () => {
   const [magnetsPB, setMagnetsPB] = useState<TMagnetDataPirateBay[]>([]);
   const [torrentsYTS, setTorrentsYTS] = useState<TTorrentDataYTS[]>([]);
   const [creditsData, setCreditsData] = useState<TMovieCredits | null>(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
 
   const scrapeTMDB = async () => {
     try {
@@ -165,7 +167,7 @@ const MovieProfile = () => {
                 {movieData?.release_date && `(${new Date(movieData.release_date).getFullYear()})`}
               </span>
             </h1>
-            {/* Rating, like, watchlist */}
+            {/* Rating, savelist, watchlist */}
             <div className="flex flex-row flex-wrap items-center gap-4">
               <div
                 className={clsx(
@@ -183,18 +185,30 @@ const MovieProfile = () => {
 
               <div
                 className={clsx(
-                  'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                  'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
+                  isBookmarked
+                    ? 'text-c42orange border-c42orange shadow-c42orange'
+                    : 'text-card border-card shadow-card'
                 )}
               >
-                <Heart className="smooth42transition hover:scale-110" />
+                <BookMarked className="smooth42transition h-5 w-5" />
+                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-30 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
+                  {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
+                </div>
               </div>
 
               <div
                 className={clsx(
-                  'bg-primary text-primary-foreground border-card shadow-card flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border font-bold shadow-md'
+                  'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
+                  isInWatchlist
+                    ? 'text-positive border-positive shadow-positive'
+                    : 'text-card border-card shadow-card'
                 )}
               >
-                <CircleCheck className="smooth42transition hover:scale-110" />
+                <Eye className="smooth42transition h-5 w-5" />
+                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-30 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
+                  {isInWatchlist ? t('set-unwatched') : t('set-watched')}
+                </div>
               </div>
             </div>
             {/* Original title */}

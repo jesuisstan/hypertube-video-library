@@ -30,7 +30,7 @@ const SocialMediaAuth = ({
       } else if (provider === '42-school') {
         setLoading42(true);
       }
-      // Redirect to GitHub login page
+      // Redirect to login page
       await signIn(provider);
 
       //setLoading(false);
