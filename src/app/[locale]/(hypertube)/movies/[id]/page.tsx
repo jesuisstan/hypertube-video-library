@@ -29,6 +29,8 @@ const MovieProfile = () => {
   const user = useUserStore((state) => state.user);
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
+  const [loadingYTS, setLoadingYTS] = useState(false);
+  const [loadingPB, setLoadingPB] = useState(false);
   const [loadingBookmarks, setLoadingBookmarks] = useState(false);
   const [loadingWatchlist, setLoadingWatchlist] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
@@ -56,7 +58,7 @@ const MovieProfile = () => {
   const scrapePB = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
 
-    setLoading(true);
+    setLoadingPB(true);
     try {
       const response = await fetch(
         `/api/torrents/piratebay?title=${searchText}&year=${searchYear}`
@@ -66,7 +68,7 @@ const MovieProfile = () => {
     } catch (error) {
       console.error('Error scraping PirateBay:', error);
     } finally {
-      setLoading(false);
+      setLoadingPB(false);
     }
   };
 
@@ -75,14 +77,14 @@ const MovieProfile = () => {
 
     // if we have imdb_id, use it for search. Otherwise, use title and year
     const searchQuery = movieData?.imdb_id ? movieData.imdb_id : `${searchText} ${searchYear}`;
-    setLoading(true);
+    setLoadingYTS(true);
     try {
       const data = await fetchMoviesByTitle(searchQuery);
       setTorrentsYTS(data?.data?.movies?.[0].torrents || []);
     } catch (error) {
       console.error('Error scraping YTS:', error);
     } finally {
-      setLoading(false);
+      setLoadingYTS(false);
     }
   };
 
@@ -160,7 +162,7 @@ const MovieProfile = () => {
     }
   };
 
-  const chaeckWatchlist = async () => {
+  const checkWatchlist = async () => {
     if (!user?.id || !movieId) return;
     try {
       setLoadingWatchlist(true);
@@ -174,16 +176,21 @@ const MovieProfile = () => {
     }
   };
 
+  // Fetch movie data and credits on component mount
   useEffect(() => {
     scrapeTMDB();
     fetchCredits();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Check if the movie is bookmarked or in watchlist when user changes
   useEffect(() => {
     checkBookmark();
-    chaeckWatchlist();
+    checkWatchlist();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
+  // Set search title and year for further torrents search based on movie data
   useEffect(() => {
     if (movieData?.original_title && movieData?.release_date) {
       setSearchTitle(movieData?.original_title);
@@ -191,6 +198,7 @@ const MovieProfile = () => {
     }
   }, [movieData]);
 
+  // Scrape torrents from YTS and PirateBay when search title is set
   useEffect(() => {
     if (searchTitle) {
       scrapeYTS(searchTitle, searchYear);
@@ -199,14 +207,9 @@ const MovieProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTitle]);
 
-  useEffect(() => {
-    if (movieId) {
-    }
-  }, []);
-
-  //console.log('TMBB movieData', movieData); // debug
-  //console.log('YTS torrents', torrentsYTS); // debug
-  //console.log('PirateBay magnetsPB', magnetsPB); // debug
+  console.log('TMBB movieData', movieData); // debug
+  console.log('YTS torrents', torrentsYTS); // debug
+  console.log('PirateBay magnetsPB', magnetsPB); // debug
 
   return loading || !movieData || !creditsData ? (
     <Loading />
@@ -499,8 +502,8 @@ const MovieProfile = () => {
       <div className="bg-card shadow-primary/20 relative z-10 mx-auto max-w-screen p-5 shadow-md">
         <ButtonCustom
           onClick={() => scrapeYTS(searchTitle, searchYear)}
-          loading={loading}
-          disabled={loading}
+          loading={loadingYTS}
+          disabled={loading || loadingYTS}
           className="w-60"
         >
           Scrape YTS base
@@ -525,8 +528,8 @@ const MovieProfile = () => {
 
         <ButtonCustom
           onClick={() => scrapePB(searchTitle, searchYear)}
-          loading={loading}
-          disabled={loading}
+          loading={loadingPB}
+          disabled={loading || loadingPB}
           className="mt-6 w-60"
         >
           Scrape Pirate Bay
