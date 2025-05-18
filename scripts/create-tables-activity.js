@@ -1,3 +1,6 @@
+// TO RUN USE: node scripts/create-tables-activity.js
+// This script creates the necessary tables for the Activity module of the Hypertube and Matcha project.
+
 // Load environment variables from .env.local
 require('dotenv').config({ path: './.env.local' });
 
@@ -12,7 +15,7 @@ async function createActivityTables() {
     // Begin a transaction
     await client.query('BEGIN');
 
-    // Create the 'visits' table
+    // Create the 'visits' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS visits (
         id SERIAL PRIMARY KEY,
@@ -23,7 +26,7 @@ async function createActivityTables() {
       );
     `);
 
-    // Create the 'likes' table
+    // Create the 'likes' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS likes (
         id SERIAL PRIMARY KEY,
@@ -34,7 +37,7 @@ async function createActivityTables() {
       );
     `);
 
-    // Create the 'matches' table
+    // Create the 'matches' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS matches (
         id SERIAL PRIMARY KEY,
@@ -45,7 +48,7 @@ async function createActivityTables() {
       );
     `);
 
-    // Create the 'blocked_users' table
+    // Create the 'blocked_users' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS blocked_users (
         id SERIAL PRIMARY KEY,
@@ -56,7 +59,7 @@ async function createActivityTables() {
       );
     `);
 
-    // Create the 'notifications' table
+    // Create the 'notifications' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS notifications (
         id SERIAL PRIMARY KEY,
@@ -70,7 +73,7 @@ async function createActivityTables() {
       );
     `);
 
-    // Create the 'chat' table
+    // Create the 'chat' table (MATCHA PROJECT)
     await client.query(`
       CREATE TABLE IF NOT EXISTS chat (
         id SERIAL PRIMARY KEY,
@@ -83,11 +86,37 @@ async function createActivityTables() {
       );
     `);
 
+    // Create the 'movies_bookmarks' table (HYPERTUBE PROJECT)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS movies_bookmarks (
+        id SERIAL PRIMARY KEY,
+        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        movie_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        poster_path TEXT NOT NULL,
+        release_date TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+
+    // Create the 'movies_watchlist' table (HYPERTUBE PROJECT)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS movies_watchlist (
+        id SERIAL PRIMARY KEY,
+        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        movie_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        poster_path TEXT NOT NULL,
+        release_date TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+
     // Commit the transaction
     await client.query('COMMIT');
 
     console.log(
-      'Tables "notifications", "blocked_users", "matches", "likes", "visits" & "chat" created successfully'
+      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watchlist" created successfully'
     );
   } catch (error) {
     // Rollback the transaction in case of an error

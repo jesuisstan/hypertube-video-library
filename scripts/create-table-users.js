@@ -1,3 +1,6 @@
+// TO RUN USE: node scripts/create-table-users.js
+// This script creates the 'users' table in the PostgreSQL database.
+
 // Load environment variables from .env.local
 require('dotenv').config({ path: './.env.local' });
 

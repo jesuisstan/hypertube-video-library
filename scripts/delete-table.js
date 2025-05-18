@@ -1,3 +1,6 @@
+// TO RUN USE: node scripts/delete-table.js <table_name>
+// This script deletes a specified table from the PostgreSQL database.
+
 require('dotenv').config({ path: './.env.local' }); // Load environment variables from .env.local
 const { db } = require('@vercel/postgres');
 

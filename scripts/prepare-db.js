@@ -1,3 +1,6 @@
+// TO RUN USE: node scripts/prepare-db.js
+// This script prepares the database by deleting existing tables and creating new ones.
+
 const { execSync } = require('child_process');
 const readline = require('readline');
 
@@ -39,13 +42,15 @@ const runCommand = (chalk, command) => {
 
 // Sequentially run each script
 const runCommands = (chalk) => {
-  runCommand(chalk, 'node ./scripts/delete-table.js chat');
-  runCommand(chalk, 'node ./scripts/delete-table.js visits');
-  runCommand(chalk, 'node ./scripts/delete-table.js likes');
-  runCommand(chalk, 'node ./scripts/delete-table.js matches');
-  runCommand(chalk, 'node ./scripts/delete-table.js blocked_users');
-  runCommand(chalk, 'node ./scripts/delete-table.js notifications');
-  runCommand(chalk, 'node ./scripts/delete-table.js users');
+  runCommand(chalk, 'node ./scripts/delete-table.js chat'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js visits'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js likes'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js matches'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js blocked_users'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js notifications'); // MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js movies_bookmarks'); // HYPERTUBE PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js movies_watchlist'); // HYPERTUBE PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js users'); // HYPERTUBE & MATCHA PROJECT
 
   runCommand(chalk, 'node ./scripts/create-table-users.js');
   runCommand(chalk, 'node ./scripts/fill-table-users.js');

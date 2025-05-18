@@ -15,17 +15,22 @@ import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { allLanguagesOptions, TLanguageOption } from '@/constants/all-languages-ISO-639-1';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
+import useUserStore from '@/stores/user';
 import { TMagnetDataPirateBay } from '@/types/magnet-data-piratebay';
 import { TMovieBasics, TMovieCredits } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
 import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
+import { Separator } from '@/components/ui/separator';
 
 const MovieProfile = () => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
+  const user = useUserStore((state) => state.user);
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
+  const [loadingBookmarks, setLoadingBookmarks] = useState(false);
+  const [loadingWatchlist, setLoadingWatchlist] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchYear, setSearchYear] = useState('');
@@ -91,6 +96,56 @@ const MovieProfile = () => {
     }
   };
 
+  const handleBookmarkClick = async () => {
+    try {
+      setLoadingBookmarks(true);
+      const queryParams = new URLSearchParams({
+        user_id: user?.id || '',
+        poster_path: movieData?.poster_path || '',
+        release_date: movieData?.release_date || '',
+        title: movieData?.original_title || movieData?.title || '',
+      });
+      const response = await fetch(`/api/movies/${movieId}/bookmarks?${queryParams.toString()}`, {
+        method: isBookmarked ? 'DELETE' : 'PUT',
+        body: JSON.stringify({ isBookmarked: !isBookmarked }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setIsBookmarked((prev) => !prev);
+    } catch (error) {
+      console.error('Error updating bookmark:', error);
+    } finally {
+      setLoadingBookmarks(false);
+    }
+  };
+
+  const handleWatchlistClick = async () => {
+    try {
+      setLoadingWatchlist(true);
+      const queryParams = new URLSearchParams({
+        user_id: user?.id || '',
+        poster_path: movieData?.poster_path || '',
+        release_date: movieData?.release_date || '',
+        title: movieData?.original_title || movieData?.title || '',
+      });
+      const response = await fetch(`/api/movies/${movieId}/watchlist?${queryParams.toString()}`, {
+        method: isInWatchlist ? 'DELETE' : 'PUT',
+        body: JSON.stringify({ isInWatchlist: !isInWatchlist }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setIsInWatchlist((prev) => !prev);
+    } catch (error) {
+      console.error('Error updating watchlist:', error);
+    } finally {
+      setLoadingWatchlist(false);
+    }
+  };
+
   useEffect(() => {
     scrapeTMDB();
     fetchCredits();
@@ -116,7 +171,7 @@ const MovieProfile = () => {
     }
   }, []);
 
-  //console.log('TMBB movieData', movieData); // debug
+  console.log('TMBB movieData', movieData); // debug
   console.log('YTS torrents', torrentsYTS); // debug
   console.log('PirateBay magnetsPB', magnetsPB); // debug
 
@@ -168,7 +223,7 @@ const MovieProfile = () => {
               </span>
             </h1>
             {/* Rating, savelist, watchlist */}
-            <div className="flex flex-row flex-wrap items-center gap-4">
+            <div className="flex flex-row items-center gap-4">
               <div
                 className={clsx(
                   'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
@@ -183,33 +238,39 @@ const MovieProfile = () => {
                 {movieData?.vote_average?.toFixed(1)}
               </div>
 
-              <div
+              <Separator orientation="vertical" />
+
+              <button
                 className={clsx(
                   'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
                   isBookmarked
-                    ? 'text-c42orange border-c42orange shadow-c42orange'
+                    ? 'border-amber-400 text-amber-400 shadow-amber-400'
                     : 'text-card border-card shadow-card'
                 )}
+                onClick={handleBookmarkClick}
+                disabled={loadingBookmarks}
               >
                 <BookMarked className="smooth42transition h-5 w-5" />
-                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-30 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
+                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
                   {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
                 </div>
-              </div>
+              </button>
 
-              <div
+              <button
                 className={clsx(
                   'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
                   isInWatchlist
-                    ? 'text-positive border-positive shadow-positive'
+                    ? 'border-amber-400 text-amber-400 shadow-amber-400'
                     : 'text-card border-card shadow-card'
                 )}
+                onClick={handleWatchlistClick}
+                disabled={loadingWatchlist}
               >
                 <Eye className="smooth42transition h-5 w-5" />
-                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-30 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
+                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
                   {isInWatchlist ? t('set-unwatched') : t('set-watched')}
                 </div>
-              </div>
+              </button>
             </div>
             {/* Original title */}
             <p className="text-secondary text-lg">
