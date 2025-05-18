@@ -11,6 +11,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     const posterPath = searchParams.get('poster_path');
     const releaseDate = searchParams.get('release_date');
     const title = searchParams.get('title');
+    const vote_average = Number(searchParams.get('vote_average'));
 
     if (!movieId) {
       return NextResponse.json({ error: 'error-movie-id-is-required' }, { status: 400 });
@@ -30,8 +31,8 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
 
     // Add the new record
     const insertQuery = `
-      INSERT INTO movies_bookmarks (user_id, movie_id, poster_path, release_date, title)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO movies_bookmarks (user_id, movie_id, poster_path, release_date, title, vote_average)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id
     `;
     const insertResult = await client.query(insertQuery, [
@@ -40,6 +41,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
       posterPath,
       releaseDate,
       title,
+      vote_average,
     ]);
 
     return NextResponse.json({

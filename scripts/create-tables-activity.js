@@ -94,19 +94,21 @@ async function createActivityTables() {
         movie_id INTEGER NOT NULL,
         title TEXT NOT NULL,
         poster_path TEXT NOT NULL,
+        vote_average REAL NOT NULL,
         release_date TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
     `);
 
-    // Create the 'movies_watchlist' table (HYPERTUBE PROJECT)
+    // Create the 'movies_watched' table (HYPERTUBE PROJECT)
     await client.query(`
-      CREATE TABLE IF NOT EXISTS movies_watchlist (
+      CREATE TABLE IF NOT EXISTS movies_watched (
         id SERIAL PRIMARY KEY,
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         movie_id INTEGER NOT NULL,
         title TEXT NOT NULL,
         poster_path TEXT NOT NULL,
+        vote_average REAL NOT NULL,
         release_date TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
@@ -116,7 +118,7 @@ async function createActivityTables() {
     await client.query('COMMIT');
 
     console.log(
-      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watchlist" created successfully'
+      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watched" created successfully'
     );
   } catch (error) {
     // Rollback the transaction in case of an error

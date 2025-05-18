@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
-import { ArrowRight, BookCopy, BookMarked, Download, Eye } from 'lucide-react';
+import { ArrowRight, BookCopy, BookmarkIcon, Download, Eye } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import DrawerCredits from '@/components/drawers-custom/drawer-credits';
@@ -32,15 +32,15 @@ const MovieProfile = () => {
   const [loadingYTS, setLoadingYTS] = useState(false);
   const [loadingPB, setLoadingPB] = useState(false);
   const [loadingBookmarks, setLoadingBookmarks] = useState(false);
-  const [loadingWatchlist, setLoadingWatchlist] = useState(false);
+  const [loadingWatched, setLoadingWatched] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchYear, setSearchYear] = useState('');
   const [magnetsPB, setMagnetsPB] = useState<TMagnetDataPirateBay[]>([]);
   const [torrentsYTS, setTorrentsYTS] = useState<TTorrentDataYTS[]>([]);
   const [creditsData, setCreditsData] = useState<TMovieCredits | null>(null);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [isInWatchlist, setIsInWatchlist] = useState(false);
 
   const scrapeTMDB = async () => {
     try {
@@ -106,6 +106,7 @@ const MovieProfile = () => {
         poster_path: movieData?.poster_path || '',
         release_date: movieData?.release_date || '',
         title: movieData?.original_title || movieData?.title || '',
+        vote_average: String(movieData?.vote_average) || '',
       });
       const response = await fetch(`/api/movies/${movieId}/bookmarks?${queryParams.toString()}`, {
         method: isBookmarked ? 'DELETE' : 'PUT',
@@ -125,14 +126,15 @@ const MovieProfile = () => {
 
   const handleWatchlistClick = async () => {
     try {
-      setLoadingWatchlist(true);
+      setLoadingWatched(true);
       const queryParams = new URLSearchParams({
         user_id: user?.id || '',
         poster_path: movieData?.poster_path || '',
         release_date: movieData?.release_date || '',
         title: movieData?.original_title || movieData?.title || '',
+        vote_average: String(movieData?.vote_average) || '',
       });
-      const response = await fetch(`/api/movies/${movieId}/watchlist?${queryParams.toString()}`, {
+      const response = await fetch(`/api/movies/${movieId}/watched?${queryParams.toString()}`, {
         method: isInWatchlist ? 'DELETE' : 'PUT',
         body: JSON.stringify({ isInWatchlist: !isInWatchlist }),
         headers: {
@@ -142,9 +144,9 @@ const MovieProfile = () => {
       const data = await response.json();
       setIsInWatchlist((prev) => !prev);
     } catch (error) {
-      console.error('Error updating watchlist:', error);
+      console.error('Error updating watched:', error);
     } finally {
-      setLoadingWatchlist(false);
+      setLoadingWatched(false);
     }
   };
 
@@ -165,14 +167,14 @@ const MovieProfile = () => {
   const checkWatchlist = async () => {
     if (!user?.id || !movieId) return;
     try {
-      setLoadingWatchlist(true);
-      const res = await fetch(`/api/movies/${movieId}/watchlist?user_id=${user.id}`);
+      setLoadingWatched(true);
+      const res = await fetch(`/api/movies/${movieId}/watched?user_id=${user.id}`);
       const data = await res.json();
       setIsInWatchlist(Boolean(data.isInWatchlist));
     } catch (error) {
-      console.error('Error checking watchlist:', error);
+      console.error('Error checking watched:', error);
     } finally {
-      setLoadingWatchlist(false);
+      setLoadingWatched(false);
     }
   };
 
@@ -183,7 +185,7 @@ const MovieProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Check if the movie is bookmarked or in watchlist when user changes
+  // Check if the movie is bookmarked or in watched when user changes
   useEffect(() => {
     checkBookmark();
     checkWatchlist();
@@ -258,7 +260,7 @@ const MovieProfile = () => {
                 {movieData?.release_date && `(${new Date(movieData.release_date).getFullYear()})`}
               </span>
             </h1>
-            {/* Rating, savelist, watchlist */}
+            {/* Rating, savelist, watched */}
             <div className="flex flex-row items-center gap-4">
               <div
                 className={clsx(
@@ -289,7 +291,7 @@ const MovieProfile = () => {
                 {loadingBookmarks ? (
                   <span className="animate-pulse">?</span>
                 ) : (
-                  <BookMarked className="smooth42transition h-5 w-5" />
+                  <BookmarkIcon className="smooth42transition h-5 w-5" />
                 )}
                 <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
                   {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
@@ -304,9 +306,9 @@ const MovieProfile = () => {
                     : 'text-card border-card shadow-card'
                 )}
                 onClick={handleWatchlistClick}
-                disabled={loadingWatchlist}
+                disabled={loadingWatched}
               >
-                {loadingWatchlist ? (
+                {loadingWatched ? (
                   <span className="animate-pulse">?</span>
                 ) : (
                   <Eye className="smooth42transition h-5 w-5" />

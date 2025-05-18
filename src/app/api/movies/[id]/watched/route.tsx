@@ -11,6 +11,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     const posterPath = searchParams.get('poster_path');
     const releaseDate = searchParams.get('release_date');
     const title = searchParams.get('title');
+    const vote_average = Number(searchParams.get('vote_average'));
 
     if (!movieId) {
       return NextResponse.json({ error: 'error-movie-id-is-required' }, { status: 400 });
@@ -21,7 +22,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
 
     // Check if the record already exists
     const checkQuery = `
-      SELECT id FROM movies_watchlist WHERE user_id = $1 AND movie_id = $2
+      SELECT id FROM movies_watched WHERE user_id = $1 AND movie_id = $2
     `;
     const checkResult = await client.query(checkQuery, [userId, movieId]);
     if ((checkResult.rowCount ?? 0) > 0) {
@@ -30,8 +31,8 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
 
     // Add the new record
     const insertQuery = `
-      INSERT INTO movies_watchlist (user_id, movie_id, poster_path, release_date, title)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO movies_watched (user_id, movie_id, poster_path, release_date, title, vote_average)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id
     `;
     const insertResult = await client.query(insertQuery, [
@@ -40,6 +41,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
       posterPath,
       releaseDate,
       title,
+      vote_average,
     ]);
 
     return NextResponse.json({
@@ -68,7 +70,7 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: stri
     }
 
     const deleteQuery = `
-      DELETE FROM movies_watchlist WHERE user_id = $1 AND movie_id = $2 RETURNING id
+      DELETE FROM movies_watched WHERE user_id = $1 AND movie_id = $2 RETURNING id
     `;
     const result = await client.query(deleteQuery, [userId, movieId]);
 
@@ -88,7 +90,7 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: stri
   }
 }
 
-// Check if a movie is in watchlist
+// Check if a movie is in watched
 export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
@@ -103,7 +105,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     }
 
     const checkQuery = `
-      SELECT id FROM movies_watchlist WHERE user_id = $1 AND movie_id = $2
+      SELECT id FROM movies_watched WHERE user_id = $1 AND movie_id = $2
     `;
     const checkResult = await client.query(checkQuery, [userId, movieId]);
     const isInWatchlist = (checkResult.rowCount ?? 0) > 0;
