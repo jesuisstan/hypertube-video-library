@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import { Eye } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import DatesRangePicker from '@/components/dates-range-picker';
@@ -19,6 +20,7 @@ import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 import Spinner from '@/components/ui/spinner';
 import ToastNotification from '@/components/ui/toast-notification';
+import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import useSortOptions from '@/hooks/useSortOptions';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
@@ -38,6 +40,7 @@ const BrowsePage = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState(false);
+  const [watchedData, setWatchedData] = useState<TMovieBasics[]>([]);
 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollPositionRef = useRef<number>(0);
@@ -87,6 +90,7 @@ const BrowsePage = () => {
       setLoading(true);
 
       const queryParams = new URLSearchParams({
+        user_id: user?.id as string,
         total_pages_available: totalPagesAvailable.toString(),
         category: 'discover',
         sort_by: sortBy,
@@ -156,6 +160,19 @@ const BrowsePage = () => {
     setValueOfSearchFilter('sort_by', 'title.asc');
   };
 
+  const fetchWatched = async () => {
+    try {
+      const response = await fetch(`/api/users/${user?.id}/watched`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch watched movies');
+      }
+      const data = await response.json();
+      setWatchedData(data.watched);
+    } catch (error) {
+      console.error('Error fetching watched movies:', error);
+    }
+  };
+
   // Control the scroll event
   useEffect(() => {
     const debounceScroll = () => {
@@ -182,6 +199,13 @@ const BrowsePage = () => {
     scrapeTMDB(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale]);
+
+  // Fetch watched movies when the user changes
+  useEffect(() => {
+    if (user) {
+      fetchWatched();
+    }
+  }, [user?.id]);
 
   // Scrape TMDB when the page changes (user scrolls down)
   useEffect(() => {
@@ -433,8 +457,17 @@ const BrowsePage = () => {
                 <motion.div
                   variants={slideFromBottom}
                   key={`${movie.id}-${index}`}
-                  className="flex justify-center self-center"
+                  className="relative flex justify-center self-center"
                 >
+                  {watchedData.some((w) => w.id === movie.id) && (
+                    <TooltipBasic
+                      trigger={
+                        <Eye className="bg-primary/60 text-primary-foreground animate-fade-in absolute top-0 left-0 z-10 h-7 w-7 rounded-full p-1 shadow-md" />
+                      }
+                    >
+                      <div className="flex max-w-96">{t('watched')}</div>
+                    </TooltipBasic>
+                  )}
                   <MovieThumbnail movieBasics={movie} loading={false} />
                 </motion.div>
               ))}

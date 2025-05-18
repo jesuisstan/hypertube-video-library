@@ -26,9 +26,9 @@ const TooltipBasic: FC<TTooltipBasicProps> = ({ trigger, children, sideOffset = 
   };
 
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={100}>
       <Tooltip open={isOpen} onOpenChange={setIsOpen}>
-        <TooltipTrigger asChild onClick={handleToggle} className="w-fit">
+        <TooltipTrigger asChild onClick={handleToggle}>
           {trigger || (
             <ButtonCustom
               aria-label="Help"

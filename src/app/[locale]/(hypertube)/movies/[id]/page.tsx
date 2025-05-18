@@ -13,6 +13,7 @@ import Loading from '@/app/loading';
 import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Separator } from '@/components/ui/separator';
+import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import { allLanguagesOptions, TLanguageOption } from '@/constants/all-languages-ISO-639-1';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
@@ -260,8 +261,8 @@ const MovieProfile = () => {
                 {movieData?.release_date && `(${new Date(movieData.release_date).getFullYear()})`}
               </span>
             </h1>
-            {/* Rating, savelist, watched */}
             <div className="flex flex-row items-center gap-4">
+              {/* Rating */}
               <div
                 className={clsx(
                   'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
@@ -278,45 +279,53 @@ const MovieProfile = () => {
 
               <Separator orientation="vertical" />
 
-              <button
-                className={clsx(
-                  'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
-                  isBookmarked
-                    ? 'border-amber-400 text-amber-400 shadow-amber-400'
-                    : 'text-card border-card shadow-card'
-                )}
-                onClick={handleBookmarkClick}
-                disabled={loadingBookmarks}
+              {/* Bookmarks button */}
+              <TooltipBasic
+                trigger={
+                  <button
+                    className={clsx(
+                      'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
+                      isBookmarked
+                        ? 'border-amber-400 text-amber-400 shadow-amber-400'
+                        : 'text-card border-card shadow-card'
+                    )}
+                    onClick={handleBookmarkClick}
+                    disabled={loadingBookmarks}
+                  >
+                    {loadingBookmarks ? (
+                      <span className="animate-pulse">?</span>
+                    ) : (
+                      <BookmarkIcon className="smooth42transition h-5 w-5" />
+                    )}
+                  </button>
+                }
               >
-                {loadingBookmarks ? (
-                  <span className="animate-pulse">?</span>
-                ) : (
-                  <BookmarkIcon className="smooth42transition h-5 w-5" />
-                )}
-                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
-                  {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
-                </div>
-              </button>
+                {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
+              </TooltipBasic>
 
-              <button
-                className={clsx(
-                  'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
-                  isInWatchlist
-                    ? 'border-amber-400 text-amber-400 shadow-amber-400'
-                    : 'text-card border-card shadow-card'
-                )}
-                onClick={handleWatchlistClick}
-                disabled={loadingWatched}
+              {/* Watched list button */}
+              <TooltipBasic
+                trigger={
+                  <button
+                    className={clsx(
+                      'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
+                      isInWatchlist
+                        ? 'border-amber-400 text-amber-400 shadow-amber-400'
+                        : 'text-card border-card shadow-card'
+                    )}
+                    onClick={handleWatchlistClick}
+                    disabled={loadingWatched}
+                  >
+                    {loadingWatched ? (
+                      <span className="animate-pulse">?</span>
+                    ) : (
+                      <Eye className="smooth42transition h-5 w-5" />
+                    )}
+                  </button>
+                }
               >
-                {loadingWatched ? (
-                  <span className="animate-pulse">?</span>
-                ) : (
-                  <Eye className="smooth42transition h-5 w-5" />
-                )}
-                <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
-                  {isInWatchlist ? t('set-unwatched') : t('set-watched')}
-                </div>
-              </button>
+                {isInWatchlist ? t('set-unwatched') : t('set-watched')}
+              </TooltipBasic>
             </div>
             {/* Original title */}
             <p className="text-secondary text-lg">
