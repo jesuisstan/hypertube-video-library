@@ -191,6 +191,7 @@
   "error-user-id-is-required": "User ID is required",
   "error-fetching-bookmarks": "Error fetching bookmarks. Please try again",
   "error-updating-database": "Error updating database",
+  "error-checking-database": "Error checking database",
   "record-already-exists": "Record already exists",
   "record-is-done": "Record is done",
   "record-not-found": "Record not found",

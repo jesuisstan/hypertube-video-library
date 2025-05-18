@@ -191,6 +191,7 @@
   "error-user-id-is-required": "ID пользователя обязателен",
   "error-fetching-bookmarks": "Ошибка загрузки закладок. Попробуйте ещё раз",
   "error-updating-database": "Ошибка обновления базы данных",
+  "error-checking-database": "Ошибка проверки базы данных",
   "record-already-exists": "Запись уже существует",
   "record-is-done": "Запись завершена",
   "record-not-found": "Запись не найдена",

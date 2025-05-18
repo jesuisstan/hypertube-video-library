@@ -87,3 +87,32 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: stri
     client.release();
   }
 }
+
+// Check if a movie is in watchlist
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
+  const client = await db.connect();
+  try {
+    const { id: movieId } = await context.params;
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get('user_id');
+    if (!movieId) {
+      return NextResponse.json({ error: 'error-movie-id-is-required' }, { status: 400 });
+    }
+    if (!userId) {
+      return NextResponse.json({ error: 'error-user-id-is-required' }, { status: 400 });
+    }
+
+    const checkQuery = `
+      SELECT id FROM movies_watchlist WHERE user_id = $1 AND movie_id = $2
+    `;
+    const checkResult = await client.query(checkQuery, [userId, movieId]);
+    const isInWatchlist = (checkResult.rowCount ?? 0) > 0;
+
+    return NextResponse.json({ isInWatchlist });
+  } catch (error) {
+    console.error('Watchlist GET error:', error);
+    return NextResponse.json({ error: 'error-checking-database' }, { status: 500 });
+  } finally {
+    client.release();
+  }
+}

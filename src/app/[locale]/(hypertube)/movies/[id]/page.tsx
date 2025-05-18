@@ -12,6 +12,7 @@ import { ArrowRight, BookCopy, BookMarked, Download, Eye } from 'lucide-react';
 import Loading from '@/app/loading';
 import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import { Separator } from '@/components/ui/separator';
 import { allLanguagesOptions, TLanguageOption } from '@/constants/all-languages-ISO-639-1';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
@@ -21,7 +22,6 @@ import { TMovieBasics, TMovieCredits } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-data-yts';
 import { formatDateThumbnail } from '@/utils/format-date';
 import { capitalize } from '@/utils/format-string';
-import { Separator } from '@/components/ui/separator';
 
 const MovieProfile = () => {
   const t = useTranslations();
@@ -146,10 +146,43 @@ const MovieProfile = () => {
     }
   };
 
+  const checkBookmark = async () => {
+    if (!user?.id || !movieId) return;
+    try {
+      setLoadingBookmarks(true);
+      const res = await fetch(`/api/movies/${movieId}/bookmarks?user_id=${user.id}`);
+      const data = await res.json();
+      setIsBookmarked(Boolean(data.isBookmarked));
+    } catch (error) {
+      console.error('Error checking bookmark:', error);
+    } finally {
+      setLoadingBookmarks(false);
+    }
+  };
+
+  const chaeckWatchlist = async () => {
+    if (!user?.id || !movieId) return;
+    try {
+      setLoadingWatchlist(true);
+      const res = await fetch(`/api/movies/${movieId}/watchlist?user_id=${user.id}`);
+      const data = await res.json();
+      setIsInWatchlist(Boolean(data.isInWatchlist));
+    } catch (error) {
+      console.error('Error checking watchlist:', error);
+    } finally {
+      setLoadingWatchlist(false);
+    }
+  };
+
   useEffect(() => {
     scrapeTMDB();
     fetchCredits();
   }, []);
+
+  useEffect(() => {
+    checkBookmark();
+    chaeckWatchlist();
+  }, [user?.id]);
 
   useEffect(() => {
     if (movieData?.original_title && movieData?.release_date) {
@@ -171,9 +204,9 @@ const MovieProfile = () => {
     }
   }, []);
 
-  console.log('TMBB movieData', movieData); // debug
-  console.log('YTS torrents', torrentsYTS); // debug
-  console.log('PirateBay magnetsPB', magnetsPB); // debug
+  //console.log('TMBB movieData', movieData); // debug
+  //console.log('YTS torrents', torrentsYTS); // debug
+  //console.log('PirateBay magnetsPB', magnetsPB); // debug
 
   return loading || !movieData || !creditsData ? (
     <Loading />
@@ -250,7 +283,11 @@ const MovieProfile = () => {
                 onClick={handleBookmarkClick}
                 disabled={loadingBookmarks}
               >
-                <BookMarked className="smooth42transition h-5 w-5" />
+                {loadingBookmarks ? (
+                  <span className="animate-pulse">?</span>
+                ) : (
+                  <BookMarked className="smooth42transition h-5 w-5" />
+                )}
                 <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
                   {isBookmarked ? t('remove-from-bookmarks') : t('add-to-bookmarks')}
                 </div>
@@ -266,7 +303,11 @@ const MovieProfile = () => {
                 onClick={handleWatchlistClick}
                 disabled={loadingWatchlist}
               >
-                <Eye className="smooth42transition h-5 w-5" />
+                {loadingWatchlist ? (
+                  <span className="animate-pulse">?</span>
+                ) : (
+                  <Eye className="smooth42transition h-5 w-5" />
+                )}
                 <div className="bg-foreground/90 text-background absolute -bottom-6 hidden w-fit max-w-44 transform truncate rounded-2xl border px-2 py-1 text-xs text-nowrap group-hover:block">
                   {isInWatchlist ? t('set-unwatched') : t('set-watched')}
                 </div>
