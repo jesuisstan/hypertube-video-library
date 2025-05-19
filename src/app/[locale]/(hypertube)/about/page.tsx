@@ -72,9 +72,9 @@ const AboutPage = () => {
   return (
     <motion.div initial="hidden" animate="visible" variants={framerMotion}>
       {/* HEADER */}
-      <div className="mb-5 flex flex-col flex-wrap items-center justify-center gap-5">
+      <div className="mb-4 flex flex-col flex-wrap items-center justify-center gap-4">
         <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">{t('welcome')}</h1>
-        <div className="xs:flex-row flex flex-col items-center justify-center gap-5">
+        <div className="xs:flex-row flex flex-col items-center justify-center gap-4">
           <Image
             src="/identity/logo-square.png"
             blurDataURL={'/identity/logo-square.png'}
@@ -143,7 +143,7 @@ const AboutPage = () => {
           variants={slideFromBottom}
           id="powered-by"
           className={clsx(
-            'bg-card shadow-primary/20 flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-md p-5 align-middle shadow-md'
+            'bg-card shadow-primary/20 flex w-[100%] flex-col content-center items-center justify-center gap-10 rounded-md border p-5 align-middle shadow-xs'
           )}
         >
           <h2 className="text-center text-xl md:text-2xl lg:text-2xl">{t('powered-by')}</h2>
@@ -379,7 +379,7 @@ const AboutPage = () => {
         <div className="w-full">
           <motion.div variants={slideFromBottom} className="flex justify-center self-center">
             {moviesTMDB.length > 0 && (
-              <h2 className="mb-5 text-center text-xl md:text-2xl lg:text-2xl">
+              <h2 className="mb-4 text-center text-xl md:text-2xl lg:text-2xl">
                 {t('popular-now')}
               </h2>
             )}
@@ -387,7 +387,7 @@ const AboutPage = () => {
 
           <div
             key="moviesTMDB"
-            className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
+            className="smooth42transition flex flex-wrap items-center justify-center gap-4 align-middle"
           >
             {moviesTMDB?.map((movie, index) => (
               <motion.div

@@ -1,15 +1,10 @@
 import { useTranslations } from 'next-intl';
 
-import clsx from 'clsx';
-
-import SkeletonDate from '@/components/ui/skeletons/skeleton-date';
-import { formatApiDateLastUpdate } from '@/utils/format-date';
-
 const StatusWrapper = ({ confirmed }: { confirmed: boolean | undefined }) => {
   const t = useTranslations();
 
   return (
-    <div className="bg-card shadow-primary/20 relative rounded-md p-5 shadow-md">
+    <div className="bg-card shadow-primary/20 relative rounded-md border p-5 shadow-xs">
       <div className="flex flex-col justify-start">
         <h3 className="text-base font-bold">{t(`status`)}</h3>
         <div className="mt-4">

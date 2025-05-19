@@ -31,6 +31,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "tailwind.config.js"
-, "../OTHERS/sheet-primitives.tsx"  ],
+  ],
   "exclude": ["node_modules"]
 }

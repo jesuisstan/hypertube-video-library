@@ -238,7 +238,7 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === 'floating' || variant === 'inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-            : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
+            : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=right]:border-l',
           className
         )}
         {...props}
@@ -265,7 +265,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       variant="ghost"
       size="icon"
       className={cn(
-        'bg-sidebar/70 border-sidebar-border smooth42transition fixed z-10 size-8 rounded-none border-r border-b',
+        'bg-sidebar/70 border-sidebar-border smooth42transition fixed z-10 size-8 rounded-none',
         className
       )}
       onClick={(event) => {
@@ -336,7 +336,7 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
       <div
         data-slot="sidebar-header"
         data-sidebar="header"
-        className={cn('flex flex-col gap-2 p-2', className)}
+        className={cn('flex flex-col gap-4 p-4', className)}
         {...props}
       />
       <Separator />
@@ -351,7 +351,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
       <div
         data-slot="sidebar-footer"
         data-sidebar="footer"
-        className={cn('flex flex-col gap-2 p-2', className)}
+        className={cn('flex flex-col gap-4 p-4', className)}
         {...props}
       />
     </>
@@ -375,7 +375,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        'flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden',
+        'flex min-h-0 flex-1 flex-col gap-4 overflow-auto group-data-[collapsible=icon]:overflow-hidden',
         className
       )}
       {...props}
@@ -388,7 +388,7 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="sidebar-group"
       data-sidebar="group"
-      className={cn('relative flex w-full min-w-0 flex-col p-2', className)}
+      className={cn('relative flex w-full min-w-0 flex-col p-4', className)}
       {...props}
     />
   );
@@ -614,7 +614,7 @@ function SidebarMenuSkeleton({
     <div
       data-slot="sidebar-menu-skeleton"
       data-sidebar="menu-skeleton"
-      className={cn('flex h-8 items-center gap-2 rounded-md px-2', className)}
+      className={cn('flex h-8 items-center gap-4 rounded-md px-4', className)}
       {...props}
     >
       {showIcon && <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />}

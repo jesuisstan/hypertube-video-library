@@ -35,7 +35,7 @@ const HypertubeLayout = ({ children }: { children: ReactNode }) => {
       <div className="flex w-full flex-grow flex-col items-center justify-between">
         <main id="main-content" role="main" className={clsx('w-full items-center')}>
           <SidebarTrigger />
-          <div className="p-4">{children}</div>
+          {children}
         </main>
         <Footer />
       </div>
