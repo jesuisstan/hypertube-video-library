@@ -12,6 +12,7 @@ import DatesRangePicker from '@/components/dates-range-picker';
 import DrawerSearchByQuery from '@/components/drawers-custom/drawer-search-by-query';
 import { KeywordMultiSelect } from '@/components/keyword-multi-select';
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
+import TooltipBasic from '@/components/tooltips-custom/tooltip-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import ChipsGroup from '@/components/ui/chips/chips-group';
 import RadioGroup from '@/components/ui/radio/radio-group';
@@ -20,7 +21,6 @@ import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 import Spinner from '@/components/ui/spinner';
 import ToastNotification from '@/components/ui/toast-notification';
-import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import useSortOptions from '@/hooks/useSortOptions';
 import useSearchStore from '@/stores/search';
 import useUserStore from '@/stores/user';
@@ -275,7 +275,7 @@ const BrowsePage = () => {
       {errorMessage && (
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
-      <div className="smooth42transition xs:flex-row flex flex-col items-start gap-5">
+      <div className="smooth42transition xs:flex-row flex flex-col items-start">
         {/* Search by query */}
         <DrawerSearchByQuery />
         {/* Sort and filter sector */}
@@ -447,11 +447,11 @@ const BrowsePage = () => {
         </div>
 
         {/* Movies sector */}
-        <div className="w-full">
+        <div className="xs:mt-0 xs:ml-4 mt-4 ml-0 w-full">
           <motion.div initial="hidden" animate="visible" variants={framerMotion}>
             <div
               key="moviesTMDB"
-              className="smooth42transition flex flex-wrap items-center justify-center gap-5 align-middle"
+              className="smooth42transition flex flex-wrap items-center justify-center gap-4 align-middle"
             >
               {moviesTMDB?.map((movie, index) => (
                 <motion.div

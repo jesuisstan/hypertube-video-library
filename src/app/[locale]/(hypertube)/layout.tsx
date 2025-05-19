@@ -5,7 +5,8 @@ import { ReactNode, useEffect } from 'react';
 import clsx from 'clsx';
 
 import Footer from '@/components/footer';
-import Menu from '@/components/menu/menu';
+import { AppSidebar } from '@/components/menu/app-sidebar';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import useSearchStore from '@/stores/search';
 
 const HypertubeLayout = ({ children }: { children: ReactNode }) => {
@@ -29,15 +30,16 @@ const HypertubeLayout = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <div className={clsx('relative flex min-h-screen w-full flex-col lg:flex-row')}>
-      <Menu />
+    <SidebarProvider>
+      <AppSidebar />
       <div className="flex w-full flex-grow flex-col items-center justify-between">
-        <main id="main-content" role="main" className={clsx('mb-auto w-full items-center p-4')}>
-          {children}
+        <main id="main-content" role="main" className={clsx('w-full items-center')}>
+          <SidebarTrigger />
+          <div className="p-4">{children}</div>
         </main>
         <Footer />
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

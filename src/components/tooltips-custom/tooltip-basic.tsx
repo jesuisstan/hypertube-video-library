@@ -5,12 +5,7 @@ import { FC, useState } from 'react';
 import { CircleAlert } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip/tooltip-primitives';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 type TTooltipBasicProps = {
   trigger?: React.ReactNode;

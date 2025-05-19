@@ -11,9 +11,16 @@ import { ArrowRight, BookCopy, BookmarkIcon, Download, Eye } from 'lucide-react'
 
 import Loading from '@/app/loading';
 import DrawerCredits from '@/components/drawers-custom/drawer-credits';
+import TooltipBasic from '@/components/tooltips-custom/tooltip-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel/carousel-primitives';
 import { Separator } from '@/components/ui/separator';
-import TooltipBasic from '@/components/ui/tooltip/tooltip-basic';
 import { allLanguagesOptions, TLanguageOption } from '@/constants/all-languages-ISO-639-1';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
@@ -219,7 +226,7 @@ const MovieProfile = () => {
   ) : (
     <div className="w-full space-y-5">
       {/* Main content with backdrop */}
-      <div className="relative mx-auto grid max-w-screen grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[300px_1fr]">
+      <div className="relative mx-auto grid max-w-screen-2xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[300px_1fr]">
         <div className="shadow-primary/40 absolute inset-0 -z-10 overflow-hidden rounded-md shadow-md">
           <Image
             src={
@@ -229,10 +236,10 @@ const MovieProfile = () => {
             }
             alt="backdrop"
             fill
-            className="object-cover opacity-30"
+            className="object-cover opacity-40"
             priority
           />
-          <div className="from-primary/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
+          <div className="from-negative/40 to-primary/90 absolute inset-0 bg-gradient-to-b" />
         </div>
         {/* Poster */}
         <div className="flex items-center justify-center overflow-hidden rounded-md align-middle">
@@ -433,82 +440,104 @@ const MovieProfile = () => {
       </div>
 
       {/* Cast */}
-      <div className="bg-card shadow-primary/20 max-w-full rounded-md p-5 shadow-md">
+      <div className="bg-card shadow-primary/20 mx-6 max-w-screen-2xl rounded-md p-5 shadow-md">
         <h3 className="mb-4 text-xl font-semibold">
           {t('top-billed-cast')}
           {':'}
         </h3>
         {creditsData?.cast?.length > 0 ? (
-          <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
-            {creditsData?.cast?.slice(0, 10).map((actor, index) => (
-              <div key={index} className="flex w-32 flex-col">
-                <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
-                  <Image
-                    src={
-                      actor.profile_path
-                        ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                        : '/icons/person.png'
-                    }
-                    alt={actor.name}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="h-[192px] w-[128px] rounded-md object-cover"
+          <Carousel>
+            <CarouselContent>
+              {creditsData?.cast?.slice(0, 10).map((actor, index) => (
+                <CarouselItem key={index} className="max-w-[140px]">
+                  <div className="flex w-32 flex-col items-center">
+                    <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
+                      <Image
+                        src={
+                          actor.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                            : '/icons/person.png'
+                        }
+                        alt={actor.name}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="h-[192px] w-[128px] rounded-md object-cover"
+                      />
+                    </div>
+                    <p className="mt-2 text-center text-sm font-semibold">{actor.name}</p>
+                    <p className="text-muted-foreground text-center text-xs">{actor.character}</p>
+                  </div>
+                </CarouselItem>
+              ))}
+              {creditsData?.cast && (
+                <CarouselItem
+                  key="drawer-cast"
+                  className="flex max-w-[140px] items-center justify-center"
+                >
+                  <DrawerCredits
+                    title={movieData?.title ? movieData?.title : ''}
+                    description={t('top-billed-cast')}
+                    data={creditsData?.cast}
                   />
-                </div>
-                <p className="mt-2 text-center text-sm font-semibold">{actor.name}</p>
-                <p className="text-muted-foreground text-center text-xs">{actor.character}</p>
-              </div>
-            ))}
-            {creditsData?.cast && (
-              <DrawerCredits
-                title={movieData?.title ? movieData?.title : ''}
-                description={t('top-billed-cast')}
-                data={creditsData?.cast}
-              />
-            )}
-          </div>
+                </CarouselItem>
+              )}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         ) : (
           <p className="text-muted-foreground text-center text-sm">{t('no-info-available')}</p>
         )}
       </div>
 
       {/* Crew */}
-      <div className="bg-card shadow-primary/20 max-w-full rounded-md p-5 shadow-md">
+      <div className="bg-card shadow-primary/20 mx-6 max-w-screen-2xl rounded-md p-5 shadow-md">
         <h3 className="mb-4 text-xl font-semibold">
           {t('crew')}
           {':'}
         </h3>
-        {creditsData?.crew.length > 0 ? (
-          <div className="flex flex-wrap justify-center gap-4 align-middle md:justify-start">
-            {creditsData?.crew?.slice(0, 10).map((crewMember, index) => (
-              <div key={index} className="flex w-32 flex-col">
-                <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
-                  <Image
-                    src={
-                      crewMember.profile_path
-                        ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
-                        : '/icons/person.png'
-                    }
-                    alt={crewMember.name}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="h-[192px] w-[128px] rounded-md object-cover"
+        {creditsData?.crew?.length > 0 ? (
+          <Carousel>
+            <CarouselContent>
+              {creditsData?.crew?.slice(0, 10).map((crewMember, index) => (
+                <CarouselItem key={index} className="max-w-[140px]">
+                  <div className="flex w-32 flex-col items-center">
+                    <div className="bg-muted flex justify-center overflow-hidden rounded-md align-middle">
+                      <Image
+                        src={
+                          crewMember.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
+                            : '/icons/person.png'
+                        }
+                        alt={crewMember.name}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="h-[192px] w-[128px] rounded-md object-cover"
+                      />
+                    </div>
+                    <p className="mt-2 text-center text-sm font-semibold">{crewMember.name}</p>
+                    <p className="text-muted-foreground text-center text-xs">{crewMember.job}</p>
+                  </div>
+                </CarouselItem>
+              ))}
+              {creditsData?.crew && (
+                <CarouselItem
+                  key="drawer-crew"
+                  className="flex max-w-[140px] items-center justify-center"
+                >
+                  <DrawerCredits
+                    title={movieData?.title ? movieData?.title : ''}
+                    description={t('crew')}
+                    data={creditsData?.crew}
                   />
-                </div>
-                <p className="mt-2 text-center text-sm font-semibold">{crewMember.name}</p>
-                <p className="text-muted-foreground text-center text-xs">{crewMember.job}</p>
-              </div>
-            ))}
-            {creditsData?.crew && (
-              <DrawerCredits
-                title={movieData?.title ? movieData?.title : ''}
-                description={t('crew')}
-                data={creditsData?.crew}
-              />
-            )}
-          </div>
+                </CarouselItem>
+              )}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         ) : (
           <p className="text-muted-foreground text-center text-sm">{t('no-info-available')}</p>
         )}

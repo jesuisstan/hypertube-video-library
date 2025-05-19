@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-import { ArrowBigRight } from 'lucide-react';
+import { UsersRound } from 'lucide-react';
 
 import DrawerBasic from '@/components/ui/drawer-template';
 import { TCastMember, TCrewMember } from '@/types/movies';
@@ -13,7 +13,7 @@ const Trigger = () => {
     <div className="smooth42transition hover:text-c42orange flex w-32 cursor-pointer flex-row items-center justify-center gap-1">
       {t('all')}
       <>
-        <ArrowBigRight className="h-4 w-4" />
+        <UsersRound className="h-4 w-4" />
       </>
     </div>
   );

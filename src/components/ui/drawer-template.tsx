@@ -9,7 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet-primitives';
+} from '@/components/ui/sheet';
 
 const DrawerBasic = ({
   trigger,

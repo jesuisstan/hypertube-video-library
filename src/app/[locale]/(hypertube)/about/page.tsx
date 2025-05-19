@@ -70,7 +70,7 @@ const AboutPage = () => {
   }, [locale]);
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={framerMotion} className="p-5">
+    <motion.div initial="hidden" animate="visible" variants={framerMotion}>
       {/* HEADER */}
       <div className="mb-5 flex flex-col flex-wrap items-center justify-center gap-5">
         <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">{t('welcome')}</h1>
