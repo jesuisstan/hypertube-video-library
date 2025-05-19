@@ -239,9 +239,7 @@ const Authentication = () => {
           <SocialMediaAuth translate={t} setError={setError} />
         )}
         {/* Horizontal devider */}
-        {(pageLayout === 'login' || pageLayout === 'register') && (
-          <Separator text={t(`or`).toUpperCase()} />
-        )}
+        {(pageLayout === 'login' || pageLayout === 'register') && <Separator />}
 
         {/* Login method selector */}
         {pageLayout === 'login' && (
@@ -404,7 +402,7 @@ const Authentication = () => {
           {/* Additional buttons */}
           {pageLayout === 'login' && (
             <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">
-              <Separator text={t(`or`).toUpperCase()} />
+              <Separator />
               <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
                 <ButtonCustom
                   variant="link"
