@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
-import { PanelLeft } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 import { ButtonShad } from '@/components/ui/buttons/button-shad';
 import { Input } from '@/components/ui/input';
@@ -265,7 +265,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       variant="ghost"
       size="icon"
       className={cn(
-        'bg-sidebar/80 border-sidebar-border smooth42transition fixed z-10 size-7 rounded-none border-r border-b',
+        'bg-sidebar/70 border-sidebar-border smooth42transition fixed z-10 size-8 rounded-none border-r border-b',
         className
       )}
       onClick={(event) => {
@@ -274,7 +274,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       }}
       {...props}
     >
-      <PanelLeft />
+      <Menu />
       <span className="sr-only">Toggle Sidebar</span>
     </ButtonShad>
   );
