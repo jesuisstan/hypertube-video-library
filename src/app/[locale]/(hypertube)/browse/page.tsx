@@ -462,7 +462,7 @@ const BrowsePage = () => {
                   {watchedData.some((w) => w.id === movie.id) && (
                     <TooltipBasic
                       trigger={
-                        <Eye className="bg-primary/60 text-primary-foreground animate-fade-in absolute top-0 left-0 z-10 h-7 w-7 rounded-full p-1 shadow-md" />
+                        <Eye className="bg-primary/60 text-primary-foreground animate-fade-in absolute top-1 left-1 z-10 h-7 w-7 rounded-full p-1 shadow-md" />
                       }
                     >
                       <div className="flex max-w-96">{t('watched')}</div>

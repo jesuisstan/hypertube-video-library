@@ -263,19 +263,24 @@ const MovieProfile = () => {
             </h1>
             <div className="flex flex-row items-center gap-4">
               {/* Rating */}
-              <div
-                className={clsx(
-                  'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
-                  movieData?.vote_average! > 7
-                    ? 'border-positive shadow-positive'
-                    : movieData?.vote_average! >= 6
-                      ? 'border-amber-400 shadow-amber-400'
-                      : 'border-destructive shadow-destructive'
-                )}
-                title={`${t('average-rating')}: ${movieData?.vote_average}`}
+              <TooltipBasic
+                trigger={
+                  <div
+                    className={clsx(
+                      'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
+                      movieData?.vote_average! > 7
+                        ? 'border-positive shadow-positive'
+                        : movieData?.vote_average! >= 6
+                          ? 'border-amber-400 shadow-amber-400'
+                          : 'border-destructive shadow-destructive'
+                    )}
+                  >
+                    {movieData?.vote_average?.toFixed(1)}
+                  </div>
+                }
               >
-                {movieData?.vote_average?.toFixed(1)}
-              </div>
+                {`${t('average-rating')}: ${movieData?.vote_average}`}
+              </TooltipBasic>
 
               <Separator orientation="vertical" />
 
