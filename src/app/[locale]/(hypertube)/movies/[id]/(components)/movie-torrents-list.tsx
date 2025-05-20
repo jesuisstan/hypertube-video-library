@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { ArrowRight, Download } from 'lucide-react';
+import { Download, Play } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -25,7 +24,7 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
-  const preferedContentLanguage = user?.preferred_language || locale; // todo: use to set video or subtitle language
+  const preferedContentLanguage = user?.preferred_language || locale;
   const [loadingYTS, setLoadingYTS] = useState(false);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchYear, setSearchYear] = useState('');
@@ -34,7 +33,6 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
   const scrapeYTS = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
 
-    // if we have imdb_id, use it for search. Otherwise, use title and year
     const searchQuery = movieData?.imdb_id ? movieData.imdb_id : `${searchText} ${searchYear}`;
     setLoadingYTS(true);
     try {
@@ -47,7 +45,6 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
     }
   };
 
-  // Set search title and year for further torrents search based on movie data
   useEffect(() => {
     if (movieData?.original_title && movieData?.release_date) {
       setSearchTitle(movieData?.original_title);
@@ -55,7 +52,6 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
     }
   }, [movieData]);
 
-  // Scrape torrents from YTS when search title is set
   useEffect(() => {
     if (searchTitle) {
       scrapeYTS(searchTitle, searchYear);
@@ -63,46 +59,49 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTitle]);
 
-  console.log('YTS torrents', torrentsYTS); // debug
-  console.log('PREFERED CONTENT LANGUAGE', preferedContentLanguage); // debug
+  console.log('YTS torrentsYTS', torrentsYTS); // debug
 
   return !movieData ? null : (
     <div className="bg-card shadow-primary/20 mx-auto w-full max-w-screen-2xl rounded-md border px-4 shadow-xs">
       <h1 className="mt-6 font-bold">Torrents from YTS:</h1>
-      <ul className="flex flex-col gap-2">
-        {torrentsYTS?.map((movie, index) => (
-          <li key={index} className="flex items-center gap-2">
-            <p>{movie.quality}</p>
-            <ArrowRight className="h-4 w-4" />
-            <p>{movie.size}</p>
-            <ArrowRight className="h-4 w-4" />
-            <ButtonCustom size="icon" variant="default" title="Download torrent">
-              <Link href={movie.url}>
-                <Download className="h-4 w-4" />
-              </Link>
-            </ButtonCustom>
-          </li>
-        ))}
-        <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Title</TableHead>
+            <TableHead>Quality</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Seeds</TableHead>
+            <TableHead>Peers</TableHead>
+            <TableHead>Size</TableHead>
+            <TableHead className="text-center">Download</TableHead>
+            <TableHead className="text-center">Stream</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {torrentsYTS.map((torrent, idx) => (
+            <TableRow key={idx}>
+              <TableCell>{movieData.title}</TableCell>
+              <TableCell>{torrent.quality}</TableCell>
+              <TableCell>{torrent.type}</TableCell>
+              <TableCell>{torrent.seeds}</TableCell>
+              <TableCell>{torrent.peers}</TableCell>
+              <TableCell>{torrent.size}</TableCell>
+              <TableCell className="text-center">
+                <ButtonCustom size="icon" variant="default" title="Download torrent">
+                  <Link href={torrent.url}>
+                    <Download className="h-4 w-4" />
+                  </Link>
+                </ButtonCustom>
+              </TableCell>
+              <TableCell className="text-center">
+                <ButtonCustom size="icon" variant="default" title="Stream (coming soon)">
+                  <Play className="h-4 w-4" />
+                </ButtonCustom>
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </ul>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };
