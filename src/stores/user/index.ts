@@ -3,7 +3,7 @@ import { User } from 'next-auth';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-type UserStore = {
+type TUserStore = {
   user: User | null;
   setUser: (userData: User) => void;
   clearUser: () => void;
@@ -12,7 +12,7 @@ type UserStore = {
   setGlobalLoading: (loading: boolean) => void;
 };
 
-const useUserStore = create<UserStore>()(
+const useUserStore = create<TUserStore>()(
   persist(
     (set, get) => ({
       user: null,

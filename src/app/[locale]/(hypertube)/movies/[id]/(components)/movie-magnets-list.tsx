@@ -3,38 +3,38 @@
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, BookCopy } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import { Link } from '@/i18n/routing';
-import { fetchMoviesByTitle } from '@/lib/yts-api';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
-import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
 
-const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) => {
+const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
   const preferedContentLanguage = user?.preferred_language || locale; // todo: use to set video or subtitle language
-  const [loadingYTS, setLoadingYTS] = useState(false);
+  const [loadingPB, setLoadingPB] = useState(false);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchYear, setSearchYear] = useState('');
-  const [torrentsYTS, setTorrentsYTS] = useState<TTorrentDataYTS[]>([]);
+  const [magnetsPB, setMagnetsPB] = useState<TMagnetDataPirateBay[]>([]);
 
-  const scrapeYTS = async (searchText: string, searchYear: string) => {
+  const scrapePB = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
 
-    // if we have imdb_id, use it for search. Otherwise, use title and year
-    const searchQuery = movieData?.imdb_id ? movieData.imdb_id : `${searchText} ${searchYear}`;
-    setLoadingYTS(true);
+    setLoadingPB(true);
     try {
-      const data = await fetchMoviesByTitle(searchQuery);
-      setTorrentsYTS(data?.data?.movies?.[0].torrents || []);
+      const response = await fetch(
+        `/api/torrents/piratebay?title=${searchText}&year=${searchYear}`
+      );
+      const data = await response.json();
+      setMagnetsPB(data);
     } catch (error) {
-      console.error('Error scraping YTS:', error);
+      console.error('Error scraping PirateBay:', error);
     } finally {
-      setLoadingYTS(false);
+      setLoadingPB(false);
     }
   };
 
@@ -46,30 +46,29 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
     }
   }, [movieData]);
 
-  // Scrape torrents from YTS when search title is set
+  // Scrape PirateBay when search title is set
   useEffect(() => {
     if (searchTitle) {
-      scrapeYTS(searchTitle, searchYear);
+      scrapePB(searchTitle, searchYear);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTitle]);
 
-  console.log('YTS torrents', torrentsYTS); // debug
-  console.log('PREFERED CONTENT LANGUAGE', preferedContentLanguage); // debug
+  console.log('PirateBay magnetsPB', magnetsPB); // debug
 
   return !movieData ? null : (
     <div className="bg-card shadow-primary/20 mx-auto w-full max-w-screen-2xl rounded-md border px-4 shadow-xs">
-      <h1 className="mt-6 font-bold">Torrents from YTS:</h1>
+      <h1 className="mt-6 font-bold">Magnets from Pirate Bay:</h1>
       <ul className="flex flex-col gap-2">
-        {torrentsYTS?.map((movie, index) => (
-          <li key={index} className="flex items-center gap-2">
-            <p>{movie.quality}</p>
+        {magnetsPB?.map((movie) => (
+          <li key={movie.link} className="flex items-center gap-2">
+            <p>{movie.title}</p>
             <ArrowRight className="h-4 w-4" />
             <p>{movie.size}</p>
             <ArrowRight className="h-4 w-4" />
-            <ButtonCustom size="icon" variant="default" title="Download torrent">
-              <Link href={movie.url}>
-                <Download className="h-4 w-4" />
+            <ButtonCustom size="icon" variant="default" title="Copy magnet">
+              <Link href={movie.link}>
+                <BookCopy className="h-4 w-4" />
               </Link>
             </ButtonCustom>
           </li>
@@ -79,4 +78,4 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
   );
 };
 
-export default MovieTorrentsList;
+export default MovieMagnetsList;

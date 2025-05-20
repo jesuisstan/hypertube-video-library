@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import MovieCredits from './(components)/movie-credits';
 import MovieHeader from './(components)/movie-header';
+import MovieMagnetsList from './(components)/movie-magnets-list';
 import MovieTorrentsList from './(components)/movie-torrents-list';
 
 import Loading from '@/app/loading';
@@ -52,6 +53,8 @@ const MovieProfile = () => {
         <MovieCredits movieData={movieData} />
         {/* Torrents */}
         <MovieTorrentsList movieData={movieData} />
+        {/* Magnets */}
+        <MovieMagnetsList movieData={movieData} />
         {/* Comments */}
         {/* TODO */}
       </div>
