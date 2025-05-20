@@ -45,9 +45,9 @@ const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const crew = creditsData?.crew ?? [];
 
   return !movieData ? null : (
-    <div className="flex flex-col items-center gap-4">
+    <div className="mx-auto w-full max-w-screen-2xl px-4">
       {/* Cast */}
-      <div className="bg-card shadow-primary/20 mx-6 max-w-screen-2xl rounded-md border p-4 shadow-xs">
+      <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
         <h3 className="mb-4 text-xl font-semibold">
           {t('top-billed-cast')}
           {':'}
@@ -111,7 +111,7 @@ const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
       </div>
 
       {/* Crew */}
-      <div className="bg-card shadow-primary/20 mx-6 max-w-screen-2xl rounded-md p-4 shadow-xs">
+      <div className="bg-card shadow-primary/20 mt-4 w-full rounded-md border p-4 shadow-xs">
         <h3 className="mb-4 text-xl font-semibold">
           {t('crew')}
           {':'}

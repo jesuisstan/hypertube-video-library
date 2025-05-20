@@ -10,6 +10,7 @@ import { BookmarkIcon, Eye } from 'lucide-react';
 
 import TooltipBasic from '@/components/tooltips-custom/tooltip-basic';
 import { Separator } from '@/components/ui/separator';
+import Spinner from '@/components/ui/spinner';
 import { allLanguagesOptions, TLanguageOption } from '@/constants/all-languages-ISO-639-1';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
@@ -201,13 +202,14 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
                     'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
                     isBookmarked
                       ? 'border-amber-400 text-amber-400 shadow-amber-400'
-                      : 'text-card border-card shadow-card'
+                      : 'text-card border-card shadow-card',
+                    loadingBookmarks && 'animate-pulse'
                   )}
                   onClick={handleBookmarkClick}
                   disabled={loadingBookmarks}
                 >
                   {loadingBookmarks ? (
-                    <span className="animate-pulse">?</span>
+                    <Spinner color="amber-400" />
                   ) : (
                     <BookmarkIcon className="smooth42transition h-5 w-5" />
                   )}
@@ -225,13 +227,14 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
                     'bg-primary group relative z-40 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border align-middle font-bold shadow-md',
                     isInWatchlist
                       ? 'border-amber-400 text-amber-400 shadow-amber-400'
-                      : 'text-card border-card shadow-card'
+                      : 'text-card border-card shadow-card',
+                    loadingWatched && 'animate-pulse'
                   )}
                   onClick={handleWatchlistClick}
                   disabled={loadingWatched}
                 >
                   {loadingWatched ? (
-                    <span className="animate-pulse">?</span>
+                    <Spinner color="amber-400" />
                   ) : (
                     <Eye className="smooth42transition h-5 w-5" />
                   )}
