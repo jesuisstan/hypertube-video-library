@@ -46,6 +46,7 @@ export function KeywordMultiSelect() {
     }, 500);
 
     return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const fetchKeywords = async (searchTerm: string, pageToFetch: number) => {
@@ -95,6 +96,7 @@ export function KeywordMultiSelect() {
     if (page > 1) {
       fetchKeywords(query, page); // Fetch the next page when `page` changes
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

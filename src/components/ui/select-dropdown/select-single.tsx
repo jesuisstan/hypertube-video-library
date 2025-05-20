@@ -38,6 +38,7 @@ const SelectSingle = ({
     if (selectedItem === undefined && defaultValue) {
       setSelectedItem(verifiedDefaultValue!);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   /* Verifying the passed Props of the component */

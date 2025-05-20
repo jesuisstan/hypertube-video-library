@@ -205,6 +205,7 @@ const BrowsePage = () => {
     if (user) {
       fetchWatched();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   // Scrape TMDB when the page changes (user scrolls down)

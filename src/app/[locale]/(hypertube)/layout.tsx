@@ -27,6 +27,7 @@ const HypertubeLayout = ({ children }: { children: ReactNode }) => {
     if (!genresList.en.length || !genresList.fr.length || !genresList.ru.length) {
       scrapeGenresList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

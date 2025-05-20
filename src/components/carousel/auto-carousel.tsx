@@ -36,6 +36,7 @@ const AutoCarousel: FC<TCarouselProps> = ({
       setIndex(index + 1);
     }, interval);
     return () => clearInterval(slider);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   const getPositionClass = (itemIndex: number) => {

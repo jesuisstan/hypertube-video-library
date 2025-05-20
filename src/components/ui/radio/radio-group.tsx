@@ -34,6 +34,7 @@ const RadioGroup = ({
     if (selectedItem === undefined && defaultValue) {
       onSelectItem(verifiedDefaultValue!);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   // Verifying the passed Props of the component

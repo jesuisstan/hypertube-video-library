@@ -301,6 +301,7 @@ function Nav({
         )
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [previousMonth, goToMonth]);
 
   const handleNextClick = React.useCallback(() => {
@@ -321,6 +322,7 @@ function Nav({
         Date.UTC(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth(), nextMonth.getUTCDate())
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goToMonth, nextMonth]);
 
   return (
