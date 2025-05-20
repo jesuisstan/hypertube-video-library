@@ -45,14 +45,15 @@ const MovieProfile = () => {
     <Loading />
   ) : (
     <div className="w-full">
-      {/* Main content with backdrop */}
+      {/* Main movie content with backdrop */}
       <MovieHeader movieData={movieData} />
-
       <div className="m-4 flex flex-col items-center gap-4">
+        {/* Cast and crew */}
         <MovieCredits movieData={movieData} />
-
-        {/* scraping torrents */}
+        {/* Torrents */}
         <MovieTorrentsList movieData={movieData} />
+        {/* Comments */}
+        {/* TODO */}
       </div>
     </div>
   );

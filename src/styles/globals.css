@@ -118,20 +118,20 @@
 
 /* Restyling the scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid;
   border-color: hsl(var(--c42orange));
 }
 
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--positive));
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 .darkmode-logo {

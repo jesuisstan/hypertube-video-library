@@ -89,108 +89,112 @@ const ProfilePage = () => {
   return loading || globalLoading || !user ? (
     <Loading />
   ) : (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={framerMotion}
-      className="flex flex-col items-stretch space-y-4"
-    >
-      <DialogProfileModify
-        show={showProfileCompleteModal}
-        setShow={setShowProfileCompleteModal}
-        startLayout={profileCompleteModalLayout as keyof typeof TProfileCompleteLayout}
-      />
-
-      {/* PROFILE GRID */}
+    <div className="bg-card shadow-primary/20 m-4 rounded-md border p-4 shadow-xs">
       <motion.div
-        variants={slideFromBottom}
-        className={clsx(
-          'grid gap-4',
-          'auto-rows-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-        )}
+        initial="hidden"
+        animate="visible"
+        variants={framerMotion}
+        className="flex flex-col items-stretch space-y-4"
       >
-        {/* HEADER */}
-        <div>
-          <HeaderWrapper
-            photoURL={user?.photos[0]}
-            nickname={user?.nickname ?? '???'}
-            firstName={user?.firstname ?? '???'}
-            lastName={user?.lastname ?? '???'}
-            loading={false}
-            modifiable
-            onModify={handleModifyClick}
-          />
-        </div>
-        {/* DESCRIPTION */}
-        <div>
-          <DescriptionWrapper
-            text={user?.biography}
-            modifiable
-            onModify={() => handleModifyClick('description' as keyof typeof TProfileCompleteLayout)}
-          />
-        </div>
+        <DialogProfileModify
+          show={showProfileCompleteModal}
+          setShow={setShowProfileCompleteModal}
+          startLayout={profileCompleteModalLayout as keyof typeof TProfileCompleteLayout}
+        />
 
-        {/* LOCATION & LANG */}
-        <div className="flex flex-col gap-4">
-          <LocationWrapper
-            address={user?.address}
-            modifiable
-            onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
-          />
-          <PrefLangWrapper
-            lang={user?.preferred_language}
-            modifiable
-            onModify={() =>
-              handleModifyClick('preferred_language' as keyof typeof TProfileCompleteLayout)
-            }
-          />
-        </div>
-
-        {/* STATUS */}
-        <div className="flex flex-col justify-between gap-4 lg:flex-row xl:flex-col xl:justify-start">
-          <StatusWrapper confirmed={user?.confirmed} />
-          <LastModificationWrapper date={user?.last_action} />
-        </div>
-      </motion.div>
-
-      {/* Bookmarks & Watchlist */}
-      <motion.div variants={slideFromBottom} className={'flex flex-col'}>
-        <CategoryToggler tabs={categoriesTabs} category={category} setCategory={setCategory} />
-        {/* Movies sector */}
-        <div className="w-full">
-          <div
-            key={category}
-            className="smooth42transition flex flex-wrap items-center justify-center gap-5 pt-4 align-middle"
-          >
-            {(category === 'bookmarks' ? bookmarksData : watchedData)?.length === 0 &&
-              !(loading || (category === 'bookmarks' ? loadingBookmarks : loadingWatched)) && (
-                <div className="text-muted-foreground w-full py-10 text-center text-lg font-medium">
-                  {category === 'bookmarks'
-                    ? t('no-bookmarks-available')
-                    : t('no-watched-available')}
-                </div>
-              )}
-
-            {(category === 'bookmarks' ? bookmarksData : watchedData)?.map((movie, index) => (
-              <motion.div
-                variants={slideFromBottom}
-                key={`${movie.id}-${index}`}
-                className="flex justify-center self-center"
-              >
-                <MovieThumbnail movieBasics={movie} loading={false} />
-              </motion.div>
-            ))}
+        {/* PROFILE GRID */}
+        <motion.div
+          variants={slideFromBottom}
+          className={clsx(
+            'grid gap-4',
+            'auto-rows-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+          )}
+        >
+          {/* HEADER */}
+          <div>
+            <HeaderWrapper
+              photoURL={user?.photos[0]}
+              nickname={user?.nickname ?? '???'}
+              firstName={user?.firstname ?? '???'}
+              lastName={user?.lastname ?? '???'}
+              loading={false}
+              modifiable
+              onModify={handleModifyClick}
+            />
+          </div>
+          {/* DESCRIPTION */}
+          <div>
+            <DescriptionWrapper
+              text={user?.biography}
+              modifiable
+              onModify={() =>
+                handleModifyClick('description' as keyof typeof TProfileCompleteLayout)
+              }
+            />
           </div>
 
-          {(loading || (category === 'bookmarks' ? loadingBookmarks : loadingWatched)) && (
-            <div className="m-5 flex flex-col items-center gap-5">
-              <Spinner size={21} />
-              <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
+          {/* LOCATION & LANG */}
+          <div className="flex flex-col gap-4">
+            <LocationWrapper
+              address={user?.address}
+              modifiable
+              onModify={() => handleModifyClick('location' as keyof typeof TProfileCompleteLayout)}
+            />
+            <PrefLangWrapper
+              lang={user?.preferred_language}
+              modifiable
+              onModify={() =>
+                handleModifyClick('preferred_language' as keyof typeof TProfileCompleteLayout)
+              }
+            />
+          </div>
+
+          {/* STATUS */}
+          <div className="flex flex-col justify-between gap-4 lg:flex-row xl:flex-col xl:justify-start">
+            <StatusWrapper confirmed={user?.confirmed} />
+            <LastModificationWrapper date={user?.last_action} />
+          </div>
+        </motion.div>
+
+        {/* Bookmarks & Watchlist */}
+        <motion.div variants={slideFromBottom} className={'flex flex-col'}>
+          <CategoryToggler tabs={categoriesTabs} category={category} setCategory={setCategory} />
+          {/* Movies sector */}
+          <div className="w-full">
+            <div
+              key={category}
+              className="smooth42transition flex flex-wrap items-center justify-center gap-5 pt-4 align-middle"
+            >
+              {(category === 'bookmarks' ? bookmarksData : watchedData)?.length === 0 &&
+                !(loading || (category === 'bookmarks' ? loadingBookmarks : loadingWatched)) && (
+                  <div className="text-muted-foreground w-full py-10 text-center text-lg font-medium">
+                    {category === 'bookmarks'
+                      ? t('no-bookmarks-available')
+                      : t('no-watched-available')}
+                  </div>
+                )}
+
+              {(category === 'bookmarks' ? bookmarksData : watchedData)?.map((movie, index) => (
+                <motion.div
+                  variants={slideFromBottom}
+                  key={`${movie.id}-${index}`}
+                  className="flex justify-center self-center"
+                >
+                  <MovieThumbnail movieBasics={movie} loading={false} />
+                </motion.div>
+              ))}
             </div>
-          )}
-        </div>
+
+            {(loading || (category === 'bookmarks' ? loadingBookmarks : loadingWatched)) && (
+              <div className="m-5 flex flex-col items-center gap-5">
+                <Spinner size={21} />
+                <p className="animate-pulse text-base leading-[19px] font-normal">{t(`loading`)}</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
