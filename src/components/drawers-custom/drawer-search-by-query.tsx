@@ -129,7 +129,7 @@ const DrawerSearchByQuery = () => {
   return (
     <DrawerBasic trigger={<Trigger />} title={title} side="left" size="1/2">
       <div ref={moviesContainerRef} className="flex w-full flex-col gap-4 p-2">
-        <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
+        <div className="xs:flex-row flex flex-col items-center justify-center gap-4">
           <div className="flex w-full max-w-32 flex-col gap-2 self-center">
             <label className="font-bold">18+</label>
             <RadioGroup
@@ -141,9 +141,6 @@ const DrawerSearchByQuery = () => {
               onSelectItem={(args_0) => handleAdultContentChange(args_0)}
               defaultValue="false"
             />
-          </div>
-          <div className="xs:flex hidden h-11">
-            <Separator orientation="vertical" />
           </div>
           <div className="flex w-full items-center gap-2">
             <Command shouldFilter={false}>

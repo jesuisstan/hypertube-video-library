@@ -226,7 +226,7 @@ const MovieProfile = () => {
   ) : (
     <div className="w-full">
       {/* Main content with backdrop */}
-      <div className="relative mx-auto grid max-w-screen-2xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[300px_1fr]">
+      <div className="relative mx-auto grid min-h-fit max-w-screen-2xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[300px_1fr]">
         <div className="shadow-primary/40 absolute inset-0 -z-10 overflow-hidden shadow-md">
           <Image
             src={
@@ -254,6 +254,9 @@ const MovieProfile = () => {
             height={0}
             sizes="100vw"
             className="h-[450px] w-[300px] rounded-md object-cover shadow-md"
+            priority
+            placeholder="blur"
+            blurDataURL="/identity/logo-thumbnail.png"
           />
         </div>
 
@@ -439,7 +442,7 @@ const MovieProfile = () => {
         </div>
       </div>
 
-      <div className="m-4 flex flex-col gap-4">
+      <div className="m-4 flex flex-col items-center gap-4">
         {/* Cast */}
         <div className="bg-card shadow-primary/20 mx-6 max-w-screen-2xl rounded-md border p-5 shadow-xs">
           <h3 className="mb-4 text-xl font-semibold">

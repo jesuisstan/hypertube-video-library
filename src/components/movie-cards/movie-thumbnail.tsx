@@ -41,12 +41,13 @@ const MovieThumbnail: FC<TMovieThumbnailProps> = ({ movieBasics, loading }) => {
                 ? `https://image.tmdb.org/t/p/w300${movieBasics.poster_path}`
                 : '/identity/logo-thumbnail.png'
             }
-            blurDataURL={'/identity/logo-thumbnail.png'}
             alt={'poster'}
             width={200}
             height={300}
             className="smooth42transition transform rounded-md hover:scale-105"
             priority
+            placeholder="blur"
+            blurDataURL="/identity/logo-thumbnail.png"
           />
           <div
             className={clsx(
