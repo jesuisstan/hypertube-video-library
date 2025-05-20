@@ -71,6 +71,8 @@ const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => 
     }
   };
 
+  console.log('PirateBay magnets', magnetsPB); // debug
+
   return !movieData ? null : (
     <div className="bg-card shadow-primary/20 mx-auto w-full max-w-screen-2xl rounded-md border px-4 shadow-xs">
       <h1 className="mt-6 font-bold">Magnets from Pirate Bay:</h1>

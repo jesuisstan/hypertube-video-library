@@ -20,6 +20,7 @@
     "content": "The page, you are looking for, does not exist"
   },
   "or": "or",
+  "or-continue-with": "or continue with",
   "auth": {
     "password": "Password",
     "email": "Email",
@@ -263,5 +264,16 @@
   "complete-profile": "Complete your profile",
   "category-filled-?": "Category filled?",
   "status": "Status",
-  "powered-by": "Powered by"
+  "powered-by": "Powered by",
+  "seeds": "Seeds",
+  "peers": "Peers",
+  "size": "Size",
+  "stream": "Stream",
+  "title": "Title",
+  "content": "Content",
+  "torrent-files": "Torrent files",
+  "magnet-links": "Magnet links",
+  "latch": "Latch",
+  "no-torrents-available": "No torrents available",
+  "no-magnet-links-available": "No magnet links available"
 }

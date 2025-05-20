@@ -198,16 +198,16 @@ const Authentication = () => {
 
       <div
         className={clsx(
-          'm-auto flex h-full w-full flex-col overflow-y-scroll pr-5 pl-5',
+          'm-auto flex h-full w-full flex-col gap-4 overflow-y-scroll py-4 pr-4 pl-4',
           'md:w-1/3',
           'lg:w-1/4'
         )}
       >
-        <div className="flex flex-row items-center justify-center gap-5 md:hidden">
+        <div className="flex flex-row items-center justify-center gap-4 md:hidden">
           <Image
             src="/identity/logo-square.png"
             blurDataURL="/identity/logo-square.png"
-            className="z-10 mt-5"
+            className="z-10"
             alt="logo"
             width={30}
             height={0}
@@ -217,7 +217,7 @@ const Authentication = () => {
           <Image
             src="/identity/logo-title-only.png"
             blurDataURL="/identity/logo-title-only.png"
-            className="z-10 mt-5"
+            className="z-10"
             alt="logo"
             width={200}
             height={0}
@@ -225,26 +225,32 @@ const Authentication = () => {
             priority
           />
         </div>
-        <div className="my-5 flex self-center">
+        <div className="mt-1 flex self-center">
           <LocaleSwitcher />
         </div>
-        <h2 className="text-foreground mb-5 text-center text-2xl">
+        <h1 className="text-foreground text-center text-2xl">
           {pageLayout === 'login' && t(`auth.sign-in`)}
           {pageLayout === 'register' && t(`auth.register-new`)}
           {pageLayout === 'confirmation' && t(`auth.confirm-email`)}
           {pageLayout === 'forgot' && t(`auth.reset-password`)}
-        </h2>
+        </h1>
 
         {/* Social login buttons */}
         {(pageLayout === 'login' || pageLayout === 'register') && (
           <SocialMediaAuth translate={t} setError={setError} />
         )}
         {/* Horizontal devider */}
-        {(pageLayout === 'login' || pageLayout === 'register') && <Separator />}
+        {(pageLayout === 'login' || pageLayout === 'register') && (
+          <div className="text-muted-foreground flex w-full items-center justify-center gap-2 overflow-hidden px-4">
+            <Separator />
+            <span className="text-muted-foreground text-nowrap">{t(`or-continue-with`)}</span>
+            <Separator />
+          </div>
+        )}
 
         {/* Login method selector */}
         {pageLayout === 'login' && (
-          <div className="mb-7 flex flex-row justify-start gap-5">
+          <div className="mb-2">
             <RadioGroup
               label={t(`auth.login-method`) + ':'}
               options={[
@@ -274,7 +280,6 @@ const Authentication = () => {
                 maxLength={21}
                 pattern="^[A-Za-z\-]{1,21}$"
                 errorMessage={t('auth.max-char') + ' 21: a-Z, -'}
-                className="mb-2"
               />
               <Label htmlFor="lastname" className="mb-2">
                 {t(`lastname`)}
@@ -287,7 +292,6 @@ const Authentication = () => {
                 maxLength={21}
                 pattern="^[A-Za-z\-]{1,21}$"
                 errorMessage={t('auth.max-char') + ' 21: a-Z, -'}
-                className="mb-2"
               />
               <Label htmlFor="nickname" className="mb-2">
                 {t(`nickname`)}
@@ -300,7 +304,6 @@ const Authentication = () => {
                 pattern="^[A-Za-z0-9\-@]{1,21}$"
                 maxLength={21}
                 errorMessage={t('auth.max-char') + ' 21: a-Z 0-9 - @'}
-                className="mb-2"
               />
             </>
           )}
@@ -319,7 +322,6 @@ const Authentication = () => {
                 pattern="^[A-Za-z0-9\-@]{1,21}$"
                 maxLength={21}
                 errorMessage={t('auth.max-char') + ' 21: a-Z 0-9 - @'}
-                className="mb-2"
               />
             </>
           )}
@@ -339,7 +341,6 @@ const Authentication = () => {
                 maxLength={42}
                 //errorMessage="Valid email with max length 42"
                 //pattern="^(?=.{1,42}$)\\S+@\\S+\\.\\S+$"
-                className="mb-2"
               />
             </>
           )}
@@ -361,7 +362,6 @@ const Authentication = () => {
                   minLength={8}
                   maxLength={21}
                   pattern="^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[@$!%*?&,.^=_+])[A-Za-z0-9@$!%*?&,.^=_+]{8,21}$"
-                  className="mb-5"
                 />
                 <button
                   type="button"
@@ -375,17 +375,15 @@ const Authentication = () => {
           )}
 
           {/* Submit button */}
-          <ButtonCustom type="submit" variant="default" className="mb-5" loading={loading}>
+          <ButtonCustom type="submit" variant="default" loading={loading}>
             {pageLayout === 'login' && t(`auth.sign-in`)}
             {pageLayout === 'register' && t(`auth.sign-up`)}
             {pageLayout === 'confirmation' && t(`auth.resend-confirmation-email`)}
             {pageLayout === 'forgot' && t(`auth.send-reset-link`)}
           </ButtonCustom>
         </form>
-        {error && <p className="text-destructive mb-5 text-center text-sm">{error}</p>}
-        {successMessage && (
-          <p className="text-positive mb-5 text-center text-sm">{successMessage}</p>
-        )}
+        {error && <p className="text-destructive text-center text-sm">{error}</p>}
+        {successMessage && <p className="text-positive text-center text-sm">{successMessage}</p>}
         <div className="flex justify-center">
           {pageLayout !== 'login' && (
             <ButtonCustom
@@ -403,7 +401,13 @@ const Authentication = () => {
           {/* Additional buttons */}
           {pageLayout === 'login' && (
             <div className="flex w-full flex-col items-center justify-center gap-2 align-middle">
-              <Separator />
+              {/* Horizontal devider with text */}
+              <div className="text-muted-foreground flex w-full items-center justify-center gap-2 overflow-hidden px-4">
+                <Separator />
+                <span className="text-muted-foreground">{t(`or`)}</span>
+                <Separator />
+              </div>
+              {/* Buttons to switch between login, register and confirmation */}
               <div className="xs:flex-row flex flex-col items-center justify-center gap-2">
                 <ButtonCustom
                   variant="link"
@@ -445,14 +449,16 @@ const Authentication = () => {
             </div>
           )}
         </div>
-        <a
-          href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
-          className="text-muted-foreground hover:text-c42orange my-6 text-center text-sm transition-all duration-300 ease-in-out"
-        >
-          {t(`need-help`)}
-        </a>
-        <div className="text-muted-foreground hover:text-c42orange text-center text-sm transition-all duration-300 ease-in-out">
-          <Link href={`/about`}>{t('about')}</Link>
+        <div className="mt-16 flex w-full flex-col items-center justify-center gap-4 align-middle">
+          <a
+            href={`mailto:${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}
+            className="text-muted-foreground hover:text-c42orange smooth42transition text-center text-sm"
+          >
+            {t(`need-help`)}
+          </a>
+          <div className="text-muted-foreground hover:text-c42orange smooth42transition text-center text-sm">
+            <Link href={`/about`}>{t('about')}</Link>
+          </div>
         </div>
       </div>
     </div>

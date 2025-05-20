@@ -209,7 +209,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
                   disabled={loadingBookmarks}
                 >
                   {loadingBookmarks ? (
-                    <Spinner color="amber-400" />
+                    <Spinner color={isBookmarked ? 'amber-400' : 'card'} />
                   ) : (
                     <BookmarkIcon className="smooth42transition h-5 w-5" />
                   )}
@@ -234,7 +234,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
                   disabled={loadingWatched}
                 >
                   {loadingWatched ? (
-                    <Spinner color="amber-400" />
+                    <Spinner color={isInWatchlist ? 'amber-400' : 'card'} />
                   ) : (
                     <Eye className="smooth42transition h-5 w-5" />
                   )}

@@ -20,6 +20,7 @@
     "content": "Страница, которую вы ищете, не существует"
   },
   "or": "или",
+  "or-continue-with": "или продолжить с",
   "auth": {
     "password": "Пароль",
     "email": "Почта",
@@ -263,5 +264,16 @@
   "complete-profile": "Заполните профиль",
   "category-filled-?": "Категория заполнена?",
   "status": "Статус",
-  "powered-by": "Работает на"
+  "powered-by": "Работает на",
+  "seeds": "Сидеры",
+  "peers": "Пиры",
+  "size": "Размер",
+  "streaming": "Стриминг",
+  "title": "Название",
+  "content": "Контент",
+  "torrent-files": "Торрент файлы",
+  "magnet-links": "Магнитные ссылки",
+  "latch": "Примагнититься",
+  "no-torrents-available": "Нет доступных торрент-файлов",
+  "no-magnet-links-available": "Нет доступных магнитных ссылок"
 }

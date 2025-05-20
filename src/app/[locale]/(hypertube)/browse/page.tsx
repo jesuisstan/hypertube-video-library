@@ -271,7 +271,7 @@ const BrowsePage = () => {
   return !user ? (
     <Loading />
   ) : (
-    <div className="bg-card shadow-primary/20 m-4 rounded-md border p-4 shadow-xs">
+    <div className="bg-card shadow-primary/20 m-4 h-full rounded-md border p-4 shadow-xs">
       {rangeWarning && <ToastNotification title={t('warning')} isOpen={true} text={rangeWarning} />}
       {errorMessage && (
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
@@ -283,7 +283,7 @@ const BrowsePage = () => {
         <div
           id="sort-filter-sector"
           className={clsx(
-            'xs:sticky xs:max-w-80 xs:overflow-x-hidden top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto rounded-br-md border-r border-b p-4'
+            'xs:sticky xs:max-w-80 xs:overflow-x-hidden top-0 flex max-h-screen w-full flex-col items-start gap-4 overflow-x-auto overflow-y-auto border-r p-4'
           )}
         >
           <div className="flex w-full flex-col justify-center gap-2">

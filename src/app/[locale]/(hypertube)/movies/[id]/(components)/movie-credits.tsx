@@ -15,7 +15,7 @@ import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import Spinner from '@/components/ui/spinner';
 import { TMovieBasics, TMovieCredits } from '@/types/movies';
 
-const MAX_CREDITS_DISPLAY = 10;
+const MAX_CREDITS_DISPLAY = 13;
 
 const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const t = useTranslations();
@@ -48,10 +48,7 @@ const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
     <div className="mx-auto w-full max-w-screen-2xl px-4">
       {/* Cast */}
       <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
-        <h3 className="mb-4 text-xl font-semibold">
-          {t('top-billed-cast')}
-          {':'}
-        </h3>
+        <h3 className="mb-4 text-xl font-semibold">{t('top-billed-cast')}</h3>
         <Carousel>
           <CarouselContent>
             {loading
@@ -112,10 +109,7 @@ const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
 
       {/* Crew */}
       <div className="bg-card shadow-primary/20 mt-4 w-full rounded-md border p-4 shadow-xs">
-        <h3 className="mb-4 text-xl font-semibold">
-          {t('crew')}
-          {':'}
-        </h3>
+        <h3 className="mb-4 text-xl font-semibold">{t('crew')}</h3>
         <Carousel>
           <CarouselContent>
             {loading

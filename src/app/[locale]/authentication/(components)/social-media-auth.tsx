@@ -49,7 +49,7 @@ const SocialMediaAuth = ({
 
   return (
     <div>
-      <div className="mb-3 flex flex-row justify-center gap-5">
+      <div className="flex flex-row justify-center gap-4">
         <ButtonCustom
           title="42-school"
           variant="default"

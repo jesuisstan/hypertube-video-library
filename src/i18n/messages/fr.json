@@ -20,6 +20,7 @@
     "content": "La page que vous recherchez n'existe pas"
   },
   "or": "ou",
+  "or-continue-with": "ou continuez avec",
   "auth": {
     "password": "Mot de passe",
     "email": "Email",
@@ -263,5 +264,16 @@
   "complete-profile": "Complétez votre profil",
   "category-filled-?": "Catégorie remplie?",
   "status": "Statut",
-  "powered-by": "Propulsé par"
+  "powered-by": "Propulsé par",
+  "seeds": "Seeds",
+  "peers": "Peers",
+  "size": "Taille",
+  "stream": "Stream",
+  "title": "Titre",
+  "content": "Contenu",
+  "torrent-files": "Fichiers torrent",
+  "magnet-links": "Liens magnet",
+  "latch": "S'attacher",
+  "no-torrents-available": "Aucun torrent disponible",
+  "no-magnet-links-available": "Aucun lien magnet disponible"
 }
