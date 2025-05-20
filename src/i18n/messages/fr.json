@@ -267,13 +267,21 @@
   "powered-by": "Propulsé par",
   "seeds": "Seeds",
   "peers": "Peers",
+  "leechers": "Leechers",
   "size": "Taille",
   "stream": "Stream",
   "title": "Titre",
   "content": "Contenu",
   "torrent-files": "Fichiers torrent",
+  "torrent": "Torrent",
   "magnet-links": "Liens magnet",
   "latch": "S'attacher",
   "no-torrents-available": "Aucun torrent disponible",
-  "no-magnet-links-available": "Aucun lien magnet disponible"
+  "no-magnet-links-available": "Aucun lien magnet disponible",
+  "open-magnet-link": "Ouvrir le lien magnet",
+  "copy-magnet-link": "Copier le lien magnet",
+  "start-streaming": "Commencer le streaming",
+  "comments": "Commentaires",
+  "no-comments-available": "Aucun commentaire disponible",
+  "add-comment": "Ajouter un commentaire"
 }

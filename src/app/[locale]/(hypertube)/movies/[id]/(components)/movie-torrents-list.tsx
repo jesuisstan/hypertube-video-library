@@ -207,14 +207,18 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
                     <TableCell>{torrent.peers}</TableCell>
                     <TableCell>{torrent.size}</TableCell>
                     <TableCell className="text-center">
-                      <ButtonCustom size="icon" variant="default" title={t('download')}>
+                      <ButtonCustom
+                        size="icon"
+                        variant="default"
+                        title={t('download') + ' ' + t('torrent')}
+                      >
                         <Link href={torrent.url}>
                           <Download className="h-4 w-4" />
                         </Link>
                       </ButtonCustom>
                     </TableCell>
                     <TableCell className="text-center">
-                      <ButtonCustom size="icon" variant="default" title={t('stream')}>
+                      <ButtonCustom size="icon" variant="default" title={t('start-streaming')}>
                         <Play className="h-4 w-4" />
                       </ButtonCustom>
                     </TableCell>

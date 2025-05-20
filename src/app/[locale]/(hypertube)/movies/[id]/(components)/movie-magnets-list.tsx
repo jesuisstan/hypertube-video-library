@@ -1,11 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { Copy, CopyCheck, Magnet, Play } from 'lucide-react';
+import {
+  ArrowDownUp,
+  ArrowDownWideNarrow,
+  ArrowUpNarrowWide,
+  Copy,
+  CopyCheck,
+  Magnet,
+  Play,
+  RefreshCw,
+} from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import Spinner from '@/components/ui/spinner';
 import {
   Table,
   TableBody,
@@ -29,6 +39,9 @@ const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => 
   const [searchYear, setSearchYear] = useState('');
   const [magnetsPB, setMagnetsPB] = useState<TMagnetDataPirateBay[]>([]);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(
+    null
+  );
 
   const scrapePB = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
@@ -71,60 +84,191 @@ const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => 
     }
   };
 
-  console.log('PirateBay magnets', magnetsPB); // debug
+  const handleSort = (key: string) => {
+    setSortConfig((prev) => {
+      if (prev && prev.key === key) {
+        return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+      }
+      return { key, direction: 'asc' };
+    });
+  };
+
+  const sortedMagnets = useMemo(() => {
+    if (!sortConfig || !Array.isArray(magnetsPB) || magnetsPB.length === 0) return magnetsPB;
+    const key = sortConfig.key as keyof TMagnetDataPirateBay;
+    if (!magnetsPB.every((item) => Object.prototype.hasOwnProperty.call(item, key))) {
+      return magnetsPB;
+    }
+    const sorted = [...magnetsPB];
+    sorted.sort((a, b) => {
+      let aValue: any = a[key];
+      let bValue: any = b[key];
+      if (key === 'size') {
+        // Try to parse size to bytes for sorting, fallback to string
+        const parseSize = (size: string) => {
+          if (!size) return 0;
+          const match = size.match(/([\d.]+)\s*(GB|GiB|MB|MiB|KB|KiB)/i);
+          if (!match) return parseFloat(size) || 0;
+          const num = parseFloat(match[1]);
+          const unit = match[2].toUpperCase();
+          switch (unit) {
+            case 'GB':
+            case 'GIB':
+              return num * 1024 * 1024 * 1024;
+            case 'MB':
+            case 'MIB':
+              return num * 1024 * 1024;
+            case 'KB':
+            case 'KIB':
+              return num * 1024;
+            default:
+              return num;
+          }
+        };
+        aValue = parseSize(a.size);
+        bValue = parseSize(b.size);
+      }
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortConfig.direction === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+      return 0;
+    });
+    return sorted;
+  }, [magnetsPB, sortConfig]);
 
   return !movieData ? null : (
-    <div className="bg-card shadow-primary/20 mx-auto w-full max-w-screen-2xl rounded-md border px-4 shadow-xs">
-      <h1 className="mt-6 font-bold">Magnets from Pirate Bay:</h1>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Seeders</TableHead>
-            <TableHead>Leechers</TableHead>
-            <TableHead>Size</TableHead>
-            <TableHead className="text-center">Magnet</TableHead>
-            <TableHead className="text-center">Copy Magnet</TableHead>
-            <TableHead className="text-center">Stream</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {magnetsPB.map((magnet, idx) => (
-            <TableRow key={magnet.link}>
-              <TableCell>{magnet.title}</TableCell>
-              <TableCell>{magnet.seeders}</TableCell>
-              <TableCell>{magnet.leechers}</TableCell>
-              <TableCell>{magnet.size}</TableCell>
-              <TableCell className="text-center">
-                <ButtonCustom size="icon" variant="default" title="Open magnet link">
-                  <Link href={magnet.link}>
-                    <Magnet className="h-4 w-4" />
-                  </Link>
-                </ButtonCustom>
-              </TableCell>
-              <TableCell className="text-center">
-                <ButtonCustom
-                  size="icon"
-                  variant="default"
-                  title="Copy magnet link"
-                  onClick={() => handleCopy(magnet.link, idx)}
-                >
-                  {copiedIdx === idx ? (
-                    <CopyCheck className="text-positive smooth42transition h-4 w-4" />
+    <div className="mx-auto w-full max-w-screen-2xl px-4">
+      <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
+        <div className="mb-4 flex items-center gap-2 align-middle">
+          <h3 className="text-xl font-semibold">{t('magnet-links')}</h3>
+          <ButtonCustom
+            variant="ghost"
+            size="icon"
+            title={t('refresh')}
+            onClick={() => scrapePB(searchTitle, searchYear)}
+            disabled={loadingPB}
+            className="smooth42transition hover:text-c42orange hover:bg-transparent"
+          >
+            <RefreshCw className={loadingPB ? 'h-5 w-5 animate-spin' : 'h-5 w-5'} />
+          </ButtonCustom>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="xs:max-w-2xl max-w-72 min-w-[200px]">{t('title')}</TableHead>
+              <TableHead
+                onClick={() => handleSort('seeders')}
+                className="cursor-pointer select-none"
+              >
+                <span className="inline-flex items-center gap-1">
+                  {t('seeds')}
+                  {sortConfig?.key === 'seeders' ? (
+                    sortConfig.direction === 'asc' ? (
+                      <ArrowUpNarrowWide className="text-primary inline h-4 w-4" />
+                    ) : (
+                      <ArrowDownWideNarrow className="text-primary inline h-4 w-4" />
+                    )
                   ) : (
-                    <Copy className="h-4 w-4" />
+                    <ArrowDownUp className="text-muted-foreground inline h-4 w-4 opacity-60" />
                   )}
-                </ButtonCustom>
-              </TableCell>
-              <TableCell className="text-center">
-                <ButtonCustom size="icon" variant="default" title="Stream (coming soon)">
-                  <Play className="h-4 w-4" />
-                </ButtonCustom>
-              </TableCell>
+                </span>
+              </TableHead>
+              <TableHead
+                onClick={() => handleSort('leechers')}
+                className="cursor-pointer select-none"
+              >
+                <span className="inline-flex items-center gap-1">
+                  {t('leechers')}
+                  {sortConfig?.key === 'leechers' ? (
+                    sortConfig.direction === 'asc' ? (
+                      <ArrowUpNarrowWide className="text-primary inline h-4 w-4" />
+                    ) : (
+                      <ArrowDownWideNarrow className="text-primary inline h-4 w-4" />
+                    )
+                  ) : (
+                    <ArrowDownUp className="text-muted-foreground inline h-4 w-4 opacity-60" />
+                  )}
+                </span>
+              </TableHead>
+              <TableHead onClick={() => handleSort('size')} className="cursor-pointer select-none">
+                <span className="inline-flex items-center gap-1">
+                  {t('size')}
+                  {sortConfig?.key === 'size' ? (
+                    sortConfig.direction === 'asc' ? (
+                      <ArrowUpNarrowWide className="text-primary inline h-4 w-4" />
+                    ) : (
+                      <ArrowDownWideNarrow className="text-primary inline h-4 w-4" />
+                    )
+                  ) : (
+                    <ArrowDownUp className="text-muted-foreground inline h-4 w-4 opacity-60" />
+                  )}
+                </span>
+              </TableHead>
+              <TableHead className="text-center">{t('latch')}</TableHead>
+              <TableHead className="text-center">{t('copy')}</TableHead>
+              <TableHead className="text-center">{t('stream')}</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {loadingPB
+              ? Array.from({ length: 5 }).map((_, idx) => (
+                  <TableRow key={`loading-${idx}`}>
+                    <TableCell className="xs:max-w-2xl max-w-72 min-w-[200px]">
+                      <div className="my-2">
+                        <Spinner size={24} />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : sortedMagnets.map((magnet, idx) => (
+                  <TableRow key={magnet.link}>
+                    <TableCell className="xs:max-w-2xl max-w-72 min-w-[200px]">
+                      {magnet.title}
+                    </TableCell>
+                    <TableCell>{magnet.seeders}</TableCell>
+                    <TableCell>{magnet.leechers}</TableCell>
+                    <TableCell>{magnet.size}</TableCell>
+                    <TableCell className="text-center">
+                      <ButtonCustom size="icon" variant="default" title={t('open-magnet-link')}>
+                        <Link href={magnet.link}>
+                          <Magnet className="h-4 w-4" />
+                        </Link>
+                      </ButtonCustom>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <ButtonCustom
+                        size="icon"
+                        variant="default"
+                        title={t('copy-magnet-link')}
+                        onClick={() => handleCopy(magnet.link, idx)}
+                      >
+                        {copiedIdx === idx ? (
+                          <CopyCheck className="text-positive smooth42transition h-4 w-4" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                      </ButtonCustom>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <ButtonCustom size="icon" variant="default" title={t('start-streaming')}>
+                        <Play className="h-4 w-4" />
+                      </ButtonCustom>
+                    </TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+        {!loadingPB && magnetsPB.length === 0 && (
+          <p className="text-muted-foreground mt-4 text-center text-sm">
+            {t('no-magnet-links-available')}
+          </p>
+        )}
+      </div>
     </div>
   );
 };

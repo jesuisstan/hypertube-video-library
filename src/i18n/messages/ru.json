@@ -267,13 +267,21 @@
   "powered-by": "Работает на",
   "seeds": "Сидеры",
   "peers": "Пиры",
+  "leechers": "Личеры",
   "size": "Размер",
-  "streaming": "Стриминг",
+  "stream": "Стриминг",
   "title": "Название",
   "content": "Контент",
   "torrent-files": "Торрент файлы",
+  "torrent": "Торрент",
   "magnet-links": "Магнитные ссылки",
   "latch": "Примагнититься",
   "no-torrents-available": "Нет доступных торрент-файлов",
-  "no-magnet-links-available": "Нет доступных магнитных ссылок"
+  "no-magnet-links-available": "Нет доступных магнитных ссылок",
+  "open-magnet-link": "Открыть магнитную ссылку",
+  "copy-magnet-link": "Скопировать магнитную ссылку",
+  "start-streaming": "Начать стриминг",
+  "comments": "Комментарии",
+  "no-comments-available": "Нет комментариев",
+  "add-comment": "Добавить комментарий"
 }

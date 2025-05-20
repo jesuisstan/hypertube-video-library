@@ -267,13 +267,21 @@
   "powered-by": "Powered by",
   "seeds": "Seeds",
   "peers": "Peers",
+  "leechers": "Leechers",
   "size": "Size",
   "stream": "Stream",
   "title": "Title",
   "content": "Content",
   "torrent-files": "Torrent files",
+  "torrent": "Torrent",
   "magnet-links": "Magnet links",
   "latch": "Latch",
   "no-torrents-available": "No torrents available",
-  "no-magnet-links-available": "No magnet links available"
+  "no-magnet-links-available": "No magnet links available",
+  "open-magnet-link": "Open magnet link",
+  "copy-magnet-link": "Copy magnet link",
+  "start-streaming": "Start streaming",
+  "comments": "Comments",
+  "no-comments-available": "No comments available",
+  "add-comment": "Add comment"
 }

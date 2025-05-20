@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 
+import MovieComments from './(components)/movie-comments';
 import MovieCredits from './(components)/movie-credits';
 import MovieHeader from './(components)/movie-header';
 import MovieMagnetsList from './(components)/movie-magnets-list';
@@ -40,8 +41,6 @@ const MovieProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //console.log('TMBB movieData', movieData); // debug
-
   return loading || !movieData ? (
     <Loading />
   ) : (
@@ -51,12 +50,12 @@ const MovieProfile = () => {
       <div className="m-4 flex flex-col items-center gap-4">
         {/* Cast and crew */}
         <MovieCredits movieData={movieData} />
+        {/* Movie comments */}
+        <MovieComments movieData={movieData} />
         {/* Torrents */}
         <MovieTorrentsList movieData={movieData} />
         {/* Magnets */}
         <MovieMagnetsList movieData={movieData} />
-        {/* Comments */}
-        {/* TODO */}
       </div>
     </div>
   );
