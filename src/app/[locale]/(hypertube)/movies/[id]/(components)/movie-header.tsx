@@ -45,8 +45,11 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
           },
         }
       );
-      const data = await response.json();
-      setIsBookmarked((prev) => !prev);
+      if (response.status !== 200) {
+        console.error('Error updating bookmark:', response.statusText);
+        return;
+      }
+      setIsBookmarked((prev) => !prev); // Toggle the watched status if the request was successful
     } catch (error) {
       console.error('Error updating bookmark:', error);
     } finally {
@@ -74,8 +77,11 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
           },
         }
       );
-      const data = await response.json();
-      setIsInWatchlist((prev) => !prev);
+      if (response.status !== 200) {
+        console.error('Error updating watched:', response.statusText);
+        return;
+      }
+      setIsInWatchlist((prev) => !prev); // Toggle the watched status if the request was successful
     } catch (error) {
       console.error('Error updating watched:', error);
     } finally {
