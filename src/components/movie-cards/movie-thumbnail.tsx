@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
-import { SkeletonThumbnail } from '@/components/ui/skeletons/skeleton-thumbnail';
+import { SkeletonThumbnail } from '@/components/skeletons/skeleton-thumbnail';
 import { Link } from '@/i18n/routing';
 import useSearchStore from '@/stores/search';
 import { TMovieBasics } from '@/types/movies';

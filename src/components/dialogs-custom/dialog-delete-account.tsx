@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
 
+import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import { useRouter } from '@/i18n/routing';

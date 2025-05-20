@@ -12,10 +12,10 @@ import { Eye, EyeOff } from 'lucide-react';
 import { SLIDES } from './(components)/slides';
 
 import SocialMediaAuth from '@/app/[locale]/authentication/(components)/social-media-auth';
+import EmblaCarouselAutoscrolling from '@/components/carousel/embla-carousel-autoscrolling';
 import Footer from '@/components/footer';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
-import EmblaCarouselAutoscrolling from '@/components/ui/carousel/embla-carousel-autoscrolling';
 import { Label } from '@/components/ui/label';
 import RadioGroup from '@/components/ui/radio/radio-group';
 import { RequiredInput } from '@/components/ui/required-input';

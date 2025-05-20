@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 
+import SkeletonChips from '@/components/skeletons/skeleton-chips';
 import ChipsOption from '@/components/ui/chips/chips-option';
-import SkeletonChips from '@/components/ui/skeletons/skeleton-chips';
 import { chipsGroupPropsSchema, TChipGroupProps } from '@/types/chips';
 import { capitalize } from '@/utils/format-string';
 

@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog/dialog-primitives';
+} from '@/components/ui/dialog';
 
 interface DialogModalBasicProps {
   isOpen: boolean;

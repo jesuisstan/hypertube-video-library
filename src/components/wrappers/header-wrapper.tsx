@@ -1,10 +1,9 @@
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { PencilLine } from 'lucide-react';
 
+import AvatarGeneral from '@/components/avatar/avatar-general';
 import TProfileCompleteLayout from '@/components/dialogs-custom/dialog-profile-modify';
-import AvatarGeneral from '@/components/ui/avatar/avatar-general';
 import FilledOrNot from '@/components/ui/filled-or-not';
 
 type THeaderWrapperProps = {

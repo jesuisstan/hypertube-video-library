@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import SelectSkeleton from '@/components/skeletons/skeleton-select';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSelector,
 } from '@/components/ui/dropdown-primitives';
-import SelectSkeleton from '@/components/ui/skeletons/skeleton-select';
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
 

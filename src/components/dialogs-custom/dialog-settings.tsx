@@ -3,13 +3,13 @@ import { useTranslations } from 'next-intl';
 
 import { Settings } from 'lucide-react';
 
+import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import DialogChangeEmail from '@/components/dialogs-custom/dialog-change-email';
 import DialogChangePassword from '@/components/dialogs-custom/dialog-change-password';
 import DialogDeleteAccount from '@/components/dialogs-custom/dialog-delete-account';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
 import ThemeToggler from '@/components/ui/buttons/theme-toggler';
-import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 

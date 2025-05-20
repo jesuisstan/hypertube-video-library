@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 
-import { ButtonCustom } from '../buttons/button-custom';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 type TCarouselProps = {
   title?: string;

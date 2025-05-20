@@ -6,6 +6,15 @@ import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, Download } from 'lucide-react';
 
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { Link } from '@/i18n/routing';
 import { fetchMoviesByTitle } from '@/lib/yts-api';
 import useUserStore from '@/stores/user';
@@ -74,6 +83,25 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
             </ButtonCustom>
           </li>
         ))}
+        <Table>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Method</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">INV001</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell>Credit Card</TableCell>
+              <TableCell className="text-right">$250.00</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </ul>
     </div>
   );

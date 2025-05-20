@@ -8,9 +8,9 @@ import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
 import { CircleAlert, MapPinned, MapPinOff, Save } from 'lucide-react';
 
-import ImageUploader from '@/components/avatar-uploader/image-uploader';
+import ImageUploader from '@/components/avatar/avatar-uploader/image-uploader';
+import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';

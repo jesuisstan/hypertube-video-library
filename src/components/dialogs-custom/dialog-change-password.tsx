@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 
 import { OctagonAlert, PencilLine } from 'lucide-react';
 
+import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
-import DialogBasic from '@/components/ui/dialog/dialog-basic';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import { useRouter } from '@/i18n/routing';
 import useUserStore from '@/stores/user';

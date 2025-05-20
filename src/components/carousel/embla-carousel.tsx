@@ -6,14 +6,14 @@ import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
 import { CirclePlay, CircleStop } from 'lucide-react';
 
-import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import {
   NextButton,
   PrevButton,
   usePrevNextButtons,
-} from '@/components/ui/carousel/embla-carousel-arrow-buttons';
-import { DotButton, useDotButton } from '@/components/ui/carousel/embla-carousel-dot-button';
-import { useAutoplay } from '@/components/ui/carousel/embla-carousel-use-autoplay';
+} from '@/components/carousel/embla-carousel-arrow-buttons';
+import { DotButton, useDotButton } from '@/components/carousel/embla-carousel-dot-button';
+import { useAutoplay } from '@/components/carousel/embla-carousel-use-autoplay';
+import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 
 type TPropType = {
   slides: React.ReactNode[];

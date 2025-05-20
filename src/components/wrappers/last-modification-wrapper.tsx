@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
-import SkeletonDate from '@/components/ui/skeletons/skeleton-date';
+import SkeletonDate from '@/components/skeletons/skeleton-date';
 import { formatApiDateLastUpdate } from '@/utils/format-date';
 
 const LastModificationWrapper = ({ date }: { date: string | null | undefined }) => {

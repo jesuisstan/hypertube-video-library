@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
-import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel/carousel-primitives';
+} from '@/components/carousel/carousel-primitives';
+import DrawerCredits from '@/components/drawers-custom/drawer-credits';
 import Spinner from '@/components/ui/spinner';
 import { TMovieBasics, TMovieCredits } from '@/types/movies';
 

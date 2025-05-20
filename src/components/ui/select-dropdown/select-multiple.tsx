@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
+import SelectSkeleton from '@/components/skeletons/skeleton-select';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,7 +12,6 @@ import {
   DropdownMenuMultipleSelector,
   DropdownMenuPortal,
 } from '@/components/ui/dropdown-primitives';
-import SelectSkeleton from '@/components/ui/skeletons/skeleton-select';
 import { TSelectMultipleProps, TSelectMultiplePropsSchema } from '@/types/select-multiple';
 import { capitalize } from '@/utils/format-string';
 
