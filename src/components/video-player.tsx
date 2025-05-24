@@ -38,13 +38,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onClose, stream, title }) => 
 
   return (
     <DialogBasic isOpen={!!stream} title={title} setIsOpen={onClose}>
-      Hello!
-      {/* <div>
+      <div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <video controls width="600" onError={handlePlaybackError} src={videoUrl}>
+        <video controls width="600" onError={handlePlaybackError} src={'/api/mock-stream'}>
           Your browser does not support the video tag.
         </video>
-      </div> */}
+      </div>
     </DialogBasic>
   );
 };
