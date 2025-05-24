@@ -19,8 +19,17 @@
 //}
 
 import React, { useState } from 'react';
+import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
+import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import DialogBasic from './dialogs-custom/dialog-basic';
 
-const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
+interface VideoPlayerProps {
+  onClose: () => void;
+  title: string;
+  stream: TTorrentDataYTS | TMagnetDataPirateBay | null;
+}
+
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ onClose, stream, title }) => {
   const [error, setError] = useState<string | null>(null);
 
   const handlePlaybackError = () => {
@@ -28,12 +37,15 @@ const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
   };
 
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <video controls width="600" onError={handlePlaybackError} src={videoUrl}>
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <DialogBasic isOpen={!!stream} title={title} setIsOpen={onClose}>
+      Hello!
+      {/* <div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <video controls width="600" onError={handlePlaybackError} src={videoUrl}>
+          Your browser does not support the video tag.
+        </video>
+      </div> */}
+    </DialogBasic>
   );
 };
 

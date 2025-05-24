@@ -13,6 +13,8 @@ import MovieTorrentsList from './(components)/movie-torrents-list';
 import Loading from '@/app/loading';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
+import { TMagnetDataPirateBay, TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import VideoPlayer from '@/components/video-player';
 
 const MovieProfile = () => {
   const t = useTranslations();
@@ -21,7 +23,7 @@ const MovieProfile = () => {
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
-
+  const [stream, setStream] = useState<TTorrentDataYTS | TMagnetDataPirateBay | null>(null);
   const scrapeTMDB = async () => {
     try {
       setLoading(true);
@@ -53,9 +55,11 @@ const MovieProfile = () => {
         {/* Movie comments */}
         <MovieComments movieData={movieData} />
         {/* Torrents */}
-        <MovieTorrentsList movieData={movieData} />
+        <MovieTorrentsList movieData={movieData} setStream={setStream} />
         {/* Magnets */}
-        <MovieMagnetsList movieData={movieData} />
+        <MovieMagnetsList movieData={movieData} setStream={setStream} />
+        {/* Player */}
+        <VideoPlayer stream={stream} onClose={() => setStream(null)} title={movieData.title} />
       </div>
     </div>
   );
