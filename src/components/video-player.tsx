@@ -19,9 +19,11 @@
 //}
 
 import React, { useState } from 'react';
+
+import DialogBasic from './dialogs-custom/dialog-basic';
+
 import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
 import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
-import DialogBasic from './dialogs-custom/dialog-basic';
 
 interface VideoPlayerProps {
   onClose: () => void;
