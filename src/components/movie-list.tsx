@@ -130,8 +130,6 @@ export default function MovieList() {
           <p>Path: {result?.videoFilePath}</p>
         </div>
       </div>
-
-      <div>{result?.videoFilePath && <VideoPlayer videoUrl={result?.videoFilePath} />}</div>
     </div>
   );
 }
