@@ -90,6 +90,7 @@
   "theme": "Theme",
   "color-theme": "Color theme",
   "refresh": "Refresh",
+  "modify": "Modify",
   "slide-show": "Slide show",
   "congrats": "Congratulations!",
   "dialog-title": {
@@ -190,10 +191,16 @@
   "error-fetching-credits": "Error fetching credits. Please try again",
   "error-movie-id-is-required": "Movie ID is required",
   "error-user-id-is-required": "User ID is required",
+  "error-comment-content-is-required": "Comment content is required",
+  "error-comment-id-is-required": "Comment ID is required",
   "error-fetching-bookmarks": "Error fetching bookmarks. Please try again",
   "error-fetching-watched": "Error fetching watched movies. Please try again",
+  "error-fetching-comments": "Error fetching comments. Please try again",
   "error-updating-database": "Error updating database",
   "error-checking-database": "Error checking database",
+  "error-deleting-comment": "Error deleting comment",
+  "error-adding-comment": "Error adding comment",
+  "error-updating-comment": "Error updating comment",
   "record-already-exists": "Record already exists",
   "record-is-done": "Record is done",
   "record-not-found": "Record not found",
@@ -283,5 +290,9 @@
   "start-streaming": "Start streaming",
   "comments": "Comments",
   "no-comments-available": "No comments available",
-  "add-comment": "Add comment"
+  "add-comment": "Add comment",
+  "comment-deleted": "Comment deleted",
+  "comment-added": "Comment added",
+  "comment-updated": "Comment updated",
+  "comment-not-found": "Comment not found"
 }

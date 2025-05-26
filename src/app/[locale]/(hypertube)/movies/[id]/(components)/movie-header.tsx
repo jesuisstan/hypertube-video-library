@@ -39,7 +39,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const response = await fetch(
         `/api/movies/${movieData?.id}/bookmarks?${queryParams.toString()}`,
         {
-          method: isBookmarked ? 'DELETE' : 'PUT',
+          method: isBookmarked ? 'DELETE' : 'POST',
           body: JSON.stringify({ isBookmarked: !isBookmarked }),
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const response = await fetch(
         `/api/movies/${movieData?.id}/watched?${queryParams.toString()}`,
         {
-          method: isInWatchlist ? 'DELETE' : 'PUT',
+          method: isInWatchlist ? 'DELETE' : 'POST',
           body: JSON.stringify({ isInWatchlist: !isInWatchlist }),
           headers: {
             'Content-Type': 'application/json',

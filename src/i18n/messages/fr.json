@@ -90,6 +90,7 @@
   "theme": "Thème",
   "color-theme": "Thème de couleur",
   "refresh": "Actualiser",
+  "modify": "Modifier",
   "slide-show": "Diaporama",
   "congrats": "Félicitations!",
   "dialog-title": {
@@ -190,10 +191,16 @@
   "error-fetching-credits": "Erreur lors de la récupération des crédits. Veuillez réessayer",
   "error-movie-id-is-required": "L'ID du film est requis",
   "error-user-id-is-required": "L'ID de l'utilisateur est requis",
+  "error-comment-content-is-required": "Le contenu du commentaire est requis",
+  "error-comment-id-is-required": "L'ID du commentaire est requis",
   "error-fetching-bookmarks": "Erreur lors de la récupération des signets. Veuillez réessayer",
   "error-fetching-watched": "Erreur lors de la récupération des films regardés. Veuillez réessayer",
+  "error-fetching-comments": "Erreur lors de la récupération des commentaires. Veuillez réessayer",
   "error-updating-database": "Erreur lors de la mise à jour de la base de données",
   "error-checking-database": "Erreur lors de la vérification de la base de données",
+  "error-deleting-comment": "Erreur lors de la suppression du commentaire",
+  "error-adding-comment": "Erreur lors de l'ajout du commentaire",
+  "error-updating-comment": "Erreur lors de la mise à jour du commentaire",
   "record-already-exists": "Enregistrement existe déjà",
   "record-is-done": "Enregistrement déjà effectué",
   "record-not-found": "Enregistrement non trouvé",
@@ -283,5 +290,9 @@
   "start-streaming": "Commencer le streaming",
   "comments": "Commentaires",
   "no-comments-available": "Aucun commentaire disponible",
-  "add-comment": "Ajouter un commentaire"
+  "add-comment": "Ajouter un commentaire",
+  "comment-deleted": "Commentaire supprimé",
+  "comment-added": "Commentaire ajouté",
+  "comment-updated": "Commentaire mis à jour",
+  "comment-not-found": "Commentaire non trouvé"
 }

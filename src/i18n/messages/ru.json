@@ -90,6 +90,7 @@
   "theme": "Тема",
   "color-theme": "Цветовая тема",
   "refresh": "Обновить",
+  "modify": "Изменить",
   "slide-show": "Слайд-шоу",
   "congrats": "Поздравляем!",
   "dialog-title": {
@@ -190,10 +191,16 @@
   "error-fetching-credits": "Ошибка загрузки каста. Попробуйте ещё раз",
   "error-movie-id-is-required": "ID фильма обязателен",
   "error-user-id-is-required": "ID пользователя обязателен",
+  "error-comment-content-is-required": "Содержимое комментария обязательно",
+  "error-comment-id-is-required": "ID комментария обязателен",
   "error-fetching-bookmarks": "Ошибка загрузки закладок. Попробуйте ещё раз",
   "error-fetching-watched": "Ошибка загрузки просмотренных. Попробуйте ещё раз",
+  "error-fetching-comments": "Ошибка загрузки комментариев. Попробуйте ещё раз",
   "error-updating-database": "Ошибка обновления базы данных",
   "error-checking-database": "Ошибка проверки базы данных",
+  "error-deleting-comment": "Ошибка удаления комментария",
+  "error-adding-comment": "Ошибка добавления комментария",
+  "error-updating-comment": "Ошибка обновления комментария",
   "record-already-exists": "Запись уже существует",
   "record-is-done": "Запись завершена",
   "record-not-found": "Запись не найдена",
@@ -283,5 +290,9 @@
   "start-streaming": "Начать стриминг",
   "comments": "Комментарии",
   "no-comments-available": "Нет комментариев",
-  "add-comment": "Добавить комментарий"
+  "add-comment": "Добавить комментарий",
+  "comment-deleted": "Комментарий удален",
+  "comment-added": "Комментарий добавлен",
+  "comment-updated": "Комментарий обновлен",
+  "comment-not-found": "Комментарий не найден"
 }

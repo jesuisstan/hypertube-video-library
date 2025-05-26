@@ -50,7 +50,9 @@ const runCommands = (chalk) => {
   runCommand(chalk, 'node ./scripts/delete-table.js notifications'); // MATCHA PROJECT
   runCommand(chalk, 'node ./scripts/delete-table.js movies_bookmarks'); // HYPERTUBE PROJECT
   runCommand(chalk, 'node ./scripts/delete-table.js movies_watched'); // HYPERTUBE PROJECT
-  runCommand(chalk, 'node ./scripts/delete-table.js users'); // HYPERTUBE & MATCHA PROJECT
+  runCommand(chalk, 'node ./scripts/delete-table.js movies_comments'); // HYPERTUBE PROJECT
+
+  runCommand(chalk, 'node ./scripts/delete-table.js users'); // MAIN TABLE. HYPERTUBE & MATCHA PROJECT
 
   runCommand(chalk, 'node ./scripts/create-table-users.js');
   runCommand(chalk, 'node ./scripts/fill-table-users.js');

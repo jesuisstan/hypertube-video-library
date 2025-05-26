@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp, PencilLine } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
