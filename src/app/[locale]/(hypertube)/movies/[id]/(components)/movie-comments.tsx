@@ -10,6 +10,7 @@ import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import Spinner from '@/components/ui/spinner';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import { Link } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 
@@ -278,7 +279,12 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
                   className="bg-muted animate-fade-in overflow-x-auto rounded px-2 py-2 text-sm"
                 >
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
+                    <Link
+                      href={{ pathname: `/users/${c.user_id}` }}
+                      locale={locale}
+                      className="group flex cursor-pointer items-center gap-2"
+                      title={c.nickname}
+                    >
                       <AvatarMini
                         src={
                           Array.isArray(c?.photos) && c?.photos.length > 0 ? c.photos[0] : undefined
@@ -289,7 +295,7 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
                         height={6}
                       />
                       <div className="font-semibold">{c.nickname}</div>
-                    </div>
+                    </Link>
                     <div className="text-muted-foreground text-xs">
                       {new Date(c.created_at).toLocaleString(locale)}
                     </div>
