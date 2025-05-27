@@ -65,31 +65,6 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
     }
   };
 
-  const modifyComment = async (comment: any) => {
-    if (!movieData?.id || !user?.id) return;
-    if (comment.user_id !== user.id) return;
-
-    const newContent = prompt(t('modify') || 'Edit your comment:', comment.content);
-    if (!newContent || newContent.trim() === comment.content) return;
-
-    setModifying(true);
-    try {
-      const params = new URLSearchParams({
-        movie_id: String(movieData.id),
-        user_id: user.id,
-        comment_content: newContent.trim(),
-      });
-      const res = await fetch(`/api/comments/${comment.id}?${params.toString()}`, {
-        method: 'PATCH',
-      });
-      if (res.ok) {
-        fetchComments(true);
-      }
-    } finally {
-      setModifying(false);
-    }
-  };
-
   // Open dialog for editing
   const openEditDialog = (comment: any) => {
     setEditComment(comment);
@@ -202,7 +177,11 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
             disabled={loading}
             className="smooth42transition hover:text-c42orange hover:bg-transparent"
           >
-            <RefreshCw className={loading ? 'h-5 w-5 animate-spin' : 'h-5 w-5'} />
+            {loading ? (
+              <CircleDashed className="h-4 w-4 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4" />
+            )}
           </ButtonCustom>
           {/* Alternative refresh button using fetchCommentsByMovieId */}
           {/*<ButtonCustom

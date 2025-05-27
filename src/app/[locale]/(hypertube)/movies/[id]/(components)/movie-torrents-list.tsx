@@ -7,6 +7,7 @@ import {
   ArrowDownUp,
   ArrowDownWideNarrow,
   ArrowUpNarrowWide,
+  CircleDashed,
   Download,
   Play,
   RefreshCw,
@@ -124,13 +125,19 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
             disabled={loadingYTS}
             className="smooth42transition hover:text-c42orange hover:bg-transparent"
           >
-            <RefreshCw className={loadingYTS ? 'h-5 w-5 animate-spin' : 'h-5 w-5'} />
+            {loadingYTS ? (
+              <CircleDashed className="h-4 w-4 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4" />
+            )}
           </ButtonCustom>
         </div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="xs:max-w-2xl max-w-72 min-w-[200px]">{t('content')}</TableHead>
+              <TableHead className="xs:max-w-2xl w-1/2 max-w-72 min-w-[200px]">
+                {t('content')}
+              </TableHead>
               <TableHead onClick={() => handleSort('seeds')} className="cursor-pointer select-none">
                 <span className="inline-flex items-center gap-1">
                   {t('seeds')}
