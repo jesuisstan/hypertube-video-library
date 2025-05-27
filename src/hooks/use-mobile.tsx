@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 1024 + 1; // +1 to include IPad Pro in mobile
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);

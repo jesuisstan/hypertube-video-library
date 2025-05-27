@@ -3,13 +3,17 @@
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { CircleDashed, PencilLine, Plus, RefreshCw, Trash2 } from 'lucide-react';
+import { CircleDashed, PencilLine, RefreshCw, Trash2 } from 'lucide-react';
 
 import AvatarMini from '@/components/avatar/avatar-mini';
+import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import Spinner from '@/components/ui/spinner';
+import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
+
+const MAX_CHARS = 442; // Maximum characters allowed for a comment
 
 const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const t = useTranslations();
@@ -21,6 +25,9 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const [adding, setAdding] = useState(false);
   const [modifying, setModifying] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editComment, setEditComment] = useState<any>(null);
+  const [editContent, setEditContent] = useState('');
 
   // Get comments for the movie via GET /movies/:id/comments API
   const fetchComments = async (silently: boolean = false) => {
@@ -77,6 +84,39 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
       });
       if (res.ok) {
         fetchComments(true);
+      }
+    } finally {
+      setModifying(false);
+    }
+  };
+
+  // Open dialog for editing
+  const openEditDialog = (comment: any) => {
+    setEditComment(comment);
+    setEditContent(comment.content);
+    setEditDialogOpen(true);
+  };
+
+  // Save edited comment
+  const handleEditSave = async () => {
+    if (!movieData?.id || !user?.id || !editComment) return;
+    if (editContent.trim() === editComment.content || !editContent.trim()) {
+      setEditDialogOpen(false);
+      return;
+    }
+    setModifying(true);
+    try {
+      const params = new URLSearchParams({
+        movie_id: String(movieData.id),
+        user_id: user.id,
+        comment_content: editContent.trim(),
+      });
+      const res = await fetch(`/api/comments/${editComment.id}?${params.toString()}`, {
+        method: 'PATCH',
+      });
+      if (res.ok) {
+        fetchComments(true);
+        setEditDialogOpen(false);
       }
     } finally {
       setModifying(false);
@@ -182,30 +222,39 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
 
         {/* Add comment input */}
         {user && (
-          <div className="mb-4 flex gap-2">
-            <input
-              type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder={t('add-comment') || 'Add a comment...'}
-              className="flex-1 rounded border px-3 py-2 text-sm"
-              disabled={adding || loading}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !adding && newComment.trim()) {
-                  handleAddComment();
-                }
-              }}
-            />
-            <ButtonCustom
-              variant="default"
-              size="icon"
-              title={t('add-comment')}
-              onClick={handleAddComment}
-              disabled={adding || !newComment.trim()}
-              loading={adding}
-            >
-              <Plus className="h-4 w-4" />
-            </ButtonCustom>
+          <div className="mb-4">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <textarea
+                value={newComment}
+                onChange={(e) => {
+                  if (e.target.value.length <= MAX_CHARS) setNewComment(e.target.value);
+                }}
+                placeholder={t('add-comment') || 'Add a comment...'}
+                className="max-h-40 min-h-16 min-w-32 flex-1 resize-y rounded border px-3 py-2 text-sm"
+                disabled={adding || loading}
+                maxLength={MAX_CHARS}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey && !adding && newComment.trim()) {
+                    e.preventDefault();
+                    handleAddComment();
+                  }
+                }}
+              />
+              <ButtonCustom
+                variant="default"
+                size="lg"
+                title={t('add-comment')}
+                onClick={handleAddComment}
+                disabled={adding || !newComment.trim()}
+                loading={adding}
+                className="w-36 py-6"
+              >
+                <span>{t('add-comment')}</span>
+              </ButtonCustom>
+            </div>
+            <p className="text-muted-foreground xs:mt-0 xs:text-left mx-2 mt-2 text-center text-[10px]">
+              {t('max')} {MAX_CHARS} {t('characters')}. {t('left')}: {MAX_CHARS - newComment.length}
+            </p>
             {/* Alternative button using handleAddCommentByMovieId */}
             {/*<ButtonCustom
               variant="default"
@@ -234,7 +283,7 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
         )}
 
         {loading ? (
-          <div className="flex h-96 items-center justify-center">
+          <div className="flex h-20 items-center justify-center">
             <Spinner size={24} />
           </div>
         ) : comments.length === 0 ? (
@@ -267,7 +316,7 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
                     </div>
                   </div>
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <div>{c.content}</div>
+                    <TextWithLineBreaks text={c.content} />
                     {c.user_id === user?.id ? (
                       <div className="smooth42transition xs:gap-4 flex items-center gap-2">
                         <ButtonCustom
@@ -275,11 +324,11 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
                           variant="ghost"
                           size="icon"
                           title={t('modify')}
-                          onClick={() => modifyComment(c)}
+                          onClick={() => openEditDialog(c)}
                           disabled={modifying || loading}
                           className="smooth42transition hover:text-c42orange max-h-4 max-w-4 hover:bg-transparent"
                         >
-                          {modifying ? (
+                          {modifying && editComment?.id === c.id ? (
                             <CircleDashed className="h-4 w-4 animate-spin" />
                           ) : (
                             <PencilLine className="h-4 w-4" />
@@ -309,6 +358,36 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
           </div>
         )}
       </div>
+      {/* Edit comment dialog */}
+      <DialogBasic
+        isOpen={editDialogOpen}
+        setIsOpen={setEditDialogOpen}
+        title={t('modify') || 'Edit comment'}
+      >
+        <div className="flex flex-col">
+          <textarea
+            value={editContent}
+            onChange={(e) => {
+              if (e.target.value.length <= MAX_CHARS) setEditContent(e.target.value);
+            }}
+            className="xs:min-w-xl max-h-96 min-h-40 max-w-3xl resize-y rounded border px-3 py-2 text-sm"
+            maxLength={MAX_CHARS}
+            disabled={modifying}
+          />
+          <span className="text-muted-foreground mx-2 text-[10px]">
+            {t('max')} {MAX_CHARS} {t('characters')}. {t('left')}: {MAX_CHARS - editContent.length}
+          </span>
+        </div>
+        <ButtonCustom
+          variant="default"
+          size="lg"
+          onClick={handleEditSave}
+          disabled={modifying || !editContent.trim() || editContent.trim() === editComment?.content}
+          loading={modifying}
+        >
+          {t('save')}
+        </ButtonCustom>
+      </DialogBasic>
     </div>
   );
 };

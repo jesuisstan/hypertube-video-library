@@ -294,5 +294,8 @@
   "comment-deleted": "Commentaire supprimé",
   "comment-added": "Commentaire ajouté",
   "comment-updated": "Commentaire mis à jour",
-  "comment-not-found": "Commentaire non trouvé"
+  "comment-not-found": "Commentaire non trouvé",
+  "max-characters": "Caractères max",
+  "left": "Restant",
+  "cancel": "Annuler"
 }

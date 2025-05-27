@@ -294,5 +294,8 @@
   "comment-deleted": "Комментарий удален",
   "comment-added": "Комментарий добавлен",
   "comment-updated": "Комментарий обновлен",
-  "comment-not-found": "Комментарий не найден"
+  "comment-not-found": "Комментарий не найден",
+  "max-characters": "Макс символов",
+  "left": "Осталось",
+  "cancel": "Отмена"
 }
