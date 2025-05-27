@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
-import { PencilLine } from 'lucide-react';
+import clsx from 'clsx';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 
@@ -24,7 +24,7 @@ const LocationWrapper = ({
         <h3 className="text-base font-bold">{t(`location`)}</h3>
         <div className="mt-4">
           <div className="flex items-center text-sm">
-            <div className="cursor-pointer" onClick={onModify}>
+            <div className={clsx(modifiable && 'cursor-pointer')} onClick={onModify}>
               {address ? (
                 <span className="flex items-center gap-2">{address}</span>
               ) : (

@@ -40,7 +40,8 @@ const DescriptionWrapper = ({
         <p className="text-base font-bold">{capitalize(t('description'))}</p>
         <p
           className={clsx(
-            'smooth42transition cursor-pointer text-sm',
+            'smooth42transition text-sm',
+            modifiable && 'cursor-pointer',
             isDescriptionExpanded ? 'h-auto' : 'line-clamp-6 h-[max-content] text-ellipsis'
           )}
           style={{ maxWidth: '100%' }} // Ensure the description doesn't exceed the container width

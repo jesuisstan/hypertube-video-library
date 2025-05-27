@@ -233,3 +233,55 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: any }
     client.release();
   }
 }
+
+function isValidUUID(uuid: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+}
+
+export async function GET(req: Request, context: { params: Promise<{ id: any }> }) {
+  const { id } = await context.params; // Get the movie ID from the request params
+
+  // If no profileToFindId is provided, return an error response
+  if (!id) {
+    return NextResponse.json({ error: 'error-user-id-is-required' }, { status: 400 });
+  }
+  if (!isValidUUID(id)) {
+    return NextResponse.json({ error: 'invalid-input' }, { status: 400 });
+  }
+
+  const client = await db.connect();
+
+  const userResult = await client.query('SELECT * FROM users WHERE id = $1', [id]);
+  const user = userResult.rows[0];
+
+  if (!user) {
+    return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
+  }
+
+  try {
+    // Fetch user profile based on the provided id
+    const query = `
+      SELECT id, firstname, lastname, nickname, biography, last_action, latitude, longitude, 
+             address, photos, confirmed, last_action, preferred_language
+      FROM users 
+      WHERE id = $1
+    `;
+    const values = [id];
+    const result = await client.query(query, values);
+
+    // If no user is found, return an error response
+    if (!result.rows || result.rows.length === 0) {
+      return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
+    }
+
+    // Return the profile data as a response
+    return NextResponse.json(result.rows[0], { status: 200 });
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    return NextResponse.json({ error: 'error-fetching-profile' }, { status: 500 });
+  } finally {
+    // Release the database client
+    client.release();
+  }
+}
