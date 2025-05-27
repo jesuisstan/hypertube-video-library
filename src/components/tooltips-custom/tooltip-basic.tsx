@@ -24,17 +24,19 @@ const TooltipBasic: FC<TTooltipBasicProps> = ({ trigger, children, sideOffset = 
     <TooltipProvider delayDuration={100}>
       <Tooltip open={isOpen} onOpenChange={setIsOpen}>
         <TooltipTrigger asChild onClick={handleToggle}>
-          {trigger || (
-            <ButtonCustom
-              aria-label="Help"
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="hover:bg-inherit"
-            >
-              <CircleAlert size={21} className="text-c42orange" />
-            </ButtonCustom>
-          )}
+          <div className="select-none">
+            {trigger || (
+              <ButtonCustom
+                aria-label="Help"
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="hover:bg-inherit"
+              >
+                <CircleAlert size={21} className="text-c42orange" />
+              </ButtonCustom>
+            )}
+          </div>
         </TooltipTrigger>
         <TooltipContent
           sideOffset={sideOffset}

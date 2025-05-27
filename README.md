@@ -86,7 +86,7 @@ To set up and run the Hypertube Video Library project locally, follow these step
 
 4. Open the application in your browser:
    ```
-   http://localhost:4242
+   http://localhost:2121
    ```
 
 ### PROD mode
@@ -125,7 +125,7 @@ To request token, produced by this app, you can run the curl cmd (in dev mode, u
 on UNIX:
 
 ```sh
-curl -X POST http://localhost:4242/api/auth/oauth/token \
+curl -X POST http://localhost:2121/api/auth/oauth/token \
 -H "Content-Type: application/json" \
 -d '{"client_id": "my-local-client-id", "client_secret": "my-local-client-secret"}'
 ```
@@ -133,7 +133,7 @@ curl -X POST http://localhost:4242/api/auth/oauth/token \
 on WINDOWS (PowerShell):
 
 ```sh
-curl -X POST http://localhost:4242/api/auth/oauth/token `
+curl -X POST http://localhost:2121/api/auth/oauth/token `
 -H "Content-Type: application/json" `
 -d '{"client_id": "my-local-client-id", "client_secret": "my-local-client-secret"}'
 ```
@@ -141,7 +141,7 @@ curl -X POST http://localhost:4242/api/auth/oauth/token `
 in Browser (firstly allow pasting in console):
 
 ```sh
-fetch('http://localhost:4242/api/auth/oauth/token', {
+fetch('http://localhost:2121/api/auth/oauth/token', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

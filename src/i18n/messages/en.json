@@ -299,5 +299,6 @@
   "comment-not-found": "Comment not found",
   "max-characters": "Maximum characters",
   "left": "Left",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "vote-count": "Vote count"
 }

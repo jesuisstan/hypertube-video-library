@@ -257,7 +257,7 @@
   "no-info-available": "Нет информации",
   "production-countries": "Страны производства",
   "bookmarks": "Закладки",
-  "watched": "Просмотренные",
+  "watched": "Просмотрено",
   "no-bookmarks-available": "Нет закладок",
   "no-watched-available": "Нет просмотренных",
   "add-to-bookmarks": "Добавить в закладки",
@@ -299,5 +299,6 @@
   "comment-not-found": "Комментарий не найден",
   "max-characters": "Макс символов",
   "left": "Осталось",
-  "cancel": "Отмена"
+  "cancel": "Отмена",
+  "vote-count": "Количество голосов"
 }
