@@ -10,13 +10,13 @@ export function useSidebarCollapseOn2xl() {
     const handleResize = () => {
       if (window.innerWidth >= 1800) return;
 
-      // Автоматически закрывать только если пользователь сам не открывал
+      // Automatically close if the user has not manually opened the sidebar
       if (!manuallyOpenedRef.current) {
         setOpen(false);
       }
     };
 
-    // При первом рендере
+    // On first render
     if (window.innerWidth < 1800) {
       setOpen(false);
     }
@@ -26,7 +26,7 @@ export function useSidebarCollapseOn2xl() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Отслеживаем ручное открытие
+  // Track manual opening
   useEffect(() => {
     if (open && window.innerWidth < 1800) {
       manuallyOpenedRef.current = true;
