@@ -1,6 +1,7 @@
-import { getAudioTracks } from '@/utils/parse-mp4';
 import fs from 'fs';
 import path from 'path';
+
+import { getAudioTracks } from '@/utils/parse-mp4';
 
 export async function GET() {
   const filePath = path.resolve('./public/sample.mp4');
