@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
-export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
+export async function POST(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
     const { id: movieId } = await context.params;

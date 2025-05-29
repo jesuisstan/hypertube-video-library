@@ -114,11 +114,22 @@ async function createActivityTables() {
       );
     `);
 
+    // Create the 'movies_comments' table (HYPERTUBE PROJECT)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS movies_comments (
+        id SERIAL PRIMARY KEY,
+        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        movie_id INTEGER NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+
     // Commit the transaction
     await client.query('COMMIT');
 
     console.log(
-      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watched" created successfully'
+      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watched", "movies_comments" created successfully'
     );
   } catch (error) {
     // Rollback the transaction in case of an error

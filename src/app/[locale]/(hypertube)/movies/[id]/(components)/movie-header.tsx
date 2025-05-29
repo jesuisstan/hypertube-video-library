@@ -39,7 +39,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const response = await fetch(
         `/api/movies/${movieData?.id}/bookmarks?${queryParams.toString()}`,
         {
-          method: isBookmarked ? 'DELETE' : 'PUT',
+          method: isBookmarked ? 'DELETE' : 'POST',
           body: JSON.stringify({ isBookmarked: !isBookmarked }),
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const response = await fetch(
         `/api/movies/${movieData?.id}/watched?${queryParams.toString()}`,
         {
-          method: isInWatchlist ? 'DELETE' : 'PUT',
+          method: isInWatchlist ? 'DELETE' : 'POST',
           body: JSON.stringify({ isInWatchlist: !isInWatchlist }),
           headers: {
             'Content-Type': 'application/json',
@@ -190,6 +190,27 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
               }
             >
               {`${t('average-rating')}: ${movieData?.vote_average}`}
+            </TooltipBasic>
+
+            {/* VOTES COUNT */}
+            <TooltipBasic
+              trigger={
+                <div
+                  className={clsx(
+                    'bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full border font-bold shadow-md',
+                    movieData?.vote_count! > 999 && 'text-xs',
+                    movieData?.vote_count! >= 10000
+                      ? 'border-positive shadow-positive'
+                      : movieData?.vote_count! >= 1000
+                        ? 'border-amber-400 shadow-amber-400'
+                        : 'border-card shadow-card'
+                  )}
+                >
+                  <div className="truncate px-1">{movieData?.vote_count?.toFixed(0)}</div>
+                </div>
+              }
+            >
+              {`${t('vote-count')}: ${movieData?.vote_count}`}
             </TooltipBasic>
 
             <Separator orientation="vertical" />

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp, PencilLine } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
@@ -40,7 +40,8 @@ const DescriptionWrapper = ({
         <p className="text-base font-bold">{capitalize(t('description'))}</p>
         <p
           className={clsx(
-            'smooth42transition cursor-pointer text-sm',
+            'smooth42transition text-sm',
+            modifiable && 'cursor-pointer',
             isDescriptionExpanded ? 'h-auto' : 'line-clamp-6 h-[max-content] text-ellipsis'
           )}
           style={{ maxWidth: '100%' }} // Ensure the description doesn't exceed the container width

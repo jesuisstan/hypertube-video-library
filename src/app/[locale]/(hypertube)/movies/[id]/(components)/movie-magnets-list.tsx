@@ -7,6 +7,7 @@ import {
   ArrowDownUp,
   ArrowDownWideNarrow,
   ArrowUpNarrowWide,
+  CircleDashed,
   Copy,
   CopyCheck,
   Magnet,
@@ -161,13 +162,19 @@ const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
             disabled={loadingPB}
             className="smooth42transition hover:text-c42orange hover:bg-transparent"
           >
-            <RefreshCw className={loadingPB ? 'h-5 w-5 animate-spin' : 'h-5 w-5'} />
+            {loadingPB ? (
+              <CircleDashed className="h-4 w-4 animate-spin" />
+            ) : (
+              <RefreshCw className="h-4 w-4" />
+            )}
           </ButtonCustom>
         </div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="xs:max-w-2xl max-w-72 min-w-[200px]">{t('title')}</TableHead>
+              <TableHead className="xs:max-w-2xl w-1/2 max-w-72 min-w-[200px]">
+                {t('title')}
+              </TableHead>
               <TableHead
                 onClick={() => handleSort('seeders')}
                 className="cursor-pointer select-none"

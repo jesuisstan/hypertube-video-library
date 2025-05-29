@@ -49,11 +49,15 @@ const HeaderWrapper = ({
           rounded
           width={184}
           height={184}
-          onAvatarChange={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
+          onAvatarChange={
+            modifiable
+              ? () => handleModify('photos' as keyof typeof TProfileCompleteLayout)
+              : undefined
+          }
         />
         {modifiable && (
           <div
-            className={'absolute top-1 right-1 cursor-pointer'}
+            className={clsx('absolute top-1 right-1', modifiable && 'cursor-pointer')}
             onClick={() => handleModify('photos' as keyof typeof TProfileCompleteLayout)}
           >
             <FilledOrNot size={15} filled={!!photoURL} />
@@ -67,7 +71,10 @@ const HeaderWrapper = ({
         onClick={() => handleModify('basics' as keyof typeof TProfileCompleteLayout)}
       >
         <div className="w-max">
-          <h1 title={nickname} className="cursor-pointer truncate text-4xl font-bold">
+          <h1
+            title={nickname}
+            className={clsx('truncate text-4xl font-bold', modifiable && 'cursor-pointer')}
+          >
             {nickname}
           </h1>
         </div>
@@ -75,7 +82,10 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('firstname')}</p>
           <p
             title={firstName}
-            className="smooth42transition cursor-pointer flex-wrap truncate text-sm"
+            className={clsx(
+              'smooth42transition flex-wrap truncate text-sm',
+              modifiable && 'cursor-pointer'
+            )}
           >
             {firstName}
           </p>
@@ -84,7 +94,10 @@ const HeaderWrapper = ({
           <p className="text-base font-bold">{t('lastname')}</p>
           <p
             title={lastName}
-            className="smooth42transition cursor-pointer flex-wrap truncate text-sm"
+            className={clsx(
+              'smooth42transition flex-wrap truncate text-sm',
+              modifiable && 'cursor-pointer'
+            )}
           >
             {lastName}
           </p>

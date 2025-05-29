@@ -4,6 +4,7 @@ import React from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import * as Avatar from '@radix-ui/react-avatar';
+import clsx from 'clsx';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import {
@@ -43,10 +44,13 @@ const PrefLangWrapper = ({
         <div className="mt-4">
           <div className="flex items-center text-sm">
             {lang ? (
-              <div className="flex cursor-pointer flex-row items-center gap-2" onClick={onModify}>
+              <div
+                className={clsx('flex flex-row items-center gap-2', modifiable && 'cursor-pointer')}
+                onClick={onModify}
+              >
                 <Avatar.Root
                   className={
-                    'border-foreground bg-foreground inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
+                    'border-foreground bg-foreground inline-flex items-center justify-center overflow-hidden rounded-full border-2 align-middle select-none'
                   }
                 >
                   <Avatar.Image
