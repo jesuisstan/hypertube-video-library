@@ -12,6 +12,7 @@ import MovieTorrentsList from './(components)/movie-torrents-list';
 
 import Loading from '@/app/loading';
 import VideoPlayer from '@/components/video-player';
+import { useSidebarCollapseOn2xl } from '@/hooks/useSidebarCollapseOn2xl';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TMagnetDataPirateBay, TTorrentDataYTS } from '@/types/torrent-magnet-data';
@@ -24,6 +25,9 @@ const MovieProfile = () => {
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
   const [stream, setStream] = useState<TTorrentDataYTS | TMagnetDataPirateBay | null>(null);
+  // Collapse sidebar depending on screen size
+  useSidebarCollapseOn2xl();
+
   const scrapeTMDB = async () => {
     try {
       setLoading(true);
