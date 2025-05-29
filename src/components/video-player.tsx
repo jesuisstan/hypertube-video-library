@@ -1,23 +1,3 @@
-//'use client';
-
-//import React, { useState } from 'react';
-
-//export default function VideoPlayer({ hash }: { hash: string }) {
-//  const videoSrc = `/api/torrent?hash=${hash}`;
-
-//  return (
-//    <div>
-//      <video
-//        src={videoSrc}
-//        controls
-//        width="800"
-//      >
-//        Your browser does not support the video tag.
-//      </video>
-//    </div>
-//  );
-//}
-
 import React, { useState } from 'react';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
@@ -45,6 +25,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onClose, stream, title }) => 
         <video controls onError={handlePlaybackError} src={'/api/mock-stream'}>
           Your browser does not support the video tag.
         </video>
+        <button
+          onClick={() => {
+            console.log('click');
+
+            fetch('/api/video-info')
+              .then((res) => res.json())
+              .then(console.log);
+          }}
+        >
+          get info
+        </button>
       </div>
     </DialogBasic>
   );
