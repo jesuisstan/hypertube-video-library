@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
 
-import { Eye, EyeOff, PencilLine } from 'lucide-react';
+import { Eye, EyeOff, Mail } from 'lucide-react';
 import { Save } from 'lucide-react';
 
 import DialogBasic from '@/components/dialogs-custom/dialog-basic';
@@ -102,7 +102,7 @@ const DialogChangeEmail = ({
         >
           <div className="flex flex-row items-center space-x-5">
             <div>
-              <PencilLine size={16} />
+              <Mail size={16} />
             </div>
             <span>{t('email-change')}</span>
           </div>

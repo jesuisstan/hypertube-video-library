@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
-import { OctagonAlert, PencilLine } from 'lucide-react';
+import { CircleAlert, KeyRound } from 'lucide-react';
 
 import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
@@ -50,7 +50,7 @@ const DialogChangePassword = ({
         >
           <div className="flex flex-row items-center space-x-5">
             <div>
-              <PencilLine size={16} />
+              <KeyRound size={16} />
             </div>
             <span>{t('auth.change-password')}</span>
           </div>
@@ -59,7 +59,7 @@ const DialogChangePassword = ({
     >
       <div className="flex min-h-[30vh] flex-col items-center justify-center space-y-10 text-center">
         <div className="text-c42orange mb-5">
-          <OctagonAlert size={60} className="smooth42transition hover:scale-150" />
+          <CircleAlert size={60} className="smooth42transition hover:scale-150" />
         </div>
         <TextWithLineBreaks text={t('auth.password-change-message')} />
       </div>

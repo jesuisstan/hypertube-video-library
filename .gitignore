@@ -55,3 +55,14 @@ next-env.d.ts
 # keep empty subfolders
 !/public/downloads/*/
 /public/downloads/**/*
+
+# ignore all files in the public/torrents folder and subfolders
+/public/torrents/*
+# but allow .gitkeep files in subfolders
+!/public/torrents/**/.gitkeep
+# keep empty subfolders
+!/public/torrents/*/
+
+# AI files
+.codegpt
+.cursor

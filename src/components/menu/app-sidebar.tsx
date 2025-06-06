@@ -7,6 +7,10 @@ import { CircleUser, Search, ShieldQuestion } from 'lucide-react';
 import ContactSupportBlock from './contact-support-block';
 import SideBarHeader from './side-bar-header';
 
+import LocaleSwitcher from '@/components/ui/buttons/locale-switcher';
+import ThemeToggler from '@/components/ui/buttons/theme-toggler';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
   SidebarContent,
@@ -89,7 +93,19 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <ContactSupportBlock translate={t} />
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-3 text-center">
+            <Label className="text-muted-foreground text-xs">{t(`color-theme`)}</Label>
+            <ThemeToggler translate={t} />
+          </div>
+          <Separator />
+          <div className="flex flex-col items-center justify-center space-y-3 text-center">
+            <Label className="text-muted-foreground text-xs">{t(`app-language`)}</Label>
+            <LocaleSwitcher />
+          </div>
+          <Separator />
+          <ContactSupportBlock translate={t} />
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

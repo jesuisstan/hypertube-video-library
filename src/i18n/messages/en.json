@@ -300,5 +300,6 @@
   "max-characters": "Maximum characters",
   "left": "Left",
   "cancel": "Cancel",
-  "vote-count": "Vote count"
+  "vote-count": "Vote count",
+  "user-deleted-successfully": "User deleted successfully"
 }
