@@ -2,13 +2,15 @@ import { useEffect, useRef } from 'react';
 
 import { useSidebar } from '@/components/ui/sidebar';
 
-export function useSidebarCollapseOn2xl() {
+const SIDEBAR_COLLAPSE_WIDTH = 1920;
+
+const useSidebarCollapseOn2xl = () => {
   const { setOpen, open } = useSidebar();
   const manuallyOpenedRef = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1800) return;
+      if (window.innerWidth > SIDEBAR_COLLAPSE_WIDTH) return;
 
       // Automatically close if the user has not manually opened the sidebar
       if (!manuallyOpenedRef.current) {
@@ -17,10 +19,10 @@ export function useSidebarCollapseOn2xl() {
     };
 
     // On first render
-    if (window.innerWidth < 1800) {
+    if (window.innerWidth <= SIDEBAR_COLLAPSE_WIDTH) {
       setOpen(false);
     }
-
+    console.log('window.innerWidth', window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,8 +30,10 @@ export function useSidebarCollapseOn2xl() {
 
   // Track manual opening
   useEffect(() => {
-    if (open && window.innerWidth < 1800) {
+    if (open && window.innerWidth <= SIDEBAR_COLLAPSE_WIDTH) {
       manuallyOpenedRef.current = true;
     }
   }, [open]);
-}
+};
+
+export default useSidebarCollapseOn2xl;

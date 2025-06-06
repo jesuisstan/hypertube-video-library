@@ -11,14 +11,14 @@ import MovieMagnetsList from './(components)/movie-magnets-list';
 import MovieTorrentsList from './(components)/movie-torrents-list';
 
 import Loading from '@/app/loading';
-import { useSidebarCollapseOn2xl } from '@/hooks/useSidebarCollapseOn2xl';
+import useSidebarCollapseOn2xl from '@/hooks/useSidebarCollapseOn2xl';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 
 const MovieProfile = () => {
-  const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
+  const userPreferedContentLanguage = user?.preferred_language; // todo to be used for subtitles lang
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
