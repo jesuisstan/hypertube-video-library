@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { OctagonAlert } from 'lucide-react';
+import { CircleAlert } from 'lucide-react';
 import { Play } from 'lucide-react';
 
 import MovieThumbnail from '@/components/movie-cards/movie-thumbnail';
@@ -114,7 +114,7 @@ const AboutPage = () => {
             </p>
             <div className="flex flex-col items-center justify-center gap-1 align-middle">
               <div>
-                <OctagonAlert size={42} className="text-destructive" />
+                <CircleAlert size={42} className="text-destructive" />
               </div>
               <div className="flex flex-col items-center text-center">
                 <p className="text-center text-xl font-normal">

@@ -300,5 +300,6 @@
   "max-characters": "Макс символов",
   "left": "Осталось",
   "cancel": "Отмена",
-  "vote-count": "Количество голосов"
+  "vote-count": "Количество голосов",
+  "user-deleted-successfully": "Пользователь успешно удален"
 }
