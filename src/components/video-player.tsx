@@ -2,15 +2,14 @@ import { FC, useState, useMemo } from 'react';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
 
-import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
-import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { TMovieBasics } from '@/types/movies';
 import { fetchSubtitles } from '@/app/[locale]/(hypertube)/movies/[id]/actions';
 
 interface VideoPlayerProps {
   onClose: () => void;
   movieData: TMovieBasics;
-  stream: TTorrentDataYTS | TMagnetDataPirateBay | null;
+  stream: TTorrentDataYTS | TUnifiedMagnetData | null;
 }
 
 const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData }) => {

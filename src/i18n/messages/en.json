@@ -203,6 +203,7 @@
   "error-deleting-comment": "Error deleting comment",
   "error-adding-comment": "Error adding comment",
   "error-updating-comment": "Error updating comment",
+  "error-fetching-torrent-data": "Error fetching torrent data",
   "record-already-exists": "Record already exists",
   "record-is-done": "Record is done",
   "record-not-found": "Record not found",
@@ -301,5 +302,8 @@
   "left": "Left",
   "cancel": "Cancel",
   "vote-count": "Vote count",
-  "user-deleted-successfully": "User deleted successfully"
+  "user-deleted-successfully": "User deleted successfully",
+  "uploaded": "Uploaded",
+  "source": "Source",
+  "uploader": "Uploader"
 }

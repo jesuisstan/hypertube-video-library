@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import MovieComments from './(components)/movie-comments';
 import MovieCredits from './(components)/movie-credits';
 import MovieHeader from './(components)/movie-header';
-import MovieMagnetsList from './(components)/movie-magnets-list';
+import MovieMagnetsCombined from './(components)/movie-magnets-combined';
 import MovieTorrentsList from './(components)/movie-torrents-list';
 
 import Loading from '@/app/loading';
@@ -15,7 +15,7 @@ import VideoPlayer from '@/components/video-player';
 import useSidebarCollapseOn2xl from '@/hooks/useSidebarCollapseOn2xl';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
-import { TMagnetDataPirateBay, TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 
 const MovieProfile = () => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
@@ -24,9 +24,18 @@ const MovieProfile = () => {
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
-  const [stream, setStream] = useState<TTorrentDataYTS | TMagnetDataPirateBay | null>(null);
+  const [stream, setStream] = useState<TTorrentDataYTS | TUnifiedMagnetData | null>(null);
   // Collapse sidebar depending on screen size
   useSidebarCollapseOn2xl();
+
+  // Wrapper functions to handle different stream types
+  const setTorrentStream = (torrent: TTorrentDataYTS | null) => {
+    setStream(torrent);
+  };
+
+  const setMagnetStream = (magnet: TUnifiedMagnetData | null) => {
+    setStream(magnet);
+  };
 
   const scrapeTMDB = async () => {
     try {
@@ -59,9 +68,9 @@ const MovieProfile = () => {
         {/* Movie comments */}
         <MovieComments movieData={movieData} />
         {/* Torrents */}
-        <MovieTorrentsList movieData={movieData} setStream={setStream} />
-        {/* Magnets */}
-        <MovieMagnetsList movieData={movieData} setStream={setStream} />
+        <MovieTorrentsList movieData={movieData} setStream={setTorrentStream} />
+        {/* Combined Magnets from all sources */}
+        <MovieMagnetsCombined movieData={movieData} setStream={setMagnetStream} />
         {/* Player */}
         <VideoPlayer stream={stream} onClose={() => setStream(null)} movieData={movieData} />
       </div>
