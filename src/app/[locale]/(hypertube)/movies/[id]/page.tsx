@@ -63,7 +63,7 @@ const MovieProfile = () => {
         {/* Magnets */}
         <MovieMagnetsList movieData={movieData} setStream={setStream} />
         {/* Player */}
-        <VideoPlayer stream={stream} onClose={() => setStream(null)} title={movieData.title} />
+        <VideoPlayer stream={stream} onClose={() => setStream(null)} movieData={movieData} />
       </div>
     </div>
   );

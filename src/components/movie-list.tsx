@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react';
 
 import { ButtonCustom } from './ui/buttons/button-custom';
-import VideoPlayer from './video-player';
 
 import { fetchMoviesPopcorn } from '@/lib/popcorn-api';
 import { fetchMovieDetails, fetchMovies } from '@/lib/yts-api';
