@@ -203,6 +203,7 @@
   "error-deleting-comment": "Erreur lors de la suppression du commentaire",
   "error-adding-comment": "Erreur lors de l'ajout du commentaire",
   "error-updating-comment": "Erreur lors de la mise à jour du commentaire",
+  "error-fetching-torrent-data": "Erreur lors de la récupération des données du torrent",
   "record-already-exists": "Enregistrement existe déjà",
   "record-is-done": "Enregistrement déjà effectué",
   "record-not-found": "Enregistrement non trouvé",
@@ -301,5 +302,8 @@
   "left": "Restant",
   "cancel": "Annuler",
   "vote-count": "Nombre de votes",
-  "user-deleted-successfully": "User supprimé avec succès"
+  "user-deleted-successfully": "User supprimé avec succès",
+  "uploaded": "Téléchargé",
+  "source": "Source",
+  "uploader": "Uploader"
 }

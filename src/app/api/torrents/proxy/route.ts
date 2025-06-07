@@ -25,6 +25,6 @@ export async function GET(req: Request) {
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Proxy error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'error-fetching-torrent-data' }, { status: 500 });
   }
 }

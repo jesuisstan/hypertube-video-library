@@ -203,6 +203,7 @@
   "error-deleting-comment": "Ошибка удаления комментария",
   "error-adding-comment": "Ошибка добавления комментария",
   "error-updating-comment": "Ошибка обновления комментария",
+  "error-fetching-torrent-data": "Ошибка загрузки данных торрента",
   "record-already-exists": "Запись уже существует",
   "record-is-done": "Запись завершена",
   "record-not-found": "Запись не найдена",
@@ -301,5 +302,8 @@
   "left": "Осталось",
   "cancel": "Отмена",
   "vote-count": "Количество голосов",
-  "user-deleted-successfully": "Пользователь успешно удален"
+  "user-deleted-successfully": "Пользователь успешно удален",
+  "uploaded": "Загружен",
+  "source": "Источник",
+  "uploader": "Загружен"
 }

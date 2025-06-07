@@ -24,3 +24,33 @@ export type TMagnetDataPirateBay = {
   size: string; // File size in a human-readable format (e.g., "1.24 GiB")
   link: string; // Magnet link for the torrent
 };
+
+export type TTorrentDataRuTracker = {
+  id: string; // Unique torrent identifier
+  title: string; // Torrent title
+  author: string; // Uploader name
+  category: string; // Category name
+  size: number; // Size in bytes
+  formattedSize: string; // Formatted size (e.g., "3.03 GB")
+  seeds: number; // Number of active seeders
+  leeches: number; // Number of active leechers
+  url: string; // Link to torrent page
+  state: string; // Current torrent status
+  downloads: number; // Number of downloads
+  registered: Date; // Registration date
+  magnetLink?: string; // Magnet link (if available)
+};
+
+export type TUnifiedMagnetData = {
+  id: string; // Unique identifier
+  title: string; // Torrent title
+  seeds: number; // Number of seeders
+  leeches: number; // Number of leechers
+  size: string; // Formatted size
+  sizeBytes: number; // Size in bytes for sorting
+  uploaded: string; // Formatted upload date
+  uploadedDate: Date; // Date object for sorting
+  magnetLink: string; // Magnet link
+  source: 'Rutracker' | 'PirateBay'; // Source of the data
+  uploader?: string; // Uploader name (PirateBay)
+};

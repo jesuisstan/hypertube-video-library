@@ -22,7 +22,6 @@ const useSidebarCollapseOn2xl = () => {
     if (window.innerWidth <= SIDEBAR_COLLAPSE_WIDTH) {
       setOpen(false);
     }
-    console.log('window.innerWidth', window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps

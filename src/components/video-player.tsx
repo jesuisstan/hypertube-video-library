@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
 
-import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
-import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
+import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 
 interface VideoPlayerProps {
   onClose: () => void;
   title: string;
-  stream: TTorrentDataYTS | TMagnetDataPirateBay | null;
+  stream: TTorrentDataYTS | TUnifiedMagnetData | null;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ onClose, stream, title }) => {

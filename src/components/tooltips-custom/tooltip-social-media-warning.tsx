@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
-import { OctagonAlert } from 'lucide-react';
+import { CircleAlert } from 'lucide-react';
 
 import { ButtonCustom } from '../ui/buttons/button-custom';
 
@@ -40,7 +40,7 @@ const TooltipSocialMediaWarning = () => {
       <TooltipBasic>
         <div className="m-5 flex flex-col items-center gap-5">
           <div className="text-c42orange">
-            <OctagonAlert size={42} className="smooth42transition hover:scale-150" />
+            <CircleAlert size={42} className="smooth42transition hover:scale-150" />
           </div>
           <div className="flex max-w-96">
             <TextWithLineBreaks text={t('auth.social-media-email-password-change-tooltip')} />
