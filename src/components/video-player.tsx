@@ -1,26 +1,17 @@
-//'use client';
-
-//import React, { useState } from 'react';
-
-//export default function VideoPlayer({ hash }: { hash: string }) {
-//  const videoSrc = `/api/torrent?hash=${hash}`;
-
-//  return (
-//    <div>
-//      <video
-//        src={videoSrc}
-//        controls
-//        width="800"
-//      >
-//        Your browser does not support the video tag.
-//      </video>
-//    </div>
-//  );
-//}
-
 import React, { useState } from 'react';
 
-const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
+import DialogBasic from './dialogs-custom/dialog-basic';
+
+import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
+import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
+
+interface VideoPlayerProps {
+  onClose: () => void;
+  title: string;
+  stream: TTorrentDataYTS | TMagnetDataPirateBay | null;
+}
+
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ onClose, stream, title }) => {
   const [error, setError] = useState<string | null>(null);
 
   const handlePlaybackError = () => {
@@ -28,12 +19,25 @@ const VideoPlayer: React.FC<{ videoUrl: string }> = ({ videoUrl }) => {
   };
 
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <video controls width="600" onError={handlePlaybackError} src={videoUrl}>
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <DialogBasic isOpen={!!stream} title={title} setIsOpen={onClose} wide>
+      <div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <video controls onError={handlePlaybackError} src={'/api/mock-stream'}>
+          Your browser does not support the video tag.
+        </video>
+        <button
+          onClick={() => {
+            console.log('click');
+
+            fetch('/api/video-info')
+              .then((res) => res.json())
+              .then(console.log);
+          }}
+        >
+          get info
+        </button>
+      </div>
+    </DialogBasic>
   );
 };
 

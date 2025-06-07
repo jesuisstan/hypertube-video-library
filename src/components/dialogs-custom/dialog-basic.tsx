@@ -22,6 +22,7 @@ interface DialogModalBasicProps {
   children: React.ReactNode;
   trigger?: React.ReactNode;
   hideCloseButton?: boolean;
+  wide?: boolean;
 }
 
 const DialogBasic: React.FC<DialogModalBasicProps> = ({
@@ -32,12 +33,13 @@ const DialogBasic: React.FC<DialogModalBasicProps> = ({
   children,
   trigger,
   hideCloseButton = false,
+  wide = false,
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
-        className="xs:max-w-fit w-auto max-w-96 min-w-80"
+        className={`xs:max-w-fit w-auto ${wide ? 'min-w-[96%]' : 'max-w-96 min-w-80'}`}
         onEscapeKeyDown={hideCloseButton && !setIsOpen ? (e) => e.preventDefault() : undefined}
         onPointerDownOutside={hideCloseButton && !setIsOpen ? (e) => e.preventDefault() : undefined}
       >

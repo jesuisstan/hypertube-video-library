@@ -30,7 +30,12 @@ import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TMagnetDataPirateBay } from '@/types/torrent-magnet-data';
 
-const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => {
+interface MovieTorrentsList {
+  movieData: TMovieBasics | null;
+  setStream: (stream: TMagnetDataPirateBay | null) => void;
+}
+
+const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
@@ -264,7 +269,12 @@ const MovieMagnetsList = ({ movieData }: { movieData: TMovieBasics | null }) => 
                       </ButtonCustom>
                     </TableCell>
                     <TableCell className="text-center">
-                      <ButtonCustom size="icon" variant="default" title={t('start-streaming')}>
+                      <ButtonCustom
+                        size="icon"
+                        variant="default"
+                        title={t('start-streaming')}
+                        onClick={() => setStream(magnet)}
+                      >
                         <Play className="h-4 w-4" />
                       </ButtonCustom>
                     </TableCell>

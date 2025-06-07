@@ -29,7 +29,12 @@ import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS } from '@/types/torrent-magnet-data';
 
-const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) => {
+interface MovieTorrentsList {
+  movieData: TMovieBasics | null;
+  setStream: (stream: TTorrentDataYTS | null) => void;
+}
+
+const MovieTorrentsList = ({ movieData, setStream }: MovieTorrentsList) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
@@ -227,7 +232,12 @@ const MovieTorrentsList = ({ movieData }: { movieData: TMovieBasics | null }) =>
                       </ButtonCustom>
                     </TableCell>
                     <TableCell className="text-center">
-                      <ButtonCustom size="icon" variant="default" title={t('start-streaming')}>
+                      <ButtonCustom
+                        size="icon"
+                        variant="default"
+                        title={t('start-streaming')}
+                        onClick={() => setStream(torrent)}
+                      >
                         <Play className="h-4 w-4" />
                       </ButtonCustom>
                     </TableCell>
