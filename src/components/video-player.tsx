@@ -1,11 +1,11 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
 
-import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
-import { TMovieBasics } from '@/types/movies';
 import { fetchSubtitles } from '@/app/[locale]/(hypertube)/movies/[id]/actions';
+import { TMovieBasics } from '@/types/movies';
+import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { getLanguageName } from '@/utils/getLanguageName';
 
 interface VideoPlayerProps {
