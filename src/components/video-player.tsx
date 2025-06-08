@@ -1,10 +1,12 @@
-import { FC, useState, useMemo } from 'react';
+import { FC, useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
 
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { TMovieBasics } from '@/types/movies';
-import { fetchSubtitles } from '@/app/[locale]/(hypertube)/movies/[id]/actions';
+import { fetchSubtitles, SubInfo } from '@/app/[locale]/(hypertube)/movies/[id]/actions';
+import { getLanguageName } from '@/utils/getLanguageName';
 
 interface VideoPlayerProps {
   onClose: () => void;
@@ -13,13 +15,16 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData }) => {
-  const [error, setError] = useState<string | null>(null);
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
 
-  const subtitles = useMemo(async () => {
-    if (movieData.imdb_id) {
-      return await fetchSubtitles(movieData.imdb_id);
-    }
-  }, []);
+  const [error, setError] = useState<string | null>(null);
+  const [subtitleList, setSubtitleList] = useState<SubInfo[]>([]);
+
+  useEffect(() => {
+    const getSubList = async () =>
+      setSubtitleList(movieData.imdb_id ? await fetchSubtitles(movieData.imdb_id) : []);
+    getSubList();
+  }, [movieData]);
 
   const handlePlaybackError = () => {
     setError('Playback failed. The file may be corrupted or incomplete.');
@@ -43,6 +48,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData }) => {
         >
           get info
         </button>
+        {subtitleList.map((sub) => getLanguageName(sub.langCode, locale))}
       </div>
     </DialogBasic>
   );

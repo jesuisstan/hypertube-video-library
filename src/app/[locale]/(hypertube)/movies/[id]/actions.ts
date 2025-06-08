@@ -3,16 +3,18 @@ import * as cheerio from 'cheerio';
 import fs from 'fs';
 import unzipper from 'unzipper';
 import path from 'path';
-import { getLangCodeFromFilename } from '@/utils/getLangaugeName';
+import { getLangCode } from '@/utils/getLanguageName';
 import ffmpeg from 'fluent-ffmpeg';
+import { isTruthy } from '@/utils/predicates';
+import { tmpdir } from 'os';
 
-interface SubInfo {
+export interface SubInfo {
   langCode: string;
   filePath: string;
 }
 
 interface RemoteSubtitle {
-  lang: string;
+  langCode: string;
   rating: string;
   pageUrl: string;
   downloadUrl?: string;
@@ -20,7 +22,7 @@ interface RemoteSubtitle {
 }
 
 export async function fetchSubtitles(imdb_id: string): Promise<SubInfo[]> {
-  const subtitlesDir = path.join(imdb_id, 'subtitles');
+  const subtitlesDir = path.join(tmpdir(), 'subtitles', imdb_id);
   if (!fs.existsSync(subtitlesDir)) {
     fs.mkdirSync(subtitlesDir, { recursive: true });
   }
@@ -28,35 +30,31 @@ export async function fetchSubtitles(imdb_id: string): Promise<SubInfo[]> {
 
   const subs = await downloadAndExtractAll(subslinks, subtitlesDir);
   const subsInfo = await Promise.all(
-    subs.map(async (sub) => {
-      // Full path to the original subtitle
-      const filePath = sub.filePath;
-      const filename = path.basename(filePath);
-      // e.g. ".srt" or ".vtt"
-      const ext = path.extname(filePath).toLowerCase();
+    subs.map(async ({ langCode, filePath }) => {
+      try {
+        // e.g. ".srt" or ".vtt"
+        const ext = path.extname(filePath).toLowerCase();
 
-      // Probe to see if a language is tagged
-      const langCode = getLangCodeFromFilename(filename);
+        // Construct new file name: basename + . + lang + .vtt
+        const base = path.basename(filePath, ext); // strip original extension
+        const outputFilename = `${base}.${langCode}.vtt`;
+        const outputPath = path.join(subtitlesDir, outputFilename);
 
-      // Construct new file name: basename + . + lang + .vtt
-      const base = path.basename(filePath, ext); // strip original extension
-      const outputFilename = `${base}.${langCode}.vtt`;
-      const outputPath = path.join(subtitlesDir, outputFilename);
+        // If it's already .vtt, just copy it. Otherwise, convert.
+        if (ext !== '.vtt') {
+          await convertToWebVTT(filePath, outputPath);
+          fs.unlinkSync(filePath);
+        } else {
+          fs.copyFileSync(filePath, outputPath);
+        }
 
-      // If it's already .vtt, just copy it. Otherwise, convert.
-      if (ext !== '.vtt') {
-        await convertToWebVTT(filePath, outputPath);
-        fs.unlinkSync(filePath);
-        // console.log(`Converted ${filePath} => ${outputFilename}`);
-      } else {
-        fs.copyFileSync(filePath, outputPath);
-        // console.log(`Copied ${filePath} => ${outputFilename}`);
+        return { langCode, filePath: outputPath };
+      } catch (err) {
+        return null;
       }
-
-      return { langCode, filePath: outputPath };
     })
   );
-  return subsInfo;
+  return subsInfo.filter(isTruthy);
 }
 
 function parseSize(sizeText: string): number {
@@ -87,20 +85,13 @@ export async function scrapeYifySubtitles(imdbId: string): Promise<RemoteSubtitl
   const subtitleMap: Record<string, RemoteSubtitle> = {};
   $('.other-subs .high-rating, .other-subs tbody tr').each((_, el) => {
     const lang = $(el).find('.sub-lang').text().trim();
+    const langCode = getLangCode(lang);
     const ratingText = $(el).find('.rating-cell').text().trim();
     const href = $(el).find('a').attr('href');
     const sizeText = $(el).find('td:nth-child(4)').text().trim();
 
     const rating = parseFloat(ratingText) || 0;
     const sizeMb = parseSize(sizeText);
-    //   if (lang && href) {
-    //     subs.push({
-    //       lang,
-    //       rating,
-    //       pageUrl: `https://yifysubtitles.ch${href}`,
-    //     });
-    //   }
-    // });
 
     const existing = subtitleMap[lang];
     if (
@@ -108,8 +99,8 @@ export async function scrapeYifySubtitles(imdbId: string): Promise<RemoteSubtitl
       rating > parseFloat(existing.rating || '0') ||
       (rating === parseFloat(existing.rating || '0') && sizeMb > (existing.sizeMb || 0))
     ) {
-      subtitleMap[lang] = {
-        lang,
+      subtitleMap[langCode] = {
+        langCode,
         rating: rating.toString(),
         pageUrl: `https://yifysubtitles.ch${href}`,
         sizeMb,
@@ -146,16 +137,14 @@ async function resolveDownloadUrl(pageUrl: string): Promise<string> {
 export async function downloadAndExtractAll(
   subs: RemoteSubtitle[],
   subtitlesDir: string
-): Promise<{ lang: string; filePath: string }[]> {
+): Promise<{ langCode: string; filePath: string }[]> {
   // 1) Полностью очищаем папку (если она есть) и создаём заново
   if (fs.existsSync(subtitlesDir)) {
     fs.rmSync(subtitlesDir, { recursive: true, force: true });
   }
   fs.mkdirSync(subtitlesDir, { recursive: true });
 
-  const results: { lang: string; filePath: string }[] = [];
-
-  await Promise.all(
+  const results = await Promise.all(
     subs.map(async (sub) => {
       try {
         // 2) Получаем ZIP как Buffer
@@ -175,7 +164,8 @@ export async function downloadAndExtractAll(
         });
 
         if (!entry) {
-          throw new Error(`No subtitle file found in ${zipUrl}`);
+          console.error(`No subtitle file found in ${zipUrl}`);
+          return;
         }
 
         // 4) Пишем его в subtitlesDir, сохраняя оригинальное имя из ZIP
@@ -188,14 +178,14 @@ export async function downloadAndExtractAll(
             .on('error', reject);
         });
 
-        results.push({ lang: sub.lang, filePath: outputPath });
+        return { langCode: sub.langCode, filePath: outputPath };
       } catch (err) {
-        console.warn(`❌ ${sub.lang} failed: ${(err as Error).message}`);
+        console.warn(`❌ ${sub.langCode} failed: ${(err as Error).message}`);
       }
     })
   );
 
-  return results;
+  return results.filter(isTruthy);
 }
 
 function convertToWebVTT(inputPath: string, outputPath: string): Promise<string> {

@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@aws-sdk/client-s3': false,
+    };
+    return config;
+  },
 };
 
 export default withNextIntl(nextConfig);
