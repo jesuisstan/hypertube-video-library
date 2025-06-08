@@ -31,14 +31,13 @@ export type TTorrentDataRuTracker = {
   author: string; // Uploader name
   category: string; // Category name
   size: number; // Size in bytes
-  formattedSize: string; // Formatted size (e.g., "3.03 GB")
   seeds: number; // Number of active seeders
   leeches: number; // Number of active leechers
-  url: string; // Link to torrent page
   state: string; // Current torrent status
   downloads: number; // Number of downloads
   registered: Date; // Registration date
   magnetLink?: string; // Magnet link (if available)
+  host: string; // Host URL
 };
 
 export type TUnifiedMagnetData = {

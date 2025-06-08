@@ -191,11 +191,39 @@ const MovieTorrentsList = ({ movieData, setStream }: MovieTorrentsList) => {
           </TableHeader>
           <TableBody>
             {loadingYTS
-              ? Array.from({ length: 3 }).map((_, idx) => (
+              ? //Array.from({ length: 3 }).map((_, idx) => (
+                //    <TableRow key={`loading-${idx}`}>
+                //      <TableCell className="xs:max-w-2xl max-w-72 min-w-[200px]">
+                //        <div className="my-2">
+                //          <Spinner size={24} />
+                //        </div>
+                //      </TableCell>
+                //    </TableRow>
+                //  ))
+                Array.from({ length: 5 }).map((_, idx) => (
                   <TableRow key={`loading-${idx}`}>
                     <TableCell className="xs:max-w-2xl max-w-72 min-w-[200px]">
                       <div className="my-2">
                         <Spinner size={24} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Spinner size={16} />
+                    </TableCell>
+                    <TableCell>
+                      <Spinner size={16} />
+                    </TableCell>
+                    <TableCell>
+                      <Spinner size={16} />
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex justify-center">
+                        <Spinner size={16} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex justify-center">
+                        <Spinner size={16} />
                       </div>
                     </TableCell>
                   </TableRow>
