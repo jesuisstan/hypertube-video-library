@@ -1,9 +1,9 @@
 export function getLanguageName(code: string, locale = 'en'): string {
   try {
     const displayNames = new Intl.DisplayNames([locale], { type: 'language' });
-    return displayNames.of(code) || `Unknown (${code})`;
+    return displayNames.of(code) || code;
   } catch (e) {
-    return `Unknown (${code})`;
+    return code;
   }
 }
 
@@ -133,7 +133,6 @@ for (const code of codes) {
 
 export function getLangCode(lang: string): string {
   const normalized = lang.toLowerCase();
-  console.log(Object.entries(langCodeToName));
 
   return (
     Object.entries(langCodeToName).find(([, language]) => language === normalized)?.[0] ??

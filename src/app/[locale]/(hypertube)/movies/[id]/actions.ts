@@ -8,11 +8,6 @@ import ffmpeg from 'fluent-ffmpeg';
 import { isTruthy } from '@/utils/predicates';
 import { tmpdir } from 'os';
 
-export interface SubInfo {
-  langCode: string;
-  filePath: string;
-}
-
 interface RemoteSubtitle {
   langCode: string;
   rating: string;
@@ -21,8 +16,9 @@ interface RemoteSubtitle {
   sizeMb: number;
 }
 
-export async function fetchSubtitles(imdb_id: string): Promise<SubInfo[]> {
-  const subtitlesDir = path.join(tmpdir(), 'subtitles', imdb_id);
+export async function fetchSubtitles(imdb_id: string): Promise<Record<string, string>> {
+  const subtitlesDir = path.join('public', 'downloads', 'subtitles', imdb_id);
+
   if (!fs.existsSync(subtitlesDir)) {
     fs.mkdirSync(subtitlesDir, { recursive: true });
   }
@@ -48,13 +44,13 @@ export async function fetchSubtitles(imdb_id: string): Promise<SubInfo[]> {
           fs.copyFileSync(filePath, outputPath);
         }
 
-        return { langCode, filePath: outputPath };
+        return [langCode, path.join('downloads', 'subtitles', imdb_id, outputFilename)];
       } catch (err) {
         return null;
       }
     })
   );
-  return subsInfo.filter(isTruthy);
+  return Object.fromEntries(subsInfo.filter(isTruthy));
 }
 
 function parseSize(sizeText: string): number {
@@ -193,6 +189,7 @@ function convertToWebVTT(inputPath: string, outputPath: string): Promise<string>
     const command = (ffmpeg as any)(inputPath);
     command
       .outputOptions('-c:s webvtt') // instruct ffmpeg to convert SRT -> WebVTT
+      .outputFormat('webvtt') // explicitly set output format
       .save(outputPath)
       .on('end', () => resolve(outputPath))
       .on('error', (error: Error) => reject(error));
