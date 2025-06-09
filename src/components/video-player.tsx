@@ -4,9 +4,9 @@ import { useLocale } from 'next-intl';
 import DialogBasic from './dialogs-custom/dialog-basic';
 
 import useUserStore from '@/stores/user';
+import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { getLanguageName } from '@/utils/language';
-import { TMovieBasics } from '@/types/movies';
 
 interface VideoPlayerProps {
   onClose: () => void;
@@ -44,7 +44,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
       });
     }, 0);
     return () => clearTimeout(timer);
-  }, [stream, subtitleList, locale, preferred_language]);
+  }, [movieData, stream, subtitleList, locale, preferred_language]);
 
   const handlePlaybackError = () => {
     setError('Playback failed. The file may be corrupted or incomplete.');
