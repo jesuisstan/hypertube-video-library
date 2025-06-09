@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 import DialogBasic from './dialogs-custom/dialog-basic';
 
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
-import { getLanguageName } from '@/utils/getLanguageName';
+import { getLanguageName } from '@/utils/language';
 import useUserStore from '@/stores/user';
 
 interface VideoPlayerProps {

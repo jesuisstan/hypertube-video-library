@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import unzipper from 'unzipper';
 
-import { getLangCode } from '@/utils/getLanguageName';
+import { getLanguageCode } from '@/utils/language';
 import { isTruthy } from '@/utils/predicates';
 
 interface RemoteSubtitle {
@@ -81,7 +81,7 @@ export async function scrapeYifySubtitles(imdbId: string): Promise<RemoteSubtitl
   const subtitleMap: Record<string, RemoteSubtitle> = {};
   $('.other-subs .high-rating, .other-subs tbody tr').each((_, el) => {
     const lang = $(el).find('.sub-lang').text().trim();
-    const langCode = getLangCode(lang);
+    const langCode = getLanguageCode(lang);
     const ratingText = $(el).find('.rating-cell').text().trim();
     const href = $(el).find('a').attr('href');
     const sizeText = $(el).find('td:nth-child(4)').text().trim();
