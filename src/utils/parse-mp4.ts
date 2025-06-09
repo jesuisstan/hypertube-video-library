@@ -1,4 +1,4 @@
-import { getLanguageName } from './getLangaugeName';
+import { getLanguageName } from './language';
 
 type Box = {
   size: number;
