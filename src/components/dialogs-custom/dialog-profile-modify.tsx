@@ -133,6 +133,54 @@ const DialogProfileModify = ({
     setLoading(false);
   };
 
+  // GEO SELECTOR STYLES
+  const customStyles = {
+    control: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: '#18181b',
+      borderColor: state.isFocused ? '#01a2a4' : '#27272a',
+      color: '#f4f4f5', // text-foreground
+      boxShadow: state.isFocused ? '0 0 0 1px #01a2a4' : 'none',
+      minHeight: 40,
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      backgroundColor: '#18181b', // bg-card
+      color: '#f4f4f5', // text-foreground
+      zIndex: 100,
+    }),
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+        ? '#01a2a4'
+        : state.isFocused
+          ? '#27272a' // bg-muted
+          : '#18181b', // bg-card
+      color: state.isSelected ? '#fff' : '#f4f4f5',
+      cursor: 'pointer',
+    }),
+    singleValue: (provided: any) => ({
+      ...provided,
+      color: '#f4f4f5', // text-foreground
+    }),
+    placeholder: (provided: any) => ({
+      ...provided,
+      color: '#a1a1aa', // text-muted-foreground
+    }),
+    input: (provided: any) => ({
+      ...provided,
+      color: '#f4f4f5', // text-foreground
+    }),
+    dropdownIndicator: (provided: any, state: any) => ({
+      ...provided,
+      color: state.isFocused ? '#01a2a4' : '#a1a1aa',
+    }),
+    indicatorSeparator: (provided: any) => ({
+      ...provided,
+      backgroundColor: '#27272a', // border-muted
+    }),
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
@@ -308,7 +356,8 @@ const DialogProfileModify = ({
                 {t(`city`)}
               </Label>
               <AsyncSelect
-                className="text-foreground/85 placeholder-foreground placeholder-opacity-25 w-52 text-xs"
+                styles={customStyles}
+                className="w-52 cursor-pointer text-xs"
                 value={selectedCityOption}
                 onChange={setSelectedCityOption}
                 loadOptions={(input) => loadCityOptions(input, setError, t)}

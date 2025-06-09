@@ -305,5 +305,6 @@
   "user-deleted-successfully": "User deleted successfully",
   "uploaded": "Uploaded",
   "source": "Source",
-  "uploader": "Uploader"
+  "uploader": "Uploader",
+  "user-updated-successfully": "User updated successfully"
 }

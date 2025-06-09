@@ -305,5 +305,6 @@
   "user-deleted-successfully": "Пользователь успешно удален",
   "uploaded": "Загружен",
   "source": "Источник",
-  "uploader": "Загружен"
+  "uploader": "Загружен",
+  "user-updated-successfully": "Пользователь успешно обновлен"
 }

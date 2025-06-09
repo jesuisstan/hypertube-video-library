@@ -305,5 +305,6 @@
   "user-deleted-successfully": "User supprimé avec succès",
   "uploaded": "Téléchargé",
   "source": "Source",
-  "uploader": "Uploader"
+  "uploader": "Uploader",
+  "user-updated-successfully": "User mis à jour avec succès"
 }
