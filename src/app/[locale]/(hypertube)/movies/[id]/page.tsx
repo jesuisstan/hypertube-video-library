@@ -9,6 +9,7 @@ import MovieCredits from './(components)/movie-credits';
 import MovieHeader from './(components)/movie-header';
 import MovieMagnetsCombined from './(components)/movie-magnets-combined';
 import MovieTorrentsList from './(components)/movie-torrents-list';
+import { fetchSubtitles } from './actions';
 
 import Loading from '@/app/loading';
 import VideoPlayer from '@/components/video-player';
@@ -16,7 +17,6 @@ import useSidebarCollapseOn2xl from '@/hooks/useSidebarCollapseOn2xl';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
-import { fetchSubtitles } from './actions';
 
 const MovieProfile = () => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
