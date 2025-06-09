@@ -16,6 +16,7 @@ import useSidebarCollapseOn2xl from '@/hooks/useSidebarCollapseOn2xl';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
+import { fetchSubtitles } from './actions';
 
 const MovieProfile = () => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
@@ -25,6 +26,7 @@ const MovieProfile = () => {
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
   const [stream, setStream] = useState<TTorrentDataYTS | TUnifiedMagnetData | null>(null);
+  const [subtitleList, setSubtitleList] = useState<Record<string, string> | null>(null);
   // Collapse sidebar depending on screen size
   useSidebarCollapseOn2xl();
 
@@ -37,12 +39,13 @@ const MovieProfile = () => {
     setStream(magnet);
   };
 
-  const scrapeTMDB = async () => {
+  const getMovieData = async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/movies/${movieId}/?lang=${locale}`); // todo fetch EN data to avoid torrent-scraping issues coused by original titles
       const data = await response.json();
       setMovieData(data);
+      setSubtitleList(data.imdb_id ? await fetchSubtitles(data.imdb_id) : null);
     } catch (error) {
       console.error('Error scraping TMDB:', error);
     } finally {
@@ -50,9 +53,9 @@ const MovieProfile = () => {
     }
   };
 
-  // Fetch movie data and credits on component mount
+  // Fetch movie data, subtitles and credits on component mount
   useEffect(() => {
-    scrapeTMDB();
+    getMovieData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,7 +75,12 @@ const MovieProfile = () => {
         {/* Combined Magnets from all sources */}
         <MovieMagnetsCombined movieData={movieData} setStream={setMagnetStream} />
         {/* Player */}
-        <VideoPlayer stream={stream} onClose={() => setStream(null)} movieData={movieData} />
+        <VideoPlayer
+          stream={stream}
+          onClose={() => setStream(null)}
+          title={movieData.title}
+          subtitleList={subtitleList}
+        />
       </div>
     </div>
   );
