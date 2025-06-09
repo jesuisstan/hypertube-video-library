@@ -10,8 +10,6 @@ import {
   CircleDashed,
   Copy,
   CopyCheck,
-  Download,
-  ExternalLink,
   Magnet,
   Play,
   RefreshCw,

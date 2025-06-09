@@ -139,7 +139,10 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
       const response = await fetch(
         `/api/torrents/rutracker?title=${encodeURIComponent(searchText)}&year=${searchYear}`
       );
-      const data: TTorrentDataRuTracker[] = await response.json();
+      const responseData = await response.json();
+
+      // Ensure data is an array before using array methods
+      const data: TTorrentDataRuTracker[] = Array.isArray(responseData) ? responseData : [];
 
       return data
         .filter((torrent) => torrent.magnetLink) // Only include torrents with magnet links
@@ -387,13 +390,19 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
                       <Spinner size={16} />
                     </TableCell>
                     <TableCell>
-                      <Spinner size={16} />
+                      <div className="flex justify-center">
+                        <Spinner size={16} />
+                      </div>
                     </TableCell>
                     <TableCell>
-                      <Spinner size={16} />
+                      <div className="flex justify-center">
+                        <Spinner size={16} />
+                      </div>
                     </TableCell>
                     <TableCell>
-                      <Spinner size={16} />
+                      <div className="flex justify-center">
+                        <Spinner size={16} />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
@@ -414,7 +423,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
                         className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                           magnet.source === 'Rutracker'
                             ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                            : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                            : 'bg-[#f6f1ee] text-[#9e6940] dark:bg-[#9e6940] dark:text-[#f6f1ee]'
                         }`}
                       >
                         {magnet.source}
