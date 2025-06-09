@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 import MovieComments from './(components)/movie-comments';
 import MovieCredits from './(components)/movie-credits';
@@ -14,7 +14,6 @@ import { fetchSubtitles } from './actions';
 import Loading from '@/app/loading';
 import VideoPlayer from '@/components/video-player';
 import useSidebarCollapseOn2xl from '@/hooks/useSidebarCollapseOn2xl';
-import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 
@@ -76,7 +75,7 @@ const MovieProfile = () => {
         <VideoPlayer
           stream={stream}
           onClose={() => setStream(null)}
-          title={movieData.title}
+          movieData={movieData}
           subtitleList={subtitleList}
         />
       </div>

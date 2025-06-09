@@ -6,15 +6,16 @@ import DialogBasic from './dialogs-custom/dialog-basic';
 import useUserStore from '@/stores/user';
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { getLanguageName } from '@/utils/language';
+import { TMovieBasics } from '@/types/movies';
 
 interface VideoPlayerProps {
   onClose: () => void;
-  title: string;
+  movieData: TMovieBasics;
   stream: TTorrentDataYTS | TUnifiedMagnetData | null;
   subtitleList: Record<string, string> | null;
 }
 
-const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, title, subtitleList }) => {
+const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitleList }) => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
   const user = useUserStore((state) => state.user);
   const preferred_language = user?.preferred_language;
@@ -31,13 +32,14 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, title, subtitleLis
       if (!videoPlayer) return;
 
       videoPlayer.querySelectorAll('track').forEach((t) => t.remove());
-      Object.entries(subtitleList ?? {}).forEach(([langCode, path], i) => {
+      Object.entries(subtitleList ?? {}).forEach(([langCode, path]) => {
         const trackEl = document.createElement('track');
         trackEl.kind = 'subtitles';
         trackEl.label = getLanguageName(langCode, locale);
         trackEl.srclang = langCode;
         trackEl.src = `${window.location.origin}/${path}`;
-        trackEl.default = preferred_language === langCode;
+        trackEl.default =
+          preferred_language !== movieData.original_language && preferred_language === langCode;
         videoPlayer.appendChild(trackEl);
       });
     }, 0);
@@ -49,7 +51,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, title, subtitleLis
   };
 
   return (
-    <DialogBasic isOpen={!!stream} title={title} setIsOpen={onClose} wide>
+    <DialogBasic isOpen={!!stream} title={movieData.title} setIsOpen={onClose} wide>
       <div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <video ref={videoRef} controls onError={handlePlaybackError} src={'/api/mock-stream'}>
