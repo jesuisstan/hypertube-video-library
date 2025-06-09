@@ -5,6 +5,7 @@ import DialogBasic from './dialogs-custom/dialog-basic';
 
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { getLanguageName } from '@/utils/getLanguageName';
+import useUserStore from '@/stores/user';
 
 interface VideoPlayerProps {
   onClose: () => void;
@@ -15,6 +16,9 @@ interface VideoPlayerProps {
 
 const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, title, subtitleList }) => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
+  const user = useUserStore((state) => state.user);
+  const preferred_language = user?.preferred_language;
+
   const [error, setError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -33,7 +37,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, title, subtitleLis
         trackEl.label = getLanguageName(langCode, locale);
         trackEl.srclang = langCode;
         trackEl.src = `${window.location.origin}/${path}`;
-        if (i === 0) trackEl.default = true;
+        trackEl.default = preferred_language === langCode;
         videoPlayer.appendChild(trackEl);
       });
     }, 0);

@@ -20,8 +20,6 @@ import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data
 
 const MovieProfile = () => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
-  const user = useUserStore((state) => state.user);
-  const userPreferedContentLanguage = user?.preferred_language; // todo to be used for subtitles lang
   const { id: movieId } = useParams(); // Grab the id from the dynamic route
   const [loading, setLoading] = useState(false);
   const [movieData, setMovieData] = useState<TMovieBasics | null>(null);
