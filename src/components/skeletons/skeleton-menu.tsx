@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { Separator } from '@/components/ui/separator';
 
 export const SkeletonUserName = () => {
-  return <div className="bg-muted flex h-4 w-28 animate-pulse rounded-full" />;
+  return <div className="bg-muted-foreground flex h-4 w-28 animate-pulse rounded-full" />;
 };
 
 export const generateSkeletonItems = (count: number) => {

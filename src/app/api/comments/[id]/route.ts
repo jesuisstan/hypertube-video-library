@@ -2,12 +2,24 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
+import { canModifyUser, createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
     const { id: commentId } = await context.params;
     if (!commentId) {
       return NextResponse.json({ error: 'error-comment-id-is-required' }, { status: 400 });
+    }
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
     }
 
     // Получаем nickname и photos пользователя через JOIN с таблицей users
@@ -43,6 +55,25 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: stri
     const { searchParams } = new URL(req.url);
     const movieId = searchParams.get('movie_id');
     const userId = searchParams.get('user_id');
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+    if (!canModifyUser(session, userId!)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
 
     const deleteQuery = `
       DELETE FROM movies_comments WHERE id = $1 AND movie_id = $2 AND user_id = $3

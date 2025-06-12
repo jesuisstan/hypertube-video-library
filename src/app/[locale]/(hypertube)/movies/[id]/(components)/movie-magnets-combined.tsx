@@ -228,12 +228,6 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
         return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
       }
 
-      if (key === 'uploadedDate') {
-        const aDate = new Date(aValue).getTime();
-        const bDate = new Date(bValue).getTime();
-        return sortConfig.direction === 'asc' ? aDate - bDate : bDate - aDate;
-      }
-
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         return sortConfig.direction === 'asc'
           ? aValue.localeCompare(bValue)
@@ -343,23 +337,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
                   )}
                 </span>
               </TableHead>
-              <TableHead
-                onClick={() => handleSort('uploadedDate')}
-                className="cursor-pointer select-none"
-              >
-                <span className="inline-flex items-center gap-1">
-                  {t('uploaded')}
-                  {sortConfig?.key === 'uploadedDate' ? (
-                    sortConfig.direction === 'asc' ? (
-                      <ArrowUpNarrowWide className="text-primary inline h-4 w-4" />
-                    ) : (
-                      <ArrowDownWideNarrow className="text-primary inline h-4 w-4" />
-                    )
-                  ) : (
-                    <ArrowDownUp className="text-muted-foreground inline h-4 w-4 opacity-60" />
-                  )}
-                </span>
-              </TableHead>
+              <TableHead>{t('uploaded')}</TableHead>
               <TableHead className="text-center">{t('latch')}</TableHead>
               <TableHead className="text-center">{t('copy')}</TableHead>
               <TableHead className="text-center">{t('stream')}</TableHead>
