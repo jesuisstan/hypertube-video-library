@@ -3,12 +3,34 @@ import { NextResponse } from 'next/server';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
+import { canModifyUser, createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function DELETE(req: Request, context: { params: Promise<{ id: any }> }) {
   const client = await db.connect();
 
   try {
     const params = await context.params;
     const id = params.id;
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO DELETE USER
+    if (!canModifyUser(session, id)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
     const { password } = await req.json(); // Get the password from the request body
 
     // Step 1: Validate input
@@ -70,10 +92,30 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: any }
   const client = await db.connect();
   const params = await context.params;
   const id = params.id;
-  const body = await req.json();
-  const { category } = body;
 
   try {
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+    if (!canModifyUser(session, id)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    const body = await req.json();
+    const { category } = body;
+
     const {
       firstname,
       lastname,
@@ -249,6 +291,25 @@ export async function GET(req: Request, context: { params: Promise<{ id: any }> 
   if (!isValidUUID(id)) {
     return NextResponse.json({ error: 'invalid-input' }, { status: 400 });
   }
+
+  // 🔒 CHECK AUTHENTICATION
+  const session = await getAuthSession();
+  if (!session) {
+    const authError = createAuthErrorResponse('unauthorized');
+    return NextResponse.json(
+      { error: authError.error, message: authError.message },
+      { status: authError.status }
+    );
+  }
+
+  //// 🔒 CHECK AUTHORIZATION TO VIEW USER
+  //if (!canViewUser(session, id)) {
+  //  const authError = createAuthErrorResponse('forbidden');
+  //  return NextResponse.json(
+  //    { error: authError.error, message: authError.message },
+  //    { status: authError.status }
+  //  );
+  //}
 
   const client = await db.connect();
 
