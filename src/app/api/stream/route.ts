@@ -9,10 +9,12 @@ import { PassThrough, Readable } from 'stream';
 import torrentStream from 'torrent-stream';
 import TorrentEngine = TorrentStream.TorrentEngine;
 import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
+import TorrentFile = TorrentStream.TorrentFile;
 
 interface TorrentData {
   magnetUri: string;
   engine?: TorrentStream.TorrentEngine;
+  file?: TorrentStream.TorrentFile;
   downloadPromise?: Promise<void>;
   fileName?: string;
   format?: VideoFileFormat;
@@ -27,51 +29,36 @@ function ensureStorageDir(hash: string) {
   return dir;
 }
 
-function startBackgroundDownload(hash: string) {
-  const data = torrents.get(hash);
-  if (!data || data.downloadPromise) return;
-
-  const engine = torrentStream(data.magnetUri, {
-    tmp: './tmp',
-    path: `./storage/films/${hash}`,
-    verify: true,
-  });
-  data.engine = engine;
-
-  data.downloadPromise = new Promise((resolve, reject) => {
+function startBackgroundDownload(hash: string): Promise<TorrentStream.TorrentFile> {
+  return new Promise((resolve, reject) => {
+    const data = torrents.get(hash);
+    if (!data) reject(new Error('Unknown hash'));
+    if (data!.downloadPromise) reject(new Error('Already downloading'));
+    const engine = torrentStream(data!.magnetUri, {
+      tmp: './tmp',
+      path: `./storage/films/${hash}`,
+      verify: true,
+    });
+    data!.engine = engine;
     engine.on('ready', () => {
       const file = engine.files.find((f: TorrentStream.TorrentFile) => {
         const fmt = getVideoFileFormatFrom(f.name);
         return fmt !== VideoFileFormat.UNKNOWN;
       });
       if (!file) return reject(new Error('No video file found'));
-
-      data.fileName = file.name;
-      data.format = getVideoFileFormatFrom(file.name);
+      data!.fileName = file.name;
+      data!.format = getVideoFileFormatFrom(file.name);
       const storageDir = ensureStorageDir(hash);
       const outputPath = path.join(storageDir, 'video.mp4');
-      data.storagePath = outputPath;
-
+      data!.storagePath = outputPath;
       file.select();
-      const inputStream = file.createReadStream();
-
-      // if (data.format === VideoFileFormat.MP4) {
-      // Direct copy
+      data!.file = file;
+      resolve(file);
       const out = fs.createWriteStream(outputPath);
-      inputStream.pipe(out);
-      out.on('finish', () => resolve());
-      out.on('error', reject);
-      // } else {
-      //   // Transcode to MP4
-      //   ffmpeg(inputStream)
-      //     .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
-      //     .toFormat('mp4')
-      //     .save(outputPath)
-      //     .on('end', () => resolve())
-      //     .on('error', reject);
-      // }
+      out.on('finish', () => resolve(file));
     });
     engine.on('error', reject);
+    // });
   });
 }
 
@@ -114,7 +101,6 @@ export async function POST(request: Request) {
   return NextResponse.json({ streamUrl: infoHash });
 }
 
-// GET: stream video chunks
 export async function GET(request: NextRequest) {
   const hash = request.nextUrl.searchParams.get('hash');
   if (!hash) {
@@ -125,19 +111,21 @@ export async function GET(request: NextRequest) {
   if (!data) {
     return NextResponse.json({ message: 'Unknown hash' }, { status: 404 });
   }
-  if (!data.engine) {
-    startBackgroundDownload(hash);
+  let file: TorrentFile;
+  if (!data.file || !data.engine) {
+    file = await startBackgroundDownload(hash);
+  } else {
+    file = data.file;
   }
-  const engine = data.engine!;
 
   try {
-    const file = await getVideoFile(engine);
     const format = getVideoFileFormatFrom(file.name);
     const total = file.length;
 
     const rangeHeader = request.headers.get('range') || '';
     const CHUNK_SIZE = 5 * 1024 * 1024;
-
+    console.log(request.headers);
+    console.log(request.nextUrl.searchParams);
     let start = 0;
     let end = total - 1;
     if (canStreamDirectly(format) && rangeHeader) {
@@ -158,6 +146,12 @@ export async function GET(request: NextRequest) {
         .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
         .on('error', (err) => console.error('FFmpeg error:', err))
         .pipe() as PassThrough;
+      return new NextResponse(outputStream as any, {
+        status: 200,
+        headers: {
+          'Content-Type': 'video/mp4',
+        },
+      });
     }
 
     return new NextResponse(outputStream as any, {
