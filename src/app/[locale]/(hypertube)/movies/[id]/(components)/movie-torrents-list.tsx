@@ -115,8 +115,6 @@ const MovieTorrentsList = ({ movieData, setStream }: MovieTorrentsList) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [torrentsYTS, sortConfig, movieData?.title]);
 
-  console.log('Sorted Torrents:', sortedTorrents); // debug
-
   return !movieData ? null : (
     <div className="mx-auto w-full max-w-screen-2xl px-4">
       <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
