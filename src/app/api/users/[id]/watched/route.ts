@@ -2,12 +2,24 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
+import { createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
     const { id: userId } = await context.params;
     if (!userId) {
       return NextResponse.json({ error: 'error-user-id-is-required' }, { status: 400 });
+    }
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
     }
 
     const query = `

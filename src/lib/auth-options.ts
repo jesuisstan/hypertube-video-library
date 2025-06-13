@@ -7,8 +7,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
-import { findOrCreateUser, updateLastAction } from '@/lib/auth-utils';
-import { defineCampus } from '@/lib/auth-utils';
+import { findOrCreateUser, updateLastAction } from '@/lib/auth-helpers';
+import { defineCampus } from '@/lib/auth-helpers';
 import { spaceToSnake } from '@/utils/format-string';
 
 export const authOptions: NextAuthOptions = {

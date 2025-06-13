@@ -3,12 +3,24 @@ import { NextResponse } from 'next/server';
 import { del, put } from '@vercel/blob';
 import { db } from '@vercel/postgres';
 
+import { canModifyUser, createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function POST(req: Request) {
   const client = await db.connect();
 
   try {
     const { searchParams } = new URL(req.url);
     const filename = searchParams.get('filename');
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
 
     if (filename) {
       // Case 1: Upload the photo to Blob Storage
@@ -21,6 +33,15 @@ export async function POST(req: Request) {
       // Case 2: Update the user's profile with the new photo URL
       const body = await req.json();
       const { id, url } = body;
+
+      // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+      if (!canModifyUser(session, id)) {
+        const authError = createAuthErrorResponse('forbidden');
+        return NextResponse.json(
+          { error: authError.error, message: authError.message },
+          { status: authError.status }
+        );
+      }
 
       // Step 1: Validate the photo received from the frontend
       if (!url || typeof url !== 'string' || url.trim() === '') {
@@ -71,6 +92,25 @@ export async function DELETE(req: Request): Promise<NextResponse> {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get('id');
     const photoUrl = searchParams.get('url');
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO DELETE USER
+    if (!canModifyUser(session, userId!)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
 
     // Step 1: Validate inputs
     if (!userId || !photoUrl) {

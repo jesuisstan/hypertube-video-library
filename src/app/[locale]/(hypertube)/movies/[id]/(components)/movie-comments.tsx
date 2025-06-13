@@ -10,6 +10,7 @@ import DialogBasic from '@/components/dialogs-custom/dialog-basic';
 import { ButtonCustom } from '@/components/ui/buttons/button-custom';
 import Spinner from '@/components/ui/spinner';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
+import ToastNotification from '@/components/ui/toast-notification';
 import { Link } from '@/i18n/routing';
 import useUserStore from '@/stores/user';
 import { TMovieBasics } from '@/types/movies';
@@ -25,21 +26,24 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const [newComment, setNewComment] = useState('');
   const [adding, setAdding] = useState(false);
   const [modifying, setModifying] = useState(false);
-  const [deleting, setDeleting] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editComment, setEditComment] = useState<any>(null);
   const [editContent, setEditContent] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Get comments for the movie via GET /movies/:id/comments API
   const fetchComments = async (silently: boolean = false) => {
     if (!movieData?.id) return;
     if (!silently) setLoading(true);
+    setErrorMessage(null); // Reset error message before fetching comments
     try {
       const res = await fetch(`/api/movies/${movieData.id}/comments`);
       const data = await res.json();
       setComments(data.comments || []);
     } catch (e) {
       setComments([]);
+      setErrorMessage(t('error-fetching-comments') || 'Error fetching comments');
     } finally {
       if (!silently) setLoading(false);
     }
@@ -49,6 +53,7 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
   const handleAddComment = async () => {
     if (!movieData?.id || !user?.id || !newComment.trim()) return;
     setAdding(true);
+    setErrorMessage(null); // Reset error message before adding a new comment
     try {
       const params = new URLSearchParams({
         user_id: user.id,
@@ -57,10 +62,20 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const res = await fetch(`/api/movies/${movieData.id}/comments?${params.toString()}`, {
         method: 'POST',
       });
+
       if (res.ok) {
         setNewComment('');
         fetchComments(true);
+      } else {
+        const errorData = await res.json();
+        if (res.status === 409 && errorData.error === 'record-already-exists') {
+          setErrorMessage(t('record-already-exists') || 'This comment already exists');
+        } else {
+          setErrorMessage(t('error-adding-comment') || 'Error adding comment');
+        }
       }
+    } catch (e) {
+      setErrorMessage(t('error-adding-comment') || 'Error adding comment');
     } finally {
       setAdding(false);
     }
@@ -93,6 +108,13 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
       if (res.ok) {
         fetchComments(true);
         setEditDialogOpen(false);
+      } else {
+        const errorData = await res.json();
+        if (errorData.error === 'comment-not-found') {
+          setErrorMessage(t('comment-not-found') || 'Comment not found');
+        } else {
+          setErrorMessage(t('error-updating-comment') || 'Error updating comment');
+        }
       }
     } finally {
       setModifying(false);
@@ -103,7 +125,8 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
     if (!movieData?.id || !user?.id) return;
     if (comment.user_id !== user.id) return;
 
-    setDeleting(true);
+    setDeletingCommentId(comment.id);
+    setErrorMessage(null); // Reset error message before deleting a comment
     try {
       const params = new URLSearchParams({
         movie_id: String(movieData.id),
@@ -114,9 +137,18 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
       });
       if (res.ok) {
         fetchComments(true);
+      } else {
+        const errorData = await res.json();
+        if (errorData.error === 'comment-not-found') {
+          setErrorMessage(t('comment-not-found') || 'Comment not found');
+        } else {
+          setErrorMessage(t('error-deleting-comment') || 'Error deleting comment');
+        }
       }
+    } catch (e) {
+      setErrorMessage(t('error-deleting-comment') || 'Error deleting comment');
     } finally {
-      setDeleting(false);
+      setDeletingCommentId(null);
     }
   };
 
@@ -166,6 +198,14 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
 
   return !movieData ? null : (
     <div className="mx-auto w-full max-w-screen-2xl px-4">
+      {errorMessage && (
+        <ToastNotification
+          isOpen={true}
+          title={t('attention')}
+          text={errorMessage}
+          duration={2000}
+        />
+      )}
       <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
         <div className="mb-4 flex items-center gap-2 align-middle">
           <h3 className="text-xl font-semibold">{t('comments')}</h3>
@@ -325,10 +365,10 @@ const MovieComments = ({ movieData }: { movieData: TMovieBasics | null }) => {
                           size="icon"
                           title={t('delete')}
                           onClick={() => deleteComment(c)}
-                          disabled={deleting || loading}
+                          disabled={deletingCommentId === c.id || loading}
                           className="smooth42transition hover:text-c42orange max-h-4 max-w-4 hover:bg-transparent"
                         >
-                          {deleting ? (
+                          {deletingCommentId === c.id ? (
                             <CircleDashed className="h-4 w-4 animate-spin" />
                           ) : (
                             <Trash2 className="h-4 w-4" />

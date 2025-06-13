@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
+import { canModifyUser, createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function POST(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
@@ -20,13 +22,32 @@ export async function POST(req: Request, context: { params: Promise<{ id: string
       return NextResponse.json({ error: 'error-comment-content-is-required' }, { status: 400 });
     }
 
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+    if (!canModifyUser(session, userId!)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
     // Check if the record already exists
     const checkQuery = `
       SELECT id FROM movies_comments WHERE user_id = $1 AND movie_id = $2 AND content = $3
     `;
     const checkResult = await client.query(checkQuery, [userId, movieId, commentContent]);
     if ((checkResult.rowCount ?? 0) > 0) {
-      return NextResponse.json({ message: 'record-already-exists' }, { status: 200 });
+      return NextResponse.json({ error: 'record-already-exists' }, { status: 409 });
     }
 
     // Add the new record
@@ -55,6 +76,16 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     const { id: movieId } = await context.params;
     if (!movieId) {
       return NextResponse.json({ error: 'error-movie-id-is-required' }, { status: 400 });
+    }
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
     }
 
     // Get all comments for the movie (including nickname and photos of the user from the table users)

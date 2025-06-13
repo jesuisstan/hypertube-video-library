@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@vercel/postgres';
 
+import { canModifyUser, createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
+
 export async function POST(req: Request, context: { params: Promise<{ id: string }> }) {
   const client = await db.connect();
   try {
@@ -18,6 +20,25 @@ export async function POST(req: Request, context: { params: Promise<{ id: string
     }
     if (!userId) {
       return NextResponse.json({ error: 'error-user-id-is-required' }, { status: 400 });
+    }
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+    if (!canModifyUser(session, userId!)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
     }
 
     // Check if the record already exists
@@ -67,6 +88,25 @@ export async function DELETE(req: Request, context: { params: Promise<{ id: stri
     }
     if (!userId) {
       return NextResponse.json({ error: 'error-user-id-is-required' }, { status: 400 });
+    }
+
+    // 🔒 CHECK AUTHENTICATION
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    // 🔒 CHECK AUTHORIZATION TO UPDATE USER
+    if (!canModifyUser(session, userId!)) {
+      const authError = createAuthErrorResponse('forbidden');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
     }
 
     const deleteQuery = `
