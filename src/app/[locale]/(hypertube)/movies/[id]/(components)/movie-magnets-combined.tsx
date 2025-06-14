@@ -244,8 +244,6 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
     return null;
   }
 
-  console.log('unifiedMagnets', unifiedMagnets); // debug
-
   return (
     <div className="mx-auto w-full max-w-screen-2xl px-4">
       <div className="bg-card shadow-primary/20 w-full rounded-md border p-4 shadow-xs">
