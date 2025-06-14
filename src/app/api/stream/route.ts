@@ -187,13 +187,13 @@ function getVideoFileFormatFrom(fileName: string): VideoFileFormat {
   }
 }
 
-export interface Range {
+interface Range {
   start: number;
   end: number;
   status: 200 | 206;
 }
 
-export function parseRange(rangeHeader: string, total: number): Range {
+function parseRange(rangeHeader: string, total: number): Range {
   if (!rangeHeader) {
     return { start: 0, end: total - 1, status: 200 };
   }
@@ -207,7 +207,7 @@ export function parseRange(rangeHeader: string, total: number): Range {
   return <Range>result;
 }
 
-export function createStreamResponse(
+function createStreamResponse(
   stream: NodeJS.ReadableStream,
   { start, end, status }: Range,
   total: number
@@ -221,10 +221,7 @@ export function createStreamResponse(
   return new NextResponse(stream as any, { status, headers });
 }
 
-export async function streamFileFromDisk(
-  filePath: string,
-  req: NextRequest
-): Promise<NextResponse> {
+async function streamFileFromDisk(filePath: string, req: NextRequest): Promise<NextResponse> {
   const { size } = await fs.promises.stat(filePath);
   const rangeHeader = req.headers.get('range') || '';
   const range = parseRange(rangeHeader, size);
