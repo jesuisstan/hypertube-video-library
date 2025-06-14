@@ -61,7 +61,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
     const fetchStream = async () => {
       setIsLoading(true);
       try {
-        const url = await getStreamURL(stream);
+        const url = await getStreamURL(stream, movieData.id);
         if (url) {
           console.log('Setting stream url');
           console.log(url);
@@ -106,7 +106,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
   );
 
   async function getStreamURL(
-    streamData: TTorrentDataYTS | TUnifiedMagnetData | null
+    streamData: TTorrentDataYTS | TUnifiedMagnetData | null,
+    movieId: number
   ): Promise<string | null> {
     if (!streamData) return null;
 
@@ -117,7 +118,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          torrentSource: streamData,
+          source: streamData,
+          movieId: movieId,
         }),
       });
 
