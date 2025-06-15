@@ -4,7 +4,6 @@ import { Exo_2 as GFont } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-import { Analytics } from '@vercel/analytics/next';
 import clsx from 'clsx';
 
 import '@/styles/globals.css';
