@@ -16,11 +16,8 @@ import { Label } from '@/components/ui/label';
 import { RequiredInput } from '@/components/ui/required-input';
 import SelectSingle from '@/components/ui/select-dropdown/select-single';
 import TextWithLineBreaks from '@/components/ui/text-with-line-breaks';
-import {
-  popularLanguagesOptionsEN,
-  popularLanguagesOptionsFR,
-  popularLanguagesOptionsRU,
-} from '@/constants/popular-languages';
+import { allLanguagesOptions } from '@/constants/all-languages-ISO-639-1';
+import { getFlag } from '@/constants/popular-languages';
 import useUpdateSession from '@/hooks/useUpdateSession';
 import useUserStore from '@/stores/user';
 import { TGeoCoordinates, TSelectGeoOption } from '@/types/geolocation';
@@ -31,6 +28,7 @@ import {
   loadCityOptions,
   reverseGeocode,
 } from '@/utils/geolocation-handlers';
+import { getLanguageName } from '@/utils/language';
 import { isProfileCategoryFilled } from '@/utils/user-handlers';
 
 const MIN_DESCRIPTION_LENGTH = 42;
@@ -74,12 +72,10 @@ const DialogProfileModify = ({
   );
 
   // Determine the correct language options array based on the locale
-  const languageOptions =
-    locale === 'en'
-      ? popularLanguagesOptionsEN
-      : locale === 'fr'
-        ? popularLanguagesOptionsFR
-        : popularLanguagesOptionsRU;
+  const languageOptions = allLanguagesOptions.map((lang) => ({
+    value: lang.value,
+    label: getLanguageName(lang.value, locale),
+  }));
 
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
@@ -389,7 +385,7 @@ const DialogProfileModify = ({
           >
             <Avatar.Image
               className="h-5 w-5 rounded-[inherit] object-cover"
-              src={`/country-flags/${preferredLanguage?.toLowerCase()}.svg`}
+              src={`/country-flags/${getFlag(getLanguageName(preferredLanguage, locale), locale)?.toLowerCase()}.svg`}
               alt="national-flag"
             />
           </Avatar.Root>

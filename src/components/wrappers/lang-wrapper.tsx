@@ -7,11 +7,9 @@ import * as Avatar from '@radix-ui/react-avatar';
 import clsx from 'clsx';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
-import {
-  popularLanguagesOptionsEN,
-  popularLanguagesOptionsFR,
-  popularLanguagesOptionsRU,
-} from '@/constants/popular-languages';
+import { getFlag } from '@/constants/popular-languages';
+import { getLanguageName } from '@/utils/language';
+import { capitalize } from '@/utils/format-string';
 
 const PrefLangWrapper = ({
   lang,
@@ -24,18 +22,6 @@ const PrefLangWrapper = ({
 }) => {
   const t = useTranslations();
   const locale = useLocale() as 'en' | 'ru' | 'fr';
-
-  // Determine the correct language options array based on the locale
-  const languageOptions =
-    locale === 'en'
-      ? popularLanguagesOptionsEN
-      : locale === 'fr'
-        ? popularLanguagesOptionsFR
-        : popularLanguagesOptionsRU;
-
-  // Find the label for the current lang
-  const languageLabel =
-    languageOptions.find((option) => option.value.toLowerCase() === lang)?.label || lang;
 
   return (
     <div className="bg-card shadow-primary/20 relative rounded-md border p-5 shadow-xs">
@@ -55,11 +41,13 @@ const PrefLangWrapper = ({
                 >
                   <Avatar.Image
                     className="h-5 w-5 rounded-[inherit] object-cover"
-                    src={`/country-flags/${lang?.toLowerCase()}.svg`}
+                    src={`/country-flags/${getFlag(getLanguageName(lang, locale), locale)?.toLowerCase()}.svg`}
                     alt="national-flag"
                   />
                 </Avatar.Root>
-                <span className="flex items-center">{languageLabel}</span>
+                <span className="flex items-center">
+                  {capitalize(getLanguageName(lang, locale))}
+                </span>
               </div>
             ) : (
               <p className="italic">{t('data-incomplete')}</p>
