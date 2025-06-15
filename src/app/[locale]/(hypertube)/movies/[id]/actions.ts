@@ -17,7 +17,7 @@ interface RemoteSubtitle {
 }
 
 export async function fetchSubtitles(imdb_id: string): Promise<Record<string, string>> {
-  const subtitlesDir = path.join('public', 'downloads', 'subtitles', imdb_id);
+  const subtitlesDir = path.join('tmp', 'downloads', 'subtitles', imdb_id);
 
   if (!fs.existsSync(subtitlesDir)) {
     fs.mkdirSync(subtitlesDir, { recursive: true });
@@ -44,7 +44,7 @@ export async function fetchSubtitles(imdb_id: string): Promise<Record<string, st
           fs.copyFileSync(filePath, outputPath);
         }
 
-        return [langCode, path.join('downloads', 'subtitles', imdb_id, outputFilename)];
+        return [langCode, path.join('subtitles', imdb_id, outputFilename)];
       } catch (err) {
         return null;
       }

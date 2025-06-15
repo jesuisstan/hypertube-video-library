@@ -38,7 +38,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
         trackEl.kind = 'subtitles';
         trackEl.label = getLanguageName(langCode, locale);
         trackEl.srclang = langCode;
-        trackEl.src = `${window.location.origin}/${path}`;
+        trackEl.src = `/api/subtitles?path=${path}`;
         trackEl.default =
           preferred_language !== movieData.original_language && preferred_language === langCode;
         videoPlayer.appendChild(trackEl);
