@@ -84,7 +84,7 @@ const SelectSingle = ({
                     value={option.value}
                     disabled={option.disabled}
                   >
-                    {option.label}
+                    {capitalize(option.label)}
                   </DropdownMenuRadioItem>
                 );
               })}
