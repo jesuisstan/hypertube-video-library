@@ -47,11 +47,11 @@ const RootLayout = async ({
   return (
     <html suppressHydrationWarning lang={locale}>
       {/* dev tool to control rerendering the elements */}
-      {process.env.NODE_ENV === 'development' && (
+      {/* {process.env.NODE_ENV === 'development' && (
         <head>
           <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
         </head>
-      )}
+      )} */}
       <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
         <ThemeProvider
           attribute="class"
