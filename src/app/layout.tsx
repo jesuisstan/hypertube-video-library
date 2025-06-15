@@ -4,7 +4,6 @@ import { Exo_2 as GFont } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-import { Analytics } from '@vercel/analytics/next';
 import clsx from 'clsx';
 
 import '@/styles/globals.css';
@@ -16,6 +15,7 @@ const font = GFont({
   subsets: ['latin', 'cyrillic'],
   weight: ['500'],
   style: ['normal'],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -60,10 +60,7 @@ const RootLayout = async ({
           disableTransitionOnChange
         >
           <NextAuthProvider>
-            <NextIntlClientProvider messages={messages}>
-              {children}
-              <Analytics />
-            </NextIntlClientProvider>
+            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
           </NextAuthProvider>
         </ThemeProvider>
       </body>
