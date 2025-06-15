@@ -78,7 +78,7 @@ const UserPage = () => {
       setLoading(true);
       const response = await fetch(`/api/users/${userProfileId}`);
       const data = await response.json();
-      console.log('User profile data:', data); // debug
+      // console.log('User profile data:', data); // debug
       setUserProfile(data);
     } catch (error) {
       console.error('Error getting user data:', error);

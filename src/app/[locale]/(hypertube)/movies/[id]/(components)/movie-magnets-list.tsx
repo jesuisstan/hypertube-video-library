@@ -147,7 +147,7 @@ const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
     return sorted;
   }, [magnetsPB, sortConfig]);
 
-  console.log('Sorted Magnets:', sortedMagnets); // debug
+  // console.log('Sorted Magnets:', sortedMagnets); // debug
 
   return !movieData ? null : (
     <div className="mx-auto w-full max-w-screen-2xl px-4">

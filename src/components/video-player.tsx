@@ -62,14 +62,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
       try {
         const url = await getStreamURL(stream, movieData.id);
         if (url) {
-          console.log('Setting stream url');
-          console.log(url);
           setStreamUrl(url);
         } else {
           setError('Stream is unavailable');
         }
       } catch (e) {
-        console.error(e);
+        // console.error(e);
         setError('Stream is unavailable');
       } finally {
         setIsLoading(false);
@@ -134,10 +132,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
 
       return `/api/stream?hash=${data.streamUrl}`;
     } catch (error) {
-      console.error(
-        'Stream URL fetch error:',
-        error instanceof Error ? error.message : 'Unknown error'
-      );
+      // console.error(
+      //   'Stream URL fetch error:',
+      //   error instanceof Error ? error.message : 'Unknown error'
+      // );
       return null;
     }
   }

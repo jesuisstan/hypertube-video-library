@@ -25,10 +25,10 @@ export default function MovieList() {
     async function loadMovies() {
       try {
         const data = await fetchMovies({ limit: 25, genre: 'adventure', sort_by: 'rating' });
-        console.log('MOVIES RAIR DATA', data); // debug
+        // console.log('MOVIES RAIR DATA', data); // debug
         setMovies(data.data.movies || []);
       } catch (err) {
-        console.log('ERROR', err); // debug
+        // console.log('ERROR', err); // debug
         setError('Failed to load movies');
       }
     }
@@ -46,10 +46,10 @@ export default function MovieList() {
       const fDetails = await fetchMovieDetails(movies[24].id);
 
       setDetails(fDetails.data.movie || []);
-      console.log('RAIR DETAILS', fDetails.data.movie.torrents[0].url); // debug
+      // console.log('RAIR DETAILS', fDetails.data.movie.torrents[0].url); // debug
       setTorrentUrl(fDetails.data.movie.torrents[0].url);
     } catch (err) {
-      console.log('ERROR', err); // debug
+      // console.log('ERROR', err); // debug
       setError('Failed to load Movie details');
     }
   }
@@ -80,7 +80,7 @@ export default function MovieList() {
   if (error) {
     return <p>{error}</p>;
   }
-  console.log('RAIR MOVIES POPCORN', moviesPopcorn); // debug
+  // console.log('RAIR MOVIES POPCORN', moviesPopcorn); // debug
   return (
     <div className="flex flex-row space-x-4">
       <div>
