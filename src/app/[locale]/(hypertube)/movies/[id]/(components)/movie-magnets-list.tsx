@@ -60,7 +60,7 @@ const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
       const data = await response.json();
       setMagnetsPB(data);
     } catch (error) {
-      console.error('Error scraping PirateBay:', error);
+      // console.error('Error scraping PirateBay:', error);
     } finally {
       setLoadingPB(false);
     }

@@ -124,7 +124,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
         })
       );
     } catch (error) {
-      console.error('Error scraping PirateBay:', error);
+      // console.error('Error scraping PirateBay:', error);
       return [];
     } finally {
       setLoadingPB(false);
@@ -162,7 +162,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
           })
         );
     } catch (error) {
-      console.error('Error scraping RuTracker:', error);
+      // console.error('Error scraping RuTracker:', error);
       return [];
     } finally {
       setLoadingRT(false);
@@ -201,7 +201,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
       setCopiedIdx(idx);
       setTimeout(() => setCopiedIdx(null), 2000);
     } catch (e) {
-      console.error('Failed to copy to clipboard:', e);
+      // console.error('Failed to copy to clipboard:', e);
     }
   };
 

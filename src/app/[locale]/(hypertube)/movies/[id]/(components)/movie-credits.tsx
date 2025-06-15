@@ -30,7 +30,7 @@ const MovieCredits = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const data: TMovieCredits = await response.json();
       setCreditsData(data);
     } catch (error) {
-      console.error('Error fetching credits:', error);
+      // console.error('Error fetching credits:', error);
     } finally {
       setLoading(false);
     }

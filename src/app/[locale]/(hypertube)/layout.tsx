@@ -18,7 +18,7 @@ const HypertubeLayout = ({ children }: { children: ReactNode }) => {
       const data = await response.json();
       setGenresList(data);
     } catch (error) {
-      console.error('Error scraping TMDB:', error);
+      // console.error('Error scraping TMDB:', error);
     }
   };
 
