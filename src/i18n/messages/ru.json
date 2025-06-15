@@ -306,5 +306,7 @@
   "uploaded": "Загружен",
   "source": "Источник",
   "uploader": "Загружен",
-  "user-updated-successfully": "Пользователь успешно обновлен"
+  "user-updated-successfully": "Пользователь успешно обновлен",
+  "unauthorized": "Unauthorized",
+  "undefined": "Неопределенная ошибка"
 }

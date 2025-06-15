@@ -306,5 +306,7 @@
   "uploaded": "Téléchargé",
   "source": "Source",
   "uploader": "Uploader",
-  "user-updated-successfully": "User mis à jour avec succès"
+  "user-updated-successfully": "User mis à jour avec succès",
+  "unauthorized": "Unautorisé",
+  "undefined": "Non défini"
 }

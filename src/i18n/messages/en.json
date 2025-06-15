@@ -306,5 +306,7 @@
   "uploaded": "Uploaded",
   "source": "Source",
   "uploader": "Uploader",
-  "user-updated-successfully": "User updated successfully"
+  "user-updated-successfully": "User updated successfully",
+  "unauthorized": "Unauthorized",
+  "undefined": "Undefined"
 }
