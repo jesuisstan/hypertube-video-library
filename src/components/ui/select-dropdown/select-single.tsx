@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useLocale } from 'next-intl';
 
 import SelectSkeleton from '@/components/skeletons/skeleton-select';
 import {
@@ -13,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-primitives';
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
+import { getLanguageName } from '@/utils/language';
 
 const SelectSingle = ({
   label,
@@ -23,6 +25,8 @@ const SelectSingle = ({
   loading,
   disabled,
 }: TSelectSingleProps) => {
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
+
   const optionsValues = options.map((option) => option.value);
 
   const verifiedDefaultValue = optionsValues.includes(defaultValue)
@@ -68,7 +72,7 @@ const SelectSingle = ({
         <DropdownMenuSelector
           disabled={disabled}
           asChild
-          value={options.find((option) => option.value === selectedItem)?.label || ''}
+          value={capitalize(getLanguageName(selectedItem, locale))}
         />
         <DropdownMenuPortal>
           <DropdownMenuContent sideOffset={5} side="bottom" align="start">
@@ -80,7 +84,7 @@ const SelectSingle = ({
                     value={option.value}
                     disabled={option.disabled}
                   >
-                    {option.label}
+                    {capitalize(option.label)}
                   </DropdownMenuRadioItem>
                 );
               })}

@@ -1,3 +1,5 @@
+import { capitalize } from '@/utils/format-string';
+
 // Define the structure for language option
 type LanguageOption = {
   value: string; // ISO2 country code
@@ -5,7 +7,7 @@ type LanguageOption = {
 };
 
 // Language options with labels in English
-export const popularLanguagesOptionsEN: LanguageOption[] = [
+const popularLanguagesOptionsEN: LanguageOption[] = [
   { value: 'AL', label: 'Albanian' },
   { value: 'EG', label: 'Arabic' },
   { value: 'BD', label: 'Bengali' },
@@ -51,7 +53,7 @@ export const popularLanguagesOptionsEN: LanguageOption[] = [
 ];
 
 // Language options with labels in French
-export const popularLanguagesOptionsFR: LanguageOption[] = [
+const popularLanguagesOptionsFR: LanguageOption[] = [
   { value: 'AL', label: 'Albanais' },
   { value: 'EN', label: 'Anglais' },
   { value: 'DE', label: 'Allemand' },
@@ -97,7 +99,7 @@ export const popularLanguagesOptionsFR: LanguageOption[] = [
 ];
 
 // Language options with labels in Russian
-export const popularLanguagesOptionsRU: LanguageOption[] = [
+const popularLanguagesOptionsRU: LanguageOption[] = [
   { value: 'AL', label: 'Албанский' },
   { value: 'EN', label: 'Английский' },
   { value: 'EG', label: 'Арабский' },
@@ -141,3 +143,13 @@ export const popularLanguagesOptionsRU: LanguageOption[] = [
   { value: 'TH', label: 'Тайский' },
   { value: 'TR', label: 'Турецкий' },
 ];
+
+export const getFlag = (langName: string, locale: 'en' | 'fr' | 'ru') => {
+  const options =
+    locale === 'en'
+      ? popularLanguagesOptionsEN
+      : locale === 'fr'
+        ? popularLanguagesOptionsFR
+        : popularLanguagesOptionsRU;
+  return options.find(({ label }) => label === capitalize(langName))?.value ?? 'europe';
+};
