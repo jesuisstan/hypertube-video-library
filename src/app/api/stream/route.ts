@@ -118,56 +118,60 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = await getAuthSession();
-  if (!session) {
-    const authError = createAuthErrorResponse('unauthorized');
-    return NextResponse.json(
-      { error: authError.error, message: authError.message },
-      { status: authError.status }
-    );
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      const authError = createAuthErrorResponse('unauthorized');
+      return NextResponse.json(
+        { error: authError.error, message: authError.message },
+        { status: authError.status }
+      );
+    }
+
+    const hash = request.nextUrl.searchParams.get('hash');
+    if (!hash) {
+      return NextResponse.json({ message: 'Missing hash parameter' }, { status: 400 });
+    }
+
+    const data = torrents.get(hash);
+    if (!data) {
+      return NextResponse.json({ message: 'Unknown hash' }, { status: 404 });
+    }
+
+    if (await isFileAvailable(hash)) {
+      const filePath = path.resolve(`./storage/available/${hash}`);
+      await updateLastWatchedLocal(hash);
+      return streamFileFromDisk(filePath, request);
+    }
+
+    let file: TorrentFile;
+    if (data.file && data.engine) {
+      file = data.file;
+    } else {
+      file = await startBackgroundDownload(hash);
+    }
+
+    const total = file.length;
+    const rangeHeader = request.headers.get('range') || '';
+    const range = parseRange(rangeHeader, total);
+
+    if (canStreamDirectly(data.format!)) {
+      const rawStream = file.createReadStream({ start: range.start, end: range.end });
+      return createStreamResponse(rawStream, range, total);
+    }
+    const transcoded = ffmpeg(file.createReadStream({ start: 0, end: total - 1 }))
+      .outputFormat('mp4')
+      .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
+      .on('error', (err) => console.error('[FFmpeg] Error during transcoding:', err))
+      .pipe();
+
+    return new NextResponse(transcoded as any, {
+      status: 200,
+      headers: { 'Content-Type': 'video/mp4' },
+    });
+  } catch (e) {
+    return new NextResponse(null, { status: 404 });
   }
-
-  const hash = request.nextUrl.searchParams.get('hash');
-  if (!hash) {
-    return NextResponse.json({ message: 'Missing hash parameter' }, { status: 400 });
-  }
-
-  const data = torrents.get(hash);
-  if (!data) {
-    return NextResponse.json({ message: 'Unknown hash' }, { status: 404 });
-  }
-
-  if (await isFileAvailable(hash)) {
-    const filePath = path.resolve(`./storage/available/${hash}`);
-    await updateLastWatchedLocal(hash);
-    return streamFileFromDisk(filePath, request);
-  }
-
-  let file: TorrentFile;
-  if (data.file && data.engine) {
-    file = data.file;
-  } else {
-    file = await startBackgroundDownload(hash);
-  }
-
-  const total = file.length;
-  const rangeHeader = request.headers.get('range') || '';
-  const range = parseRange(rangeHeader, total);
-
-  if (canStreamDirectly(data.format!)) {
-    const rawStream = file.createReadStream({ start: range.start, end: range.end });
-    return createStreamResponse(rawStream, range, total);
-  }
-  const transcoded = ffmpeg(file.createReadStream({ start: 0, end: total - 1 }))
-    .outputFormat('mp4')
-    .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
-    .on('error', (err) => console.error('[FFmpeg] Error during transcoding:', err))
-    .pipe();
-
-  return new NextResponse(transcoded as any, {
-    status: 200,
-    headers: { 'Content-Type': 'video/mp4' },
-  });
 }
 
 /** Helpers */

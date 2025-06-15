@@ -64,6 +64,7 @@
     "parse-torrent": "^11.0.18",
     "pg": "^8.16.0",
     "piratebay-scraper": "^5.0.0",
+    "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "react-day-picker": "^9.6.7",
     "react-dom": "^19.1.0",

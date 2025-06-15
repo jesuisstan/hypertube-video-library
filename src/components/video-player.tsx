@@ -78,7 +78,18 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
   }, [stream, movieData.id]);
 
   return (
-    <DialogBasic isOpen={!!stream} title={movieData.title} setIsOpen={onClose} wide>
+    <DialogBasic
+      isOpen={!!stream}
+      title={movieData.title}
+      setIsOpen={() => {
+        videoRef?.current?.play().catch((err) => {
+          if (err.name === 'AbortError' || err.message.includes('aborted by the user agent')) {
+          }
+        });
+        onClose();
+      }}
+      wide
+    >
       <div className="w-full">
         {error ? (
           <div className="mb-4 rounded-md bg-red-100 p-3 text-red-700">{error}</div>
