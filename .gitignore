@@ -47,6 +47,8 @@ next-env.d.ts
 # temporary or download files
 .tmp
 /temp
+/tmp
+/storage
 
 # ignore all files in downloads folder and subfolders
 /public/downloads/*

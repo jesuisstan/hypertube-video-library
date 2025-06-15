@@ -125,11 +125,20 @@ async function createActivityTables() {
       );
     `);
 
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS movies_available (
+        id SERIAL PRIMARY KEY,
+        torrent_hash text NOT NULL,
+        movie_id int4 NOT NULL,
+        last_watched TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `);
+
     // Commit the transaction
     await client.query('COMMIT');
 
     console.log(
-      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watched", "movies_comments" created successfully'
+      'Tables "notifications", "blocked_users", "matches", "likes", "visits", "chat", "movies_bookmarks", "movies_watched", "movies_comments", "movies_available" created successfully'
     );
   } catch (error) {
     // Rollback the transaction in case of an error
