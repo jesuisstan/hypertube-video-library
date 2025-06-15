@@ -8,8 +8,8 @@ import clsx from 'clsx';
 
 import FilledOrNot from '@/components/ui/filled-or-not';
 import { getFlag } from '@/constants/popular-languages';
-import { getLanguageName } from '@/utils/language';
 import { capitalize } from '@/utils/format-string';
+import { getLanguageName } from '@/utils/language';
 
 const PrefLangWrapper = ({
   lang,

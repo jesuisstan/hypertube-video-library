@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useLocale } from 'next-intl';
 
 import SelectSkeleton from '@/components/skeletons/skeleton-select';
 import {
@@ -14,7 +15,6 @@ import {
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
 import { getLanguageName } from '@/utils/language';
-import { useLocale } from 'next-intl';
 
 const SelectSingle = ({
   label,
