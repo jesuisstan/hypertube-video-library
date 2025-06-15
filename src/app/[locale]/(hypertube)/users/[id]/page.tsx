@@ -51,7 +51,7 @@ const UserPage = () => {
       const data = await response.json();
       setBookmarksData(data.bookmarks);
     } catch (error) {
-      console.error('Error fetching bookmarks:', error);
+      // console.error('Error fetching bookmarks:', error);
     } finally {
       setLoadingBookmarks(false);
     }
@@ -67,7 +67,7 @@ const UserPage = () => {
       const data = await response.json();
       setWatchedData(data.watched);
     } catch (error) {
-      console.error('Error fetching watched movies:', error);
+      // console.error('Error fetching watched movies:', error);
     } finally {
       setLoadingWatched(false);
     }
@@ -78,10 +78,10 @@ const UserPage = () => {
       setLoading(true);
       const response = await fetch(`/api/users/${userProfileId}`);
       const data = await response.json();
-      console.log('User profile data:', data); // debug
+      // console.log('User profile data:', data); // debug
       setUserProfile(data);
     } catch (error) {
-      console.error('Error getting user data:', error);
+      // console.error('Error getting user data:', error);
     } finally {
       setLoading(false);
     }

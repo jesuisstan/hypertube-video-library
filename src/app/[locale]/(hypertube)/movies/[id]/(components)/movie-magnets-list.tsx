@@ -60,7 +60,7 @@ const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
       const data = await response.json();
       setMagnetsPB(data);
     } catch (error) {
-      console.error('Error scraping PirateBay:', error);
+      // console.error('Error scraping PirateBay:', error);
     } finally {
       setLoadingPB(false);
     }
@@ -147,7 +147,7 @@ const MovieMagnetsList = ({ movieData, setStream }: MovieTorrentsList) => {
     return sorted;
   }, [magnetsPB, sortConfig]);
 
-  console.log('Sorted Magnets:', sortedMagnets); // debug
+  // console.log('Sorted Magnets:', sortedMagnets); // debug
 
   return !movieData ? null : (
     <div className="mx-auto w-full max-w-screen-2xl px-4">

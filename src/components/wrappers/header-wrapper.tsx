@@ -31,7 +31,7 @@ const HeaderWrapper = ({
     if (onModify) {
       onModify(layout);
     } else {
-      console.warn('No onModify function provided.');
+      // console.warn('No onModify function provided.');
     }
   };
 

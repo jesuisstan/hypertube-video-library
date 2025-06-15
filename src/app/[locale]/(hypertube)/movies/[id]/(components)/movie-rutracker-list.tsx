@@ -60,7 +60,7 @@ const MovieRutrackerList = ({ movieData, setStream }: MovieRutrackerListProps) =
       const data = await response.json();
       setMagnets(data);
     } catch (error) {
-      console.error('Error scraping RuTracker:', error);
+      // console.error('Error scraping RuTracker:', error);
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,7 @@ const MovieRutrackerList = ({ movieData, setStream }: MovieRutrackerListProps) =
       setCopiedIdx(idx);
       setTimeout(() => setCopiedIdx(null), 2000);
     } catch (e) {
-      console.error('Failed to copy to clipboard:', e);
+      // console.error('Failed to copy to clipboard:', e);
     }
   };
 
@@ -141,7 +141,7 @@ const MovieRutrackerList = ({ movieData, setStream }: MovieRutrackerListProps) =
     return new Date(date).toLocaleDateString(locale);
   };
 
-  console.log('Rutracker magnets', magnets); //debug
+  // console.log('Rutracker magnets', magnets); //debug
 
   return !movieData ? null : (
     <div className="mx-auto w-full max-w-screen-2xl px-4">

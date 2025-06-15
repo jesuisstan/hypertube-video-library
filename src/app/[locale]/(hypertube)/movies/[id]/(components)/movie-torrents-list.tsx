@@ -56,7 +56,7 @@ const MovieTorrentsList = ({ movieData, setStream }: MovieTorrentsList) => {
       const data = await fetchMoviesByTitle(searchQuery);
       setTorrentsYTS(data?.data?.movies?.[0].torrents || []);
     } catch (error) {
-      console.error('Error scraping YTS:', error);
+      // console.error('Error scraping YTS:', error);
     } finally {
       setLoadingYTS(false);
     }
