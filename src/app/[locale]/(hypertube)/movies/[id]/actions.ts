@@ -5,7 +5,6 @@ import fs from 'fs';
 import path from 'path';
 import unzipper from 'unzipper';
 
-import { TTorrentDataYTS, TUnifiedMagnetData } from '@/types/torrent-magnet-data';
 import { getLanguageCode } from '@/utils/language';
 import { isTruthy } from '@/utils/predicates';
 

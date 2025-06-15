@@ -31,8 +31,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
     const timer = setTimeout(() => {
       const videoPlayer = videoRef.current;
 
-      if (!videoPlayer) return;
-
+      if (!videoPlayer || !streamUrl) return;
       videoPlayer.querySelectorAll('track').forEach((t) => t.remove());
       Object.entries(subtitleList ?? {}).forEach(([langCode, path]) => {
         const trackEl = document.createElement('track');
@@ -46,7 +45,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
       });
     }, 0);
     return () => clearTimeout(timer);
-  }, [movieData, stream, subtitleList, locale, preferred_language]);
+  }, [movieData, stream, subtitleList, streamUrl, locale, preferred_language]);
 
   const handlePlaybackError = () => {
     setError('Playback failed. The file may be corrupted or incomplete.');
