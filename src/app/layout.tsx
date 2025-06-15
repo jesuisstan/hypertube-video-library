@@ -15,6 +15,7 @@ const font = GFont({
   subsets: ['latin', 'cyrillic'],
   weight: ['500'],
   style: ['normal'],
+  preload: false,
 });
 
 export const metadata: Metadata = {
