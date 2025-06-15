@@ -65,13 +65,15 @@ export function AppSidebar() {
             priority
           />
         </div>
-        <SideBarHeader
-          name={user?.nickname || user?.firstname}
-          photoUrl={
-            Array.isArray(user?.photos) && user?.photos.length > 0 ? user.photos[0] : undefined
-          }
-          translate={t}
-        />
+        {user && (
+          <SideBarHeader
+            name={user.nickname || user.firstname}
+            photoUrl={
+              Array.isArray(user.photos) && user.photos.length > 0 ? user.photos[0] : undefined
+            }
+            translate={t}
+          />
+        )}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
