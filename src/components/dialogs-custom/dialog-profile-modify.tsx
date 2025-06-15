@@ -392,7 +392,7 @@ const DialogProfileModify = ({
           <SelectSingle
             options={languageOptions}
             defaultValue="en"
-            selectedItem={preferredLanguage.toUpperCase()}
+            selectedItem={preferredLanguage}
             setSelectedItem={(value) => setPreferredLanguage(value.toLocaleLowerCase())}
           />
         </div>

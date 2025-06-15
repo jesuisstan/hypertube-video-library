@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/dropdown-primitives';
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
+import { getLanguageName } from '@/utils/language';
+import { useLocale } from 'next-intl';
 
 const SelectSingle = ({
   label,
@@ -23,6 +25,8 @@ const SelectSingle = ({
   loading,
   disabled,
 }: TSelectSingleProps) => {
+  const locale = useLocale() as 'en' | 'ru' | 'fr';
+
   const optionsValues = options.map((option) => option.value);
 
   const verifiedDefaultValue = optionsValues.includes(defaultValue)
@@ -68,7 +72,7 @@ const SelectSingle = ({
         <DropdownMenuSelector
           disabled={disabled}
           asChild
-          value={options.find((option) => option.value === selectedItem)?.label || ''}
+          value={capitalize(getLanguageName(selectedItem, locale))}
         />
         <DropdownMenuPortal>
           <DropdownMenuContent sideOffset={5} side="bottom" align="start">
