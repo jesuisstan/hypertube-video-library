@@ -62,6 +62,7 @@ const DialogBasic: React.FC<DialogModalBasicProps> = ({
             width={121}
             height={0}
             placeholder="empty"
+            priority
           />
         </DialogFooter>
       </DialogContent>
