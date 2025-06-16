@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import DialogBasic from './dialogs-custom/dialog-basic';
 
@@ -17,6 +17,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitleList }) => {
   const locale = useLocale() as 'en' | 'ru' | 'fr';
+  const t = useTranslations();
   const user = useUserStore((state) => state.user);
   const preferred_language = user?.preferred_language;
 
@@ -49,7 +50,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
   }, [movieData, stream, subtitleList, streamUrl, locale, preferred_language]);
 
   const handlePlaybackError = () => {
-    setError('Playback failed. The file may be corrupted or incomplete.');
+    setError(t('playback-failed'));
   };
 
   useEffect(() => {
@@ -65,11 +66,11 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
         if (url) {
           setStreamUrl(url);
         } else {
-          setError('Stream is unavailable');
+          setError(t('stream-is-unavailable'));
         }
       } catch (e) {
-        // console.error(e);
-        setError('Stream is unavailable');
+        console.error(e);
+        setError(t('stream-is-unavailable'));
       } finally {
         setIsLoading(false);
       }
@@ -97,7 +98,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
         ) : isLoading ? (
           <div className="flex h-64 w-full items-center justify-center">
             <div className="border-primary h-12 w-12 animate-spin rounded-full border-t-2 border-b-2"></div>
-            <span className="ml-3">Loading stream...</span>
+            <span className="ml-3">{t('loading')}</span>
           </div>
         ) : (
           <video
@@ -107,7 +108,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
             onError={handlePlaybackError}
             src={streamUrl || undefined}
           >
-            Your browser does not support the video tag.
+            {t('browser-does-not-support-the-video-tag')}
           </video>
         )}
       </div>
@@ -133,13 +134,13 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
       });
 
       if (!response.ok) {
-        throw new Error(`Stream request failed with status: ${response.status}`);
+        throw new Error(t('stream-request-failed'));
       }
 
       const data = await response.json();
 
       if (!data || !data.streamUrl) {
-        throw new Error('No stream URL returned from server');
+        throw new Error(t('stream-url-fetch-error'));
       }
 
       return `/api/stream?hash=${data.streamUrl}`;

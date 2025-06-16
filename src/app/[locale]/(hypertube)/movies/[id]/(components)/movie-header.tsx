@@ -47,12 +47,12 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
         }
       );
       if (response.status !== 200) {
-        // console.error('Error updating bookmark:', response.statusText);
+        console.error('Error updating bookmark:', response.statusText);
         return;
       }
       setIsBookmarked((prev) => !prev); // Toggle the watched status if the request was successful
     } catch (error) {
-      // console.error('Error updating bookmark:', error);
+      console.error('Error updating bookmark:', error);
     } finally {
       setLoadingBookmarks(false);
     }
@@ -79,12 +79,12 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
         }
       );
       if (response.status !== 200) {
-        // console.error('Error updating watched:', response.statusText);
+        console.error('Error updating watched:', response.statusText);
         return;
       }
       setIsInWatchlist((prev) => !prev); // Toggle the watched status if the request was successful
     } catch (error) {
-      // console.error('Error updating watched:', error);
+      console.error('Error updating watched:', error);
     } finally {
       setLoadingWatched(false);
     }
@@ -98,7 +98,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const data = await res.json();
       setIsBookmarked(Boolean(data.isBookmarked));
     } catch (error) {
-      // console.error('Error checking bookmark:', error);
+      console.error('Error checking bookmark:', error);
     } finally {
       setLoadingBookmarks(false);
     }
@@ -112,7 +112,7 @@ const MovieHeader = ({ movieData }: { movieData: TMovieBasics | null }) => {
       const data = await res.json();
       setIsInWatchlist(Boolean(data.isInWatchlist));
     } catch (error) {
-      // console.error('Error checking watched:', error);
+      console.error('Error checking watched:', error);
     } finally {
       setLoadingWatched(false);
     }

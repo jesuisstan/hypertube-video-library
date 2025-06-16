@@ -44,7 +44,7 @@ const MovieProfile = () => {
       setMovieData(data);
       setSubtitleList(data.imdb_id ? await fetchSubtitles(data.imdb_id) : null);
     } catch (error) {
-      // console.error('Error scraping TMDB:', error);
+      console.error('Error scraping TMDB:', error);
     } finally {
       setLoading(false);
     }

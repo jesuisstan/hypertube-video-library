@@ -308,5 +308,10 @@
   "uploader": "Uploader",
   "user-updated-successfully": "User mis à jour avec succès",
   "unauthorized": "Unautorisé",
-  "undefined": "Non défini"
+  "undefined": "Non défini",
+  "browser-does-not-support-the-video-tag": "Votre navigateur ne supporte pas la balise video.",
+  "playback-failed": "La lecture a échoué. Le fichier peut être corrompu ou incomplet.",
+  "stream-is-unavailable": "Le stream n'est pas disponible",
+  "stream-request-failed": "La requête de stream a échoué",
+  "stream-url-fetch-error": "Erreur lors de la récupération de l'URL du stream"
 }

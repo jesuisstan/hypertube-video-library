@@ -308,5 +308,10 @@
   "uploader": "Загружен",
   "user-updated-successfully": "Пользователь успешно обновлен",
   "unauthorized": "Unauthorized",
-  "undefined": "Неопределенная ошибка"
+  "undefined": "Неопределенная ошибка",
+  "browser-does-not-support-the-video-tag": "Ваш браузер не поддерживает тег video.",
+  "playback-failed": "Стриминг невозможен. Файл может быть поврежден или неполный.",
+  "stream-is-unavailable": "Стриминг недоступен",
+  "stream-request-failed": "Ошибка запроса стриминга",
+  "stream-url-fetch-error": "Ошибка получения URL стриминга"
 }

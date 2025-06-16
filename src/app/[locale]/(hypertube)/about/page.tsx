@@ -53,10 +53,10 @@ const AboutPage = () => {
         setMoviesTMDB(uniqueMovies);
       }
       if (error) {
-        // console.error('Error fetching movies:', error);
+        console.error('Error fetching movies:', error);
       }
     } catch (error) {
-      // console.error('Error fetching movies:', error);
+      console.error('Error fetching movies:', error);
     } finally {
       setLoading(false);
     }

@@ -169,7 +169,7 @@ const BrowsePage = () => {
       const data = await response.json();
       setWatchedData(data.watched);
     } catch (error) {
-      // console.error('Error fetching watched movies:', error);
+      console.error('Error fetching watched movies:', error);
     }
   };
 

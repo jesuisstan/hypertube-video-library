@@ -308,5 +308,10 @@
   "uploader": "Uploader",
   "user-updated-successfully": "User updated successfully",
   "unauthorized": "Unauthorized",
-  "undefined": "Undefined"
+  "undefined": "Undefined",
+  "browser-does-not-support-the-video-tag": "Your browser does not support the video tag.",
+  "playback-failed": "Playback failed. The file may be corrupted or incomplete.",
+  "stream-is-unavailable": "Stream is unavailable",
+  "stream-request-failed": "Stream request failed",
+  "stream-url-fetch-error": "Stream URL fetch error"
 }

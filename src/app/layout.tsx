@@ -4,6 +4,7 @@ import { Exo_2 as GFont } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
+import { Analytics } from '@vercel/analytics/next';
 import clsx from 'clsx';
 
 import '@/styles/globals.css';
@@ -15,7 +16,7 @@ const font = GFont({
   subsets: ['latin', 'cyrillic'],
   weight: ['500'],
   style: ['normal'],
-  preload: false,
+  //preload: false,
 });
 
 export const metadata: Metadata = {
@@ -47,11 +48,11 @@ const RootLayout = async ({
   return (
     <html suppressHydrationWarning lang={locale}>
       {/* dev tool to control rerendering the elements */}
-      {/* {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === 'development' && (
         <head>
           <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
         </head>
-      )} */}
+      )}
       <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
         <ThemeProvider
           attribute="class"
@@ -60,7 +61,10 @@ const RootLayout = async ({
           disableTransitionOnChange
         >
           <NextAuthProvider>
-            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+              <Analytics />
+            </NextIntlClientProvider>
           </NextAuthProvider>
         </ThemeProvider>
       </body>
