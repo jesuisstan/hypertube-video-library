@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { db, VercelPoolClient } from '@vercel/postgres';
 import ffmpeg from 'fluent-ffmpeg';
+import fs from 'fs';
 import magnet from 'magnet-uri';
 import parseTorrent, { toMagnetURI } from 'parse-torrent';
+import path from 'path';
 import torrentStream from 'torrent-stream';
 
 import { createAuthErrorResponse, getAuthSession } from '@/lib/auth-helpers';
@@ -22,46 +25,52 @@ const torrents = new Map<
   }
 >();
 
-function startDirectStream(hash: string): Promise<TorrentFile> {
+function startBackgroundDownload(hash: string): Promise<TorrentFile> {
   return new Promise((resolve, reject) => {
     const data = torrents.get(hash);
     if (!data) {
-      console.error('[stream] Unknown hash:', hash);
+      console.error('[download] Unknown hash:', hash);
       return reject(new Error('Unknown hash'));
     }
     if (data.engine) {
-      console.log('[stream] Using existing engine for hash:', hash);
-      if (data.file) {
-        return resolve(data.file);
-      }
+      console.warn('[download] Download already in progress for hash:', hash);
+      return reject(new Error('Already downloading'));
     }
 
     const engine = torrentStream(data.magnetUri, {
-      tmp: `${process.env.STORAGE_PATH || './tmp'}/streaming`,
-      verify: false, // Disable verification for faster streaming
+      tmp: `${process.env.STORAGE_PATH}/tmp`,
+      path: `${process.env.STORAGE_PATH}/downloading/${hash}`,
+      verify: true,
     });
     data.engine = engine;
-
     engine.on('ready', () => {
       const file = engine.files.find((f: TorrentFile) => {
         const fmt = getVideoFileFormatFrom(f.name);
         return fmt !== VideoFileFormat.UNKNOWN;
       });
       if (!file) {
-        console.error(`[stream][${hash}] No video file found in torrent`);
+        console.error(`[download][${hash}] No video file found in torrent`);
         return reject(new Error('No video file found'));
       }
       data.fileName = file.name;
       data.format = getVideoFileFormatFrom(file.name);
       file.select();
       data.file = file;
-      console.log(`[stream][${hash}] Ready to stream: ${file.name}`);
       resolve(file);
     });
 
     engine.on('error', (err: any) => {
-      console.error(`[stream][${hash}] Engine error:`, err);
+      console.error(`[download][${hash}] Engine error:`, err);
       reject(err);
+    });
+
+    engine.on('idle', async () => {
+      try {
+        await saveVideoFile(data, hash);
+        await setDownloadComplete(data.movieId, hash);
+      } catch (err) {
+        console.error(`[download][${hash}] Error saving or updating:`, err);
+      }
     });
   });
 }
@@ -73,7 +82,7 @@ export async function POST(request: Request) {
     if (!data.source) {
       return NextResponse.json({ error: 'Empty data' }, { status: 400 });
     }
-
+    await cleanupStaleMovies();
     let magnetUri: string;
     let infoHash: string;
 
@@ -129,31 +138,38 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'Unknown hash' }, { status: 404 });
     }
 
-    // Always stream directly from torrent
-    const file = await startDirectStream(hash);
+    if (await isFileAvailable(hash)) {
+      const filePath = path.resolve(`./storage/available/${hash}`);
+      await updateLastWatchedLocal(hash);
+      return streamFileFromDisk(filePath, request);
+    }
+
+    let file: TorrentFile;
+    if (data.file && data.engine) {
+      file = data.file;
+    } else {
+      file = await startBackgroundDownload(hash);
+    }
+
     const total = file.length;
     const rangeHeader = request.headers.get('range') || '';
     const range = parseRange(rangeHeader, total);
 
     if (canStreamDirectly(data.format!)) {
-      // Direct streaming for supported formats
       const rawStream = file.createReadStream({ start: range.start, end: range.end });
       return createStreamResponse(rawStream, range, total);
-    } else {
-      // Transcode unsupported formats to MP4 on the fly
-      const transcoded = ffmpeg(file.createReadStream({ start: 0, end: total - 1 }))
-        .outputFormat('mp4')
-        .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
-        .on('error', (err) => console.error('[FFmpeg] Error during transcoding:', err))
-        .pipe();
-
-      return new NextResponse(transcoded as any, {
-        status: 200,
-        headers: { 'Content-Type': 'video/mp4' },
-      });
     }
+    const transcoded = ffmpeg(file.createReadStream({ start: 0, end: total - 1 }))
+      .outputFormat('mp4')
+      .outputOptions(['-movflags frag_keyframe+empty_moov+faststart'])
+      .on('error', (err) => console.error('[FFmpeg] Error during transcoding:', err))
+      .pipe();
+
+    return new NextResponse(transcoded as any, {
+      status: 200,
+      headers: { 'Content-Type': 'video/mp4' },
+    });
   } catch (e) {
-    console.error('[stream] Error:', e);
     return new NextResponse(null, { status: 404 });
   }
 }
@@ -209,6 +225,14 @@ function createStreamResponse(
   return new NextResponse(stream as any, { status, headers });
 }
 
+async function streamFileFromDisk(filePath: string, req: NextRequest): Promise<NextResponse> {
+  const { size } = await fs.promises.stat(filePath);
+  const rangeHeader = req.headers.get('range') || '';
+  const range = parseRange(rangeHeader, size);
+  const rs = fs.createReadStream(filePath, { start: range.start, end: range.end });
+  return createStreamResponse(rs, range, size);
+}
+
 function canStreamDirectly(format: VideoFileFormat): boolean {
   const ok = format === VideoFileFormat.MP4 || format === VideoFileFormat.OGG;
   return ok;
@@ -220,4 +244,155 @@ enum VideoFileFormat {
   AVI = 'avi',
   OGG = 'ogg',
   UNKNOWN = 'unknown',
+}
+
+// DB and storage helpers...
+async function saveVideoFile(data: { file?: TorrentFile; format?: VideoFileFormat }, hash: string) {
+  console.log('[saveVideo] Saving video for hash:', hash);
+  if (!data.file) throw new Error('No file to save');
+  const base = process.env.STORAGE_PATH ?? './storage';
+  const srcFolder = path.join(base, 'downloading', hash);
+  const srcPath = path.join(srcFolder, data.file.path);
+  if (!srcPath) throw new Error('Failed to find file path');
+  const destFolder = path.join(base, 'available');
+  await fs.promises.mkdir(destFolder, { recursive: true });
+  const destDir = path.join(destFolder, hash);
+  const isDirect = canStreamDirectly(data.format!);
+  if (isDirect) {
+    await fs.promises.rename(srcPath, destDir);
+  } else {
+    const mp4Path = `${destDir}.mp4`;
+    await convertToMp4(srcPath, mp4Path);
+    await fs.promises.rename(mp4Path, destDir);
+  }
+  const tmpDir = path.dirname(data.file.path);
+  await fs.promises.rm(srcFolder, { recursive: true, force: true });
+  console.log('[saveVideo] Cleaned up temp dir:', tmpDir);
+}
+
+async function convertToMp4(inputPath: string, outputPath: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputPath)
+      .outputOptions(['-c:v libx264', '-c:a aac', '-movflags frag_keyframe+empty_moov+faststart'])
+      .on('error', (err) => {
+        console.error('[saveAsMp4] FFmpeg error:', err);
+        reject(err);
+      })
+      .on('end', async () => {
+        await fs.promises.unlink(inputPath);
+        resolve(outputPath);
+      })
+      .save(outputPath);
+  });
+}
+
+async function setDownloadComplete(movieId: number, hash: string) {
+  const client = await db.connect();
+  const query = `INSERT INTO movies_available (torrent_hash, movie_id, last_watched) VALUES ($1, $2, NOW()) RETURNING id`;
+  try {
+    const res = await client.query(query, [hash, movieId]);
+    return res.rows[0].id;
+  } catch (err) {
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+async function isFileAvailable(hash: string): Promise<boolean> {
+  const dbOk = await checkDbIsFileAvailable(hash);
+  const fsOk = await checkStorageIsFileAvailable(hash);
+  return dbOk && fsOk;
+}
+
+async function checkDbIsFileAvailable(hash: string): Promise<boolean> {
+  const client: VercelPoolClient = await db.connect();
+  try {
+    const { rows } = await client.query(
+      `SELECT EXISTS(SELECT 1 FROM movies_available WHERE torrent_hash=$1) AS exists`,
+      [hash]
+    );
+    return rows[0].exists;
+  } finally {
+    client.release();
+  }
+}
+
+async function checkStorageIsFileAvailable(hash: string): Promise<boolean> {
+  const base = process.env.STORAGE_PATH || './storage';
+  const dest = path.join(base, 'available', hash);
+  try {
+    await fs.promises.access(dest, fs.constants.R_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function updateLastWatchedLocal(hash: string): Promise<number> {
+  const client = await db.connect();
+  const query = `
+    UPDATE movies_available
+    SET last_watched = NOW()
+    WHERE id = (
+      SELECT id
+      FROM movies_available
+      WHERE torrent_hash = $1
+      ORDER BY last_watched DESC
+      LIMIT 1
+      )
+      RETURNING id
+  `;
+  try {
+    const res = await client.query(query, [hash]);
+    if (res.rows.length === 0) {
+      return 0;
+    }
+    return res.rows[0].id;
+  } catch (err) {
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+async function cleanupStaleMovies(): Promise<string[]> {
+  const base = process.env.STORAGE_PATH ?? './storage';
+  const availableRoot = path.join(base, 'available');
+  let staleHashes: string[];
+  try {
+    staleHashes = await fetchStaleMovieHashes();
+  } catch (err) {
+    console.error('[cleanup] Failed to fetch stale hashes:', err);
+    throw err;
+  }
+
+  const deleted: string[] = [];
+  for (const hash of staleHashes) {
+    const dirToDelete = path.join(availableRoot, hash);
+    try {
+      await fs.promises.rm(dirToDelete, { recursive: true, force: true });
+      deleted.push(hash);
+    } catch (err) {
+      console.error(`[cleanup] Error deleting ${dirToDelete}:`, err);
+    }
+  }
+  return deleted;
+}
+
+async function fetchStaleMovieHashes(): Promise<string[]> {
+  const client = await db.connect();
+  try {
+    const query = `
+      SELECT DISTINCT torrent_hash
+      FROM movies_available
+      WHERE last_watched < NOW() - INTERVAL '30 days'
+    `;
+    const { rows } = await client.query<{ torrent_hash: string }>(query);
+    return rows.map((r) => r.torrent_hash);
+  } catch (err) {
+    throw err;
+  } finally {
+    client.release();
+  }
 }

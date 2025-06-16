@@ -10,7 +10,8 @@
     "lint-fix": "next lint --fix",
     "clean": "npx rimraf .swc && npx rimraf .next && npx rimraf node_modules && npx rimraf package-lock.json",
     "c:i": "npm run clean && npm install",
-    "evaluation": "npm install && node ./scripts/prepare-db.js && npm run build && npm start"
+    "evaluation": "npm install && node ./scripts/prepare-db.js && npm run build && npm start",
+    "install-ffmpeg": "node ./scripts/install-ffmpeg.js"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.7",
