@@ -92,7 +92,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
     >
       <div className="w-full">
         {error ? (
-          <div className="mb-4 rounded-md bg-red-100 p-3 text-red-700">{error}</div>
+          <div className="text-destructive mb-4 rounded-md bg-red-100 p-3">{error}</div>
         ) : isLoading ? (
           <div className="flex h-64 w-full items-center justify-center">
             <div className="border-primary h-12 w-12 animate-spin rounded-full border-t-2 border-b-2"></div>
@@ -143,10 +143,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onClose, stream, movieData, subtitl
 
       return `/api/stream?hash=${data.streamUrl}`;
     } catch (error) {
-      // console.error(
-      //   'Stream URL fetch error:',
-      //   error instanceof Error ? error.message : 'Unknown error'
-      // );
+      console.error(
+        'Stream URL fetch error:',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
       return null;
     }
   }
