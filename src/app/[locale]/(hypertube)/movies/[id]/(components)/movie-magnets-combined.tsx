@@ -124,69 +124,60 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
         })
       );
     } catch (error) {
-      // console.error('Error scraping PirateBay:', error);
+      console.error('Error scraping PirateBay:', error);
       return [];
     } finally {
       setLoadingPB(false);
     }
   };
 
-  //const scrapeRuTracker = async (searchText: string, searchYear: string) => {
-  //  if (!searchText || !searchYear) return [];
+  const scrapeRuTracker = async (searchText: string, searchYear: string) => {
+    if (!searchText || !searchYear) return [];
 
-  //  setLoadingRT(true);
-  //  try {
-  //    const response = await fetch(
-  //      `/api/torrents/rutracker?title=${encodeURIComponent(searchText)}&year=${searchYear}`
-  //    );
-  //    const responseData = await response.json();
+    setLoadingRT(true);
+    try {
+      const response = await fetch(
+        `/api/torrents/rutracker?title=${encodeURIComponent(searchText)}&year=${searchYear}`
+      );
+      const responseData = await response.json();
 
-  //    // Ensure data is an array before using array methods
-  //    const data: TTorrentDataRuTracker[] = Array.isArray(responseData) ? responseData : [];
+      // Ensure data is an array before using array methods
+      const data: TTorrentDataRuTracker[] = Array.isArray(responseData) ? responseData : [];
 
-  //    return data
-  //      .filter((torrent) => torrent.magnetLink) // Only include torrents with magnet links
-  //      .map(
-  //        (torrent): TUnifiedMagnetData => ({
-  //          id: `rt-${torrent.id}`,
-  //          title: torrent.title,
-  //          seeds: torrent.seeds,
-  //          leeches: torrent.leeches,
-  //          size: formatBytes(torrent.size),
-  //          sizeBytes: torrent.size,
-  //          uploaded: new Date(torrent.registered).toLocaleDateString(locale),
-  //          uploadedDate: new Date(torrent.registered),
-  //          magnetLink: torrent.magnetLink!,
-  //          source: 'Rutracker',
-  //          uploader: torrent.author,
-  //        })
-  //      );
-  //  } catch (error) {
-  //    // console.error('Error scraping RuTracker:', error);
-  //    return [];
-  //  } finally {
-  //    setLoadingRT(false);
-  //  }
-  //};
-
-  //const fetchAllMagnets = async (searchText: string, searchYear: string) => {
-  //  if (!searchText || !searchYear) return;
-
-  //  const [pirateBayResults, rutrackerResults] = await Promise.all([
-  //    scrapePirateBay(searchText, searchYear),
-  //    scrapeRuTracker(searchText, searchYear),
-  //  ]);
-
-  //  const combined = [...pirateBayResults, ...rutrackerResults];
-  //  setUnifiedMagnets(combined);
-  //};
+      return data
+        .filter((torrent) => torrent.magnetLink) // Only include torrents with magnet links
+        .map(
+          (torrent): TUnifiedMagnetData => ({
+            id: `rt-${torrent.id}`,
+            title: torrent.title,
+            seeds: torrent.seeds,
+            leeches: torrent.leeches,
+            size: formatBytes(torrent.size),
+            sizeBytes: torrent.size,
+            uploaded: new Date(torrent.registered).toLocaleDateString(locale),
+            uploadedDate: new Date(torrent.registered),
+            magnetLink: torrent.magnetLink!,
+            source: 'Rutracker',
+            uploader: torrent.author,
+          })
+        );
+    } catch (error) {
+      console.error('Error scraping RuTracker:', error);
+      return [];
+    } finally {
+      setLoadingRT(false);
+    }
+  };
 
   const fetchAllMagnets = async (searchText: string, searchYear: string) => {
     if (!searchText || !searchYear) return;
 
-    const [pirateBayResults] = await Promise.all([scrapePirateBay(searchText, searchYear)]);
+    const [pirateBayResults, rutrackerResults] = await Promise.all([
+      scrapePirateBay(searchText, searchYear),
+      scrapeRuTracker(searchText, searchYear),
+    ]);
 
-    const combined = pirateBayResults;
+    const combined = [...pirateBayResults, ...rutrackerResults];
     setUnifiedMagnets(combined);
   };
 
@@ -210,7 +201,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
       setCopiedIdx(idx);
       setTimeout(() => setCopiedIdx(null), 2000);
     } catch (e) {
-      // console.error('Failed to copy to clipboard:', e);
+      console.error('Failed to copy to clipboard:', e);
     }
   };
 
