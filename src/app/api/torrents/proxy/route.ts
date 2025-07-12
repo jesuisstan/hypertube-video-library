@@ -2,14 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const targetUrl = url.searchParams.get('targetUrl'); // Забираем целевой URL из параметров запроса
+  const targetUrl = url.searchParams.get('targetUrl');
 
   if (!targetUrl) {
     return NextResponse.json({ error: 'Target URL is required' }, { status: 400 });
   }
 
   try {
-    // Прокси-запрос
     const response = await fetch(targetUrl, {
       method: 'GET',
       headers: {

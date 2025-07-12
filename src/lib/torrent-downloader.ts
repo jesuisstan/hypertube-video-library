@@ -2,7 +2,6 @@ import crypto from 'crypto';
 import dgram from 'dgram';
 import { createWriteStream, readFileSync, writeFileSync } from 'fs';
 import fs from 'fs';
-import { createServer } from 'net';
 import net from 'net';
 
 const DEFAULT_TRACKERS = [
@@ -67,7 +66,6 @@ export async function downloadVideoFile(metadata: any, destination: string) {
     try {
       // Fetch peers from the tracker
       const peers = await fetchPeersFromTracker(trackerUrl, metadata.infoHash);
-      console.log('[INFO] !!!!!!!!!!!!!!!!!!!!!!!!! Peers!!!!!!!!!!!!!!!!!!! :', peers);
       console.log(`[INFO] Found ${peers.length} peers`);
 
       for (const peer of peers) {
