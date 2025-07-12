@@ -156,8 +156,7 @@ const BrowsePage = () => {
       setErrorMessage(t('error-page-limit-reached'));
       return;
     }
-    //setPage((prevPage) => prevPage + 1); // original logic (todo: uncomment after 42 evaluation, delete all below)
-    setValueOfSearchFilter('sort_by', 'title.asc');
+    setPage((prevPage) => prevPage + 1);
   };
 
   const fetchWatched = async () => {
