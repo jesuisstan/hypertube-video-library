@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dropdown-primitives';
 import { SelectSinglePropsSchema, TSelectSingleProps } from '@/types/select-single';
 import { capitalize } from '@/utils/format-string';
-import { getLanguageName } from '@/utils/language';
 
 const SelectSingle = ({
   label,
@@ -72,7 +71,7 @@ const SelectSingle = ({
         <DropdownMenuSelector
           disabled={disabled}
           asChild
-          value={capitalize(getLanguageName(selectedItem, locale))}
+          value={options.find((option) => option.value === selectedItem)?.label || ''}
         />
         <DropdownMenuPortal>
           <DropdownMenuContent sideOffset={5} side="bottom" align="start">

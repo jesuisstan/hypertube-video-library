@@ -108,7 +108,7 @@ const MovieMagnetsCombined = ({ movieData, setStream }: MovieMagnetsCombinedProp
       );
       const data: TMagnetDataPirateBay[] = await response.json();
 
-      return data.map(
+      return data?.map(
         (magnet, index): TUnifiedMagnetData => ({
           id: `pb-${index}-${magnet.link.slice(-10)}`,
           title: magnet.title,
