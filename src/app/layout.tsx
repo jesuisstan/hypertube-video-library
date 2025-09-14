@@ -53,7 +53,7 @@ const RootLayout = async ({
           <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
         </head>
       )}
-      <body className={clsx(font.className, 'flex min-h-screen flex-col')}>
+      <body className={clsx(font.className, 'flex min-h-screen flex-col')} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

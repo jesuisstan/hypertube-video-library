@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import { User as TUser } from 'next-auth';
 import { useTranslations } from 'next-intl';
@@ -72,10 +72,14 @@ const DialogProfileModify = ({
   );
 
   // Determine the correct language options array based on the locale
-  const languageOptions = allLanguagesOptions.map((lang) => ({
-    value: lang.value,
-    label: getLanguageName(lang.value, locale),
-  }));
+  const languageOptions = useMemo(
+    () =>
+      allLanguagesOptions.map((lang) => ({
+        value: lang.value,
+        label: getLanguageName(lang.value, locale),
+      })),
+    [locale]
+  );
 
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
