@@ -17,7 +17,7 @@ const Footer = () => {
         {'. '}
         {t(`service-provided`)}{' '}
         <a
-          href={`https://www.krivtsoff.site/`}
+          href={`https://www.krivtsoff.online/`}
           target="_blank"
           className="text-positive hover:text-c42orange my-6 text-center text-sm transition-all duration-300 ease-in-out"
         >

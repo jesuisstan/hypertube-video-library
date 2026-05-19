@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { Eye } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 import Loading from '@/app/loading';
 import DatesRangePicker from '@/components/dates-range-picker';
@@ -276,8 +276,6 @@ const BrowsePage = () => {
         <ToastNotification isOpen={true} title={t('attention')} text={errorMessage} />
       )}
       <div className="smooth42transition xs:flex-row flex flex-col items-start">
-        {/* Search by query */}
-        <DrawerSearchByQuery />
         {/* Sort and filter sector */}
         <div
           id="sort-filter-sector"
@@ -289,6 +287,13 @@ const BrowsePage = () => {
             <label htmlFor="browse" className="text-2xl font-bold">
               {t('browsing-the-library')}
             </label>
+            <Separator />
+
+            {/* Search by query */}
+            <div className="flex w-full items-center">
+              <DrawerSearchByQuery />
+            </div>
+
             <Separator />
 
             <label htmlFor="sort" className="font-bold">
@@ -439,8 +444,7 @@ const BrowsePage = () => {
 
               {/* Fetch button */}
               <ButtonCustom onClick={fetchMoreMovies} variant="default">
-                {/* replace with {t('fetch-more')} after 42 evaluation */}
-                {t('browse')}
+                {t('fetch-more')}
               </ButtonCustom>
             </div>
           </div>
@@ -462,7 +466,7 @@ const BrowsePage = () => {
                   {watchedData.some((w) => w.id === movie.id) && (
                     <TooltipBasic
                       trigger={
-                        <Eye className="bg-primary/60 text-primary-foreground animate-fade-in absolute top-1 left-1 z-10 h-7 w-7 rounded-full p-1 shadow-md" />
+                        <Check className="bg-primary text-primary-foreground animate-fade-in absolute top-1 left-1 z-10 h-7 w-7 rounded-full p-1 shadow-md" />
                       }
                     >
                       <div className="flex max-w-96">{t('watched')}</div>

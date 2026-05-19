@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { motion } from 'framer-motion';
@@ -19,7 +18,6 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import RadioGroup from '@/components/ui/radio/radio-group';
-import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/ui/spinner';
 import useSearchStore from '@/stores/search';
 import { framerMotion, slideFromBottom } from '@/styles/motion-variants';
@@ -28,19 +26,12 @@ import { TMovieBasics } from '@/types/movies';
 const Trigger = () => {
   const t = useTranslations();
 
-  const triggerButton = (
-    <div className="animate-fade-up-down fixed top-2 right-2 z-50">
-      <ButtonCustom variant="default" className="rounded-full shadow-lg">
-        <div className="flex flex-row items-center justify-center gap-2 align-middle">
-          <Search width={18} height={18} />
-          <p>{t('search.search-by-phrase')}</p>
-        </div>
-      </ButtonCustom>
+  return (
+    <div className="flex cursor-pointer flex-row items-center justify-center gap-2 py-1 pr-1 align-middle">
+      <Search />
+      <p className="font-bold">{t('search.search-by-phrase')}</p>
     </div>
   );
-
-  // Render outside parent hierarchy using portal
-  return typeof window !== 'undefined' ? createPortal(triggerButton, document.body) : null;
 };
 
 const DrawerSearchByQuery = () => {
